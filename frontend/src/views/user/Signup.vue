@@ -1,11 +1,6 @@
 <template>
   <div class="signup">
-    <!-- <img
-        class="logo"
-        src="../assets/images/logo_without_title.png"
-        alt="logo"
-        width="30%"
-      /> -->
+    <img class="logo" src="../../assets/images/logo_without_title.png" alt="logo" width="20%" />
     <h1>회원가입</h1>
     <div class="join-form">
         <div class="input">
@@ -28,9 +23,11 @@
       <label>
         <input v-model="isTerm" type="checkbox" id="term" />
         <span>약관을 동의합니다.</span>
+      </label>
+      <div class="button">
         <button class="register" @click="register">가입하기</button>
         <button class="cancle" @click="cancel">취소</button>
-      </label>
+      </div>
   </div>
   
 </template>
