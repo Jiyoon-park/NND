@@ -5,6 +5,7 @@
         <v-card>
           <v-card-title>
             <div>
+              <v-icon class="mr-5">mdi-account-circle</v-icon>
               <span class="grey--text">User Name</span>
               <br />
               <span>공모전 팀원 구합니다</span>
