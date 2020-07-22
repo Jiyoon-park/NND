@@ -1,6 +1,6 @@
 <template>
-  <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app right>
+  <div id="inspire">
+    <v-navigation-drawer v-model="drawer" fixed-tabs app right>
       <v-list dense>
         <v-list-item link>
           <v-icon class="mr-5">mdi-account-circle</v-icon>
@@ -35,7 +35,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="green" dark>
+    <v-toolbar app color="teal" dark>
       <v-btn icon class="hidden-xs-only">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -45,8 +45,8 @@
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-app-bar>
-  </v-app>
+    </v-toolbar>
+  </div>
 </template>
 
 <script>
@@ -56,10 +56,10 @@ export default {
   components: {},
 
   props: {
-    source: String,
+    source: String
   },
   data: () => ({
-    drawer: null,
-  }),
+    drawer: null
+  })
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-form>
       <v-container class="d-flex">
         <v-text-field
@@ -15,23 +15,23 @@
         </v-btn>
       </v-container>
     </v-form>
-    <SearchKeywords />
-  </v-app>
+    <!-- <SearchKeywords /> -->
+  </div>
 </template>
 
 <script>
-import SearchKeywords from "./SearchKeywords.vue";
+// import SearchKeywords from "./SearchKeywords.vue";
 
 export default {
   components: {
-    SearchKeywords,
+    // SearchKeywords,
   },
   data() {
     return {
       inputData: "",
-      searchKeywords: [],
+      searchKeywords: []
     };
-  },
+  }
 };
 </script>
 
