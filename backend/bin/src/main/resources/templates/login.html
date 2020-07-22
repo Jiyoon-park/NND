@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=”shortcut icon” href="/assets/img/favicon.ico">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script>
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function(e,xhr,options) {
+            xhr.setRequestHeader(header, token);
+        })
+    </script>
+</head>
+<body>
+<script>
+$(document).ready(function(){
+    $("#btnTest").click(function(){
+
+        var data = {
+            "email": "test22@test.com"
+            , "name": "이름"
+        }
+        $.post("/signup", data, function(res){
+            console.log(res);
+        })
+    })
+
+    $("#btnTestGet").click(function(){
+        $.get("/getTest", function(res){
+            console.log("GET res: ", res);
+        })
+    })
+})
+</script>
+
+<p>
+    <a href="/">홈으로</a>
+</p>
+<br>
+<p><strong>회원가입 (이미 회원가입 중이라면 로그인으로 대체)</strong></p>
+<form action="/signup" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <input type="text" name="email" value="test@test.com">
+    <input type="text" name="name" value="test">
+    <input type="text" name="password" value="test1">
+    <button type="submit">전송</button>
+</form>
+
+<br><br>
+<!--<button id="btnTest">ajax POST 테스트</button>-->
+<!--<br><br>-->
+<!--<button id="btnTestGet">ajax GET 테스트</button>-->
+<!--<br><br>-->
+<p><strong>로그인 테스트</strong></p>
+<form action="/loginAction" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <input type="text" name="email" value="test@test.com">
+    <input type="text" name="name" value="test">
+    <input type="text" name="password" value="test1">
+    <!--<input id = "remember-me" name ="remember-me" type = "checkbox"/>Remember me-->
+    <button type="submit">전송</button>
+</form>
+
+
+
+</body>
+</html>
