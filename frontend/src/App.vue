@@ -1,18 +1,16 @@
 <template>
-  <v-app>
-    <v-main>
-      <Home />
-    </v-main>
-  </v-app>
+  <div id="app">
+    <nav-bar></nav-bar>
+  </div>
 </template>
 
 <script>
-import Home from "./views/Home.vue";
+import NavBar from "@/components/common/NavBar.vue";
 export default {
   name: "App",
 
   components: {
-    Home
+    NavBar,
   },
 
   data: () => ({
