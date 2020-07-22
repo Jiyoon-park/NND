@@ -10,10 +10,12 @@
       </v-tabs>
 
       <v-tabs-items v-model="currentItem">
-        <SearchBar />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
+        <v-tab-item v-for="item in items.concat(more)" :key="item" :value="'tab-' + item">
+          <SearchBar />
+          <NewsFeed />
+          <NewsFeed />
+          <NewsFeed />
+        </v-tab-item>
       </v-tabs-items>
     </v-card>
   </div>
@@ -29,7 +31,7 @@ export default {
   },
   data: () => ({
     currentItem: "tab-Web",
-    items: ["팀", "팀원"]
+    items: ["팀원", "팀"]
   }),
 
   methods: {}
