@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import NavBar from "../components/common/NavBar.vue";
+import NewsFeed from "../components/common/NewsFeed.vue";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const routes = [
     path: "/navbar",
     name: "NavBar",
     component: NavBar,
+  },
+  {
+    path:"/newsfeed",
+    name: "NewsFeed",
+    component: NewsFeed,
   },
 ];
 
