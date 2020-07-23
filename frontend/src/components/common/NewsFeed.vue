@@ -9,10 +9,11 @@
               <span class="grey--text">User Name</span>
               <br />
               <span>공모전 팀원 구합니다</span>
-              <br />
-              <span>같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다</span>
             </div>
           </v-card-title>
+          <v-card-subtitle>
+              <span>같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다</span>
+          </v-card-subtitle>
           <v-card-actions>
             <v-btn text color="gray" @click.stop="dialog = true">상세정보</v-btn>
             <v-dialog v-model="dialog" max-width="500">
