@@ -12,17 +12,20 @@
         <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">{{ item }}</v-tab>
       </v-tabs>
 
-      <v-tabs-items v-model="currentItem">
-        <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
-          <SearchBar />
-          <NewsFeed />
-          <br />
-          <NewsFeed />
-          <br />
-          <NewsFeed />
-        </v-tab-item>
-      </v-tabs-items>
-    </v-card>
+    <v-tabs-items v-model="currentItem">
+      <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
+        <SearchBar />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+        <NewsFeed />
+      </v-tab-item>
+    </v-tabs-items>
   </v-app>
 </template>
 <script>
