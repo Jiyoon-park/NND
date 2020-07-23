@@ -14,7 +14,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="orange">상세정보 보기</v-btn>
+            <v-btn flat color="orange">상세정보</v-btn>
             <v-btn icon color="indigo">
               <v-icon>mdi-star</v-icon>
             </v-btn>
