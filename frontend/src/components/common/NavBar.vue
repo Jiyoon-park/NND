@@ -35,7 +35,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar app color="teal" dark>
+    <v-toolbar color="teal" dark>
       <v-btn icon class="hidden-xs-only">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -56,10 +56,10 @@ export default {
   components: {},
 
   props: {
-    source: String
+    source: String,
   },
   data: () => ({
-    drawer: null
-  })
+    drawer: null,
+  }),
 };
 </script>
