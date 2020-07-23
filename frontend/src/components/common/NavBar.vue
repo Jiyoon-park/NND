@@ -8,7 +8,6 @@
             <v-list-item-title>홍길동</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
         <v-list-item link>
           <v-list-item-content>
             <v-list-item-title>내 정보</v-list-item-title>
@@ -35,17 +34,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="teal" dark>
-      <v-btn icon>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-
+    <v-app-bar app color="teal" dark :flat="true" :fixed="true">
       <v-spacer></v-spacer>
       <v-toolbar-title>너내동</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-toolbar>
+    </v-app-bar>
+    <FAB></FAB>
   </div>
 </template>
 
@@ -58,7 +54,8 @@ export default {
   data: () => ({
     drawer: null,
   }),
+  components: {},
 };
 </script>
 
-<style scoped></style>
+<style></style>
