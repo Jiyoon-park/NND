@@ -13,7 +13,9 @@
         <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
           <SearchBar />
           <NewsFeed />
+          <br />
           <NewsFeed />
+          <br />
           <NewsFeed />
         </v-tab-item>
       </v-tabs-items>
