@@ -2,11 +2,14 @@
   <div class="container">
     <v-form @submit.prevent="onSubmit">
       <div class="d-flex">
+        <!-- <v-text-field @keydown.native="onSubmit" label="Regular" single-line></v-text-field> -->
+
         <input class="search-input" type="text" v-model="inputData" placeholder="검색어를 입력하세요" />
         <v-btn depressed color="teal" dark class="ml-2">
           <v-icon>fas fa-search</v-icon>
         </v-btn>
       </div>
+      <small v-show="warning" class="red--text">{{ errorMsg }}</small>
     </v-form>
     <div>
       <ul class="search-keyword-list d-flex">
@@ -33,14 +36,29 @@ export default {
     return {
       inputData: "",
       searchKeywords: [],
+      warning: false,
+      errorMsg: "",
     };
   },
   methods: {
     onSubmit() {
-      if (this.inputData) {
-        this.searchKeywords.push(this.inputData);
+      this.warning = false;
+      var counter = this.searchKeywords.length;
+      if (!this.inputData) {
+        this.errorMsg = "검색어를 입력해주십시오.";
+        this.warning = true;
+      } else {
+        for (var i = 0; i < counter; i++) {
+          if (this.searchKeywords[i] == this.inputData) {
+            this.errorMsg = "이미 추가된 검색어입니다.";
+            this.warning = true;
+          }
+        }
       }
-      this.inputData = "";
+      if (this.warning == false) {
+        this.searchKeywords.push(this.inputData);
+        this.inputData = "";
+      }
     },
     onDelbtn(index) {
       this.searchKeywords.splice(index, 1);

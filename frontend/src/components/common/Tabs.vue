@@ -2,16 +2,14 @@
   <v-app>
     <v-card>
       <v-tabs
-        class="mt-14 rounded-0"
+        class="rounded-0"
         background-color="teal"
         v-model="currentItem"
         dark
         fixed-tabs
         slider-color="white"
       >
-        <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">
-          {{ item }}
-        </v-tab>
+        <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">{{ item }}</v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="currentItem">
