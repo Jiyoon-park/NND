@@ -36,7 +36,7 @@
     </v-navigation-drawer>
 
     <v-toolbar color="teal" dark>
-      <v-btn icon class="hidden-xs-only">
+      <v-btn icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
 
