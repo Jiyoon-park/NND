@@ -35,31 +35,26 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar app color="teal" dark>
-      <v-btn icon class="hidden-xs-only">
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-
+    <v-app-bar app color="teal" dark flat="false" fixed="true">
       <v-spacer></v-spacer>
       <v-toolbar-title>너내동</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-toolbar>
+    </v-app-bar>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NavBar",
-
-  components: {},
-
+  name: "LayoutsDemosBaselineFlipped",
   props: {
-    source: String
+    source: String,
   },
   data: () => ({
-    drawer: null
-  })
+    drawer: null,
+  }),
 };
 </script>
+
+<style scoped></style>

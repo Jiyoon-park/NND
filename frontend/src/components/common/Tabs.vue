@@ -1,16 +1,21 @@
 <template>
-  <div>
+  <v-app>
     <v-card>
-      <v-tabs background-color="teal" v-model="currentItem" dark fixed-tabs slider-color="white">
+      <v-tabs
+        class="mt-14 rounded-0"
+        background-color="teal"
+        v-model="currentItem"
+        dark
+        fixed-tabs
+        slider-color="white"
+      >
         <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">
-          {{
-          item
-          }}
+          {{ item }}
         </v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="currentItem">
-        <v-tab-item v-for="item in items.concat(more)" :key="item" :value="'tab-' + item">
+        <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
           <SearchBar />
           <NewsFeed />
           <NewsFeed />
@@ -18,7 +23,7 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card>
-  </div>
+  </v-app>
 </template>
 <script>
 import SearchBar from "./SearchBar.vue";
@@ -27,13 +32,19 @@ import NewsFeed from "./NewsFeed.vue";
 export default {
   components: {
     SearchBar,
-    NewsFeed
+    NewsFeed,
   },
   data: () => ({
     currentItem: "tab-Web",
-    items: ["팀원", "팀"]
+    items: ["팀원", "팀"],
   }),
 
-  methods: {}
+  methods: {},
 };
 </script>
+<!--
+<style scoped>
+.mb-20 {
+  margin-top: 64px;
+}
+</style>-->
