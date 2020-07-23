@@ -35,7 +35,11 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="teal" dark flat="false" fixed="true">
+    <v-toolbar color="teal" dark>
+      <v-btn icon>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+
       <v-spacer></v-spacer>
       <v-toolbar-title>너내동</v-toolbar-title>
       <v-spacer></v-spacer>
