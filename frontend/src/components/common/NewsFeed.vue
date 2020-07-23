@@ -29,10 +29,17 @@
 export default {
   data: () => {
     return {
-      feedNum: this.$store.state.newsfeeds[this.$route.oarams.id]
+      feedNum: this.$store.state.newsfeeds[this.$route.params.id]
     };
   },
   methods: {
+    selectedFeed() {
+      this.$set(
+        this.$data,
+        "selectedFeed",
+        this.$store.state.newsfeeds[this.$route.params.id]
+      );
+    },
     addFavorite() {
 
     }
