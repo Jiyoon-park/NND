@@ -29,8 +29,7 @@
                   문의사항있으시면 아래 링크로 질문해주시면 고맙겠습니다.<br />
                 </v-card-text>
                 <v-card-text>
-                  오픈카톡방 :
-                  <!-- <div v-bind: href="https://www.google/com">KAKAO!!</div> -->
+                  오픈카톡방 : KAKAO!!
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -53,71 +52,70 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          label="Legal first name*"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          label="Legal middle name"
-                          hint="example of helper text only on focus"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          label="Legal last name*"
-                          hint="example of persistent helper text"
-                          persistent-hint
-                          required
-                        ></v-text-field>
+                      <v-col cols="12">
+                        <header>이름*</header>
+                        <v-text-field label="이름" required></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-text-field label="Email*" required></v-text-field>
+                        <header>이메일*</header>
+                        <v-text-field label="이메일" required></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-text-field
-                          label="Password*"
-                          type="password"
-                          required
-                        ></v-text-field>
+                        <header>사용가능한 기술 스택*</header>
+                        <v-checkbox
+                          v-model="selected"
+                          label="JAVA"
+                          value="JAVA"
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="selected"
+                          label="C"
+                          value="C"
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="selected"
+                          label="C++"
+                          value="C++"
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="selected"
+                          label="Python"
+                          value="Python"
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="selected"
+                          label="Django"
+                          value="Django"
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="selected"
+                          label="SpringBoot"
+                          value="Springboot"
+                        ></v-checkbox>
+                        <v-checkbox
+                          v-model="selected"
+                          label="Vue"
+                          value="Vue"
+                        ></v-checkbox>
                       </v-col>
-                      <v-col cols="12" sm="6">
-                        <v-select
-                          :items="['0-17', '18-29', '30-54', '54+']"
-                          label="Age*"
-                          required
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12" sm="6">
-                        <v-autocomplete
-                          :items="[
-                            'Skiing',
-                            'Ice hockey',
-                            'Soccer',
-                            'Basketball',
-                            'Hockey',
-                            'Reading',
-                            'Writing',
-                            'Coding',
-                            'Basejump',
-                          ]"
-                          label="Interests"
-                          multiple
-                        ></v-autocomplete>
+                      <v-col cols="12">
+                        <v-textarea
+                          name="description"
+                          label="자기소개 100자
+                        이내로 적어주세요."
+                        ></v-textarea>
                       </v-col>
                     </v-row>
                   </v-container>
-                  <small>*indicates required field</small>
+                  <small>*는 필수입력항목입니다</small>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false"
-                    >Close</v-btn
+                  <v-btn color="blue darken-1" text @click="dialog2 = false"
+                    >취소</v-btn
                   >
-                  <v-btn color="blue darken-1" text @click="dialog = false"
-                    >Save</v-btn
+                  <v-btn color="blue darken-1" text @click="dialog2 = false"
+                    >신청하기</v-btn
                   >
                 </v-card-actions>
               </v-card>
