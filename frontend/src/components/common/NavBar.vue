@@ -45,16 +45,13 @@
       <v-spacer></v-spacer>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-toolbar>
+    </v-app-bar>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NavBar",
-
-  components: {},
-
+  name: "LayoutsDemosBaselineFlipped",
   props: {
     source: String,
   },
@@ -63,3 +60,5 @@ export default {
   }),
 };
 </script>
+
+<style scoped></style>
