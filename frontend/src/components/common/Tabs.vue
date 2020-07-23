@@ -10,7 +10,7 @@
       </v-tabs>
 
       <v-tabs-items v-model="currentItem">
-        <v-tab-item v-for="item in items.concat(more)" :key="item" :value="'tab-' + item">
+        <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
           <SearchBar />
           <NewsFeed />
           <NewsFeed />
@@ -27,13 +27,13 @@ import NewsFeed from "./NewsFeed.vue";
 export default {
   components: {
     SearchBar,
-    NewsFeed
+    NewsFeed,
   },
   data: () => ({
     currentItem: "tab-Web",
-    items: ["팀원", "팀"]
+    items: ["팀원", "팀"],
   }),
 
-  methods: {}
+  methods: {},
 };
 </script>
