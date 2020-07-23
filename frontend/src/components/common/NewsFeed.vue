@@ -15,7 +15,7 @@
           </v-card-title>
           <v-card-actions>
             <v-btn text color="orange">상세정보</v-btn>
-            <v-btn icon color="indigo">
+            <v-btn icon color="indigo" class="btn_favorite" @click="addFavorite()">
               <v-icon>mdi-star</v-icon>
             </v-btn>
           </v-card-actions>
@@ -26,5 +26,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => {
+    return {
+      feedNum: this.$store.state.newsfeeds[this.$route.oarams.id]
+    };
+  },
+  methods: {
+    addFavorite() {
+
+    }
+  }
+};
 </script>
