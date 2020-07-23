@@ -1,0 +1,21 @@
+<template>
+  <div>
+    <p>팀</p>
+    <NewsFeed />
+    <NewsFeed />
+    <NewsFeed />
+  </div>
+</template>
+
+<script>
+import NewsFeed from "./NewsFeed.vue";
+export default {
+  components: {
+    NewsFeed,
+  },
+};
+</script>
+
+
+<style>
+</style>

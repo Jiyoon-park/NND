@@ -8,35 +8,34 @@
       fixed-tabs
       slider-color="white"
     >
-      <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">{{
+      <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">
+        {{
         item
-      }}</v-tab>
+        }}
+      </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="currentItem">
       <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
         <SearchBar />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
-        <NewsFeed />
+
+        <TeammemberFeed v-if="item==='팀원'" />
+
+        <TeamFeed v-if="item==='팀'" />
       </v-tab-item>
     </v-tabs-items>
   </v-app>
 </template>
 <script>
 import SearchBar from "./SearchBar.vue";
-import NewsFeed from "./NewsFeed.vue";
+import TeamFeed from "./TeamFeed.vue";
+import TeammemberFeed from "./TeammemberFeed.vue";
 
 export default {
   components: {
     SearchBar,
-    NewsFeed,
+    TeammemberFeed,
+    TeamFeed,
   },
   data: () => ({
     currentItem: "tab-Web",
