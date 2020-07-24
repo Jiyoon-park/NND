@@ -2,7 +2,7 @@
   <div class="container">
     <v-form @submit.prevent="onSubmit">
       <div class="d-flex">
-        <!-- <v-text-field @keydown.native="onSubmit" label="Regular" single-line></v-text-field> -->
+        <!-- <v-text-field @keypress.13="onSubmit()" label="Regular" single-line></v-text-field> -->
 
         <input class="search-input" type="text" v-model="inputData" placeholder="검색어를 입력하세요" />
         <v-btn depressed color="teal" dark class="ml-2">
