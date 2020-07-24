@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Welcome from "../views/Welcome.vue";
 import SignUp from "../components/common/SignUp.vue";
+import Findpw from "../components/user/Findpw.vue";
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,11 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: SignUp,
+  },
+  {
+    path: "/findpw",
+    name: "Findpw",
+    component: Findpw,
   },
 ];
 

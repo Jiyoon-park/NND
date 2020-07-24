@@ -30,8 +30,11 @@
       초기화
     </v-btn>
 
-    <v-btn color="warning" @click="resetValidation">
+    <v-btn color="warning"  class="mr-4" @click="resetValidation">
       오류메세지 제거
+    </v-btn>
+    <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">
+      비밀번호찾기
     </v-btn>
   </v-form>
 </template>
