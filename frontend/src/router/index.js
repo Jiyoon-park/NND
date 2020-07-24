@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
 import Welcome from "../views/Welcome.vue";
 import SignUp from "../components/common/SignUp.vue";
 import Findpw from "../components/user/Findpw.vue";
