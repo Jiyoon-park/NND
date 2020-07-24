@@ -15,32 +15,23 @@
             <span>같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다</span>
           </v-card-subtitle>
           <v-card-actions>
-            <v-btn text color="gray" @click.stop="dialog = true"
-              >상세정보</v-btn
-            >
+            <v-btn text color="gray" @click.stop="dialog = true">상세정보</v-btn>
             <v-dialog v-model="dialog" max-width="500">
               <v-card>
-                <v-card-title class="headline"
-                  >공모전 팀원 구합니다</v-card-title
-                >
+                <v-card-title class="headline">공모전 팀원 구합니다</v-card-title>
                 <v-card-text>
-                  같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다.<br />
-                  프론트쪽 사람은 마무리되었습니다. <br />
-                  문의사항있으시면 아래 링크로 질문해주시면 고맙겠습니다.<br />
+                  같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다.
+                  <br />프론트쪽 사람은 마무리되었습니다.
+                  <br />문의사항있으시면 아래 링크로 질문해주시면 고맙겠습니다.
+                  <br />
                 </v-card-text>
-                <v-card-text>
-                  오픈카톡방 : KAKAO!!
-                </v-card-text>
+                <v-card-text>오픈카톡방 : KAKAO!!</v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
-                  <v-btn color="green darken-1" text @click="dialog = false"
-                    >닫기</v-btn
-                  >
+                  <v-btn color="green darken-1" text @click="dialog = false">닫기</v-btn>
 
-                  <v-btn color="green darken-1" text @click="dialog2 = !dialog2"
-                    >신청하기</v-btn
-                  >
+                  <v-btn color="green darken-1" text @click="dialog2 = !dialog2">신청하기</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -62,41 +53,13 @@
                       </v-col>
                       <v-col cols="12">
                         <header>사용가능한 기술 스택*</header>
-                        <v-checkbox
-                          v-model="selected"
-                          label="JAVA"
-                          value="JAVA"
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="selected"
-                          label="C"
-                          value="C"
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="selected"
-                          label="C++"
-                          value="C++"
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="selected"
-                          label="Python"
-                          value="Python"
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="selected"
-                          label="Django"
-                          value="Django"
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="selected"
-                          label="SpringBoot"
-                          value="Springboot"
-                        ></v-checkbox>
-                        <v-checkbox
-                          v-model="selected"
-                          label="Vue"
-                          value="Vue"
-                        ></v-checkbox>
+                        <v-checkbox v-model="selected1" label="JAVA" value="JAVA"></v-checkbox>
+                        <v-checkbox v-model="selected2" label="C" value="C"></v-checkbox>
+                        <v-checkbox v-model="selected3" label="C++" value="C++"></v-checkbox>
+                        <v-checkbox v-model="selected4" label="Python" value="Python"></v-checkbox>
+                        <v-checkbox v-model="selected5" label="Django" value="Django"></v-checkbox>
+                        <v-checkbox v-model="selected6" label="SpringBoot" value="Springboot"></v-checkbox>
+                        <v-checkbox v-model="selected7" label="Vue" value="Vue"></v-checkbox>
                       </v-col>
                       <v-col cols="12">
                         <v-textarea
@@ -111,22 +74,14 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog2 = false"
-                    >취소</v-btn
-                  >
-                  <v-btn color="blue darken-1" text @click="dialog2 = false"
-                    >신청하기</v-btn
-                  >
+                  <v-btn color="blue darken-1" text @click="dialog2 = false">취소</v-btn>
+                  <v-btn color="blue darken-1" text @click="dialog2 = false">신청하기</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
 
-            <v-btn text color="orange" v-if="!favorite" @click="addFavorite"
-              >즐겨찾기 추가</v-btn
-            >
-            <v-btn text color="red" v-if="favorite" @click="delFavorite"
-              >즐겨찾기 제거</v-btn
-            >
+            <v-btn text color="orange" v-if="!favorite" @click="addFavorite">즐겨찾기 추가</v-btn>
+            <v-btn text color="red" v-if="favorite" @click="delFavorite">즐겨찾기 제거</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -141,6 +96,13 @@ export default {
       favorite: false,
       dialog: false,
       dialog2: false,
+      selected1: false,
+      selected2: false,
+      selected3: false,
+      selected4: false,
+      selected5: false,
+      selected6: false,
+      selected7: false,
     };
   },
   methods: {
