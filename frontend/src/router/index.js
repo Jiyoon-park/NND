@@ -38,6 +38,11 @@ const routes = [
     name: "Findpw",
     component: Findpw,
   },
+  {
+    path: "/login",
+    name: Login,
+    component: Login,
+  },
 ];
 
 const router = new VueRouter({
