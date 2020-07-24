@@ -3,9 +3,14 @@
     <v-navigation-drawer v-model="drawer" fixed-tabs app right>
       <v-list dense>
         <v-list-item link>
-          <v-icon class="mr-5">mdi-account-circle</v-icon>
-          <v-list-item-content>
-            <v-list-item-title>홍길동</v-list-item-title>
+          <div v-if="id != null">
+            <v-icon class="mr-5">mdi-account-circle</v-icon>
+            <v-list-item-content class="float-right">
+              <v-list-item-title>홍길동</v-list-item-title>
+            </v-list-item-content>
+          </div>
+          <v-list-item-content v-else @click="$router.push('/signup')">
+            <v-list-item-title>로그인</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
@@ -52,8 +57,14 @@ export default {
   },
   data: () => ({
     drawer: null,
+    id: null,
+    items: [
+      { icon: "apps", title: "Home", to: "/" },
+      { icon: "bubble_chart", title: "About", to: "/about" },
+    ],
   }),
   components: {},
+  methods: {},
 };
 </script>
 
