@@ -1,5 +1,6 @@
 <template>
   <div id="create">
+    <!--
     <v-btn
       fab
       dark
@@ -10,36 +11,27 @@
       bottom
       @click="$vuetify.goTo(target)"
     >
-      <v-icon v-if="yyy" dark>mdi-chevron-up</v-icon>
-      <v-icon v-else dark>mdi-plus</v-icon>
+      <v-icon v-if="visible" dark>mdi-chevron-up</v-icon>
+      <v-icon v-if="!visible" dark>mdi-plus</v-icon>
     </v-btn>
+    -->
   </div>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    number: 9999,
-    yyy: false,
-  }),
-  mounted() {
-    this.myMethod();
-  },
-  methods: {
-    myMethod() {
-      var cnt = 0;
-      window.addEventListener("scroll", function() {
-        console.log(cnt++);
-      });
-    },
-  },
+import { addBackToTop } from "vanilla-back-to-top";
 
-  computed: {
-    target() {
-      const value = this[this.type];
-      return Number(value);
-    },
+export default {
+  created: function() {
+    addBackToTop({
+      backgroundColor: "red",
+      diameter: 40,
+    });
   },
+  methods: {},
 };
 </script>
+<!--
+npm install --save vanilla-back-to-top
+ -->
 <style></style>

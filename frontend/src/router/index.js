@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Welcome from "../views/Welcome.vue";
+import SignUp from "../components/common/SignUp.vue";
+import Findpw from "../components/user/Findpw.vue";
 
 Vue.use(VueRouter);
 
@@ -27,9 +29,14 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/login",
-    name: Login,
-    component: Login,
+    path: "/signup",
+    name: "SignUp",
+    component: SignUp,
+  },
+  {
+    path: "/findpw",
+    name: "Findpw",
+    component: Findpw,
   },
 ];
 
