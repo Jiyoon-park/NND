@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Login from "../views/Login.vue";
 import Welcome from "../views/Welcome.vue";
 import SignUp from "../components/user/SignUp.vue";
 import Findpw from "../components/user/Findpw.vue";
-// import Write from "../views/WritePage.vue";
+import Login from "../components/user/Login.vue";
+import Profile from "../components/user/Profile.vue";
 
 Vue.use(VueRouter);
 
@@ -44,11 +44,11 @@ const routes = [
     name: Login,
     component: Login,
   },
-  // {
-  //   path: "/write",
-  //   name: Write,
-  //   component: Write,
-  // },
+  {
+    path: "/profile",
+    name: Profile,
+    component: Profile,
+  },
 ];
 
 const router = new VueRouter({
