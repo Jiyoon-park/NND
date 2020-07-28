@@ -2,7 +2,7 @@
   <div>
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
-        <v-card>
+        <v-card outlined>
           <v-list-item>
             <v-list-item-avatar color="grey"></v-list-item-avatar>
             <v-list-item-content>

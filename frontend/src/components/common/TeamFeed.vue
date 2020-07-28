@@ -1,8 +1,18 @@
 <template>
-  <div>
+  <div :style="{ backgroundImage: 'url(../../assets/images/Sea.png)' }">
     <p>팀</p>
     <NewsFeed />
+    <br />
     <NewsFeed />
+    <br />
+    <NewsFeed />
+    <br />
+    <NewsFeed />
+    <br />
+    <NewsFeed />
+    <br />
+    <NewsFeed />
+    <br />
     <NewsFeed />
   </div>
 </template>
@@ -16,6 +26,4 @@ export default {
 };
 </script>
 
-
-<style>
-</style>
+<style></style>
