@@ -1,20 +1,8 @@
 <template>
   <div id="create">
-    <!--
-    <v-btn
-      fab
-      dark
-      large
-      color="primary"
-      fixed
-      right
-      bottom
-      @click="$vuetify.goTo(target)"
-    >
-      <v-icon v-if="visible" dark>mdi-chevron-up</v-icon>
-      <v-icon v-if="!visible" dark>mdi-plus</v-icon>
+    <v-btn fab dark large color="primary" fixed right bottom class="act_btn">
+      <v-icon dark>mdi-plus</v-icon>
     </v-btn>
-    -->
   </div>
 </template>
 
@@ -22,10 +10,10 @@
 import { addBackToTop } from "vanilla-back-to-top";
 
 export default {
-  created: function() {
+  created: function () {
     addBackToTop({
       backgroundColor: "red",
-      diameter: 40,
+      diameter: 64,
     });
   },
   methods: {},
@@ -34,4 +22,9 @@ export default {
 <!--
 npm install --save vanilla-back-to-top
  -->
-<style></style>
+<style>
+.act_btn {
+  margin-bottom: 70px;
+  margin-right: 5px;
+}
+</style>
