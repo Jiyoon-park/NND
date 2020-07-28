@@ -41,6 +41,7 @@ build/
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
 
 ### Eclipse ###
+*.class
 .metadata
 bin/
 tmp/
