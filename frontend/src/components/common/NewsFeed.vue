@@ -12,10 +12,20 @@
             </div>
           </v-card-title>
           <v-card-subtitle>
-            <span>같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다</span>
+            <span>같이 javascript 및 jQuery 관련 프로젝트할 팀원 구합니다</span>
           </v-card-subtitle>
           <v-card-actions>
-            <v-btn text color="gray" @click.stop="dialog = true">상세정보</v-btn>
+            <div>
+              <v-btn v-if="!favorite" @click="addFavorite" outlined fab x-small max-width="50px">
+                <v-img src="../../assets/images/star(blank).png" max-width="15%"></v-img>
+              </v-btn>
+              <v-btn v-if="favorite" @click="delFavorite" outlined fab x-small max-width="50px">
+                <v-img src="../../assets/images/star(full).png" max-width="15%"></v-img>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn depressed @click.stop="dialog = true" right>상세정보</v-btn>
+            </div>
             <v-dialog v-model="dialog" max-width="500">
               <v-card>
                 <v-card-title class="headline">공모전 팀원 구합니다</v-card-title>
@@ -31,7 +41,7 @@
 
                   <v-btn color="green darken-1" text @click="dialog = false">닫기</v-btn>
 
-                  <v-btn color="green darken-1" text @click="dialog2 = !dialog2">신청하기</v-btn>
+                  <v-btn color="green darken-1" text @click="dialog2 = !dialog2" right>신청하기</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -79,9 +89,6 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-
-            <v-btn text color="orange" v-if="!favorite" @click="addFavorite">즐겨찾기 추가</v-btn>
-            <v-btn text color="red" v-if="favorite" @click="delFavorite">즐겨찾기 제거</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -102,7 +109,7 @@ export default {
       selected4: false,
       selected5: false,
       selected6: false,
-      selected7: false,
+      selected7: false
     };
   },
   methods: {
@@ -111,7 +118,7 @@ export default {
     },
     delFavorite() {
       this.favorite = false;
-    },
-  },
+    }
+  }
 };
 </script>
