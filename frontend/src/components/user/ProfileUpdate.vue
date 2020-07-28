@@ -19,32 +19,42 @@
 
       <div id="my-info" class="target">
         <h3># 내정보</h3>
-        <v-row>
-          <v-col cols="4" md="2">
-            <p>이메일</p>
-            <p>GIT 주소</p>
-          </v-col>
-          <v-col cols="8" md="10">
-            <p>abc1123@naver.com</p>
-            <p>https://github.com/project</p>
-          </v-col>
-        </v-row>
+        <v-card-text>
+          <v-text-field filled dense disabled value="abcd1123@naver.com" label="이메일" color="white"></v-text-field>
+          <v-text-field filled dense disabled value="홍길동" label="이름" color="white"></v-text-field>
+          <v-text-field dense v-model="password" label="비밀번호" filled></v-text-field>
+          <v-text-field dense v-model="password2" label="비밀번호 확인" filled></v-text-field>
+          <v-text-field dense v-model="gitaddress" label="GIT 주소" filled></v-text-field>
+        </v-card-text>
       </div>
-
-      <hr />
+      <v-divider></v-divider>
       <div id="skills" class="target">
         <h3># 기술스택</h3>
         <div class="skills">
-          <v-btn small color="primary" class="skill">java</v-btn>
-          <v-btn small color="primary" class="skill">C</v-btn>
-          <v-btn small color="primary" class="skill">C++</v-btn>
-          <v-btn small color="primary" class="skill">Python</v-btn>
+          <v-chip-group column multiple>
+            <v-chip filter outlined>Java</v-chip>
+            <v-chip filter outlined>C</v-chip>
+            <v-chip filter outlined>C++</v-chip>
+            <v-chip filter outlined>Python</v-chip>
+            <v-chip filter outlined>Spring</v-chip>
+            <v-chip filter outlined>Django</v-chip>
+          </v-chip-group>
         </div>
       </div>
 
-      <hr />
+      <v-divider></v-divider>
       <div id="experience" class="target">
-        <h3># 참여이력</h3>
+        <div class="d-flex justify-space-between">
+          <h3># 참여이력</h3>
+          <div>
+            <v-btn color="green" fab small class="mr-1">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            <v-btn color="red" fab small>
+              <v-icon>mdi-minus</v-icon>
+            </v-btn>
+          </div>
+        </div>
         <v-card class="mx-auto my-3" max-width="344" shaped>
           <v-list-item three-line>
             <v-list-item-content>
@@ -55,29 +65,6 @@
           </v-list-item>
           <v-card-actions>
             <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">공모전</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
             <v-btn text>Button</v-btn>
           </v-card-actions>
         </v-card>
@@ -101,6 +88,12 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
+      hasSaved: false,
+      isEditing: null,
+      model: null,
+      password: "",
+      password2: "",
+      gitaddress: "",
     };
   },
   computed: {
@@ -146,9 +139,5 @@ export default {
 
 .skill {
   margin: 0 3px;
-}
-
-hr {
-  margin: 30px 0;
 }
 </style>

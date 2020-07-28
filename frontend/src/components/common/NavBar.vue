@@ -9,7 +9,7 @@
               <v-list-item-title>홍길동</v-list-item-title>
             </v-list-item-content>
           </div>
-          <v-list-item-content v-else @click="$router.push('/signup')">
+          <v-list-item-content v-else @click="$router.push('/login')">
             <v-list-item-title>로그인</v-list-item-title>
           </v-list-item-content>
         </v-list-item>

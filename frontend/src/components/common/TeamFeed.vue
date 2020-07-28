@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>팀</p>
     <NewsFeed />
     <NewsFeed />
     <NewsFeed />

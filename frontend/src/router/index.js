@@ -6,6 +6,7 @@ import SignUp from "../components/common/SignUp.vue";
 import Findpw from "../components/user/Findpw.vue";
 import Login from "../components/user/Login.vue";
 import Profile from "../components/user/Profile.vue";
+import ProfileUpdate from "../components/user/ProfileUpdate.vue";
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,11 @@ const routes = [
     path: "/profile",
     name: Profile,
     component: Profile,
+  },
+  {
+    path: "/profile-update",
+    name: ProfileUpdate,
+    component: ProfileUpdate,
   },
 ];
 
