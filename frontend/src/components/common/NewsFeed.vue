@@ -16,11 +16,11 @@
           </v-card-subtitle>
           <v-card-actions>
             <div>
-              <v-btn v-if="!favorite" @click="addFavorite" outlined fab x-small max-width="50px">
-                <v-img src="../../assets/images/star(blank).png" max-width="15%"></v-img>
+              <v-btn v-if="!favorite" @click="addFavorite" outlined fab x-small max-width="50px" >
+                <v-img src="../../assets/images/star(blank).png" max-width="40px"/>
               </v-btn>
               <v-btn v-if="favorite" @click="delFavorite" outlined fab x-small max-width="50px">
-                <v-img src="../../assets/images/star(full).png" max-width="15%"></v-img>
+                <v-img src="../../assets/images/star(full).png" max-width="40px"/>
               </v-btn>
             </div>
             <div>
