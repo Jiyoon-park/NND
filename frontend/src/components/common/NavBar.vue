@@ -1,6 +1,12 @@
 <template>
   <div id="inspire">
-    <v-navigation-drawer v-model="drawer" fixed-tabs app right>
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed-tabs
+      app
+      right
+      src="../../assets/images/Sea.png"
+    >
       <v-list dense>
         <v-list-item link>
           <div v-if="id != null">
@@ -9,7 +15,7 @@
               <v-list-item-title>홍길동</v-list-item-title>
             </v-list-item-content>
           </div>
-          <v-list-item-content v-else @click="$router.push('/signup')">
+          <v-list-item-content v-else @click="$router.push('/login')">
             <v-list-item-title>로그인</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -39,12 +45,17 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="teal" dark :flat="true" :fixed="true">
+    <v-app-bar app color="white" dark :flat="true" :fixed="true">
+      <v-img
+        src="../../assets/images/logo_without_title.png"
+        max-width="110px"
+      />
       <v-spacer></v-spacer>
-      <v-toolbar-title>너내동</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
+      <v-btn @click.stop="drawer = !drawer">
+        <v-icon>fas fa-list</v-icon>
+      </v-btn>
     </v-app-bar>
   </div>
 </template>
