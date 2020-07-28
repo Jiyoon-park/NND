@@ -26,7 +26,7 @@
         </v-list-item>
 
         <v-list-item link>
-          <v-list-item-content>
+          <v-list-item-content @click="$router.push('/')">
             <v-list-item-title>팀/팀원 구하기</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
