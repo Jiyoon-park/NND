@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <v-tabs
       class="rounded-0 mt-13"
       background-color="teal"
@@ -24,7 +24,7 @@
         <TeamFeed v-if="item==='팀'" />
       </v-tab-item>
     </v-tabs-items>
-  </v-app>
+  </div>
 </template>
 <script>
 import SearchBar from "./SearchBar.vue";
