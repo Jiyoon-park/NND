@@ -1,57 +1,68 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="name"
-      :counter="10"
-      :rules="nameRules"
-      label="이름"
-      required
-    ></v-text-field>
+  <v-parallax src="../../assets/images/logo_without_title.png">
+    <v-row justify="center">
+      <v-col cols="10" md="8" lg="6" class="mt-15">
+        <h2>회원가입</h2>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail ID"
+            required
+          ></v-text-field>
 
-    <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail ID"
-      required
-    ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            :type="'password'"
+            label="비밀번호"
+            required
+          ></v-text-field>
 
-    <v-checkbox
-      v-model="checkbox"
-      :rules="[(v) => !!v || '약관동의를 해야합니다']"
-      label="약관에 동의하십니까?"
-      required
-    ></v-checkbox>
+          <v-checkbox
+            v-model="checkbox"
+            :rules="[(v) => !!v || '약관동의를 해야합니다']"
+            label="약관에 동의하십니까?"
+            required
+          ></v-checkbox>
 
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      제출
-    </v-btn>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="validate"
+          >
+            제출
+          </v-btn>
 
-    <v-btn color="error" class="mr-4" @click="reset">
-      초기화
-    </v-btn>
-
-    <v-btn color="warning"  class="mr-4" @click="resetValidation">
-      오류메세지 제거
-    </v-btn>
-    <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">
-      비밀번호찾기
-    </v-btn>
-  </v-form>
+          <v-btn color="error" class="mr-4" @click="reset">
+            초기화
+          </v-btn>
+          <v-btn color="yellow" class="mr-4" @click="$router.push('/login')">
+            로그인화면
+          </v-btn>
+          <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">
+            비밀번호찾기
+          </v-btn>
+        </v-form>
+      </v-col>
+    </v-row>
+  </v-parallax>
 </template>
 
 <script>
 export default {
   data: () => ({
     valid: true,
-    name: "",
-    nameRules: [
-      (v) => !!v || "이름은 필수 입력항목입니다",
-      (v) => (v && v.length <= 10) || "10글자 이하로 입력해야 합니다.",
-    ],
     email: "",
     emailRules: [
-      (v) => !!v || "E-Mail은 필수입력 항목입니다",
+      (v) => !!v || "E-Mail은 필수 입력항목입니다",
       (v) => /.+@.+\..+/.test(v) || "E-mail 양식이 올바르지 않습니다.",
+    ],
+    password: "",
+    passwordRules: [
+      (v) => !!v || "비밀번호는 필수 입력항목입니다",
+      (v) => (v && v.length >= 8) || "8글자 이상 입력해야 합니다.",
     ],
     checkbox: false,
   }),
@@ -62,9 +73,6 @@ export default {
     },
     reset() {
       this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
     },
   },
 };
