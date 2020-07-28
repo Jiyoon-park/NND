@@ -1,12 +1,6 @@
 <template>
   <div id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed-tabs
-      app
-      right
-      src="../../assets/images/Sea.png"
-    >
+    <v-navigation-drawer v-model="drawer" fixed-tabs app right>
       <v-list dense>
         <v-list-item link>
           <div v-if="id != null">
