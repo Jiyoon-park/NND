@@ -2,8 +2,6 @@
   <div class="container">
     <v-form @submit.prevent="onSubmit">
       <div class="d-flex">
-        <!-- <v-text-field @keypress.13="onSubmit()" label="Regular" single-line></v-text-field> -->
-
         <input class="search-input" type="text" v-model="inputData" placeholder="검색어를 입력하세요" />
         <v-btn depressed color="teal" dark class="ml-2">
           <v-icon>fas fa-search</v-icon>
@@ -38,7 +36,17 @@ export default {
       searchKeywords: [],
       warning: false,
       errorMsg: "",
+      // items: ["Java", "Vue", "Django", "Vuetify", "C", "C++", "JS", "Spring "],
+      // model: ["Vuetify"],
+      // search: null,
     };
+  },
+  watch: {
+    model(val) {
+      if (val.length > 5) {
+        this.$nextTick(() => this.model.pop());
+      }
+    },
   },
   methods: {
     onSubmit() {
