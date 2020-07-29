@@ -28,8 +28,17 @@ public class Member implements Serializable {
     @Column
     public String profile;
     
+	@Column
+    public String password;
+    
     @Column
     public String company;
+    
+    @Column
+    public String gitaddr;
+    
+    @Column
+    public String memberstack;
 
 	public Long getIdx() {
 		return idx;
@@ -37,6 +46,22 @@ public class Member implements Serializable {
 
 	public void setIdx(Long idx) {
 		this.idx = idx;
+	}
+
+	public String getGitaddr() {
+		return gitaddr;
+	}
+
+	public void setGitaddr(String gitaddr) {
+		this.gitaddr = gitaddr;
+	}
+
+	public String getMemberstack() {
+		return memberstack;
+	}
+
+	public void setMemberstack(String memberstack) {
+		this.memberstack = memberstack;
 	}
 
 	public String getName() {
@@ -53,6 +78,14 @@ public class Member implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+    public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getProfile() {
@@ -83,14 +116,15 @@ public class Member implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Member(Long idx, String name, String email, String profile, String company) {
+	public Member(String name, String email, String password, String profile, String company) {
 		super();
-		this.idx = idx;
 		this.name = name;
 		this.email = email;
+		this.password = password;
 		this.profile = profile;
 		this.company = company;
 	}
+
 	
 	
 
