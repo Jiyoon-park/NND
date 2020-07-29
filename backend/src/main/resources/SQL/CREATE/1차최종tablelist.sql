@@ -4,8 +4,7 @@ CREATE TABLE `member` (
   `name` char(8) NOT NULL,
   `email` varchar(128) NOT NULL,
   `profile` varchar(128) default NULL,
-  `password` varchar(300) default null,
-  `company` varchar(10) default NULL,
+  `company` varchar(10) NOT NULL,
   `gitaddr` varchar(128) Default null,
   `memberstack` varchar(500) default null,
   PRIMARY KEY (`idx`)
@@ -13,7 +12,7 @@ CREATE TABLE `member` (
 
 CREATE TABLE `teamboard` (
   `teamboardno` int(10) NOT NULL AUTO_INCREMENT,
-  `idx` int default NULL,  
+  `idx` int NOT NULL,  
   `email` varchar(128) NOT NULL,
   `teamname` varchar(128) NOT NULL,
   `membernames` varchar(200) default null,
@@ -31,7 +30,7 @@ CREATE TABLE `teamboard` (
 
  CREATE TABLE `memberboard` (  
   `boardno` int(10) NOT NULL AUTO_INCREMENT,
-  `idx` int DEFAULT NULL, 
+  `idx` int NOT NULL, 
   `email` varchar(128) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` varchar(255) NOT NULL,
@@ -54,13 +53,14 @@ CREATE TABLE `letter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `projecthistory`(
-  `idx` int not null AUTO_INCREMENT,
+  `historyno` int not null auto_increment,
+  `idx` int NOT NULL default 0,
   `projectname` varchar(128) default null,
   `content` varchar(500) default null,
   `gitlink` varchar(128) default null,
   `usedstack` varchar(200) default null,
-  PRIMARY KEY (`idx`),
-  FOREIGN KEY (`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
+  PRIMARY KEY (`historyno`),
+  FOREIGN KEY (`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE liketeam(
