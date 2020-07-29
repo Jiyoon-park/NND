@@ -7,6 +7,7 @@ import Findpw from "../components/user/Findpw.vue";
 import Login from "../components/user/Login.vue";
 import Profile from "../components/user/Profile.vue";
 import ProfileUpdate from "../components/user/ProfileUpdate.vue";
+import AddBoard from "../components/common/AddBoard.vue";
 
 Vue.use(VueRouter);
 
@@ -54,6 +55,11 @@ const routes = [
     path: "/profile-update",
     name: ProfileUpdate,
     component: ProfileUpdate,
+  },
+  {
+    path: "/addboard",
+    name: AddBoard,
+    component: AddBoard,
   },
 ];
 
