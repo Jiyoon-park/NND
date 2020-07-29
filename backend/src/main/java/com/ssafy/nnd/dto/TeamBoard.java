@@ -23,13 +23,19 @@ public class TeamBoard{
 	@Id
 	@Column (name = "teamboardno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long teamboardNo; //게시글 번호
+	private Long teamboardNo; //게시글 번호
 
+	@Column
+	private Long idx;
+	
 	@Column
 	private String email; // 작성자 이메일
 
 	@Column (name = "teamname")
 	private String teamName; // 팀이름
+	
+	@Column (name = "memberemails")
+	private String memberEmails;
 	
 	@Column (name = "groupsize")
 	private int groupSize; // 총인원
@@ -58,9 +64,26 @@ public class TeamBoard{
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Member member;
 //
-
+ 
+	
 	public Long getTeamboardNo() {
 		return teamboardNo;
+	}
+
+	public String getMemberEmails() {
+		return memberEmails;
+	}
+
+	public void setMemberEmails(String memberEmails) {
+		this.memberEmails = memberEmails;
+	}
+
+	public Long getIdx() {
+		return idx;
+	}
+
+	public void setIdx(Long idx) {
+		this.idx = idx;
 	}
 
 	public void setTeamboardNo(Long teamboardNo) {
@@ -149,12 +172,15 @@ public class TeamBoard{
 
 	@Override
 	public String toString() {
-		return "TeamBoard [teamboardNo=" + teamboardNo + ", email=" + email + ", teamName=" + teamName + ", groupSize="
-				+ groupSize + ", deadLine=" + deadLine + ", title=" + title + ", content=" + content + ", techStack="
-				+ techStack + ", contentStack=" + contentStack + ", likeCnt=" + likeCnt + ", createDate=" + createDate
-				+ "]";
+		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
+				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
+				+ title + ", content=" + content + ", techStack=" + techStack + ", contentStack=" + contentStack
+				+ ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
 	}
 
+	
+
+	
 	
 
 	
