@@ -1,5 +1,6 @@
 <template>
   <v-row justify="center">
+    <NavBar />
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>회원가입</h2>
       <v-form ref="form" v-model="valid" lazy-validation>
@@ -31,7 +32,13 @@
 </template>
 
 <script>
+import NavBar from "../common/NavBar.vue";
+
 export default {
+  name: "SignUp",
+  components: {
+    NavBar,
+  },
   data: () => ({
     valid: true,
     email: "",
