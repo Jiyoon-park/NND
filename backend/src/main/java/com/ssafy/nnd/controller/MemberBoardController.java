@@ -51,7 +51,7 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
-    @PutMapping("/member")
+    @PutMapping("/member/save")
     public MemberBoard createMemberBoard(@RequestBody MemberBoard memberBoard){
     	System.out.println(memberBoard.toString());
     	MemberBoard newmemberBoard = memberBoardRepository.save(memberBoard);
