@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 
-
-
-
-
 @CrossOrigin
 @RestController
 public class TeamBoardController {
@@ -53,7 +49,7 @@ public class TeamBoardController {
     	return teamBoard.get();
     }
     
-    @PutMapping("/teamboard")
+    @PutMapping("/teamboard/save")
     public TeamBoard createTeamBoard(@RequestBody TeamBoard teamBoard){
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
@@ -67,7 +63,5 @@ public class TeamBoardController {
     	
     	return "Delete Success!";
     }
-
-	
 
 }
