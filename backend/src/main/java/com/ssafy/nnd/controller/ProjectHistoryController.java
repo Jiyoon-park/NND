@@ -31,11 +31,11 @@ public class ProjectHistoryController {
     	return projectHistoryRepository.findAll();
     }
 
-	@PostMapping("/projecthistory/{id}")
-    public ProjectHistory updateProjectHistory(@PathVariable String id, @RequestBody ProjectHistory newprojectHistory)
+	@PostMapping("/projecthistory/update/{idx}")
+    public ProjectHistory updateProjectHistory(@PathVariable String idx, @RequestBody ProjectHistory newprojectHistory)
     {
-    	Long postID = Long.parseLong(id);
-    	Optional<ProjectHistory> projecthistory = projectHistoryRepository.findById(postID);
+    	Long postID = Long.parseLong(idx);
+    	Optional<ProjectHistory> projecthistory = projectHistoryRepository.findByIdx(postID);
     	projecthistory.get().setProjectName(newprojectHistory.getProjectName());
     	projecthistory.get().setContent(newprojectHistory.getContent());
     	projecthistory.get().setGitLink(newprojectHistory.getGitLink());
@@ -52,9 +52,9 @@ public class ProjectHistoryController {
 	    	return newprojectHistory;
 	    }
 	 
-	 @DeleteMapping("/projecthistory/{id}")
-	    public String deleteProjectHistory(@PathVariable String id){
-	    	Long postID = Long.parseLong(id);
+	 @DeleteMapping("/projecthistory/delete/{idx}")
+	    public String deleteProjectHistory(@PathVariable String idx){
+	    	Long postID = Long.parseLong(idx);
 	    	projectHistoryRepository.deleteById(postID);
 	    	
 	    	return "Delete Success!";
