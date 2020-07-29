@@ -1,9 +1,26 @@
 <template>
   <div class="container">
-    <v-form @submit.prevent="onSubmit">
+    <v-row>
+      <v-col cols="5" class="pr-0">
+        <v-select
+          menu-props="auto"
+          v-model="select"
+          :items="items"
+          label="전체"
+          hide-details
+          single-line
+          outlined
+          dense
+        ></v-select>
+      </v-col>
+      <v-col cols="7">
+        <v-text-field dense single-line outlined></v-text-field>
+      </v-col>
+    </v-row>
+    <!-- <v-form @submit.prevent="onSubmit">
       <div class="d-flex">
         <input class="search-input" type="text" v-model="inputData" placeholder="검색어를 입력하세요" />
-        <v-btn depressed color="teal" dark class="ml-2">
+        <v-btn depressed color="grey" dark class="ml-2">
           <v-icon>fas fa-search</v-icon>
         </v-btn>
       </div>
@@ -17,8 +34,8 @@
             <i class="fas fa-times-circle"></i>
           </button>
         </li>
-      </ul>
-    </div>
+    </ul>-->
+    <!-- </div> -->
     <!-- <SearchKeywords /> -->
   </div>
 </template>
@@ -36,6 +53,8 @@ export default {
       searchKeywords: [],
       warning: false,
       errorMsg: "",
+      select: null,
+      items: ["전체", "아이디", "제목+내용", "태그검색"],
       // items: ["Java", "Vue", "Django", "Vuetify", "C", "C++", "JS", "Spring "],
       // model: ["Vuetify"],
       // search: null,

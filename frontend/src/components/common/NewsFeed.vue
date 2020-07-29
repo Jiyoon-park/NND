@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
         <v-card outlined>
@@ -106,7 +106,7 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </div>
+  </v-container>
 </template>
 
 <script>
