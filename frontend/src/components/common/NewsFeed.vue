@@ -7,8 +7,10 @@
             <v-list-item-avatar color="grey"></v-list-item-avatar>
             <v-list-item-content>
               <span class="grey--text">User Name</span>
-              <div class="text-center">
-                <v-chip class="ma-2" color="indigo" text-color="white">팀원</v-chip>
+              <div class="text-right">
+                <v-chip class="ma-2" color="indigo" text-color="white">C++</v-chip>
+                <v-chip class="ma-2" color="indigo" text-color="white">JAVA</v-chip>
+                <v-chip class="ma-2" color="indigo" text-color="white">Spring</v-chip>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -35,7 +37,7 @@
             <div v-show="show">
               <v-divider />
 
-              <v-card outlined color="blue lighten-4">
+              <v-card outlined color="blue lighten-5">
                 <v-card-title class="headline">공모전 팀원 구합니다</v-card-title>
                 <v-card-text>
                   같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다.
@@ -45,6 +47,11 @@
                   <br />
                 </v-card-text>
                 <v-card-text>오픈카톡방 : KAKAO!!</v-card-text>
+                <div class="text-left">
+                  <v-chip class="ma-2" color="indigo" text-color="white">C++</v-chip>
+                  <v-chip class="ma-2" color="indigo" text-color="white">JAVA</v-chip>
+                  <v-chip class="ma-2" color="indigo" text-color="white">Spring</v-chip>
+                </div>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="green darken-1" text @click="dialog = !dialog" right>신청하기</v-btn>
