@@ -1,6 +1,15 @@
 <template>
   <div id="create">
-    <v-btn fab dark large color="primary" fixed right bottom class="act_btn">
+    <v-btn
+      fab
+      dark
+      large
+      color="primary"
+      fixed
+      right
+      bottom
+      @click="$router.push('/addboard')"
+    >
       <v-icon dark>mdi-plus</v-icon>
     </v-btn>
   </div>
@@ -10,7 +19,7 @@
 import { addBackToTop } from "vanilla-back-to-top";
 
 export default {
-  created: function () {
+  created: function() {
     addBackToTop({
       backgroundColor: "red",
       diameter: 64,
@@ -23,8 +32,8 @@ export default {
 npm install --save vanilla-back-to-top
  -->
 <style>
-.act_btn {
+#back-to-top {
   margin-bottom: 70px;
-  margin-right: 5px;
+  margin-right: -4px;
 }
 </style>
