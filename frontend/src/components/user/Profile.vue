@@ -7,7 +7,7 @@
         <v-avatar color="grey" size="90" class="mb-2">
           <span class="white--text headline">GD</span>
         </v-avatar>
-        <h3>SSAFY3기 홍길동</h3>
+        <h3>SSAFY3기 {{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
         <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
@@ -54,8 +54,12 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">너내동</v-list-item-title>
-              <v-list-item-subtitle>SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-1"
+                >너내동</v-list-item-title
+              >
+              <v-list-item-subtitle
+                >SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
@@ -66,8 +70,13 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-1"
+                >Headline 5</v-list-item-title
+              >
+              <v-list-item-subtitle
+                >Greyhound divisely hello coldly
+                fonwderfully</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
@@ -78,8 +87,13 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">공모전</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-1"
+                >Headline 5</v-list-item-title
+              >
+              <v-list-item-subtitle
+                >Greyhound divisely hello coldly
+                fonwderfully</v-list-item-subtitle
+              >
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
@@ -94,7 +108,7 @@
 <script>
 import NavBar from "../common/NavBar.vue";
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   components: {
@@ -106,7 +120,16 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
+      user: "",
     };
+  },
+  created() {
+    axios.get("http://localhost:8080/userinfo").then((res) => {
+      console.log(res.data);
+      this.user = res.data;
+      console.log(this.user);
+    });
+    axios.push("http://localhost:8080/project-history/save/`${this.user}`");
   },
   computed: {
     target() {
