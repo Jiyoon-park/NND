@@ -6,5 +6,5 @@ CREATE TABLE `projecthistory`(
   `gitlink` varchar(128) default null,
   `usedstack` varchar(200) default null,
   PRIMARY KEY (`historyno`),
-  FOREIGN KEY (`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE
+  FOREIGN KEY (`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

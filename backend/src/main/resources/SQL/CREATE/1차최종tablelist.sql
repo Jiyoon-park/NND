@@ -12,10 +12,10 @@ CREATE TABLE `member` (
 
 CREATE TABLE `teamboard` (
   `teamboardno` int(10) NOT NULL AUTO_INCREMENT,
-  `idx` int NOT NULL,  
+  `idx` int default NULL,  
   `email` varchar(128) NOT NULL,
   `teamname` varchar(128) NOT NULL,
-  `membernames` varchar(200) default null,
+  `memberemails` varchar(200) default null,
   `groupsize` int(10) NOT NULL,
   `deadline` varchar(30) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `projecthistory`(
   `gitlink` varchar(128) default null,
   `usedstack` varchar(200) default null,
   PRIMARY KEY (`historyno`),
-  FOREIGN KEY (`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE
+  FOREIGN KEY (`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE liketeam(
