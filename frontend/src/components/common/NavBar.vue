@@ -14,7 +14,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
-          <v-list-item-content>
+          <v-list-item-content @click="$router.push('/profile')">
             <v-list-item-title>내 정보</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -39,17 +39,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="white" dark :flat="true" :fixed="true">
-      <v-img
-        src="../../assets/images/logo_without_title.png"
-        max-width="110px"
-      />
+    <!-- 자몽 -->
+    <!-- <v-app-bar color="#eb4d4b" app :flat="true" :fixed="true"> -->
+    <!-- 남색 -->
+    <!-- <v-app-bar color="#30336b" app :flat="true" :fixed="true"> -->
+    <v-app-bar color="#FFF" app :flat="true" :fixed="true">
+      <img src="../../assets/images/sm_logo.png" width="30px" @click="$router.push('/')" />
       <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
-      <v-btn @click.stop="drawer = !drawer">
-        <v-icon>fas fa-list</v-icon>
-      </v-btn>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>

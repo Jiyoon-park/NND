@@ -1,6 +1,7 @@
 <template>
   <v-row justify="center">
     <NavBar />
+
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
@@ -8,7 +9,11 @@
         </v-avatar>
         <h3>SSAFY3기 홍길동</h3>
         <p># 참여중인 팀 : 앨리스</p>
+        <v-btn small @click="$router.push('/profile-update')">
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
       </div>
+
       <v-tabs class="tabs">
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>

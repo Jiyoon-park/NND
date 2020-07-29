@@ -8,6 +8,7 @@
         </v-avatar>
         <h3>SSAFY3기 홍길동</h3>
         <p># 참여중인 팀 : 앨리스</p>
+        <v-btn small @click="$router.push('/profile')">save</v-btn>
       </div>
       <v-tabs class="tabs">
         <v-spacer></v-spacer>
@@ -21,7 +22,7 @@
         <h3># 내정보</h3>
         <v-card-text>
           <v-text-field filled dense disabled value="abcd1123@naver.com" label="이메일" color="white"></v-text-field>
-          <v-text-field filled dense disabled value="홍길동" label="이름" color="white"></v-text-field>
+          <v-text-field filled dense v-model="name" value="홍길동" label="이름"></v-text-field>
           <v-text-field dense v-model="password" label="비밀번호" filled></v-text-field>
           <v-text-field dense v-model="password2" label="비밀번호 확인" filled></v-text-field>
           <v-text-field dense v-model="gitaddress" label="GIT 주소" filled></v-text-field>
@@ -91,6 +92,7 @@ export default {
       hasSaved: false,
       isEditing: null,
       model: null,
+      name: "",
       password: "",
       password2: "",
       gitaddress: "",
