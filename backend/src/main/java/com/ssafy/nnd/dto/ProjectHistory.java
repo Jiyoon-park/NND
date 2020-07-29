@@ -21,9 +21,13 @@ import lombok.NoArgsConstructor;
 public class ProjectHistory{
 	
 	@Id
+	@Column (name = "historyno")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long idx;			// 자동생성번호
+    public Long historyNo;			// 자동생성번호
 
+	@Column
+	public Long idx;
+	
     @Column (name="projectname")
     public String projectName;	//플젝 이름, 주제
 
@@ -37,6 +41,14 @@ public class ProjectHistory{
     public String usedStack;   // 프로젝트에 사용한 기술스택
 
 	
+ 
+	public Long getHistoryNo() {
+		return historyNo;
+	}
+
+	public void setHistoryNo(Long historyNo) {
+		this.historyNo = historyNo;
+	}
 
 	public Long getIdx() {
 		return idx;
@@ -80,10 +92,11 @@ public class ProjectHistory{
 
 	@Override
 	public String toString() {
-		return "ProjectHistory [idx=" + idx + ", projectName=" + projectName + ", content=" + content + ", gitLink="
-				+ gitLink + ", usedStack=" + usedStack + "]";
+		return "ProjectHistory [historyNo=" + historyNo + ", idx=" + idx + ", projectName=" + projectName + ", content="
+				+ content + ", gitLink=" + gitLink + ", usedStack=" + usedStack + "]";
 	}
 
+	
     
 	
 }
