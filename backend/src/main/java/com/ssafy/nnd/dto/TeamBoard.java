@@ -21,20 +21,21 @@ import lombok.NoArgsConstructor;
 public class TeamBoard{
 	
 	@Id
+	@Column (name = "teamboardno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long teamboardno; //게시글 번호
+	public Long teamboardNo; //게시글 번호
 
 	@Column
 	private String email; // 작성자 이메일
 
-	@Column
-	private String teamname; // 팀이름
+	@Column (name = "teamname")
+	private String teamName; // 팀이름
 	
-	@Column
-	private int groupsize; // 총인원
+	@Column (name = "groupsize")
+	private int groupSize; // 총인원
 	
-	@Column
-	private String deadline; // 마감기한
+	@Column (name = "deadline")
+	private String deadLine; // 마감기한
 	
 	@Column
 	private String title; // 제목
@@ -42,28 +43,28 @@ public class TeamBoard{
 	@Column
 	private String content; // 본문내용
 
-	@Column
-	private String techstack; // 기술스택태그
+	@Column (name = "techstack")
+	private String techStack; // 기술스택태그
+ 
+	@Column (name = "contentstack")
+	private String contentStack; // 내용스택태그
 
-	@Column
-	private String contentstack; // 내용스택태그
-
-	@Column
-	private int likecnt; // 개수
+	@Column (name = "likecnt")
+	private int likeCnt; // 개수
 	
-	@Column(insertable = false, updatable = false)
-	private LocalDateTime createdate;
+	@Column(name = "createdate" ,insertable = false, updatable = false)
+	private LocalDateTime createDate;
 //
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Member member;
 //
 
-	public Long getTeamboardno() {
-		return teamboardno;
+	public Long getTeamboardNo() {
+		return teamboardNo;
 	}
 
-	public void setTeamboardno(Long teamboardno) {
-		this.teamboardno = teamboardno;
+	public void setTeamboardNo(Long teamboardNo) {
+		this.teamboardNo = teamboardNo;
 	}
 
 	public String getEmail() {
@@ -74,30 +75,28 @@ public class TeamBoard{
 		this.email = email;
 	}
 
-
-	public int getGroupsize() {
-		return groupsize;
+	public String getTeamName() {
+		return teamName;
 	}
 
-
-	public String getTeamname() {
-		return teamname;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
-	public void setTeamname(String teamname) {
-		this.teamname = teamname;
+	public int getGroupSize() {
+		return groupSize;
 	}
 
-	public void setGroupsize(int groupsize) {
-		this.groupsize = groupsize;
+	public void setGroupSize(int groupSize) {
+		this.groupSize = groupSize;
 	}
 
-	public String getDeadline() {
-		return deadline;
+	public String getDeadLine() {
+		return deadLine;
 	}
 
-	public void setDeadline(String deadline) {
-		this.deadline = deadline;
+	public void setDeadLine(String deadLine) {
+		this.deadLine = deadLine;
 	}
 
 	public String getTitle() {
@@ -116,50 +115,48 @@ public class TeamBoard{
 		this.content = content;
 	}
 
-
-	public String getTechstack() {
-		return techstack;
+	public String getTechStack() {
+		return techStack;
 	}
 
-	public void setTechstack(String techstack) {
-		this.techstack = techstack;
+	public void setTechStack(String techStack) {
+		this.techStack = techStack;
 	}
 
-	public String getContentstack() {
-		return contentstack;
+	public String getContentStack() {
+		return contentStack;
 	}
 
-	public void setContentstack(String contentstack) {
-		this.contentstack = contentstack;
+	public void setContentStack(String contentStack) {
+		this.contentStack = contentStack;
 	}
 
-	public LocalDateTime getCreatedate() {
-		return createdate;
+	public int getLikeCnt() {
+		return likeCnt;
 	}
 
-	public void setCreatedate(LocalDateTime createdate) {
-		this.createdate = createdate;
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
 	}
 
-	public int getLikecnt() {
-		return likecnt;
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
 
-	public void setLikecnt(int likecnt) {
-		this.likecnt = likecnt;
-	}
-
-	public TeamBoard() {
-		// TODO Auto-generated constructor stub
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 	@Override
 	public String toString() {
-		return "TeamBoard [teamboardno=" + teamboardno + ", email=" + email + ", teamname=" + teamname + ", groupsize="
-				+ groupsize + ", deadline=" + deadline + ", title=" + title + ", content=" + content + ", techstack="
-				+ techstack + ", contentstack=" + contentstack + ", likecnt=" + likecnt + ", createdate=" + createdate
+		return "TeamBoard [teamboardNo=" + teamboardNo + ", email=" + email + ", teamName=" + teamName + ", groupSize="
+				+ groupSize + ", deadLine=" + deadLine + ", title=" + title + ", content=" + content + ", techStack="
+				+ techStack + ", contentStack=" + contentStack + ", likeCnt=" + likeCnt + ", createDate=" + createDate
 				+ "]";
 	}
 
+	
+
+	
 	
 }
