@@ -48,9 +48,37 @@
         <div class="d-flex justify-space-between">
           <h3># 참여이력</h3>
           <div>
-            <v-btn color="green" fab small class="mr-1">
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
+            <v-dialog v-model="dialog" persistent max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="green" dark v-bind="attrs" v-on="on" fab small class="mr-1">
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title
+                  class="headline font-weight-regular light-green lighten-1 white--text"
+                >my project</v-card-title>
+                <v-form>
+                  <v-container>
+                    <v-text-field filled label="프로젝트 이름" placeholder="내용을 입력해주세요." required></v-text-field>
+                    <v-text-field filled label="프로젝트 한줄 설명" placeholder="내용을 입력해주세요." required></v-text-field>
+                    <v-text-field filled label="기술 스택" placeholder="기타 기술스택 직접 입력하기" required></v-text-field>
+                    <v-textarea filled label="상세 업무 및 성과" placeholder="내용을 입력해주세요." required></v-textarea>
+                    <v-text-field
+                      filled
+                      label="저장소 링크"
+                      placeholder="https://github.com/example"
+                      required
+                    ></v-text-field>
+                  </v-container>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                    <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                  </v-card-actions>
+                </v-form>
+              </v-card>
+            </v-dialog>
             <v-btn color="red" fab small>
               <v-icon>mdi-minus</v-icon>
             </v-btn>
@@ -66,6 +94,7 @@
           </v-list-item>
           <v-card-actions>
             <v-btn text>Button</v-btn>
+            <v-spacer></v-spacer>
             <v-btn text>Button</v-btn>
           </v-card-actions>
         </v-card>
@@ -96,6 +125,7 @@ export default {
       password: "",
       password2: "",
       gitaddress: "",
+      dialog: false,
     };
   },
   computed: {
