@@ -46,14 +46,21 @@
     <v-app-bar color="#FFF" app :flat="true" :fixed="true">
       <img src="../../assets/images/sm_logo.png" width="30px" @click="$router.push('/')" />
       <v-spacer></v-spacer>
+
+      <Search />
+
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>
 
 <script>
+import Search from "./Search.vue";
 export default {
   name: "LayoutsDemosBaselineFlipped",
+  components: {
+    Search,
+  },
   props: {
     source: String,
   },
@@ -65,7 +72,7 @@ export default {
       { icon: "bubble_chart", title: "About", to: "/about" },
     ],
   }),
-  components: {},
+
   methods: {},
 };
 </script>
