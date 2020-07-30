@@ -129,7 +129,6 @@ export default {
       this.user = res.data;
       console.log(this.user);
     });
-    axios.push("http://localhost:8080/project-history/save/`${this.user}`");
   },
   computed: {
     target() {
