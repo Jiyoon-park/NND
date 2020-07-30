@@ -97,6 +97,7 @@ export default {
     selection: "team",
     types: ["team", "member"],
     skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
+    skillSelection: null,
   }),
 };
 </script>
