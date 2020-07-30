@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 
-
-
-
-
 @CrossOrigin
 @RestController
 public class TeamBoardController {
@@ -29,45 +25,48 @@ public class TeamBoardController {
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(){
-    	return teamBoardRepository.findAll();
+    	return teamBoardRepository.findAllByOrderByTeamboardNoDesc();
     }
     
-    @GetMapping("/teamboard/{id}")
-    public TeamBoard getTeamBoard(@PathVariable String id){
-    	Long postID = Long.parseLong(id);
-    	
-    	Optional<TeamBoard> teamBoard = teamBoardRepository.findById(postID);
-    	System.out.println(teamBoard.get().getEmail());
-    	return teamBoard.get();
-    }
+//    @GetMapping("/teamboard/{id}")
+//    public TeamBoard getTeamBoard(@PathVariable String id){
+//    	Long postID = Long.parseLong(id);
+//    	
+//    	Optional<TeamBoard> teamBoard = teamBoardRepository.findById(postID);
+//    	System.out.println(teamBoard.get().getEmail());
+//    	return teamBoard.get();
+//    }
     
-    @PostMapping("/teamboard/{id}")
-    public TeamBoard updateMemberBoard(@PathVariable String id, @RequestBody TeamBoard newteamBoard)
+    @PostMapping("/teamboard/update/{teamboardno}")
+    public TeamBoard updateMemberBoard(@PathVariable String teamboardno, @RequestBody TeamBoard newteamBoard)
     {
-    	Long postID = Long.parseLong(id);
-    	Optional<TeamBoard> teamBoard = teamBoardRepository.findById(postID);
-    	teamBoard.get().setEmail(newteamBoard.getEmail());
+    	Long postID = Long.parseLong(teamboardno);
+    	Optional<TeamBoard> teamBoard = teamBoardRepository.findByTeamboardNo(postID);
+    	teamBoard.get().setTeamName(newteamBoard.getTeamName());
+    	teamBoard.get().setMemberEmails(newteamBoard.getMemberEmails());
+    	teamBoard.get().setGroupSize(newteamBoard.getGroupSize());
+    	teamBoard.get().setDeadLine(newteamBoard.getDeadLine());
     	teamBoard.get().setTitle(newteamBoard.getTitle());
+    	teamBoard.get().setContent(newteamBoard.getContent());
+    	teamBoard.get().setTechStack(newteamBoard.getTechStack());
+    	teamBoard.get().setContentStack(newteamBoard.getContentStack());
     	System.out.println(newteamBoard.toString());
     	teamBoardRepository.save(teamBoard.get());
     	return teamBoard.get();
     }
     
-    @PutMapping("/teamboard")
+    @PutMapping("/teamboard/save")
     public TeamBoard createTeamBoard(@RequestBody TeamBoard teamBoard){
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
     	return newmemberBoard;
     }
 
-    @DeleteMapping("/teamboard/{id}")
-    public String deleteTeamBoard(@PathVariable String id){
-    	Long postID = Long.parseLong(id);
-    	teamBoardRepository.deleteById(postID);
+    @DeleteMapping("/teamboard/delete/{teamboardno}")
+    public String deleteTeamBoard(@PathVariable Long teamboardno){
+    	teamBoardRepository.deleteById(teamboardno);
     	
     	return "Delete Success!";
     }
-
-	
 
 }

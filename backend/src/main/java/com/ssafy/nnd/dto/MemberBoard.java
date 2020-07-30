@@ -15,9 +15,13 @@ import java.time.LocalDateTime;
 public class MemberBoard {
 
 	@Id
+	@Column (name = "boardno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long boardno; // 게시글 번호
+	public Long boardNo; // 게시글 번호
 
+	@Column
+	private  Long idx;
+	
 	@Column
 	private String email; // 작성자 이메일
 
@@ -33,18 +37,28 @@ public class MemberBoard {
 	@Column(name = "techstack")
 	private String techStack; // 내용스택
 
-	@Column(insertable = false, updatable = false)
-	private LocalDateTime createdate;
+	@Column(name = "createdate", insertable = false, updatable = false)
+	private LocalDateTime createDate;
 
 	@Column
 	private int likecnt; // 개수
 
-	public Long getBoardno() {
-		return boardno;
+ 
+	
+	public Long getIdx() {
+		return idx;
 	}
 
-	public void setBoardno(Long boardno) {
-		this.boardno = boardno;
+	public void setIdx(Long idx) {
+		this.idx = idx;
+	}
+
+	public Long getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(Long boardNo) {
+		this.boardNo = boardNo;
 	}
 
 	public String getEmail() {
@@ -87,12 +101,14 @@ public class MemberBoard {
 		this.contentStack = contentStack;
 	}
 
-	public LocalDateTime getCreatedate() {
-		return createdate;
+	
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreatedate(LocalDateTime createdate) {
-		this.createdate = createdate;
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
 	}
 
 	public int getLikecnt() {
@@ -105,9 +121,14 @@ public class MemberBoard {
 
 	@Override
 	public String toString() {
-		return "MemberBoard [boardno=" + boardno + ", email=" + email + ", title=" + title + ", content=" + content
-				+ ", contentStack=" + contentStack + ", techStack=" + techStack + ", createdate=" + createdate
-				+ ", likecnt=" + likecnt + "]";
+		return "MemberBoard [boardNo=" + boardNo + ", idx=" + idx + ", email=" + email + ", title=" + title
+				+ ", content=" + content + ", contentStack=" + contentStack + ", techStack=" + techStack
+				+ ", createDate=" + createDate + ", likecnt=" + likecnt + "]";
 	}
 
+	
+
+	
+
+	
 }
