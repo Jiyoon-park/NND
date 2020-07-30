@@ -25,7 +25,7 @@ public class TeamBoardController {
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(){
-    	return teamBoardRepository.findAllByOrderByIdDesc();
+    	return teamBoardRepository.findAllByOrderByTeamboardNoDesc();
     }
     
 //    @GetMapping("/teamboard/{id}")

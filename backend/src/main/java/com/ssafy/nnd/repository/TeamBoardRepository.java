@@ -11,6 +11,6 @@ import com.ssafy.nnd.dto.TeamBoard;
 
 public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>{
 
-	List<TeamBoard> findAllByOrderByIdDesc();
+	List<TeamBoard> findAllByOrderByTeamboardNoDesc();
 	Optional<TeamBoard> findByTeamboardNo(Long teamboardno);
 }

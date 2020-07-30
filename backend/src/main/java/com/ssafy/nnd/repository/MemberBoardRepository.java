@@ -7,6 +7,6 @@ import com.ssafy.nnd.dto.MemberBoard;
 
 
 public interface MemberBoardRepository extends JpaRepository<MemberBoard, Long> {
-	List<MemberBoard> findAllByOrderByIdDesc();
+	List<MemberBoard> findAllByOrderByBoardNoDesc();
 }
 
