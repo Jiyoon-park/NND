@@ -55,7 +55,7 @@ public class HomeController {
             session.setAttribute("access_Token", access_Token);
         }
 //        System.out.println("로그인중"+mem.toString());
-        return "redirect:http://localhost:8081/home";
+        return "redirect:http://localhost:8081/";
     }
 
    

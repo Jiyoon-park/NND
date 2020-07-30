@@ -116,14 +116,19 @@ public class Member implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Member(String name, String email, String password, String profile, String company) {
+	public Member(String name, String email, String profile, String password, String company, String gitaddr,
+			String memberstack) {
 		super();
 		this.name = name;
 		this.email = email;
-		this.password = password;
 		this.profile = profile;
+		this.password = password;
 		this.company = company;
+		this.gitaddr = gitaddr;
+		this.memberstack = memberstack;
 	}
+
+
 
 	
 	
