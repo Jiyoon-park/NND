@@ -50,61 +50,23 @@
       <hr />
       <div id="experience" class="target">
         <h3># 참여이력</h3>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">너내동</v-list-item-title>
-              <v-list-item-subtitle>SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>
-                Greyhound divisely hello coldly
-                fonwderfully
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">공모전</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>
-                Greyhound divisely hello coldly
-                fonwderfully
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
+        <ProjectHistoryList />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 import axios from "axios";
+
+import NavBar from "../common/NavBar.vue";
+import ProjectHistoryList from "../profile/ProjectHistoryList.vue";
 
 export default {
   components: {
     NavBar,
+    ProjectHistoryList,
   },
   data() {
     return {
@@ -112,14 +74,13 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
-      user: null,
-      profileURL: null,
+      user: "",
+      profileURL: "",
     };
   },
   created() {
     axios.get("http://localhost:8080/userinfo").then((res) => {
       this.user = res.data;
-      console.log(this.user);
       this.profileURL = this.user.profile;
     });
   },
