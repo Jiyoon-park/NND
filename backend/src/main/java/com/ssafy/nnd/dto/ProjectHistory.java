@@ -23,24 +23,29 @@ public class ProjectHistory{
 	@Id
 	@Column (name = "historyno")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long historyNo;			// 자동생성번호
+	private Long historyNo;			// 자동생성번호
 
 	@Column
-	public Long idx;
+	private Long idx;
 	
     @Column (name="projectname")
-    public String projectName;	//플젝 이름, 주제
+    private String projectName;	//플젝 이름, 주제
 
     @Column 
-    public String content;		// 프로젝트 소개
+    private String summary;   //요약 한줄설명
+    
+    @Column 
+    private String content;		// 프로젝트 소개
     
     @Column (name="gitlink")
-    public String gitLink;		// 프로젝트 관련 git link
+    private String gitLink;		// 프로젝트 관련 git link
     
     @Column  (name ="usedstack")
-    public String usedStack;   // 프로젝트에 사용한 기술스택
+    private String usedStack;   // 프로젝트에 사용한 기술스택
 
-	
+	public ProjectHistory() {
+		// TODO Auto-generated constructor stub
+	}
  
 	public Long getHistoryNo() {
 		return historyNo;
@@ -90,11 +95,22 @@ public class ProjectHistory{
 		this.usedStack = usedStack;
 	}
 
+	
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
 	@Override
 	public String toString() {
-		return "ProjectHistory [historyNo=" + historyNo + ", idx=" + idx + ", projectName=" + projectName + ", content="
-				+ content + ", gitLink=" + gitLink + ", usedStack=" + usedStack + "]";
+		return "ProjectHistory [historyNo=" + historyNo + ", idx=" + idx + ", projectName=" + projectName + ", summary="
+				+ summary + ", content=" + content + ", gitLink=" + gitLink + ", usedStack=" + usedStack + "]";
 	}
+
+	
 
 	
     
