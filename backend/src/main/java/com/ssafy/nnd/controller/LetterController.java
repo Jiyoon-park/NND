@@ -72,7 +72,7 @@ public class LetterController {
 	}
 	
 	// D
-	@DeleteMapping("/member/delete/{id}")
+	@DeleteMapping("/letter/delete/{id}")
 	public @ResponseBody String deleteLetter(@PathVariable String id) {
 		int postID = Integer.parseInt(id);
 		try {
