@@ -61,7 +61,7 @@ public class MemberBoardController {
     	return newmemberBoard;
     }
 
-    @DeleteMapping("/member/delete/{id}")
+    @DeleteMapping("/member/deleteboard/{id}")
     public String deleteMemberBoard(@PathVariable String id){
     	Long postID = Long.parseLong(id);
     	memberBoardRepository.deleteById(postID);
