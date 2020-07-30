@@ -56,8 +56,9 @@ public class HomeController {
         Optional<Member> member = memberRepository.findByEmailAndCompany(email, company);
         if (member.equals(Optional.empty())) { // 신규 유저일때
         	memberRepository.save(mem);	// db에 등록
+		} else {
+			mem.setIdx(member.get().getIdx());
 		}
-        mem.setIdx(member.get().getIdx());
         
         tmpMember = new Member(mem);
         
