@@ -39,10 +39,10 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
-    @PostMapping("/member/update/{id}")
-    public MemberBoard updateMemberBoard(@PathVariable String id, @RequestBody MemberBoard newmemberBoard)
+    @PostMapping("/member/update/{boardno}")
+    public MemberBoard updateMemberBoard(@PathVariable String boardno, @RequestBody MemberBoard newmemberBoard)
     {
-    	Long postID = Long.parseLong(id);
+    	Long postID = Long.parseLong(boardno);
     	Optional<MemberBoard> memberBoard = memberBoardRepository.findById(postID);
     	memberBoard.get().setTitle(newmemberBoard.getTitle());
     	memberBoard.get().setContent(newmemberBoard.getContent());
@@ -61,11 +61,9 @@ public class MemberBoardController {
     	return newmemberBoard;
     }
 
-    @DeleteMapping("/member/delete/{id}")
-    public String deleteMemberBoard(@PathVariable String id){
-    	Long postID = Long.parseLong(id);
-    	memberBoardRepository.deleteById(postID);
-    	
+    @DeleteMapping("/member/delete/{boardno}")
+    public String deleteMemberBoard(@PathVariable Long boardno){
+    	memberBoardRepository.deleteById(boardno);
     	return "Delete Success!";
     }
     
