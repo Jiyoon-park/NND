@@ -26,16 +26,15 @@ public class ProjectHistoryController {
 	@Autowired
     ProjectHistoryRepository projectHistoryRepository;
 	
-	@GetMapping("/projecthistory/list")
-    public List<ProjectHistory> getAllProjectHistory(){
-    	return projectHistoryRepository.findAll();
+	@GetMapping("/projecthistory/list/{idx}")
+    public Optional<ProjectHistory> getAllProjectHistory(@PathVariable Long idx){
+    	return projectHistoryRepository.findByIdx(idx);
     }
 
-	@PostMapping("/projecthistory/update/{idx}")
-    public ProjectHistory updateProjectHistory(@PathVariable String idx, @RequestBody ProjectHistory newprojectHistory)
+	@PostMapping("/projecthistory/update/{historyno}")
+    public ProjectHistory updateProjectHistory(@PathVariable Long historyno, @RequestBody ProjectHistory newprojectHistory)
     {
-    	Long postID = Long.parseLong(idx);
-    	Optional<ProjectHistory> projecthistory = projectHistoryRepository.findByIdx(postID);
+    	Optional<ProjectHistory> projecthistory = projectHistoryRepository.findById(historyno);
     	projecthistory.get().setProjectName(newprojectHistory.getProjectName());
     	projecthistory.get().setSummary(newprojectHistory.getSummary());
     	projecthistory.get().setContent(newprojectHistory.getContent());
