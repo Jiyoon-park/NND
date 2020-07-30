@@ -4,7 +4,8 @@ CREATE TABLE `member` (
   `name` char(8) NOT NULL,
   `email` varchar(128) NOT NULL,
   `profile` varchar(128) default NULL,
-  `company` varchar(10) NOT NULL,
+  `password` varchar(300) default null,
+  `company` varchar(10) default NULL,
   `gitaddr` varchar(128) Default null,
   `memberstack` varchar(500) default null,
   PRIMARY KEY (`idx`)
