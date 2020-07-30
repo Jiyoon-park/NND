@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table (name="liketeam")
 @Builder
 public class LikeTeam implements Serializable {
 
@@ -20,10 +20,10 @@ public class LikeTeam implements Serializable {
 	public Long likeno;
 
 	@Column
-	public int tboard;
+	public Long tboard;
 
 	@Column
-	public int mno;
+	public Long mno;
 
 	@Column(insertable = false, updatable = false)
 	private LocalDateTime createdate;
@@ -32,14 +32,6 @@ public class LikeTeam implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public LikeTeam(Long likeno, int tboard, int mno, LocalDateTime createdate) {
-		super();
-		this.likeno = likeno;
-		this.tboard = tboard;
-		this.mno = mno;
-		this.createdate = createdate;
-	}
-
 	public Long getLikeno() {
 		return likeno;
 	}
@@ -48,19 +40,20 @@ public class LikeTeam implements Serializable {
 		this.likeno = likeno;
 	}
 
-	public int getTboard() {
+	
+	public Long getTboard() {
 		return tboard;
 	}
 
-	public void setTboard(int tboard) {
+	public void setTboard(Long tboard) {
 		this.tboard = tboard;
 	}
 
-	public int getMno() {
+	public Long getMno() {
 		return mno;
 	}
 
-	public void setMno(int mno) {
+	public void setMno(Long mno) {
 		this.mno = mno;
 	}
 
@@ -71,8 +64,14 @@ public class LikeTeam implements Serializable {
 	public void setCreatedate(LocalDateTime createdate) {
 		this.createdate = createdate;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "LikeTeam [likeno=" + likeno + ", tboard=" + tboard + ", mno=" + mno + ", createdate=" + createdate
+				+ "]";
+	}
+	
+	
 }
 
 
