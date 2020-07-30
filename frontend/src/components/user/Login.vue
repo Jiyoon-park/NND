@@ -48,8 +48,11 @@ export default {
     NavBar,
   },
   data: () => ({
+    loginData: {
+      email: null,
+      password: null,
+    },
     valid: true,
-    email: "",
     emailRules: [
       (v) => !!v || "이메일을 입력해주세요",
       (v) => /.+@.+\..+/.test(v) || "올바른 양식의 이메일을 입력해주세요",

@@ -7,7 +7,7 @@
         <v-avatar color="grey" size="90" class="mb-2">
           <span class="white--text headline">GD</span>
         </v-avatar>
-        <h3>SSAFY3기 {{ user.name }}</h3>
+        <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
         <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
@@ -30,7 +30,7 @@
             <p>GIT 주소</p>
           </v-col>
           <v-col cols="8" md="10">
-            <p>abc1123@naver.com</p>
+            <p>{{ user.email }}</p>
             <p>https://github.com/project</p>
           </v-col>
         </v-row>
@@ -54,12 +54,8 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1"
-                >너내동</v-list-item-title
-              >
-              <v-list-item-subtitle
-                >SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle
-              >
+              <v-list-item-title class="headline mb-1">너내동</v-list-item-title>
+              <v-list-item-subtitle>SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
@@ -70,13 +66,11 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1"
-                >Headline 5</v-list-item-title
-              >
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
+              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+              <v-list-item-subtitle>
+                Greyhound divisely hello coldly
+                fonwderfully
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
@@ -87,13 +81,11 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">공모전</div>
-              <v-list-item-title class="headline mb-1"
-                >Headline 5</v-list-item-title
-              >
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
+              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
+              <v-list-item-subtitle>
+                Greyhound divisely hello coldly
+                fonwderfully
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
@@ -125,9 +117,7 @@ export default {
   },
   created() {
     axios.get("http://localhost:8080/userinfo").then((res) => {
-      console.log(res.data);
       this.user = res.data;
-      console.log(this.user);
     });
   },
   computed: {
