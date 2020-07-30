@@ -4,15 +4,21 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>회원가입</h2>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="email" :rules="emailRules" label="E-mail ID" required></v-text-field>
+        <v-text-field v-model="name" :rules="nameRule" label="이름*" required></v-text-field>
+
+        <v-text-field v-model="email" :rules="emailRules" label="이메일*" required></v-text-field>
 
         <v-text-field
           v-model="password"
           :rules="passwordRules"
           :type="'password'"
-          label="비밀번호"
+          label="비밀번호*"
           required
         ></v-text-field>
+
+        <v-file-input label="프로필 사진" prepend-icon></v-file-input>
+
+        <v-text-field v-model="git" label="깃 주소"></v-text-field>
 
         <v-checkbox
           v-model="checkbox"
@@ -41,6 +47,8 @@ export default {
   },
   data: () => ({
     valid: true,
+    name: "",
+    nameRule: [(v) => !!v || "이름은 필수 입력항목입니다."],
     email: "",
     emailRules: [
       (v) => !!v || "E-Mail은 필수 입력항목입니다",
