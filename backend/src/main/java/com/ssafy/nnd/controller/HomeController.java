@@ -1,6 +1,7 @@
 package com.ssafy.nnd.controller;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,17 +14,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssafy.nnd.dto.Member;
+import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.util.KakaoAPI;
 
 
 @CrossOrigin
 @Controller
 public class HomeController {
+	
+	@Autowired
+    MemberRepository memberRepository;
  
-	private String name;
-	private String email;
-	private String company;
-	private String profile;
+	private Member tmpMember;
+	
+	private String email, company;
 	
     @Autowired
     private KakaoAPI kakao;
@@ -44,10 +48,19 @@ public class HomeController {
         mem.setName((String)userInfo.get("nickname"));
         mem.setProfile((String)userInfo.get("profile"));
         mem.setCompany((String)userInfo.get("company"));
-        name= mem.getName();
-        email=mem.getEmail();
-        profile=mem.getProfile();
-        company=mem.getCompany();
+        
+        email = mem.getEmail();
+        company = mem.getCompany();
+        
+        // db에 넣기
+        Optional<Member> member = memberRepository.findByEmailAndCompany(email, company);
+        if (member.equals(Optional.empty())) { // 신규 유저일때
+        	memberRepository.save(mem);	// db에 등록
+		}
+        mem.setIdx(member.get().getIdx());
+        
+        tmpMember = new Member(mem);
+        
         //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
         if (userInfo.get("email") != null) {
 //            session.setAttribute("userId", userInfo.get("email"));
@@ -61,13 +74,7 @@ public class HomeController {
    
     @GetMapping(value="/userinfo")
     public @ResponseBody Member returnUserinfo(HttpSession session) throws Exception{
-    	Member member = new Member();
-    	member.setEmail(email);
-    	member.setName(name);
-    	member.setCompany(company);
-    	member.setProfile(profile);
-//    	System.out.println(member.toString());
-    	return member;
+    	return tmpMember;
     }
     
     @RequestMapping(value="/logout")

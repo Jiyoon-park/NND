@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "member")
 @Builder
 public class Member implements Serializable {
 
@@ -115,6 +115,17 @@ public class Member implements Serializable {
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Member(Member m) {
+		this.idx = m.idx;
+		this.name = m.name;
+		this.email = m.email;
+		this.profile = m.profile;
+		this.password = m.password;
+		this.company = m.company;
+		this.gitaddr = m.gitaddr;
+		this.memberstack = m.memberstack;
+	}
 
 	public Member(String name, String email, String profile, String password, String company, String gitaddr,
 			String memberstack) {
@@ -128,9 +139,6 @@ public class Member implements Serializable {
 		this.memberstack = memberstack;
 	}
 
-
-
-	
 	
 
 }
