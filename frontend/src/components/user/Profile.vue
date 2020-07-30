@@ -1,11 +1,11 @@
 <template>
   <v-row justify="center">
     <NavBar />
-
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
@@ -31,7 +31,7 @@
           </v-col>
           <v-col cols="8" md="10">
             <p>{{ user.email }}</p>
-            <p>https://github.com/project</p>
+            <p>{{ user.gitaddr }}</p>
           </v-col>
         </v-row>
       </div>
@@ -112,12 +112,15 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
-      user: "",
+      user: null,
+      profileURL: null,
     };
   },
   created() {
     axios.get("http://localhost:8080/userinfo").then((res) => {
       this.user = res.data;
+      console.log(this.user);
+      this.profileURL = this.user.profile;
     });
   },
   computed: {

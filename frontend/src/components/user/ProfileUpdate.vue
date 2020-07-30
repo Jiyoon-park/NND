@@ -4,7 +4,8 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
@@ -21,8 +22,8 @@
       <div id="my-info" class="target">
         <h3># 내정보</h3>
         <v-card-text>
-          <v-text-field filled dense disabled value="abc1123@naver.com" label="이메일" color="white"></v-text-field>
-          <v-text-field filled dense v-model="name" value="홍길동" label="이름"></v-text-field>
+          <v-text-field filled dense disabled :value="user.email" label="이메일" color="white"></v-text-field>
+          <v-text-field filled dense v-model="newName" label="이름"></v-text-field>
           <v-text-field dense v-model="password" label="비밀번호" filled></v-text-field>
           <v-text-field dense v-model="password2" label="비밀번호 확인" filled></v-text-field>
           <v-text-field dense v-model="gitaddress" label="GIT 주소" filled></v-text-field>
@@ -54,16 +55,22 @@
             </v-btn>
           </div>
         </div>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
+        <v-card
+          class="mx-auto my-3"
+          max-width="344"
+          shaped
+          v-for="(project, i) in projects"
+          :key="i"
+        >
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">너내동</v-list-item-title>
-              <v-list-item-subtitle>SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle>
+              <v-list-item-title class="headline mb-1">{{ project.projectName }}</v-list-item-title>
+              <v-list-item-subtitle>{{ project.summary }}</v-list-item-subtitle>
+              <div>{{ project.gitLink }}</div>
             </v-list-item-content>
           </v-list-item>
           <v-card-actions>
-            <v-btn text>Button</v-btn>
             <v-spacer></v-spacer>
             <v-btn text>Button</v-btn>
           </v-card-actions>
@@ -93,19 +100,31 @@ export default {
       hasSaved: false,
       isEditing: null,
       model: null,
-      name: "",
+      newName: "",
       password: "",
       password2: "",
       gitaddress: "",
-      dialog: false,
-      user: "",
+      projects: null,
+      user: null,
+      profileURL: null,
     };
   },
   created() {
     axios.get("http://localhost:8080/userinfo").then((res) => {
       this.user = res.data;
+      this.profileURL = this.user.profile;
+      axios
+        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+        .then(({ data }) => {
+          this.projects = data;
+          console.log(this.projects);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   },
+
   computed: {
     target() {
       const value = this[this.type];
