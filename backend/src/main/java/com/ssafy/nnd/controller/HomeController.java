@@ -22,6 +22,8 @@ public class HomeController {
  
 	private String name;
 	private String email;
+	private String company;
+	private String profile;
 	
     @Autowired
     private KakaoAPI kakao;
@@ -40,8 +42,12 @@ public class HomeController {
         Member mem = new Member();
         mem.setEmail((String)userInfo.get("email"));
         mem.setName((String)userInfo.get("nickname"));
+        mem.setProfile((String)userInfo.get("profile"));
+        mem.setCompany((String)userInfo.get("company"));
         name= mem.getName();
         email=mem.getEmail();
+        profile=mem.getProfile();
+        company=mem.getCompany();
         //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
         if (userInfo.get("email") != null) {
 //            session.setAttribute("userId", userInfo.get("email"));
@@ -58,6 +64,8 @@ public class HomeController {
     	Member member = new Member();
     	member.setEmail(email);
     	member.setName(name);
+    	member.setCompany(company);
+    	member.setProfile(profile);
 //    	System.out.println(member.toString());
     	return member;
     }
