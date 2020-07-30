@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.ProjectHistory;
-import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.repository.ProjectHistoryRepository;
 
 
@@ -27,12 +27,12 @@ public class ProjectHistoryController {
     ProjectHistoryRepository projectHistoryRepository;
 	
 	@GetMapping("/projecthistory/list/{idx}")
-    public Optional<ProjectHistory> getAllProjectHistory(@PathVariable Long idx){
+    public @ResponseBody List<ProjectHistory> getAllProjectHistory(@PathVariable Long idx){
     	return projectHistoryRepository.findByIdx(idx);
     }
 
 	@PostMapping("/projecthistory/update/{historyno}")
-    public ProjectHistory updateProjectHistory(@PathVariable Long historyno, @RequestBody ProjectHistory newprojectHistory)
+    public @ResponseBody String updateProjectHistory(@PathVariable Long historyno, @RequestBody ProjectHistory newprojectHistory)
     {
     	Optional<ProjectHistory> projecthistory = projectHistoryRepository.findById(historyno);
     	projecthistory.get().setProjectName(newprojectHistory.getProjectName());
@@ -42,14 +42,14 @@ public class ProjectHistoryController {
     	projecthistory.get().setUsedStack(newprojectHistory.getUsedStack());
     	System.out.println(newprojectHistory.toString());
     	projectHistoryRepository.save(projecthistory.get());
-    	return projecthistory.get();
+    	return "update Success";
     }
 	
 	 @PutMapping("/projecthistory/save")
-	    public ProjectHistory createProjectHistory(@RequestBody ProjectHistory projectHistory){
+	    public @ResponseBody String createProjectHistory(@RequestBody ProjectHistory projectHistory){
 	    	System.out.println(projectHistory.toString());
-	    	ProjectHistory newprojectHistory = projectHistoryRepository.save(projectHistory);
-	    	return newprojectHistory;
+	    	projectHistoryRepository.save(projectHistory);
+	    	return "save Success";
 	    }
 	 
 	 
