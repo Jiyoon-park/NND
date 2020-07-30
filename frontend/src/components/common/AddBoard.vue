@@ -9,7 +9,7 @@
               <h2 class="tc">팀 등록</h2>
               <v-card-text>
                 <v-text-field
-                  v-model="teamname"
+                  v-model="teamName"
                   label="팀이름"
                   required
                 ></v-text-field>
@@ -24,7 +24,7 @@
                 <p>팀원수</p>
 
                 <v-overflow-btn
-                  v-model="groupsize"
+                  v-model="groupSize"
                   :items="dropdown_font"
                   label="선택하세요"
                   class="my-2"
@@ -62,7 +62,7 @@
               </v-col>
               <v-col sm="12" md="12">
                 <v-combobox
-                  v-model="techstack"
+                  v-model="techStack"
                   :items="items"
                   hide-selected
                   label="기술 스택"
@@ -111,11 +111,11 @@ export default {
     menu2: false,
     dropdown_font: [3, 4, 5, 6],
     items: [],
-    teamname: null,
+    teamName: null,
     title: null,
     content: null,
-    groupsize: null,
-    techstack: null,
+    groupSize: null,
+    techStack: null,
     email: null,
   }),
   components: {
@@ -126,19 +126,27 @@ export default {
       axios
         .put("http://localhost:8080/teamboard/save", {
           email: "hi@naver.com",
-          teamname: this.teamname,
+          teamName: this.teamName,
           title: this.title,
           content: this.content,
-          deadline: this.date,
-          groupsize: this.groupsize,
-          techstack: JSON.stringify(this.techstack),
+          deadLine: this.date,
+          groupSize: this.groupSize,
+          techStack: JSON.stringify(this.techStack),
         })
         .then((response) => {
           console.log(response);
+          alert("등록성공");
+          this.goMain();
         })
         .catch((error) => {
           console.log(error.response);
+          alert("실패");
         });
+    },
+    goMain() {
+      this.$router.push({
+        name: "Home",
+      });
     },
   },
 };
