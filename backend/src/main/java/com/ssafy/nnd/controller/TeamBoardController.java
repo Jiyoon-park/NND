@@ -37,11 +37,11 @@ public class TeamBoardController {
 //    	return teamBoard.get();
 //    }
     
-    @PostMapping("/teamboard/update/{idx}")
-    public TeamBoard updateMemberBoard(@PathVariable String idx, @RequestBody TeamBoard newteamBoard)
+    @PostMapping("/teamboard/update/{teamboardno}")
+    public TeamBoard updateMemberBoard(@PathVariable String teamboardno, @RequestBody TeamBoard newteamBoard)
     {
-    	Long postID = Long.parseLong(idx);
-    	Optional<TeamBoard> teamBoard = teamBoardRepository.findByIdx(postID);
+    	Long postID = Long.parseLong(teamboardno);
+    	Optional<TeamBoard> teamBoard = teamBoardRepository.findByTeamboardNo(postID);
     	teamBoard.get().setTeamName(newteamBoard.getTeamName());
     	teamBoard.get().setMemberEmails(newteamBoard.getMemberEmails());
     	teamBoard.get().setGroupSize(newteamBoard.getGroupSize());
@@ -62,10 +62,9 @@ public class TeamBoardController {
     	return newmemberBoard;
     }
 
-    @DeleteMapping("/teamboard/delete/{idx}")
-    public String deleteTeamBoard(@PathVariable String idx){
-    	Long postID = Long.parseLong(idx);
-    	teamBoardRepository.deleteById(postID);
+    @DeleteMapping("/teamboard/delete/{teamboardno}")
+    public String deleteTeamBoard(@PathVariable Long teamboardno){
+    	teamBoardRepository.deleteById(teamboardno);
     	
     	return "Delete Success!";
     }

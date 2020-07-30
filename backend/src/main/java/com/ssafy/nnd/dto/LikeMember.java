@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table (name="likemember")
 @Builder
 public class LikeMember implements Serializable {
 
@@ -20,41 +20,40 @@ public class LikeMember implements Serializable {
 	public Long likeno;
 
 	@Column
-	public int mboard;
+	public Long mboard;
 
 	@Column
-	public int mno;
+	public Long mno;
 
 	@Column(insertable = false, updatable = false)
 	private LocalDateTime createdate;
 	public LikeMember() {
 		// TODO Auto-generated constructor stub
 	}
-	public LikeMember(Long likeno, int mboard, int mno, LocalDateTime createdate) {
-		super();
-		this.likeno = likeno;
-		this.mboard = mboard;
-		this.mno = mno;
-		this.createdate = createdate;
-	}
+	
 	public Long getLikeno() {
 		return likeno;
 	}
 	public void setLikeno(Long likeno) {
 		this.likeno = likeno;
 	}
-	public int getMboard() {
+	
+	public Long getMboard() {
 		return mboard;
 	}
-	public void setMboard(int mboard) {
+
+	public void setMboard(Long mboard) {
 		this.mboard = mboard;
 	}
-	public int getMno() {
+
+	public Long getMno() {
 		return mno;
 	}
-	public void setMno(int mno) {
+
+	public void setMno(Long mno) {
 		this.mno = mno;
 	}
+
 	public LocalDateTime getCreatedate() {
 		return createdate;
 	}
@@ -62,8 +61,14 @@ public class LikeMember implements Serializable {
 		this.createdate = createdate;
 	}
 
+	@Override
+	public String toString() {
+		return "LikeMember [likeno=" + likeno + ", mboard=" + mboard + ", mno=" + mno + ", createdate=" + createdate
+				+ "]";
+	}
 
 
+	
 
 }
 

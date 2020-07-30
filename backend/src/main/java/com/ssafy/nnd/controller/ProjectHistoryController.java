@@ -37,6 +37,7 @@ public class ProjectHistoryController {
     	Long postID = Long.parseLong(idx);
     	Optional<ProjectHistory> projecthistory = projectHistoryRepository.findByIdx(postID);
     	projecthistory.get().setProjectName(newprojectHistory.getProjectName());
+    	projecthistory.get().setSummary(newprojectHistory.getSummary());
     	projecthistory.get().setContent(newprojectHistory.getContent());
     	projecthistory.get().setGitLink(newprojectHistory.getGitLink());
     	projecthistory.get().setUsedStack(newprojectHistory.getUsedStack());
@@ -52,10 +53,11 @@ public class ProjectHistoryController {
 	    	return newprojectHistory;
 	    }
 	 
-	 @DeleteMapping("/projecthistory/delete/{idx}")
-	    public String deleteProjectHistory(@PathVariable String idx){
-	    	Long postID = Long.parseLong(idx);
-	    	projectHistoryRepository.deleteById(postID);
+	 
+	 ////////////////////////////////////////////////////////////////////수정해야됨
+	 @DeleteMapping("/projecthistory/delete/{historyno}")
+	    public String deleteProjectHistory(@PathVariable Long historyno){
+	    	projectHistoryRepository.deleteById(historyno);
 	    	
 	    	return "Delete Success!";
 	    }
