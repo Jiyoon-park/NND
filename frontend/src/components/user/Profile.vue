@@ -1,11 +1,11 @@
 <template>
   <v-row justify="center">
     <NavBar />
-
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
@@ -31,7 +31,7 @@
           </v-col>
           <v-col cols="8" md="10">
             <p>{{ user.email }}</p>
-            <p>https://github.com/project</p>
+            <p>{{ user.gitaddr }}</p>
           </v-col>
         </v-row>
       </div>
@@ -50,61 +50,23 @@
       <hr />
       <div id="experience" class="target">
         <h3># 참여이력</h3>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">너내동</v-list-item-title>
-              <v-list-item-subtitle>SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>
-                Greyhound divisely hello coldly
-                fonwderfully
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">공모전</div>
-              <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-              <v-list-item-subtitle>
-                Greyhound divisely hello coldly
-                fonwderfully
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
+        <ProjectHistoryList />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 import axios from "axios";
+
+import NavBar from "../common/NavBar.vue";
+import ProjectHistoryList from "../profile/ProjectHistoryList.vue";
 
 export default {
   components: {
     NavBar,
+    ProjectHistoryList,
   },
   data() {
     return {
@@ -113,11 +75,13 @@ export default {
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
       user: "",
+      profileURL: "",
     };
   },
   created() {
     axios.get("http://localhost:8080/userinfo").then((res) => {
       this.user = res.data;
+      this.profileURL = this.user.profile;
     });
   },
   computed: {

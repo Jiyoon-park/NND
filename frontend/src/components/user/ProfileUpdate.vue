@@ -4,7 +4,8 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline"></span>
+          <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
@@ -21,11 +22,11 @@
       <div id="my-info" class="target">
         <h3># 내정보</h3>
         <v-card-text>
-          <v-text-field filled dense disabled value="abc1123@naver.com" label="이메일" color="white"></v-text-field>
-          <v-text-field filled dense v-model="name" value="홍길동" label="이름"></v-text-field>
-          <v-text-field dense v-model="password" label="비밀번호" filled></v-text-field>
-          <v-text-field dense v-model="password2" label="비밀번호 확인" filled></v-text-field>
-          <v-text-field dense v-model="gitaddress" label="GIT 주소" filled></v-text-field>
+          <v-text-field filled dense disabled :value="user.email" label="이메일" color="white"></v-text-field>
+          <v-text-field filled dense v-model="user.name" label="이름"></v-text-field>
+          <v-text-field dense v-model="userinfo.password" label="비밀번호" filled></v-text-field>
+          <v-text-field dense v-model="userinfo.password2" label="비밀번호 확인" filled></v-text-field>
+          <v-text-field dense v-model="user.gitaddr" label="GIT 주소" filled></v-text-field>
         </v-card-text>
       </div>
       <v-divider></v-divider>
@@ -49,40 +50,27 @@
           <h3># 참여이력</h3>
           <div>
             <AddProjectHistory />
-            <v-btn color="red" fab small>
-              <v-icon>mdi-minus</v-icon>
-            </v-btn>
           </div>
         </div>
-        <v-card class="mx-auto my-3" max-width="344" shaped>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div class="overline mb-4">프로젝트</div>
-              <v-list-item-title class="headline mb-1">너내동</v-list-item-title>
-              <v-list-item-subtitle>SSAFY인들을 위한 팀빌딩 SNS</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-card-actions>
-            <v-btn text>Button</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn text>Button</v-btn>
-          </v-card-actions>
-        </v-card>
+        <ProjectHistoryList />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 import axios from "axios";
-import AddProjectHistory from "../common/AddProjectHistory.vue";
+
+import NavBar from "../common/NavBar.vue";
+import AddProjectHistory from "../profile/AddProjectHistory.vue";
+import ProjectHistoryList from "../profile/ProjectHistoryList.vue";
 
 export default {
   components: {
     NavBar,
     AddProjectHistory,
+    ProjectHistoryList,
   },
   data() {
     return {
@@ -93,17 +81,20 @@ export default {
       hasSaved: false,
       isEditing: null,
       model: null,
-      name: "",
-      password: "",
-      password2: "",
-      gitaddress: "",
-      dialog: false,
+      userinfo: {
+        newName: "",
+        password: "",
+        password2: "",
+        gitaddress: "",
+      },
       user: "",
+      profileURL: "",
     };
   },
   created() {
     axios.get("http://localhost:8080/userinfo").then((res) => {
       this.user = res.data;
+      this.profileURL = this.user.profile;
     });
   },
   computed: {
