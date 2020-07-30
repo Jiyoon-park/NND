@@ -4,14 +4,14 @@
       <i class="fas fa-search" @click="dialog = true" dark v-bind="attrs" v-on="on"></i>
     </template>
     <v-card>
-      <v-toolbar dark color="primary">
+      <v-toolbar dark color="purple lighten-2">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark text @click="dialog = false">search</v-btn>
+          <v-btn background-color="purple" dark text @click="dialog = false">search</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-container>
@@ -28,6 +28,7 @@
               small-chips
               outlined
               class="mt-5"
+              color="purple darken-2"
             ></v-combobox>
           </v-list-item>
         </v-list>
@@ -38,14 +39,13 @@
           <v-list-item>
             <v-list-item-content class="py-0">
               <div class="d-flex justify-center">
-                <v-chip large color="primary" outlined pill>
-                  member
-                  <i class="fas fa-user ml-2"></i>
-                </v-chip>
-                <v-chip large color="primary" outlined pill class="ml-2">
-                  team
-                  <i class="fas fa-users ml-2"></i>
-                </v-chip>
+                <v-chip-group
+                  v-model="selection"
+                  active-class="deep-purple--text text--accent-4"
+                  mandatory
+                >
+                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
+                </v-chip-group>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -57,7 +57,7 @@
             <v-list-item-content>
               <div class="d-flex justify-center">
                 <v-radio-group row>
-                  <v-radio label="스터디" color="red" value="스터디"></v-radio>
+                  <v-radio label="스터디" color="purple" value="스터디"></v-radio>
                   <v-radio label="프로젝트" color="orange" value="프로젝트"></v-radio>
                   <v-radio label="공모전" color="success" value="공모전"></v-radio>
                 </v-radio-group>
@@ -68,7 +68,21 @@
         <v-divider></v-divider>
         <v-list three-line subheader>
           <v-subheader>By Skills:</v-subheader>
-          <v-list-item></v-list-item>
+          <v-list-item>
+            <v-list-item-content class="py-0">
+              <div class="d-flex justify-center">
+                <v-chip-group v-model="skillSelection" multiple column>
+                  <v-chip
+                    filter
+                    outlined
+                    v-for="skill in skills"
+                    :key="skill"
+                    :value="skill"
+                  >{{ skill }}</v-chip>
+                </v-chip-group>
+              </div>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-container>
     </v-card>
@@ -80,6 +94,9 @@ export default {
   data: () => ({
     dialog: false,
     search: [],
+    selection: "team",
+    types: ["team", "member"],
+    skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
   }),
 };
 </script>
