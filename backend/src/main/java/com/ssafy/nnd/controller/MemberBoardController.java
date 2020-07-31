@@ -27,7 +27,7 @@ public class MemberBoardController {
     public List<MemberBoard> getAllMemberBoard(){
     	
     	
-    	return memberBoardRepository.findAll();
+    	return memberBoardRepository.findAllByOrderByBoardNoDesc();
     }
     
     @GetMapping("/member/{id}")
