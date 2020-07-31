@@ -9,7 +9,9 @@
     >
       <v-list-item three-line>
         <v-list-item-content>
-          <v-list-item-title class="headline mb-1">{{ project.projectName }}</v-list-item-title>
+          <v-list-item-title class="headline mb-1">{{
+            project.projectName
+          }}</v-list-item-title>
           <v-list-item-subtitle>{{ project.summary }}</v-list-item-subtitle>
           <div class="mt-3">링크 : {{ project.gitLink }}</div>
         </v-list-item-content>
@@ -45,5 +47,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

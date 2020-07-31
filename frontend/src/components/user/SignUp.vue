@@ -4,9 +4,19 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>회원가입</h2>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="name" :rules="nameRule" label="이름*" required></v-text-field>
+        <v-text-field
+          v-model="name"
+          :rules="nameRule"
+          label="이름*"
+          required
+        ></v-text-field>
 
-        <v-text-field v-model="email" :rules="emailRules" label="이메일*" required></v-text-field>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="이메일*"
+          required
+        ></v-text-field>
 
         <v-text-field
           v-model="password"
@@ -27,11 +37,17 @@
           required
         ></v-checkbox>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">제출</v-btn>
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate"
+          >제출</v-btn
+        >
 
         <v-btn color="error" class="mr-4" @click="reset">초기화</v-btn>
-        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')">로그인화면</v-btn>
-        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">비밀번호찾기</v-btn>
+        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')"
+          >로그인화면</v-btn
+        >
+        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')"
+          >비밀번호찾기</v-btn
+        >
       </v-form>
     </v-col>
   </v-row>
