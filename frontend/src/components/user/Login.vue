@@ -4,7 +4,14 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>로그인</h2>
       <v-form class="form" ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="email" :rules="emailRules" label="이메일" required outlined dense></v-text-field>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="이메일"
+          required
+          outlined
+          dense
+        ></v-text-field>
         <v-text-field
           v-model="password"
           :rules="[rules.required, rules.min]"
@@ -15,8 +22,14 @@
           outlined
           dense
         ></v-text-field>
-        <v-btn class="button" :disabled="!valid" color="teal" @click="login">로그인</v-btn>
-        <v-checkbox v-model="checkbox" color="success" label="로그인 정보 기억"></v-checkbox>
+        <v-btn class="button" :disabled="!valid" color="teal" @click="login"
+          >로그인</v-btn
+        >
+        <v-checkbox
+          v-model="checkbox"
+          color="success"
+          label="로그인 정보 기억"
+        ></v-checkbox>
       </v-form>
       <div class="login-body text-center">
         <div class="sns-login">
@@ -24,14 +37,16 @@
           <v-btn color="yellow darken-1" class="sns-btn" dark>
             <a
               href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"
-            >Kakao</a>
+              >Kakao</a
+            >
           </v-btn>
           <v-btn color="green accent-4" class="sns-btn" dark>Naver</v-btn>
           <v-btn color="light-blue darken-2" class="sns-btn" dark>Google</v-btn>
         </div>
         <div class="add-option">
           <router-link to="/signup" class="routers">회원가입</router-link>|
-          <router-link to="/findemail" class="routers">이메일 찾기</router-link>|
+          <router-link to="/findemail" class="routers">이메일 찾기</router-link
+          >|
           <router-link to="/findpw" class="routers">비밀번호 찾기</router-link>
         </div>
       </div>

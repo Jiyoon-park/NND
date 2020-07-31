@@ -9,18 +9,23 @@
               <v-list-item-title>홍길동</v-list-item-title>
             </v-list-item-content>
           </div>
-          <v-list-item-content v-else @click="$router.push('/login').catch(()=>{})">
+          <v-list-item-content
+            v-else
+            @click="$router.push('/login').catch(() => {})"
+          >
             <v-list-item-title>로그인</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
-          <v-list-item-content @click="$router.push('/profile').catch(()=>{})">
+          <v-list-item-content
+            @click="$router.push('/profile').catch(() => {})"
+          >
             <v-list-item-title>내 정보</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item link>
-          <v-list-item-content @click="$router.push('/').catch(()=>{})">
+          <v-list-item-content @click="$router.push('/').catch(() => {})">
             <v-list-item-title>팀/팀원 구하기</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -47,13 +52,16 @@
       <img
         src="../../assets/images/sm_logo.png"
         width="30px"
-        @click="$router.push('/').catch(()=>{})"
+        @click="$router.push('/').catch(() => {})"
       />
       <v-spacer></v-spacer>
 
       <Search />
 
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        color="#999"
+      ></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>
