@@ -2,7 +2,6 @@
 
 ## Project setup
 ```
-yarn install
 npm install vue-router
 npm install --save vanilla-back-to-top
 yarn add axios
@@ -10,6 +9,7 @@ yarn add vuex
 vue add vuetify
 yarn add @fortawesome/fontawesome-free -D
 npm install vue-cookies --save
+yarn install
 ```
 
 ### Compiles and hot-reloads for development
