@@ -30,7 +30,7 @@ public class MemberBoardController {
     	return memberBoardRepository.findAllByOrderByBoardNoDesc();
     }
     
-    @GetMapping("/member/{id}")
+    @GetMapping("/memberboard/{id}")
     public MemberBoard getMemberBoard(@PathVariable String id){
     	Long postID = Long.parseLong(id);
     	
@@ -39,7 +39,7 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
-    @PostMapping("/member/update/{boardno}")
+    @PostMapping("/memberboard/update/{boardno}")
     public MemberBoard updateMemberBoard(@PathVariable String boardno, @RequestBody MemberBoard newmemberBoard)
     {
     	Long postID = Long.parseLong(boardno);
@@ -54,14 +54,14 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
-    @PutMapping("/member/save")
+    @PutMapping("/memberboard/save")
     public MemberBoard createMemberBoard(@RequestBody MemberBoard memberBoard){
     	System.out.println(memberBoard.toString());
     	MemberBoard newmemberBoard = memberBoardRepository.save(memberBoard);
     	return newmemberBoard;
     }
 
-    @DeleteMapping("/member/delete/{boardno}")
+    @DeleteMapping("/memberboard/delete/{boardno}")
     public String deleteMemberBoard(@PathVariable Long boardno){
     	memberBoardRepository.deleteById(boardno);
     	return "Delete Success!";
