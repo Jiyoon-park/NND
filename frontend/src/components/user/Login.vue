@@ -4,6 +4,8 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>로그인</h2>
       <v-form class="form" ref="form" v-model="valid" lazy-validation>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
         <v-text-field
           v-model="email"
           :rules="emailRules"
@@ -80,23 +82,30 @@ export default {
     checkbox: false,
     show: false,
   }),
+    created () {
+    let token = window.$cookies.get('nnd') //nnd가 key인 쿠키 가져옴
+    if (token) { //토큰 존재하면
+      this.$router.push("/") //home으로 보냄
+    }
+  },
   methods: {
     login() {
       if (this.$refs.form.validate()) {
         axios
-          .get("http://localhost:8080/member/login", {
+          .post("http://localhost:8080/member/login", {
             params: {
               email: this.email,
               password: this.password,
             },
           })
           .then((response) => {
-            console.log(response);
-            this.$router.push("/");
+          console.log(response)
+          window.$cookies.set('nnd', response.data, '2d') //로그인시 쿠키 저장
+          //location.reload()
+          this.$router.push("/") //로그인 성공하면 home으로
           })
           .catch((error) => {
             console.log(error.response);
-            this.$router.push("/login");
           });
       }
     },
