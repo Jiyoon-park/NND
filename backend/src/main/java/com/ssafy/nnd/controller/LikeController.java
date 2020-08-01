@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssafy.nnd.dto.LikeMember;
 import com.ssafy.nnd.dto.LikeTeam;
+import com.ssafy.nnd.dto.MemberBoard;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.repository.LikeMemberRepository;
 import com.ssafy.nnd.repository.LikeTeamRepository;
+import com.ssafy.nnd.repository.MemberBoardRepository;
+import com.ssafy.nnd.repository.TeamBoardRepository;
 
 
 
@@ -33,6 +36,12 @@ public class LikeController {
 	
 	@Autowired 
 	LikeTeamRepository liketeamRepository;
+	
+	@Autowired
+	TeamBoardRepository teamboardRepository;
+	
+	@Autowired
+	MemberBoardRepository memberboardRepository;
 	
 	//개인 게시글 즐겨찾기 추가
 	@PutMapping("likemember/save/{mno}/{mboard}")
@@ -80,13 +89,14 @@ public class LikeController {
 	}
 	// 멤보 게시판 즐겨찾기 전체 목록
 	@GetMapping("/likemember/list/{mno}")
-    public @ResponseBody List<LikeMember> getLikeMemberBoard(@PathVariable Long mno){
-    	return likememberRepository.findByMno(mno);
+    public @ResponseBody List<MemberBoard> getLikeMemberBoard(@PathVariable Long mno){
+    	return memberboardRepository.findLikeboardByMno(mno);
     }
+	
 	// 팀게시판 즐겨찾기 전체목록 
 	@GetMapping("/liketeam/list/{mno}")
-	public @ResponseBody List<LikeTeam> getLikeTeamBoard(@PathVariable Long mno){
-		return liketeamRepository.findByMno(mno);
+	public @ResponseBody List<TeamBoard> getLikeTeamBoard(@PathVariable Long mno){
+		return teamboardRepository.findLikeboardByMno(mno);
 	}
 	
 	

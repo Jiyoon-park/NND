@@ -119,6 +119,24 @@ public class MemberBoard {
 		this.likecnt = likecnt;
 	}
 
+	public MemberBoard() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public MemberBoard(Long boardNo, Long idx, String email, String title, String content, String contentStack,
+			String techStack, LocalDateTime createDate, int likecnt) {
+		super();
+		this.boardNo = boardNo;
+		this.idx = idx;
+		this.email = email;
+		this.title = title;
+		this.content = content;
+		this.contentStack = contentStack;
+		this.techStack = techStack;
+		this.createDate = createDate;
+		this.likecnt = likecnt;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberBoard [boardNo=" + boardNo + ", idx=" + idx + ", email=" + email + ", title=" + title
