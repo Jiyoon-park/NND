@@ -48,6 +48,9 @@ public class TeamBoard{
 	
 	@Column
 	private String content; // 본문내용
+	
+	@Column (name="kakaolink")
+	private String kakaoLink;
 
 	@Column (name = "techstack")
 	private String techStack; // 기술스택태그
@@ -68,6 +71,14 @@ public class TeamBoard{
 	
 	public Long getTeamboardNo() {
 		return teamboardNo;
+	}
+
+	public String getKakaoLink() {
+		return kakaoLink;
+	}
+
+	public void setKakaoLink(String kakaoLink) {
+		this.kakaoLink = kakaoLink;
 	}
 
 	public String getMemberEmails() {
@@ -174,10 +185,11 @@ public class TeamBoard{
 	public String toString() {
 		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
 				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
-				+ title + ", content=" + content + ", techStack=" + techStack + ", contentStack=" + contentStack
-				+ ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
+				+ title + ", content=" + content + ", kakaoLink=" + kakaoLink + ", techStack=" + techStack
+				+ ", contentStack=" + contentStack + ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
 	}
 
+	
 	
 
 	
