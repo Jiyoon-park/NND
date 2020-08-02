@@ -24,6 +24,9 @@ public class MemberBoard {
 	
 	@Column
 	private String email; // 작성자 이메일
+	
+	@Column
+	private String name;
 
 	@Column
 	private String title; // 제목
@@ -43,8 +46,15 @@ public class MemberBoard {
 	@Column
 	private int likecnt; // 개수
 
- 
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Long getIdx() {
 		return idx;
 	}
@@ -121,10 +131,11 @@ public class MemberBoard {
 
 	@Override
 	public String toString() {
-		return "MemberBoard [boardNo=" + boardNo + ", idx=" + idx + ", email=" + email + ", title=" + title
-				+ ", content=" + content + ", contentStack=" + contentStack + ", techStack=" + techStack
+		return "MemberBoard [boardNo=" + boardNo + ", idx=" + idx + ", email=" + email + ", name=" + name + ", title="
+				+ title + ", content=" + content + ", contentStack=" + contentStack + ", techStack=" + techStack
 				+ ", createDate=" + createDate + ", likecnt=" + likecnt + "]";
 	}
+
 
 	
 

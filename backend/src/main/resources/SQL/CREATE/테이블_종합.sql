@@ -5,6 +5,7 @@ CREATE TABLE `member` (
   `email` varchar(128) NOT NULL,
   `profile` varchar(128) default NULL,
   `password` varchar(300) default null,
+  `passwordcheck` varchar(300) default null,
   `company` varchar(10) default NULL,
   `gitaddr` varchar(128) Default null,
   `memberstack` varchar(500) default null,
@@ -32,8 +33,9 @@ CREATE TABLE `teamboard` (
 
  CREATE TABLE `memberboard` (  
   `boardno` int(10) NOT NULL AUTO_INCREMENT,
-  `idx` int NOT NULL, 
+  `idx` int DEFAULT NULL, 
   `email` varchar(128) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` varchar(255) NOT NULL,
   `contentstack` varchar(128) NOT NULL,
