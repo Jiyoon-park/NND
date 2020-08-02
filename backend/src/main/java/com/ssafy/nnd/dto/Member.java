@@ -135,18 +135,20 @@ public class Member implements Serializable {
 		this.email = m.email;
 		this.profile = m.profile;
 		this.password = m.password;
+		this.passwordcheck= m.passwordcheck;
 		this.company = m.company;
 		this.gitaddr = m.gitaddr;
 		this.memberstack = m.memberstack;
 	}
 
-	public Member(String name, String email, String profile, String password, String company, String gitaddr,
+	public Member(String name, String email, String profile, String password, String passwordcheck, String company, String gitaddr,
 			String memberstack) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.profile = profile;
 		this.password = password;
+		this.passwordcheck = passwordcheck;
 		this.company = company;
 		this.gitaddr = gitaddr;
 		this.memberstack = memberstack;
