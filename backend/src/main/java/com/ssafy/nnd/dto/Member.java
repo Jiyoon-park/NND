@@ -30,10 +30,7 @@ public class Member implements Serializable {
     
 	@Column
     public String password;
-	
-	@Column
-	public String passwordcheck;
-    
+
     @Column
     public String company;
     
@@ -43,14 +40,6 @@ public class Member implements Serializable {
     @Column
     public String memberstack;
 
-    
-	public String getPasswordcheck() {
-		return passwordcheck;
-	}
-
-	public void setPasswordcheck(String passwordcheck) {
-		this.passwordcheck = passwordcheck;
-	}
 
 	public Long getIdx() {
 		return idx;
@@ -118,11 +107,12 @@ public class Member implements Serializable {
 
 
 	
+
+
 	@Override
 	public String toString() {
 		return "Member [idx=" + idx + ", name=" + name + ", email=" + email + ", profile=" + profile + ", password="
-				+ password + ", passwordcheck=" + passwordcheck + ", company=" + company + ", gitaddr=" + gitaddr
-				+ ", memberstack=" + memberstack + "]";
+				+ password + ", company=" + company + ", gitaddr=" + gitaddr + ", memberstack=" + memberstack + "]";
 	}
 
 	public Member() {
@@ -135,20 +125,18 @@ public class Member implements Serializable {
 		this.email = m.email;
 		this.profile = m.profile;
 		this.password = m.password;
-		this.passwordcheck= m.passwordcheck;
 		this.company = m.company;
 		this.gitaddr = m.gitaddr;
 		this.memberstack = m.memberstack;
 	}
 
-	public Member(String name, String email, String profile, String password, String passwordcheck, String company, String gitaddr,
+	public Member(String name, String email, String profile, String password, String company, String gitaddr,
 			String memberstack) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.profile = profile;
 		this.password = password;
-		this.passwordcheck = passwordcheck;
 		this.company = company;
 		this.gitaddr = gitaddr;
 		this.memberstack = memberstack;

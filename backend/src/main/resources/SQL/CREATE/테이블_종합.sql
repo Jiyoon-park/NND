@@ -5,7 +5,6 @@ CREATE TABLE `member` (
   `email` varchar(128) NOT NULL,
   `profile` varchar(128) default NULL,
   `password` varchar(300) default null,
-  `passwordcheck` varchar(300) default null,
   `company` varchar(10) default NULL,
   `gitaddr` varchar(128) Default null,
   `memberstack` varchar(500) default null,
