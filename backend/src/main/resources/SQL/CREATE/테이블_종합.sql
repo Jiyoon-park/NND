@@ -22,7 +22,7 @@ CREATE TABLE `teamboard` (
   `title` varchar(100) NOT NULL,
   `content` varchar(500) NOT NULL,
   `techstack` varchar(300) DEFAULT NULL,
-  `contentstack` varchar(300) DEFAULT NULL,
+  `category` varchar(300) DEFAULT NULL,
   `kakaolink` varchar(128) DEFAULT NULL,
   `likecnt` int (10) DEFAULT 0,
   `createdate` datetime DEFAULT current_timestamp(),
@@ -40,7 +40,7 @@ CREATE TABLE `teamboard` (
   `contentstack` varchar(128) NOT NULL,
   `techstack` varchar(128) NOT NULL, 
   `createdate` datetime DEFAULT current_timestamp(),
-  `likecnt` int(10) NOT NULL,
+  `likecnt` int(10) DEFAULT 0,
   PRIMARY KEY (`boardno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -50,6 +50,7 @@ CREATE TABLE `letter` (
   `receiveidx` int NOT NULL,
   `content` varchar(500) DEFAULT NULL,
   `createdate` datetime DEFAULT current_timestamp(),
+  `read` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`letterno`),
   FOREIGN KEY (`sendidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`receiveidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
@@ -72,8 +73,8 @@ CREATE TABLE liketeam(
     tboard                     int    NOT NULL,    
     mno                        int    NOT NULL,
     createdate                datetime DEFAULT current_timestamp(),
-    FOREIGN KEY (mno) REFERENCES member (idx),
-    FOREIGN KEY (tboard) REFERENCES teamboard (teamboardno)
+    FOREIGN KEY (mno) REFERENCES member (idx) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (tboard) REFERENCES teamboard (teamboardno) ON UPDATE CASCADE ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -82,6 +83,6 @@ CREATE TABLE likemember(
     mboard                     int    NOT NULL,    
     mno                        int    NOT NULL,
     createdate                datetime DEFAULT current_timestamp(),
-    FOREIGN KEY (mno) REFERENCES member (idx),
-    FOREIGN KEY (mboard) REFERENCES memberboard (boardno)
+    FOREIGN KEY (mno) REFERENCES member (idx) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (mboard) REFERENCES memberboard (boardno) ON UPDATE CASCADE ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;

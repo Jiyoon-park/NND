@@ -8,6 +8,6 @@
   `contentstack` varchar(128) NOT NULL,
   `techstack` varchar(128) NOT NULL, 
   `createdate` datetime DEFAULT current_timestamp(),
-  `likecnt` int(10) NOT NULL,
+  `likecnt` int(10) DEFAULT 0,
   PRIMARY KEY (`boardno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
