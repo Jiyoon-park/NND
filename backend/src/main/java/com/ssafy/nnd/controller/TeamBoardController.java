@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,8 @@ public class TeamBoardController {
     TeamBoardRepository teamBoardRepository;
 
     @GetMapping("/teamboard/list")
-    public List<TeamBoard> getAllMemberBoard(){
-    	return teamBoardRepository.findAllByOrderByTeamboardNoDesc();
+    public List<TeamBoard> getAllMemberBoard(final Pageable pageable){
+    	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
 //    @GetMapping("/teamboard/{id}")
