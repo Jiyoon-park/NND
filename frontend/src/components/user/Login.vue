@@ -91,22 +91,19 @@ export default {
   methods: {
     login() {
       if (this.$refs.form.validate()) {
-        axios
-          .post("http://localhost:8080/member/login", {
-            params: {
-              email: this.email,
-              password: this.password,
-            },
-          })
-          .then((response) => {
+        axios.post('http://localhost:8080/member/login', {
+            email: this.email,
+            password: this.password,
+        })
+        .then((response) => {
           console.log(response)
           window.$cookies.set('nnd', response.data, '2d') //로그인시 쿠키 저장
           //location.reload()
           this.$router.push("/") //로그인 성공하면 home으로
-          })
-          .catch((error) => {
-            console.log(error.response);
-          });
+        },
+        () => {
+          console.log('failed')
+        });
       }
     },
   },
