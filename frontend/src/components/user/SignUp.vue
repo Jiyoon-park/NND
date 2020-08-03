@@ -4,19 +4,9 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>회원가입</h2>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="name"
-          :rules="nameRule"
-          label="이름*"
-          required
-        ></v-text-field>
+        <v-text-field v-model="name" :rules="nameRule" label="이름*" required></v-text-field>
 
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="이메일*"
-          required
-        ></v-text-field>
+        <v-text-field v-model="email" :rules="emailRules" label="이메일*" required></v-text-field>
 
         <v-text-field
           v-model="password"
@@ -26,7 +16,7 @@
           required
         ></v-text-field>
 
-        <v-file-input label="프로필 사진" prepend-icon></v-file-input>
+        <v-file-input v-model="profile" label="프로필 사진" prepend-icon></v-file-input>
 
         <v-text-field v-model="git" label="깃 주소"></v-text-field>
 
@@ -37,17 +27,11 @@
           required
         ></v-checkbox>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate"
-          >제출</v-btn
-        >
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="signup">제출</v-btn>
 
         <v-btn color="error" class="mr-4" @click="reset">초기화</v-btn>
-        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')"
-          >로그인화면</v-btn
-        >
-        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')"
-          >비밀번호찾기</v-btn
-        >
+        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')">로그인화면</v-btn>
+        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">비밀번호찾기</v-btn>
       </v-form>
     </v-col>
   </v-row>
@@ -55,6 +39,7 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
+import axios from "axios";
 
 export default {
   name: "SignUp",
@@ -79,8 +64,28 @@ export default {
   }),
 
   methods: {
-    validate() {
-      this.$refs.form.validate();
+    signup() {
+      if (this.$refs.form.validate()) {
+        axios
+          .post("http://localhost:8080/signup", {
+            params: {
+              name: this.name,
+              email: this.email,
+              password: this.password,
+              profile: this.profile,
+              git: this.git,
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            alert("회원가입 완료");
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.$router.push("/signup");
+          });
+      }
     },
     reset() {
       this.$refs.form.reset();
