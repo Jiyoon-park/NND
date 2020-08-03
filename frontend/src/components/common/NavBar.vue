@@ -9,17 +9,12 @@
               <v-list-item-title>홍길동</v-list-item-title>
             </v-list-item-content>
           </div>
-          <v-list-item-content
-            v-else
-            @click="$router.push('/login').catch(() => {})"
-          >
+          <v-list-item-content v-else @click="$router.push('/login').catch(() => {})">
             <v-list-item-title>로그인</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
-          <v-list-item-content
-            @click="$router.push('/profile').catch(() => {})"
-          >
+          <v-list-item-content @click="$router.push('/profile').catch(() => {})">
             <v-list-item-title>내 정보</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -53,11 +48,9 @@
       <v-spacer></v-spacer>
 
       <Search />
+      <i class="fas fa-envelope ml-2" @click="$router.push('/letter').catch(() => {})"></i>
 
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-        color="#999"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>
