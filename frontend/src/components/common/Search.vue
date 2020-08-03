@@ -39,7 +39,7 @@
                 <v-chip-group
                   v-model="typeSelection"
                   active-class="deep-purple--text text--accent-4"
-                  multiple
+                  mandatory
                 >
                   <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
                 </v-chip-group>
@@ -120,20 +120,20 @@ export default {
   methods: {
     submit() {
       axios
-        .put("http://localhost:8080/search", {
-          search: this.search,
+        .get("localhost:8080/searchUsingFilter", {
+          query: this.search,
           type: this.typeSelection,
           category: this.categorySelection,
-          skill: this.skillSelection,
+          skills: this.skillSelection,
         })
         .then((response) => {
           console.log(response);
-          alert("등록성공");
+          alert("백엔드 전송 성공");
           // this.goMain();
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
+          alert("ㅠㅠ실패");
         });
       this.dialog = false;
     },

@@ -4,7 +4,7 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
