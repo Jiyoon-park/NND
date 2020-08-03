@@ -4,6 +4,7 @@ CREATE TABLE `letter` (
   `receiveidx` int NOT NULL,
   `content` varchar(500) DEFAULT NULL,
   `createdate` datetime DEFAULT current_timestamp(),
+  `read` TINYINT(1) NULL DEFAULT 0,
   PRIMARY KEY (`letterno`),
   FOREIGN KEY (`sendidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`receiveidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
