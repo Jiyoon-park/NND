@@ -2,6 +2,7 @@
   `boardno` int(10) NOT NULL AUTO_INCREMENT,
   `idx` int DEFAULT NULL, 
   `email` varchar(128) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` varchar(255) NOT NULL,
   `contentstack` varchar(128) NOT NULL,

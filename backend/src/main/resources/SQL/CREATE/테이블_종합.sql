@@ -23,6 +23,7 @@ CREATE TABLE `teamboard` (
   `content` varchar(500) NOT NULL,
   `techstack` varchar(300) DEFAULT NULL,
   `contentstack` varchar(300) DEFAULT NULL,
+  `kakaolink` varchar(128) DEFAULT NULL,
   `likecnt` int (10) DEFAULT 0,
   `createdate` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`teamboardno`),
@@ -31,8 +32,9 @@ CREATE TABLE `teamboard` (
 
  CREATE TABLE `memberboard` (  
   `boardno` int(10) NOT NULL AUTO_INCREMENT,
-  `idx` int NOT NULL, 
+  `idx` int DEFAULT NULL, 
   `email` varchar(128) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` varchar(255) NOT NULL,
   `contentstack` varchar(128) NOT NULL,

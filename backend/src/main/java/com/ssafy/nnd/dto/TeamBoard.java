@@ -48,6 +48,9 @@ public class TeamBoard{
 	
 	@Column
 	private String content; // 본문내용
+	
+	@Column (name="kakaolink")
+	private String kakaoLink;
 
 	@Column (name = "techstack")
 	private String techStack; // 기술스택태그
@@ -64,10 +67,41 @@ public class TeamBoard{
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Member member;
 //
- 
+  public TeamBoard() {
+	// TODO Auto-generated constructor stub
+}
+  
 	
+	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
+		String deadLine, String title, String content, String techStack, String contentStack, int likeCnt,
+		LocalDateTime createDate) {
+	super();
+	this.teamboardNo = teamboardNo;
+	this.idx = idx;
+	this.email = email;
+	this.teamName = teamName;
+	this.memberEmails = memberEmails;
+	this.groupSize = groupSize;
+	this.deadLine = deadLine;
+	this.title = title;
+	this.content = content;
+	this.techStack = techStack;
+	this.contentStack = contentStack;
+	this.likeCnt = likeCnt;
+	this.createDate = createDate;
+}
+
+
 	public Long getTeamboardNo() {
 		return teamboardNo;
+	}
+
+	public String getKakaoLink() {
+		return kakaoLink;
+	}
+
+	public void setKakaoLink(String kakaoLink) {
+		this.kakaoLink = kakaoLink;
 	}
 
 	public String getMemberEmails() {
@@ -174,10 +208,11 @@ public class TeamBoard{
 	public String toString() {
 		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
 				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
-				+ title + ", content=" + content + ", techStack=" + techStack + ", contentStack=" + contentStack
-				+ ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
+				+ title + ", content=" + content + ", kakaoLink=" + kakaoLink + ", techStack=" + techStack
+				+ ", contentStack=" + contentStack + ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
 	}
 
+	
 	
 
 	
