@@ -16,6 +16,14 @@
           required
         ></v-text-field>
 
+        <v-text-field
+          v-model="passwordchk"
+          :rules="[passwordchkRules, passwordconfirmRules]"
+          :type="'password'"
+          label="비밀번호 확인"
+          required
+        ></v-text-field>
+
         <v-file-input v-model="profile" label="프로필 사진" prepend-icon></v-file-input>
 
         <v-text-field v-model="git" label="깃 주소"></v-text-field>
@@ -60,21 +68,28 @@ export default {
       (v) => !!v || "비밀번호는 필수 입력항목입니다",
       (v) => (v && v.length >= 8) || "8글자 이상 입력해야 합니다.",
     ],
+    passwordchk: "",
+    passwordchkRules: [(v) => !!v || "비밀번호 확인은 필수 입력항목입니다."],
+    git: "",
     checkbox: false,
   }),
+
+  computed: {
+    passwordconfirmRules() {
+      return () => this.password === this.passwordchk || "비밀번호가 다릅니다";
+    },
+  },
 
   methods: {
     signup() {
       if (this.$refs.form.validate()) {
         axios
           .post("http://localhost:8080/signup", {
-            params: {
-              name: this.name,
-              email: this.email,
-              password: this.password,
-              profile: this.profile,
-              git: this.git,
-            },
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            profile: this.profile,
+            git: this.git,
           })
           .then((response) => {
             console.log(response);
