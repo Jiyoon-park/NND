@@ -1,4 +1,3 @@
-
 CREATE TABLE liketeam(
     likeno                      int    NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     tboard                     int    NOT NULL,    
