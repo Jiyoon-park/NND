@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.MemberBoard;
+import com.ssafy.nnd.repository.MemberBoardCustomRepository;
+import com.ssafy.nnd.repository.MemberBoardCustomRepositoryImpl;
 import com.ssafy.nnd.repository.MemberBoardRepository;
 
 @CrossOrigin
@@ -28,6 +30,11 @@ public class MemberBoardController {
     	
     	
     	return memberBoardRepository.findAllByOrderByBoardNoDesc();
+    }
+    
+    @GetMapping("/memberboard/search")
+    public List<MemberBoard> searchMemberBoard(){
+    	return memberBoardRepository.findMemberBoardList();
     }
     
     @GetMapping("/memberboard/{id}")
