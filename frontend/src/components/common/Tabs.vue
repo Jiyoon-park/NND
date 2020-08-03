@@ -2,26 +2,22 @@
   <div>
     <v-tabs
       class="rounded-0 mt-13"
-      background-color="teal"
+      background-color="white"
       v-model="currentItem"
-      dark
+      color="black"
       fixed-tabs
-      slider-color="white"
+      slider-color="#30336b"
     >
       <v-tab v-for="item in items" :key="item" :href="'#tab-' + item">
-        {{
-        item
-        }}
+        {{ item }}
       </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="currentItem">
       <v-tab-item v-for="item in items" :key="item" :value="'tab-' + item">
         <SearchBar />
-
-        <TeammemberFeed v-if="item==='팀원'" />
-
-        <TeamFeed v-if="item==='팀'" />
+        <TeammemberFeed v-if="item === '팀원'" />
+        <TeamFeed v-if="item === '팀'" />
       </v-tab-item>
     </v-tabs-items>
   </div>

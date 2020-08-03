@@ -1,6 +1,5 @@
 <template>
   <div id="create">
-    <!--
     <v-btn
       fab
       dark
@@ -9,12 +8,10 @@
       fixed
       right
       bottom
-      @click="$vuetify.goTo(target)"
+      @click="$router.push('/addboard')"
     >
-      <v-icon v-if="visible" dark>mdi-chevron-up</v-icon>
-      <v-icon v-if="!visible" dark>mdi-plus</v-icon>
+      <v-icon dark>mdi-plus</v-icon>
     </v-btn>
-    -->
   </div>
 </template>
 
@@ -25,7 +22,7 @@ export default {
   created: function() {
     addBackToTop({
       backgroundColor: "red",
-      diameter: 40,
+      diameter: 64,
     });
   },
   methods: {},
@@ -34,4 +31,9 @@ export default {
 <!--
 npm install --save vanilla-back-to-top
  -->
-<style></style>
+<style>
+#back-to-top {
+  margin-bottom: 70px;
+  margin-right: -4px;
+}
+</style>

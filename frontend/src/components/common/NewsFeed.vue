@@ -1,25 +1,27 @@
 <template>
-  <div>
+  <v-container>
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
-        <v-card>
+        <v-card outlined>
           <v-list-item>
             <v-list-item-avatar color="grey"></v-list-item-avatar>
             <v-list-item-content>
-              <span class="grey--text">User Name</span>
-              <div class="text-center">
-                <v-chip class="ma-2" color="indigo" text-color="white"
-                  >팀원</v-chip
+              <span class="grey--text">{{ teaminfo.email }}</span>
+              <div class="text-right">
+                <v-chip
+                  class="ma-2"
+                  color="indigo"
+                  text-color="white"
+                  v-for="stack in JSON.parse(stacks)"
+                  :key="stack"
+                  >{{ stack }}</v-chip
                 >
               </div>
             </v-list-item-content>
           </v-list-item>
           <v-card-title>
-            <span>공모전 팀원 구합니다</span>
+            <span>{{ teaminfo.title }}</span>
           </v-card-title>
-          <v-card-subtitle>
-            <span>같이 javascript 및 jQuery 관련 프로젝트할 팀원 구합니다</span>
-          </v-card-subtitle>
           <v-card-actions>
             <v-btn
               v-if="!favorite"
@@ -49,23 +51,20 @@
             </v-btn>
             <v-spacer />
             <v-spacer />
-            <v-btn v-if="!show" @click="show = !show"> 상세정보</v-btn>
-            <v-btn v-if="show" @click="show = !show"> 닫기</v-btn>
+            <v-btn v-if="!show" @click="show = !show">상세정보</v-btn>
+            <v-btn v-if="show" @click="show = !show">닫기</v-btn>
           </v-card-actions>
 
           <v-expand-transition>
             <div v-show="show">
               <v-divider />
 
-              <v-card outlined color="blue lighten-4">
-                <v-card-title class="headline"
-                  >공모전 팀원 구합니다</v-card-title
-                >
+              <v-card outlined color="blue lighten-5">
+                <v-card-title class="headline">{{
+                  teaminfo.title
+                }}</v-card-title>
                 <v-card-text>
-                  같이 javascript 및 jQuery 관련 프로젝트 팀원 구합니다.
-                  <br />프론트쪽 사람은 마무리되었습니다. <br />문의사항있으시면
-                  아래 링크로 질문해주시면 고맙겠습니다.
-                  <br />
+                  {{ teaminfo.content }}
                 </v-card-text>
                 <v-card-text>오픈카톡방 : KAKAO!!</v-card-text>
                 <v-card-actions>
@@ -160,11 +159,13 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </div>
+  </v-container>
 </template>
 
 <script>
 export default {
+  name: "NewsFeed",
+  props: ["teaminfo"],
   data() {
     return {
       show: false,
@@ -177,6 +178,7 @@ export default {
       selected5: false,
       selected6: false,
       selected7: false,
+      stacks: this.teaminfo.techStack,
     };
   },
   methods: {

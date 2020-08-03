@@ -67,8 +67,31 @@ public class TeamBoard{
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Member member;
 //
- 
+  public TeamBoard() {
+	// TODO Auto-generated constructor stub
+}
+  
 	
+	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
+		String deadLine, String title, String content, String techStack, String contentStack, int likeCnt,
+		LocalDateTime createDate) {
+	super();
+	this.teamboardNo = teamboardNo;
+	this.idx = idx;
+	this.email = email;
+	this.teamName = teamName;
+	this.memberEmails = memberEmails;
+	this.groupSize = groupSize;
+	this.deadLine = deadLine;
+	this.title = title;
+	this.content = content;
+	this.techStack = techStack;
+	this.contentStack = contentStack;
+	this.likeCnt = likeCnt;
+	this.createDate = createDate;
+}
+
+
 	public Long getTeamboardNo() {
 		return teamboardNo;
 	}

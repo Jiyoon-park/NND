@@ -1,19 +1,9 @@
 <template>
-  <div>
-    <p>팀멤버</p>
-    <NewsFeed />
-    <NewsFeed />
-    <NewsFeed />
-  </div>
+  <div></div>
 </template>
 
 <script>
-import NewsFeed from "./NewsFeed.vue";
-export default {
-  components: {
-    NewsFeed,
-  },
-};
+export default {};
 </script>
 
 <style></style>

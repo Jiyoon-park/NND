@@ -4,16 +4,13 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
-        <v-btn small @click="$router.push('/profile-update')">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
+        <v-btn small @click="$router.push('/profile')">save</v-btn>
       </div>
-
       <v-tabs class="tabs">
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
@@ -24,32 +21,64 @@
 
       <div id="my-info" class="target">
         <h3># 내정보</h3>
-        <v-row>
-          <v-col cols="4" md="2">
-            <p>이메일</p>
-            <p>GIT 주소</p>
-          </v-col>
-          <v-col cols="8" md="10">
-            <p>{{ user.email }}</p>
-            <p>{{ user.gitaddr }}</p>
-          </v-col>
-        </v-row>
+        <v-card-text>
+          <v-text-field
+            filled
+            dense
+            disabled
+            :value="user.email"
+            label="이메일"
+            color="white"
+          ></v-text-field>
+          <v-text-field
+            filled
+            dense
+            v-model="user.name"
+            label="이름"
+          ></v-text-field>
+          <v-text-field
+            dense
+            v-model="userinfo.password"
+            label="비밀번호"
+            filled
+          ></v-text-field>
+          <v-text-field
+            dense
+            v-model="userinfo.password2"
+            label="비밀번호 확인"
+            filled
+          ></v-text-field>
+          <v-text-field
+            dense
+            v-model="user.gitaddr"
+            label="GIT 주소"
+            filled
+          ></v-text-field>
+        </v-card-text>
       </div>
-
-      <hr />
+      <v-divider></v-divider>
       <div id="skills" class="target">
         <h3># 기술스택</h3>
         <div class="skills">
-          <v-btn small color="primary" class="skill">java</v-btn>
-          <v-btn small color="primary" class="skill">C</v-btn>
-          <v-btn small color="primary" class="skill">C++</v-btn>
-          <v-btn small color="primary" class="skill">Python</v-btn>
+          <v-chip-group column multiple>
+            <v-chip filter outlined>Java</v-chip>
+            <v-chip filter outlined>C</v-chip>
+            <v-chip filter outlined>C++</v-chip>
+            <v-chip filter outlined>Python</v-chip>
+            <v-chip filter outlined>Spring</v-chip>
+            <v-chip filter outlined>Django</v-chip>
+          </v-chip-group>
         </div>
       </div>
 
-      <hr />
+      <v-divider></v-divider>
       <div id="experience" class="target">
-        <h3># 참여이력</h3>
+        <div class="d-flex justify-space-between">
+          <h3># 참여이력</h3>
+          <div>
+            <AddProjectHistory />
+          </div>
+        </div>
         <ProjectHistoryList />
       </div>
     </v-col>
@@ -61,11 +90,13 @@ import * as easings from "vuetify/es5/services/goto/easing-patterns";
 import axios from "axios";
 
 import NavBar from "../common/NavBar.vue";
+import AddProjectHistory from "../profile/AddProjectHistory.vue";
 import ProjectHistoryList from "../profile/ProjectHistoryList.vue";
 
 export default {
   components: {
     NavBar,
+    AddProjectHistory,
     ProjectHistoryList,
   },
   data() {
@@ -74,6 +105,15 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
+      hasSaved: false,
+      isEditing: null,
+      model: null,
+      userinfo: {
+        newName: "",
+        password: "",
+        password2: "",
+        gitaddress: "",
+      },
       user: "",
       profileURL: "",
     };
@@ -127,9 +167,5 @@ export default {
 
 .skill {
   margin: 0 3px;
-}
-
-hr {
-  margin: 30px 0;
 }
 </style>
