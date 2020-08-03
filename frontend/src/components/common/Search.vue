@@ -1,26 +1,15 @@
 <template>
   <v-dialog v-model="dialog" fullscreen hide-overlay>
     <template v-slot:activator="{ on, attrs }">
-      <i
-        class="fas fa-search"
-        @click="dialog = true"
-        dark
-        v-bind="attrs"
-        v-on="on"
-      ></i>
+      <i class="fas fa-search" @click="dialog = true" dark v-bind="attrs" v-on="on"></i>
     </template>
     <v-card>
       <v-toolbar dark color="purple lighten-2">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title></v-toolbar-title>
+        <v-toolbar-title>Search</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items>
-          <v-btn background-color="purple" dark text @click="dialog = false"
-            >search</v-btn
-          >
-        </v-toolbar-items>
       </v-toolbar>
       <v-container>
         <v-list three-line subheader>
@@ -48,17 +37,11 @@
             <v-list-item-content class="py-0">
               <div class="d-flex justify-center">
                 <v-chip-group
-                  v-model="selection"
+                  v-model="typeSelection"
                   active-class="deep-purple--text text--accent-4"
-                  mandatory
+                  multiple
                 >
-                  <v-chip
-                    large
-                    v-for="type in types"
-                    :key="type"
-                    :value="type"
-                    >{{ type }}</v-chip
-                  >
+                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -70,23 +53,21 @@
           <v-list-item>
             <v-list-item-content>
               <div class="d-flex justify-center">
-                <v-radio-group row>
-                  <v-radio
-                    label="스터디"
-                    color="purple"
-                    value="스터디"
-                  ></v-radio>
-                  <v-radio
-                    label="프로젝트"
-                    color="orange"
-                    value="프로젝트"
-                  ></v-radio>
-                  <v-radio
-                    label="공모전"
-                    color="success"
-                    value="공모전"
-                  ></v-radio>
-                </v-radio-group>
+                <v-switch v-model="categorySelection" label="스터디" color="red darken-3" value="스터디"></v-switch>
+                <v-switch
+                  v-model="categorySelection"
+                  label="프로젝트"
+                  color="indigo darken-3"
+                  value="프로젝트"
+                  class="mx-2"
+                ></v-switch>
+                <v-switch
+                  v-model="categorySelection"
+                  label="공모전"
+                  color="orange darken-3"
+                  value="공모전"
+                ></v-switch>
+                <!-- {{ categorySelection }} -->
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -96,7 +77,7 @@
           <v-subheader>By Skills:</v-subheader>
           <v-list-item>
             <v-list-item-content class="py-0">
-              <div class="d-flex justify-center">
+              <div class="d-flex flex-column justify-center">
                 <v-chip-group v-model="skillSelection" multiple column>
                   <v-chip
                     filter
@@ -104,28 +85,59 @@
                     v-for="skill in skills"
                     :key="skill"
                     :value="skill"
-                    >{{ skill }}</v-chip
-                  >
+                  >{{ skill }}</v-chip>
                 </v-chip-group>
+                <!-- 기술스택 추가하기 구현 못함-->
+                <v-combobox v-model="newSkill" label="기술스택 추가" chips></v-combobox>
               </div>
             </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-container>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+        <v-btn color="blue darken-1" text @click="submit">Search</v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     dialog: false,
-    search: [],
-    selection: "team",
+    search: "",
+    typeSelection: [],
+    categorySelection: [],
+    skillSelection: [],
+    newSkill: "",
     types: ["team", "member"],
     skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
-    skillSelection: null,
   }),
+  methods: {
+    submit() {
+      axios
+        .put("http://localhost:8080/search", {
+          search: this.search,
+          type: this.typeSelection,
+          category: this.categorySelection,
+          skill: this.skillSelection,
+        })
+        .then((response) => {
+          console.log(response);
+          alert("등록성공");
+          // this.goMain();
+        })
+        .catch((error) => {
+          console.log(error.response);
+          alert("실패");
+        });
+      this.dialog = false;
+    },
+  },
 };
 </script>
 
