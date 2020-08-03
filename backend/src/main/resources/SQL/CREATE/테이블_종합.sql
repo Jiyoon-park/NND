@@ -40,7 +40,7 @@ CREATE TABLE `teamboard` (
   `contentstack` varchar(128) NOT NULL,
   `techstack` varchar(128) NOT NULL, 
   `createdate` datetime DEFAULT current_timestamp(),
-  `likecnt` int(10) NOT NULL,
+  `likecnt` int(10) DEFAULT 0,
   PRIMARY KEY (`boardno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -73,8 +73,8 @@ CREATE TABLE liketeam(
     tboard                     int    NOT NULL,    
     mno                        int    NOT NULL,
     createdate                datetime DEFAULT current_timestamp(),
-    FOREIGN KEY (mno) REFERENCES member (idx),
-    FOREIGN KEY (tboard) REFERENCES teamboard (teamboardno)
+    FOREIGN KEY (mno) REFERENCES member (idx) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (tboard) REFERENCES teamboard (teamboardno) ON UPDATE CASCADE ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -83,6 +83,6 @@ CREATE TABLE likemember(
     mboard                     int    NOT NULL,    
     mno                        int    NOT NULL,
     createdate                datetime DEFAULT current_timestamp(),
-    FOREIGN KEY (mno) REFERENCES member (idx),
-    FOREIGN KEY (mboard) REFERENCES memberboard (boardno)
+    FOREIGN KEY (mno) REFERENCES member (idx) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (mboard) REFERENCES memberboard (boardno) ON UPDATE CASCADE ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
