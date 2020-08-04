@@ -96,7 +96,7 @@ public class MemberController {
 		//		
 
 		Optional<Member> memberOpt = memberRepository.findMemberByEmail(request.getEmail());
-		Member member= new Member(request.getName(),request.getEmail(), request.getProfile(), request.getPassword(),"null",request.getGitaddr(),request.getMemberstack());
+		Member member= new Member(request.getName(),request.getEmail(), request.getPassword(), request.getProfile(),"null",request.getGitaddr(),request.getMemberstack());
 
 		ResponseEntity response = null;
 
