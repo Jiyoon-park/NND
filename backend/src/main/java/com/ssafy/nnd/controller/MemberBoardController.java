@@ -59,7 +59,7 @@ public class MemberBoardController {
     	Optional<MemberBoard> memberBoard = memberBoardRepository.findById(postID);
     	memberBoard.get().setTitle(newmemberBoard.getTitle());
     	memberBoard.get().setContent(newmemberBoard.getContent());
-    	memberBoard.get().setContentStack(newmemberBoard.getContentStack());
+    	memberBoard.get().setCategory(newmemberBoard.getCategory());
     	memberBoard.get().setTechStack(newmemberBoard.getTechStack());
     	
     	System.out.println(memberBoard.toString());
