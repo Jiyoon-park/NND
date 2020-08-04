@@ -40,6 +40,10 @@
       </v-list>
     </v-navigation-drawer>
 
+    <!-- 자몽 -->
+    <!-- <v-app-bar color="#eb4d4b" app :flat="true" :fixed="true"> -->
+    <!-- 남색 -->
+    <!-- <v-app-bar color="#30336b" app :flat="true" :fixed="true"> -->
     <v-app-bar color="#FFF" app :flat="true" :fixed="true">
       <img
         src="../../assets/images/sm_logo.png"
@@ -73,12 +77,13 @@ export default {
       { icon: "bubble_chart", title: "About", to: "/about" },
     ],
   }),
-  created () {
-    this.id = this.$route.params.id //넘겨 받아야함
-    console.log(this.id)
+  created() {
+    this.id = this.$route.params.id; //넘겨 받아야함
+    console.log(this.id);
   },
   methods: {},
 };
 </script>
 
 <style></style>
+

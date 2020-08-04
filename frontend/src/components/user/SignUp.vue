@@ -16,9 +16,13 @@
           required
         ></v-text-field>
 
-        <v-file-input label="프로필 사진" prepend-icon></v-file-input>
-
-        <v-text-field v-model="git" label="깃 주소"></v-text-field>
+        <v-text-field
+          v-model="passwordchk"
+          :rules="[passwordchkRules, passwordconfirmRules]"
+          :type="'password'"
+          label="비밀번호 확인"
+          required
+        ></v-text-field>
 
         <v-checkbox
           v-model="checkbox"
@@ -27,8 +31,7 @@
           required
         ></v-checkbox>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">제출</v-btn>
-
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="signup">제출</v-btn>
         <v-btn color="error" class="mr-4" @click="reset">초기화</v-btn>
         <v-btn color="yellow" class="mr-4" @click="$router.push('/login')">로그인화면</v-btn>
         <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">비밀번호찾기</v-btn>
@@ -39,6 +42,7 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
+import axios from "axios";
 
 export default {
   name: "SignUp",
@@ -46,6 +50,13 @@ export default {
     NavBar,
   },
   data: () => ({
+    signupData: {
+      name: null,
+      email: null,
+      profile: null,
+      password: null,
+    },
+
     valid: true,
     name: "",
     nameRule: [(v) => !!v || "이름은 필수 입력항목입니다."],
@@ -59,12 +70,37 @@ export default {
       (v) => !!v || "비밀번호는 필수 입력항목입니다",
       (v) => (v && v.length >= 8) || "8글자 이상 입력해야 합니다.",
     ],
+    passwordchk: "",
+    passwordchkRules: [(v) => !!v || "비밀번호 확인은 필수 입력항목입니다."],
     checkbox: false,
   }),
 
+  computed: {
+    passwordconfirmRules() {
+      return () => this.password === this.passwordchk || "비밀번호가 다릅니다";
+    },
+  },
+
   methods: {
-    validate() {
-      this.$refs.form.validate();
+    signup() {
+      if (this.$refs.form.validate()) {
+        axios
+          .post("http://localhost:8080/member/signup", {
+            name: this.name,
+            email: this.email,
+            profile: null,
+            password: this.password,
+          })
+          .then((response) => {
+            console.log(response);
+            alert("회원가입 완료");
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.$router.push("/signup");
+          });
+      }
     },
     reset() {
       this.$refs.form.reset();

@@ -8,6 +8,7 @@ import Login from "../components/user/Login.vue";
 import Profile from "../components/user/Profile.vue";
 import ProfileUpdate from "../components/user/ProfileUpdate.vue";
 import AddBoard from "../components/common/AddBoard.vue";
+import LetterList from "../components/letter/LetterList.vue";
 
 Vue.use(VueRouter);
 
@@ -43,7 +44,7 @@ const routes = [
   },
   {
     path: "/login",
-    name: Login,
+    name: "Login",
     component: Login,
   },
   {
@@ -54,13 +55,18 @@ const routes = [
   },
   {
     path: "/profile-update",
-    name: ProfileUpdate,
+    name: "ProfileUpdate",
     component: ProfileUpdate,
   },
   {
     path: "/addboard",
-    name: AddBoard,
+    name: "AddBoard",
     component: AddBoard,
+  },
+  {
+    path: "/letter",
+    name: "LetterList",
+    component: LetterList,
   },
 ];
 

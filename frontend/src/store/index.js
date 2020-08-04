@@ -1,86 +1,96 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from 'axios'
+import axios from "axios";
 Vue.use(Vuex);
 
 //토큰 저장
 export default new Vuex.Store({
   state: {
     count: 0,
-    token: '',
+    token: "",
     user: {},
-    log: []
+    log: [],
   },
   getters: {
-    getCountValue: state => {
-      return state.count
+    getCountValue: (state) => {
+      return state.count;
     },
-    getToken: state => {
-      return state.token
+    getToken: (state) => {
+      return state.token;
     },
-    getUser: state => {
-      return state.user
+    getUser: (state) => {
+      return state.user;
     },
-    getLog: state => {
-      return state.log
+    getLog: (state) => {
+      return state.log;
     },
-    isloggedIn: state => {
-      return !!state.user
-    }
+    isloggedIn: (state) => {
+      return !!state.user;
+    },
   },
   mutations: {
-    increment (state) {
-      state.count++
+    increment(state) {
+      state.count++;
     },
-    setToken (state, token) {
-      state.token = token
+    setToken(state, token) {
+      state.token = token;
     },
-    setUser (state, user) {
-      state.user = user
+    setUser(state, user) {
+      state.user = user;
     },
-    setLog (state, log) {
-      state.log = log
+    setLog(state, log) {
+      state.log = log;
     },
-    logout (state) {
-      state.user = ''
-      state.token = ''
-    }
+    logout(state) {
+      state.user = "";
+      state.token = "";
+    },
   },
   actions: {
-    async getUserFromServer (context) {
-      console.log("getUserFromServer")
+    async getUserFromServer(context) {
       if (context.state.token) {
-        axios.get('http://localhost:8080/member', { //재시작시 실행
-          headers: {
-            Authorization: 'Bearer ' + context.state.token // the token is a variable which holds the token
-          }
-        }).then((resp) => {
-          console.log(resp);
-          console.log('getUserFromServer.action.afterAxios')
-          context.commit('setUser', resp.data)
-        }, (resp) => {
-          console.log(resp);
-          console.log('Error while loading user')
-          window.$cookies.remove('nnd')
-          context.commit('setUser', '')
-        })
+        axios
+          .get("http://localhost:8080/member", {
+            //재시작시 실행
+            headers: {
+              Authorization: "Bearer " + context.state.token, // the token is a variable which holds the token
+            },
+          })
+          .then(
+            (resp) => {
+              console.log(resp);
+              console.log("getUserFromServer.action.afterAxios");
+              context.commit("setUser", resp.data);
+            },
+            (resp) => {
+              console.log(resp);
+              console.log("Error while loading user");
+              window.$cookies.remove("nnd");
+              context.commit("setUser", "");
+            }
+          );
       }
     },
-    async getLogById ({commit, state}) {
-      console.log('getUserLogById.action')
+    async getLogById({ commit, state }) {
+      console.log("getUserLogById.action");
       if (state.user.id) {
-        axios.get('http://localhost:8080/member/info/?id=${state.user.id}', {
-          headers: {
-            Authorization: 'Bearer ' + state.token // the token is a variable which holds the token
-          }
-        }).then((resp) => {
-          console.log(resp);
-          commit('setLog', resp.data)
-        }, (resp) => {
-          console.log(resp);
-          console.log('Error while loading log ')
-        })
+        axios
+          .get("http://localhost:8080/member/info/?id=${state.user.id}", {
+            headers: {
+              Authorization: "Bearer " + state.token, // the token is a variable which holds the token
+            },
+          })
+          .then(
+            (resp) => {
+              console.log(resp);
+              commit("setLog", resp.data);
+            },
+            (resp) => {
+              console.log(resp);
+              console.log("Error while loading log ");
+            }
+          );
       }
-    }
-  }
-})
+    },
+  },
+});
