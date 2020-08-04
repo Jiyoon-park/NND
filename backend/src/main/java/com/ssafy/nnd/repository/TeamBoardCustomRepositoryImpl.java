@@ -7,9 +7,9 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 
-import com.ssafy.nnd.dto.MemberBoard;
+import com.ssafy.nnd.dto.TeamBoard;
 
-public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomRepository {
+public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository {
 	
 	@Autowired
 	EntityManager entityManager;
@@ -22,10 +22,10 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 
 	@Override
 	@Query(nativeQuery = true)
-	public List findMemberBoardList(List query, List category, List skills) {
-		System.out.println("custom findMemberBoardList");
+	public List findTeamBoardList(List query, List category, List skills) {
+		System.out.println("custom findTeamBoardList");
 		StringBuilder str = new StringBuilder();
-		str.append("select m from MemberBoard as m where ");
+		str.append("select m from TeamBoard as m where ");
 		
 		// query
 		// title과 content를 대상으로 검색
@@ -36,10 +36,10 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 				str.append(" OR ");
 				str.append("content like " + "\'%" + string + "%\'");
 				str.append(" OR ");
-				str.append("name like " + "\'%" + string + "%\'");
+				str.append("teamname like " + "\'%" + string + "%\'");
 				str.append(" OR ");
 			}
-			str.append("1 = 1) AND ");
+			str.append("1 = 0) AND ");
 		}
 		
 		// category
@@ -49,7 +49,7 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 				str.append("category = " + "\'" + string + "\'");
 				str.append(" OR ");
 			}
-			str.append("1 = 1) AND ");
+			str.append("1 = 0) AND ");
 		}
 		
 		// skills
@@ -59,16 +59,14 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 				str.append("techstack like " + "\'%" + string + "%\'");
 				str.append(" OR ");
 			}
-			str.append("1 = 1) AND ");
+			str.append("1 = 0) AND ");
 		}
 		
 		// 맨마지막은 항상 1을 붙여서 AND로 종료되지 않도록 한다.
 		str.append("1 = 1");
-		
 		System.out.println(str.toString());
 		
-		
-		return entityManager.createQuery(str.toString(), MemberBoard.class).getResultList();
+		return entityManager.createQuery(str.toString(), TeamBoard.class).getResultList();
 	}
 
 
