@@ -5,15 +5,7 @@
       <h2>로그인</h2>
       <v-form class="form" ref="form" v-model="valid" lazy-validation>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="이메일"
-          required
-          outlined
-          dense
-        ></v-text-field>
+        <v-text-field v-model="email" :rules="emailRules" label="이메일" required outlined dense></v-text-field>
         <v-text-field
           v-model="password"
           :rules="[rules.required, rules.min]"
@@ -24,14 +16,8 @@
           outlined
           dense
         ></v-text-field>
-        <v-btn class="button" :disabled="!valid" color="teal" @click="login"
-          >로그인</v-btn
-        >
-        <v-checkbox
-          v-model="checkbox"
-          color="success"
-          label="로그인 정보 기억"
-        ></v-checkbox>
+        <v-btn class="button" :disabled="!valid" color="teal" @click="login">로그인</v-btn>
+        <v-checkbox v-model="checkbox" color="success" label="로그인 정보 기억"></v-checkbox>
       </v-form>
       <div class="login-body text-center">
         <div class="sns-login">
@@ -39,16 +25,14 @@
           <v-btn color="yellow darken-1" class="sns-btn" dark>
             <a
               href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"
-              >Kakao</a
-            >
+            >Kakao</a>
           </v-btn>
           <v-btn color="green accent-4" class="sns-btn" dark>Naver</v-btn>
           <v-btn color="light-blue darken-2" class="sns-btn" dark>Google</v-btn>
         </div>
         <div class="add-option">
           <router-link to="/signup" class="routers">회원가입</router-link>|
-          <router-link to="/findemail" class="routers">이메일 찾기</router-link
-          >|
+          <router-link to="/findemail" class="routers">이메일 찾기</router-link>|
           <router-link to="/findpw" class="routers">비밀번호 찾기</router-link>
         </div>
       </div>
@@ -65,11 +49,10 @@ export default {
     NavBar,
   },
   data: () => ({
-    loginData: {
-      email: null,
-      password: null,
-    },
+    id: 0,
+    token: "",
     valid: true,
+    email: "",
     emailRules: [
       (v) => !!v || "이메일을 입력해주세요",
       (v) => /.+@.+\..+/.test(v) || "올바른 양식의 이메일을 입력해주세요",
@@ -82,28 +65,37 @@ export default {
     checkbox: false,
     show: false,
   }),
-    created () {
-    let token = window.$cookies.get('nnd') //nnd가 key인 쿠키 가져옴
-    if (token) { //토큰 존재하면
-      this.$router.push("/") //home으로 보냄
+  created() {
+    let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    if (token) {
+      //토큰 존재하면
+      console.log("already-login");
+      this.$router.push("/"); //home으로 보냄
     }
   },
   methods: {
     login() {
       if (this.$refs.form.validate()) {
-        axios.post('http://localhost:8080/member/login', {
+        axios
+          .post("http://localhost:8080/member/login", {
             email: this.email,
             password: this.password,
-        })
-        .then((response) => {
-          console.log(response)
-          window.$cookies.set('nnd', response.data, '2d') //로그인시 쿠키 저장
-          //location.reload()
-          this.$router.push("/") //로그인 성공하면 home으로
-        },
-        () => {
-          console.log('failed')
-        });
+          })
+          .then(
+            (response) => {
+              console.log(response);
+              window.$cookies.set("nnd", response.data.data, "2d"); //로그인시 쿠키 저장
+              console.log(response.data.object.idx);
+              //location.reload()
+              this.$router.push({
+                name: "Home",
+                params: { id: response.data.object.idx },
+              });
+            },
+            () => {
+              console.log("failed");
+            }
+          );
       }
     },
   },
