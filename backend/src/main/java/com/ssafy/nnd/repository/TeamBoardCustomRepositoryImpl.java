@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
+import com.ssafy.nnd.dto.MemberBoard;
 import com.ssafy.nnd.dto.TeamBoard;
 
 public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository {
@@ -22,7 +24,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 
 	@Override
 	@Query(nativeQuery = true)
-	public List findTeamBoardList(List query, List category, List skills) {
+	public List findTeamBoardList(List query, List category, List skills, final Pageable pageable) {
 		System.out.println("custom findTeamBoardList");
 		StringBuilder str = new StringBuilder();
 		str.append("select m from TeamBoard as m where ");
@@ -66,7 +68,10 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		str.append("1 = 1");
 		System.out.println(str.toString());
 		
-		return entityManager.createQuery(str.toString(), TeamBoard.class).getResultList();
+		int pageNumber = pageable.getPageNumber();
+		int pageSize = pageable.getPageSize();
+		
+		return entityManager.createQuery(str.toString(), TeamBoard.class).setFirstResult((pageNumber-1) * pageSize).setMaxResults(pageNumber * pageSize).getResultList();
 	}
 
 

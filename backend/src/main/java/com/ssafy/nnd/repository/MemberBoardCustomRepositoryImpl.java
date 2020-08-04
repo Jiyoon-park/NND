@@ -68,8 +68,10 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		
 		System.out.println(str.toString());
 		
+		int pageNumber = pageable.getPageNumber();
+		int pageSize = pageable.getPageSize();
 		
-		return entityManager.createQuery(str.toString(), MemberBoard.class).getResultList();
+		return entityManager.createQuery(str.toString(), MemberBoard.class).setFirstResult((pageNumber-1) * pageSize).setMaxResults(pageNumber * pageSize).getResultList();
 	}
 
 
