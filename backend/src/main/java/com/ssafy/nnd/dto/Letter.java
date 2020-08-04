@@ -41,7 +41,10 @@ public class Letter {
 	private String content;	// 메시지 내용
 	
 	@Column(name = "createdate", insertable = false, updatable = false)
-	private LocalDateTime createDate;	// 메시지 발수신 시각
+	private LocalDateTime createDate;	// 메시지 발수신 시각	
+	
+	@Column(name = "read")
+	private Byte read;		// 메시지 읽었는지 확인 (안읽음 = 0, 읽음 1)
 	
 	public Letter() {
 		// TODO Auto-generated constructor stub
@@ -86,13 +89,21 @@ public class Letter {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+	
+	public Byte getRead() {
+		return read;
+	}
+
+	public void setRead(Byte read) {
+		this.read = read;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Letter [letterNo=").append(letterNo).append(", sendIdx=").append(sendIdx)
 				.append(", receiveIdx=").append(receiveIdx).append(", content=").append(content).append(", createDate=")
-				.append(createDate).append("]");
+				.append(createDate).append(", read=").append(read).append("]");
 		return builder.toString();
 	}
 	
