@@ -22,8 +22,8 @@
       <div class="login-body text-center">
         <div class="sns-login">
           <p>SNS로 간편하게 로그인할 수 있어요!</p>
-          <v-btn color="yellow darken-1" class="sns-btn" dark
-            ><a
+          <v-btn color="yellow darken-1" class="sns-btn" dark>
+            <a
               href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"
             >Kakao</a>
           </v-btn>
@@ -84,8 +84,8 @@ export default {
           .then(
             (response) => {
               console.log(response);
-              window.$cookies.set("nnd", response.data.data, "2d"); //로그인시 쿠키 저장
-              console.log(response.data.object.idx);
+              window.$cookies.set("nnd", response.data, "2d"); //로그인시 쿠키 저장
+              console.log(response.data.object);
               //location.reload()
               this.$router.push({
                 name: "Home",
