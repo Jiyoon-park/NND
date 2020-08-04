@@ -55,8 +55,8 @@ public class TeamBoard{
 	@Column (name = "techstack")
 	private String techStack; // 기술스택태그
  
-	@Column (name = "contentstack")
-	private String contentStack; // 내용스택태그
+	@Column (name = "category")
+	private String category; // 내용스택태그
 
 	@Column (name = "likecnt")
 	private int likeCnt; // 개수
@@ -73,7 +73,7 @@ public class TeamBoard{
   
 	
 	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
-		String deadLine, String title, String content, String techStack, String contentStack, int likeCnt,
+		String deadLine, String title, String content, String techStack, String category, int likeCnt,
 		LocalDateTime createDate) {
 	super();
 	this.teamboardNo = teamboardNo;
@@ -86,7 +86,7 @@ public class TeamBoard{
 	this.title = title;
 	this.content = content;
 	this.techStack = techStack;
-	this.contentStack = contentStack;
+	this.category = category;
 	this.likeCnt = likeCnt;
 	this.createDate = createDate;
 }
@@ -180,12 +180,12 @@ public class TeamBoard{
 		this.techStack = techStack;
 	}
 
-	public String getContentStack() {
-		return contentStack;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setContentStack(String contentStack) {
-		this.contentStack = contentStack;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public int getLikeCnt() {
@@ -209,7 +209,7 @@ public class TeamBoard{
 		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
 				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
 				+ title + ", content=" + content + ", kakaoLink=" + kakaoLink + ", techStack=" + techStack
-				+ ", contentStack=" + contentStack + ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
+				+ ", category=" + category + ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
 	}
 
 	
