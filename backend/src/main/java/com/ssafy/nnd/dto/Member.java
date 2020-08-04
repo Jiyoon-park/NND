@@ -30,7 +30,7 @@ public class Member implements Serializable {
     
 	@Column
     public String password;
-    
+
     @Column
     public String company;
     
@@ -39,6 +39,7 @@ public class Member implements Serializable {
     
     @Column
     public String memberstack;
+
 
 	public Long getIdx() {
 		return idx;
@@ -104,14 +105,16 @@ public class Member implements Serializable {
 		this.company = company;
 	}
 
+
+	
+
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Member [idx=").append(idx).append(", name=").append(name).append(", email=").append(email)
-				.append(", profile=").append(profile).append(", company=").append(company).append("]");
-		return builder.toString();
+		return "Member [idx=" + idx + ", name=" + name + ", email=" + email + ", profile=" + profile + ", password="
+				+ password + ", company=" + company + ", gitaddr=" + gitaddr + ", memberstack=" + memberstack + "]";
 	}
-	
+
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
