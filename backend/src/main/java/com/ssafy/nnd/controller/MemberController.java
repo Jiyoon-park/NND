@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +29,7 @@ import com.ssafy.nnd.service.JwtService;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/member")
 public class MemberController {
 
 	@Autowired
@@ -38,7 +41,7 @@ public class MemberController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@GetMapping("/member/init")
+	@GetMapping
 	public LoginVo getUser() {
 		System.out.println("!!!!!!!!!!");
 		long memberId = jwtService.getMemberId();
@@ -48,7 +51,7 @@ public class MemberController {
 		return modelMapper.map(loginMember.get(), LoginVo.class);
 	}
 
-	@PostMapping("/member/login")
+	@PostMapping("/login")
 	public Object login(@RequestBody Member member) {
 
 		String email = member.getEmail();
@@ -66,6 +69,7 @@ public class MemberController {
 			String token = jwtService.create("member", loginmember, "user");
 			System.out.println(token);
 			final BasicResponse result = new BasicResponse();
+			result.object = loginmember;
 			result.status = true;
 			result.data = token;
 			response = new ResponseEntity<>(result, HttpStatus.OK);
@@ -78,7 +82,7 @@ public class MemberController {
 	}
 
 
-	@PostMapping("/member/signup")
+	@PostMapping("/signup")
 	public String signup(@Valid @RequestBody SignupRequest request) {
 
 		//		 try {
@@ -109,6 +113,13 @@ public class MemberController {
 		}
 
 		return "!!";
+	}
+
+	@GetMapping("/info/{id}")
+	public Object getuserinfo(@PathVariable long id) {
+		Optional<Member> member = memberRepository.findById(id);
+		
+		return member.get();
 	}
 
 }

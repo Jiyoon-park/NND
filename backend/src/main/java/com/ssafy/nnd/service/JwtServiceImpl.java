@@ -70,7 +70,7 @@ public class JwtServiceImpl implements JwtService{
 
 	@Override
 	public long getMemberId() {
-        Integer memberId = (Integer) this.get("member").get("idx");
+        Integer memberId = (Integer) this.get("member").get("id");
 		return new Long(memberId);
 	}
 
