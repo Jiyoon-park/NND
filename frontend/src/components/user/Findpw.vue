@@ -2,38 +2,20 @@
   <v-row no-gutters>
     <v-col class="pa-5" tile>
       <!--sm="12" md="4" lg="4"-->
-      <div class=" mt-5 pt-5 pb-5" align="center">
+      <div class="mt-5 pt-5 pb-5" align="center">
         <h1>비밀번호 찾기</h1>
       </div>
 
       <div class="pa-10">
-        <v-text-field
-          label="E-mail을 입력해주세요"
-          v-model="email"
-          :rules="[rules.email]"
-          outlined
-          dense
-        >
-        </v-text-field>
+        <v-text-field label="E-mail을 입력해주세요" v-model="email" :rules="[rules.email]" outlined dense></v-text-field>
 
-        <v-text-field label="휴대폰 번호를 입력해주세요" outlined dense>
-        </v-text-field>
+        <v-btn block large color="primary" class="mb-4" @click="authEmail">이메일로 인증번호 받기</v-btn>
 
-        <v-btn block large color="primary" class="mb-4"
-          >휴대폰으로 인증번호 받기</v-btn
-        >
-
-        <v-text-field
-          single-line
-          type="text"
-          label="인증번호 입력해주세요"
-          Filled
-          class="mb-6"
-        />
+        <v-text-field single-line type="text" label="인증번호 입력해주세요" Filled class="mb-6" />
         <v-btn class="c-20">인증</v-btn>
 
         <div class="text-right">
-          <a href="#"> 이메일 재발송</a>
+          <a href="#">이메일 재발송</a>
         </div>
       </div>
     </v-col>
@@ -56,6 +38,7 @@ export default {
       },
     };
   },
+  methods: {},
 };
 </script>
 
