@@ -41,7 +41,7 @@ public class MemberBoardController {
     }
     
     @PutMapping("/memberboard/search")
-	public List<MemberBoard> searchMemberBoard(@RequestBody Map<String, Object> map) {
+	public List<MemberBoard> searchMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, @RequestBody Map<String, Object> map, final Pageable pageable) {
 		
 		List<String> query = (List<String>) map.get("query");
 		List<String> category = (List<String>) map.get("category");
@@ -49,7 +49,7 @@ public class MemberBoardController {
 		System.out.println("query : " + query);
 		System.out.println("category : " + category);
 		System.out.println("skills : " + skills);
-		return memberBoardRepository.findMemberBoardList(query, category, skills);
+		return memberBoardRepository.findMemberBoardList(query, category, skills, pageable);
 	}
     
     @PostMapping("/memberboard/update/{boardno}")
