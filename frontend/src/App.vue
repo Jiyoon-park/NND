@@ -10,24 +10,24 @@ export default {
 
   components: {},
 
-  created() {
-    console.log("App.vue");
-    let token = window.$cookies.get("nnd");
+  created () {
+    console.log('App.vue')
+    let token = window.$cookies.get('nnd')
     if (token) {
-      this.$store.commit("setToken", token);
-      console.log("App.vue.afterSetToken");
-      this.$store.dispatch("getUserFromServer");
+      this.$store.commit('setToken', token)
+      console.log('App.vue.afterSetToken')
+      this.$store.dispatch('getUserFromServer')
     } else {
-      this.onLogout();
+      this.onLogout()
     }
   },
   methods: {
     onLogout: function () {
-      this.$store.commit("logout");
-      window.$cookies.remove("nnd");
-      this.$router.push("/login");
-    },
-  },
+      this.$store.commit('logout')
+      window.$cookies.remove('nnd')
+      this.$router.push('/login')
+    }
+  }
 };
 </script>
 

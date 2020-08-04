@@ -79,7 +79,7 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
-import axios from "axios";
+//import axios from "axios";
 
 export default {
   components: { NavBar },
@@ -112,25 +112,11 @@ export default {
     };
   },
   created() {
-    axios
-      .get(`http://localhost:8080/letter/read/receive/`)
-      .then((res) => {
-        console.log(res);
-        this.receiveLetter = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
-      .get(`http://localhost:8080/letter/read/send/`)
-      .then((res) => {
-        console.log(res);
-        this.sendLetter = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    if (token) {
+      console.log("@@@");
+      console.log(token);
+    }
   },
 };
 </script>

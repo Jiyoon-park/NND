@@ -13,10 +13,14 @@ Vue.use(VueCookie);
 
 Vue.config.productionTip = false;
 var config = {
-  apiKey: "<API_KEY>",
-  authDomain: "<PROJECT_ID>.firebaseapp.com",
-  databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
-  storageBucket: "<BUCKET>.appspot.com",
+  apiKey: "AIzaSyDrGjK4k58OdMBChAfYWlml_m6LwPF-vh0",
+  authDomain: "signup-95e15.firebaseapp.com",
+  databaseURL: "https://signup-95e15.firebaseio.com",
+  projectId: "signup-95e15",
+  storageBucket: "signup-95e15.appspot.com",
+  messagingSenderId: "779627961819",
+  appId: "1:779627961819:web:6be596853eb5be2b67dbfe",
+  measurementId: "G-G6LZ10T7SW",
 };
 firebase.initializeApp(config);
 
