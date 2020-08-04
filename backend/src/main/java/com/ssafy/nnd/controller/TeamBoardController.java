@@ -33,7 +33,7 @@ public class TeamBoardController {
     }
     
     @PutMapping("/teamboard/search")
-	public List<TeamBoard> searchTeamBoard(@RequestBody Map<String, Object> map) {
+	public List<TeamBoard> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
 		
 		List<String> query = (List<String>) map.get("query");
 		List<String> category = (List<String>) map.get("category");
@@ -41,7 +41,7 @@ public class TeamBoardController {
 		System.out.println("query : " + query);
 		System.out.println("category : " + category);
 		System.out.println("skills : " + skills);
-		return teamBoardRepository.findTeamBoardList(query, category, skills);
+		return teamBoardRepository.findTeamBoardList(query, category, skills, pageable);
 	}
     
 //    @GetMapping("/teamboard/{id}")
