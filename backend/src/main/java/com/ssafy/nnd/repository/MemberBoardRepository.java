@@ -8,10 +8,13 @@ import org.springframework.data.repository.query.Param;
 import com.ssafy.nnd.dto.MemberBoard;
 
 
-public interface MemberBoardRepository extends JpaRepository<MemberBoard, Long> {
+public interface MemberBoardRepository extends JpaRepository<MemberBoard, Long>, MemberBoardCustomRepository<MemberBoard> {
 	List<MemberBoard> findAllByOrderByBoardNoDesc();
 	
 	@Query(value="SELECT * FROM memberboard JOIN likemember ON boardno=mboard WHERE mno = :mno ",nativeQuery=true)
 	List<MemberBoard> findLikeboardByMno(@Param("mno") Long mno);
+
+	// custom (필터 검색 시 사용되는 method)
+	List<MemberBoard> findMemberBoardList(List<String> query, List<String> category, List<String> skills);
 }
 
