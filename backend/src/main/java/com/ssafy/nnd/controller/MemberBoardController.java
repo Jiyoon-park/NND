@@ -1,6 +1,7 @@
 package com.ssafy.nnd.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ import com.ssafy.nnd.repository.MemberBoardRepository;
 @RestController
 public class MemberBoardController {
 
-    @Autowired
-    MemberBoardRepository memberBoardRepository;
+	@Autowired
+	MemberBoardRepository memberBoardRepository;
 
     @GetMapping("/memberboard/list")
     public List<MemberBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
@@ -38,6 +39,18 @@ public class MemberBoardController {
     	System.out.println(memberBoard.get().getEmail());
     	return memberBoard.get();
     }
+    
+    @PutMapping("/memberboard/search")
+	public List<MemberBoard> searchMemberBoard(@RequestBody Map<String, Object> map) {
+		
+		List<String> query = (List<String>) map.get("query");
+		List<String> category = (List<String>) map.get("category");
+		List<String> skills = (List<String>) map.get("skills");
+		System.out.println("query : " + query);
+		System.out.println("category : " + category);
+		System.out.println("skills : " + skills);
+		return memberBoardRepository.findMemberBoardList(query, category, skills);
+	}
     
     @PostMapping("/memberboard/update/{boardno}")
     public MemberBoard updateMemberBoard(@PathVariable String boardno, @RequestBody MemberBoard newmemberBoard)
@@ -59,14 +72,12 @@ public class MemberBoardController {
     	System.out.println(memberBoard.toString());
     	MemberBoard newmemberBoard = memberBoardRepository.save(memberBoard);
     	return newmemberBoard;
-    }
+	}
 
-    @DeleteMapping("/memberboard/delete/{boardno}")
+	@DeleteMapping("/memberboard/delete/{boardno}")
     public String deleteMemberBoard(@PathVariable Long boardno){
     	memberBoardRepository.deleteById(boardno);
     	return "Delete Success!";
     }
     
 }
-
-

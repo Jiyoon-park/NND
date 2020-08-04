@@ -1,6 +1,7 @@
 package com.ssafy.nnd.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,18 @@ public class TeamBoardController {
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
+    @PutMapping("/teamboard/search")
+	public List<TeamBoard> searchTeamBoard(@RequestBody Map<String, Object> map) {
+		
+		List<String> query = (List<String>) map.get("query");
+		List<String> category = (List<String>) map.get("category");
+		List<String> skills = (List<String>) map.get("skills");
+		System.out.println("query : " + query);
+		System.out.println("category : " + category);
+		System.out.println("skills : " + skills);
+		return teamBoardRepository.findTeamBoardList(query, category, skills);
+	}
+    
 //    @GetMapping("/teamboard/{id}")
 //    public TeamBoard getTeamBoard(@PathVariable String id){
 //    	Long postID = Long.parseLong(id);
@@ -52,7 +65,7 @@ public class TeamBoardController {
     	teamBoard.get().setTitle(newteamBoard.getTitle());
     	teamBoard.get().setContent(newteamBoard.getContent());
     	teamBoard.get().setTechStack(newteamBoard.getTechStack());
-    	teamBoard.get().setContentStack(newteamBoard.getContentStack());
+    	teamBoard.get().setCategory(newteamBoard.getCategory());
     	System.out.println(newteamBoard.toString());
     	teamBoardRepository.save(teamBoard.get());
     	return teamBoard.get();

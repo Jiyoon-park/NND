@@ -34,8 +34,8 @@ public class MemberBoard {
 	@Column
 	private String content; // 내용
 
-	@Column(name = "contentstack")
-	private String contentStack; // 내용스택
+	@Column(name = "category")
+	private String category; // 내용스택
 
 	@Column(name = "techstack")
 	private String techStack; // 내용스택
@@ -95,9 +95,6 @@ public class MemberBoard {
 		this.content = content;
 	}
 
-	public String getContentStack() {
-		return contentStack;
-	}
 
 	public String getTechStack() {
 		return techStack;
@@ -107,11 +104,13 @@ public class MemberBoard {
 		this.techStack = techStack;
 	}
 
-	public void setContentStack(String contentStack) {
-		this.contentStack = contentStack;
+	public String getCategory() {
+		return category;
 	}
 
-	
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public LocalDateTime getCreateDate() {
 		return createDate;
@@ -132,16 +131,17 @@ public class MemberBoard {
 	public MemberBoard() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public MemberBoard(Long boardNo, Long idx, String email, String title, String content, String contentStack,
+
+	public MemberBoard(Long boardNo, Long idx, String email, String name, String title, String content, String category,
 			String techStack, LocalDateTime createDate, int likecnt) {
 		super();
 		this.boardNo = boardNo;
 		this.idx = idx;
 		this.email = email;
+		this.name = name;
 		this.title = title;
 		this.content = content;
-		this.contentStack = contentStack;
+		this.category = category;
 		this.techStack = techStack;
 		this.createDate = createDate;
 		this.likecnt = likecnt;
@@ -149,15 +149,12 @@ public class MemberBoard {
 
 	@Override
 	public String toString() {
-		return "MemberBoard [boardNo=" + boardNo + ", idx=" + idx + ", email=" + email + ", name=" + name + ", title="
-				+ title + ", content=" + content + ", contentStack=" + contentStack + ", techStack=" + techStack
-				+ ", createDate=" + createDate + ", likecnt=" + likecnt + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("MemberBoard [boardNo=").append(boardNo).append(", idx=").append(idx).append(", email=")
+				.append(email).append(", name=").append(name).append(", title=").append(title).append(", content=")
+				.append(content).append(", category=").append(category).append(", techStack=").append(techStack)
+				.append(", createDate=").append(createDate).append(", likecnt=").append(likecnt).append("]");
+		return builder.toString();
 	}
-
-
-	
-
-	
-
 	
 }
