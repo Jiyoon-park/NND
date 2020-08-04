@@ -44,27 +44,27 @@ const routes = [
   },
   {
     path: "/login",
-    name: Login,
+    name: "Login",
     component: Login,
   },
   {
     path: "/profile",
-    name: Profile,
+    name: "Profile",
     component: Profile,
   },
   {
     path: "/profile-update",
-    name: ProfileUpdate,
+    name: "ProfileUpdate",
     component: ProfileUpdate,
   },
   {
     path: "/addboard",
-    name: AddBoard,
+    name: "AddBoard",
     component: AddBoard,
   },
   {
     path: "/letter",
-    name: LetterList,
+    name: "LetterList",
     component: LetterList,
   },
 ];
