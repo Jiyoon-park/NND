@@ -27,7 +27,7 @@ public class TeamBoardController {
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
-    	System.out.println(pageable);
+//    	System.out.println(pageable);
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
