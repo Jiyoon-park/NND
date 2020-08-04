@@ -1,11 +1,6 @@
 <template>
   <v-app>
-    <news-feed
-      v-for="(board, i) in boards"
-      v-bind:teaminfo="boards[i]"
-      v-bind:key="i"
-    >
-    </news-feed>
+    <news-feed v-for="(board, i) in boards" v-bind:teaminfo="boards[i]" v-bind:key="i"></news-feed>
   </v-app>
 </template>
 
@@ -24,10 +19,17 @@ export default {
     //   boards: null,
     // },
     boards: null,
+    page: 1,
+    size: 10,
   }),
   created() {
     axios
-      .get("http://localhost:8080/teamboard/list")
+      .get(`http://localhost:8080/teamboard/list`, {
+        params: {
+          page: this.page,
+          size: this.size,
+        },
+      })
       .then(({ data }) => {
         this.boards = data;
         console.log(this.boards);

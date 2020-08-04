@@ -8,22 +8,26 @@
           </v-avatar>
 
           <v-list-item-content>
-            <span class="grey--text">dlckddbs@gmail.com</span>
+            <span class="grey--text">{{ teaminfo.email }}</span>
+            <div class="text-right">
+              <v-chip
+                class="ma-2"
+                color="indigo"
+                text-color="white"
+                v-for="stack in JSON.parse(stacks)"
+                :key="stack"
+              >{{ stack }}</v-chip>
+            </div>
           </v-list-item-content>
         </v-list-item>
         <v-card-title>
-          <span>팀원구합니다.</span>
+          <span>{{ teaminfo.title }}</span>
         </v-card-title>
         <v-expansion-panels class="elevation-0 mt-5">
           <v-expansion-panel>
             <v-expansion-panel-header></v-expansion-panel-header>
-            <v-expansion-panel-content>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </v-expansion-panel-content>
-            <v-expansion-panel-content>오픈카톡방 : KAKAO!!</v-expansion-panel-content>
+            <v-expansion-panel-content>{{ teaminfo.content }}</v-expansion-panel-content>
+            <v-expansion-panel-content>{{ teaminfo.kakaoLink }}</v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
@@ -93,7 +97,9 @@
 
 <script>
 export default {
-  name: "NewsFeed",
+  name: "NewsFeed2",
+  props: ["teaminfo"],
+
   data() {
     return {
       show: false,
@@ -106,6 +112,7 @@ export default {
       selected5: false,
       selected6: false,
       selected7: false,
+      stacks: this.teaminfo.techStack,
     };
   },
   methods: {
