@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,7 +38,12 @@ public class HomeController {
         
         return "index";
     }
-    
+    @GetMapping("/info/{id}")
+	public Object getuserinfo(@PathVariable long id) {
+		Optional<Member> member = memberRepository.findById(id);
+
+		return member.get();
+	}
     @RequestMapping(value="/login")
     public String login(@RequestParam("code") String code, HttpSession session) {
         String access_Token = kakao.getAccessToken(code);
@@ -72,11 +78,11 @@ public class HomeController {
         return "redirect:http://localhost:8081/";
     }
 
-   
-    @GetMapping(value="/userinfo")
-    public @ResponseBody Member returnUserinfo(HttpSession session) throws Exception{
-    	return tmpMember;
-    }
+//   
+//    @GetMapping(value="/userinfo")
+//    public @ResponseBody Member returnUserinfo(HttpSession session) throws Exception{
+//    	return tmpMember;
+//    }
     
     @RequestMapping(value="/logout")
     public String logout(HttpSession session) {

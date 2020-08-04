@@ -15,9 +15,7 @@
         </v-list-item>
         <v-list-item link>
           <!--this.$router.push({ name: 'Home', params: { id: response.data.object.idx }})-->
-          <v-list-item-content
-            @click="$router.push({name : 'Profile', params: {id: id}}).catch(()=>{})"
-          >
+          <v-list-item-content @click="$router.push({name : 'Profile', params: {id: id}}).catch(()=>{})">
             <v-list-item-title>내 정보</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
