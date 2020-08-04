@@ -22,38 +22,11 @@
       <div id="my-info" class="target">
         <h3># 내정보</h3>
         <v-card-text>
-          <v-text-field
-            filled
-            dense
-            disabled
-            :value="user.email"
-            label="이메일"
-            color="white"
-          ></v-text-field>
-          <v-text-field
-            filled
-            dense
-            v-model="user.name"
-            label="이름"
-          ></v-text-field>
-          <v-text-field
-            dense
-            v-model="userinfo.password"
-            label="비밀번호"
-            filled
-          ></v-text-field>
-          <v-text-field
-            dense
-            v-model="userinfo.password2"
-            label="비밀번호 확인"
-            filled
-          ></v-text-field>
-          <v-text-field
-            dense
-            v-model="user.gitaddr"
-            label="GIT 주소"
-            filled
-          ></v-text-field>
+          <v-text-field filled dense disabled :value="user.email" label="이메일" color="white"></v-text-field>
+          <v-text-field filled dense v-model="user.name" label="이름"></v-text-field>
+          <v-text-field dense v-model="userinfo.password" label="비밀번호" filled></v-text-field>
+          <v-text-field dense v-model="userinfo.password2" label="비밀번호 확인" filled></v-text-field>
+          <v-text-field dense v-model="user.gitaddr" label="GIT 주소" filled></v-text-field>
         </v-card-text>
       </div>
       <v-divider></v-divider>

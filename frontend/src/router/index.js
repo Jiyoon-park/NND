@@ -48,8 +48,9 @@ const routes = [
   },
   {
     path: "/profile",
-    name: Profile,
+    name: "Profile",
     component: Profile,
+    props: true
   },
   {
     path: "/profile-update",
