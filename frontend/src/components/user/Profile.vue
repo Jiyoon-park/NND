@@ -4,7 +4,7 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span v-if="!profileURL" class="white--text headline"></span>
+          <span v-if="!profileURL" class="white--text headline">GD</span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
@@ -58,7 +58,6 @@
 
 <script>
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
-import axios from "axios";
 
 import NavBar from "../common/NavBar.vue";
 import ProjectHistoryList from "../profile/ProjectHistoryList.vue";
@@ -79,10 +78,22 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:8080/userinfo").then((res) => {
-      this.user = res.data;
-      this.profileURL = this.user.profile;
-    });
+    let token = window.$cookies.get("nnd");
+    let id = this.$route.params.id; //넘겨 받아야함
+    console.log(id);
+    console.log(token);
+    if (token) {
+      this.$http
+        .get(`http://localhost:8080/member/info/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token, // the token is a variable which holds the token
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+          this.user = resp.data;
+        });
+    }
   },
   computed: {
     target() {
