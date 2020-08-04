@@ -7,12 +7,32 @@
       </div>
 
       <div class="pa-10">
-        <v-text-field label="E-mail을 입력해주세요" v-model="email" :rules="[rules.email]" outlined dense></v-text-field>
+        <v-text-field
+          label="E-mail을 입력해주세요"
+          v-model="email"
+          :rules="[rules.email]"
+          outlined
+          dense
+        ></v-text-field>
 
-        <v-btn block large color="primary" class="mb-4" @click="authEmail">이메일로 인증번호 받기</v-btn>
+        <v-btn block large color="primary" class="mb-4" @click="authEmail"
+          >이메일로 인증번호 받기</v-btn
+        >
 
-        <v-text-field single-line type="text" label="인증번호 입력해주세요" Filled class="mb-6" />
-        <v-btn class="c-20">인증</v-btn>
+        <v-text-field
+          single-line
+          type="text"
+          label="인증번호 입력해주세요"
+          Filled
+          class="mb-6"
+        />
+        <v-text-field
+          id="email-code"
+          type="text"
+          placeholder="인증번호 입력(5분 이내)"
+        />
+        <v-btn class="mr-4">인증</v-btn>
+        <v-btn class="c-20" @click="$router.push('/login')">뒤로가기</v-btn>
 
         <div class="text-right">
           <a href="#">이메일 재발송</a>
