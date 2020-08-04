@@ -31,6 +31,11 @@ public class LetterController {
 		return letterRepository.findAll();
 	}
 	
+	@GetMapping("/letter/read/{letterno}")
+	public @ResponseBody Optional<Letter> getAllLetter(@PathVariable Long letterno) {
+		return letterRepository.findById(letterno);
+	}
+	
 	// 보내는 사람 기준으로 검색
 	@GetMapping("/letter/read/send/{id}")
 	public @ResponseBody List<Letter> getLetterBySend(@PathVariable String id) {
