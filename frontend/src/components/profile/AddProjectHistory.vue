@@ -8,8 +8,7 @@
     <v-card>
       <v-card-title
         class="headline font-weight-regular light-green lighten-1 white--text"
-        >project history</v-card-title
-      >
+      >project history</v-card-title>
       <v-form>
         <v-container>
           <v-text-field
@@ -50,9 +49,7 @@
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false"
-            >Close</v-btn
-          >
+          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
           <v-btn color="blue darken-1" text @click="submit">Save</v-btn>
         </v-card-actions>
       </v-form>
@@ -111,4 +108,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

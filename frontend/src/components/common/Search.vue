@@ -1,13 +1,7 @@
 <template>
   <v-dialog v-model="dialog" fullscreen hide-overlay>
     <template v-slot:activator="{ on, attrs }">
-      <i
-        class="fas fa-search"
-        @click="dialog = true"
-        dark
-        v-bind="attrs"
-        v-on="on"
-      ></i>
+      <i class="fas fa-search" @click="dialog = true" dark v-bind="attrs" v-on="on"></i>
     </template>
     <v-card>
       <v-toolbar dark color="purple lighten-2">
@@ -17,9 +11,7 @@
         <v-toolbar-title></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn background-color="purple" dark text @click="dialog = false"
-            >search</v-btn
-          >
+          <v-btn background-color="purple" dark text @click="dialog = false">search</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-container>
@@ -52,13 +44,7 @@
                   active-class="deep-purple--text text--accent-4"
                   mandatory
                 >
-                  <v-chip
-                    large
-                    v-for="type in types"
-                    :key="type"
-                    :value="type"
-                    >{{ type }}</v-chip
-                  >
+                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -71,21 +57,9 @@
             <v-list-item-content>
               <div class="d-flex justify-center">
                 <v-radio-group row>
-                  <v-radio
-                    label="스터디"
-                    color="purple"
-                    value="스터디"
-                  ></v-radio>
-                  <v-radio
-                    label="프로젝트"
-                    color="orange"
-                    value="프로젝트"
-                  ></v-radio>
-                  <v-radio
-                    label="공모전"
-                    color="success"
-                    value="공모전"
-                  ></v-radio>
+                  <v-radio label="스터디" color="purple" value="스터디"></v-radio>
+                  <v-radio label="프로젝트" color="orange" value="프로젝트"></v-radio>
+                  <v-radio label="공모전" color="success" value="공모전"></v-radio>
                 </v-radio-group>
               </div>
             </v-list-item-content>
@@ -104,8 +78,7 @@
                     v-for="skill in skills"
                     :key="skill"
                     :value="skill"
-                    >{{ skill }}</v-chip
-                  >
+                  >{{ skill }}</v-chip>
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -129,4 +102,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>
