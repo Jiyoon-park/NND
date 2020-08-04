@@ -24,10 +24,6 @@
           required
         ></v-text-field>
 
-        <v-file-input v-model="profile" label="프로필 사진" prepend-icon></v-file-input>
-
-        <v-text-field v-model="git" label="깃 주소"></v-text-field>
-
         <v-checkbox
           v-model="checkbox"
           :rules="[(v) => !!v || '약관동의를 해야합니다']"
@@ -36,7 +32,6 @@
         ></v-checkbox>
 
         <v-btn :disabled="!valid" color="success" class="mr-4" @click="signup">제출</v-btn>
-
         <v-btn color="error" class="mr-4" @click="reset">초기화</v-btn>
         <v-btn color="yellow" class="mr-4" @click="$router.push('/login')">로그인화면</v-btn>
         <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">비밀번호찾기</v-btn>
@@ -55,6 +50,13 @@ export default {
     NavBar,
   },
   data: () => ({
+    signupData: {
+      name: null,
+      email: null,
+      profile: null,
+      password: null,
+    },
+
     valid: true,
     name: "",
     nameRule: [(v) => !!v || "이름은 필수 입력항목입니다."],
@@ -70,7 +72,6 @@ export default {
     ],
     passwordchk: "",
     passwordchkRules: [(v) => !!v || "비밀번호 확인은 필수 입력항목입니다."],
-    git: "",
     checkbox: false,
   }),
 
@@ -84,12 +85,11 @@ export default {
     signup() {
       if (this.$refs.form.validate()) {
         axios
-          .post("http://localhost:8080/signup", {
+          .post("http://localhost:8080/member/signup", {
             name: this.name,
             email: this.email,
+            profile: null,
             password: this.password,
-            profile: this.profile,
-            git: this.git,
           })
           .then((response) => {
             console.log(response);
