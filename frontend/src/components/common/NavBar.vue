@@ -10,7 +10,7 @@
 
           <v-list-item-content class="float-right">
             <v-list-item-title class="user-interface">{{
-              name
+              username
             }}</v-list-item-title>
             <v-list-item-title class="user-interface"
               >로그아웃</v-list-item-title
@@ -73,7 +73,7 @@ export default {
   },
   data: () => ({
     id: 0,
-    name: "",
+    username: "",
     profileURL: "",
     drawer: null,
     items: [
@@ -85,8 +85,8 @@ export default {
     let token = window.$cookies.get("nnd");
     if (token) {
       console.log(token.object.idx);
-      this.name = token.object.name;
-      // this.profileURL = token.object.profile;
+      this.username = token.object.name;
+      this.profileURL = token.object.profile;
     }
   },
   methods: {},
