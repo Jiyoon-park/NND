@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <div class="mt-13">
+    <div>
       <v-tabs fixed-tabs v-model="tab" color="purple">
         <v-tab v-for="item in items" :key="item.tab">{{ item.tab }}</v-tab>
       </v-tabs>
@@ -11,63 +11,36 @@
           <v-card flat>
             <v-list>
               <v-list-item-group>
-                <v-dialog v-model="dialog" persistent max-width="290">
-                  <template v-slot:activator="{ on, attrs }">
-                    <!-- 리스트 하나하나 -->
-                    <v-list-item
-                      v-for="(item, i) in items"
-                      :key="i"
-                      class="letter py-3"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <div class="mr-4">
-                        <v-avatar color="grey" size="60">
-                          <span class="white--text headline">user</span>
-                        </v-avatar>
-                      </div>
-                      <v-list-item-content>
-                        <div>
-                          <v-list-item-text v-text="item.letter.username" class="font-weight-black"></v-list-item-text>
-                          <i
-                            class="fas fa-envelope float-right"
-                            style="font-size:20px; color: #7E57C2;"
-                            v-if="!item.letter.read"
-                          ></i>
-                          <i
-                            class="fas fa-envelope-open-text float-right"
-                            style="font-size:20px; color: #BDBDBD;"
-                            v-else
-                          ></i>
-                          <br />
-                          <v-list-item-text v-text="item.letter.createdate" class="text--secondary"></v-list-item-text>
-                        </div>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <!-- 리스트 하나하나 끝 -->
-                  </template>
-                  <!-- props로 데이터를 넘겨줘야함 -->
-                  <v-card>
-                    <v-toolbar dark color="purple lighten-2">
-                      <v-btn icon dark @click="dialog = false">
-                        <v-icon>mdi-close</v-icon>
-                      </v-btn>
-                      <v-toolbar-title>{{ item.tab }}</v-toolbar-title>
-                      <v-spacer></v-spacer>
-                    </v-toolbar>
-                    <v-card-text class="mt-5">
-                      <p>보낸 사람</p>
-                      <p>보낸 날짜</p>
-                      <p>{{ item.content }}</p>
-                    </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="green darken-1" text @click="dialog = false">닫기</v-btn>
-                      <v-btn color="green darken-1" text @click="dialog = false">수락하기</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                <v-list-item
+                  v-for="letter in item.letters"
+                  :key="letter.letterNo"
+                  class="letter py-3"
+                  @click="onListDetail(`${letter.letterNo}`)"
+                >
+                  <div class="mr-4">
+                    <v-avatar color="grey" size="60">
+                      <span v-if="!letter.profile" class="white--text headline"></span>
+                      <img v-else :src="letter.profile" />
+                    </v-avatar>
+                  </div>
+                  <v-list-item-content>
+                    <div>
+                      <v-list-item-title v-text="letter.name" class="font-weight-black"></v-list-item-title>
+                      <i
+                        class="fas fa-envelope float-right"
+                        style="font-size:20px; color: #7E57C2;"
+                        v-if="!letter.read"
+                      ></i>
+                      <i
+                        class="fas fa-envelope-open-text float-right"
+                        style="font-size:20px; color: #BDBDBD;"
+                        v-else
+                      ></i>
+                      <br />
+                      <v-list-item-title v-text="letter.createDate" class="text--secondary"></v-list-item-title>
+                    </div>
+                  </v-list-item-content>
+                </v-list-item>
               </v-list-item-group>
             </v-list>
           </v-card>
@@ -79,33 +52,23 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
-//import axios from "axios";
+import axios from "axios";
 
 export default {
+  name: "LetterList",
   components: { NavBar },
   data() {
     return {
       tab: null,
-      receiveLetter: [],
-      sendLetter: [],
+      model: 1,
       items: [
         {
           tab: "받은 편지함",
-          letter: {
-            username: "대장",
-            content: "백엔드 마스터임당.",
-            createdate: "오늘",
-            read: false,
-          },
+          letters: [],
         },
         {
           tab: "보낸 편지함",
-          letter: {
-            username: "팀장",
-            content: "프론트엔드 마스터임당.",
-            createdate: "8월 1일",
-            read: true,
-          },
+          letters: [],
         },
       ],
       dialog: false,
@@ -114,9 +77,33 @@ export default {
   created() {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
     if (token) {
-      console.log("@@@");
-      console.log(token);
+      console.log(token.object.idx);
+      axios
+        .get(`http://localhost:8080/letter/read/receive/${token.object.idx}`)
+        .then((res) => {
+          this.items[0].letters = res.data;
+          console.log(this.items[0].letters);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      axios
+        .get(`http://localhost:8080/letter/read/send/${token.object.idx}`)
+        .then((res) => {
+          this.items[1].letters = res.data;
+          console.log(this.items[1].letters);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+  },
+  methods: {
+    // 클릭한 편지의 편지 pk를 받아옴.
+    onListDetail: function (letterNo) {
+      alert(letterNo);
+    },
   },
 };
 </script>
