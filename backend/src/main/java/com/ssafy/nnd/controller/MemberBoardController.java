@@ -40,8 +40,9 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
+    // 좋아요 비활성화 상태에서 검색
     @PutMapping("/memberboard/search")
-	public List<MemberBoard> searchMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, @RequestBody Map<String, Object> map, final Pageable pageable) {
+	public List<Object> searchMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, @RequestBody Map<String, Object> map, final Pageable pageable) {
 		
 		List<String> query = (List<String>) map.get("query");
 		List<String> category = (List<String>) map.get("category");
@@ -51,6 +52,19 @@ public class MemberBoardController {
 		System.out.println("skills : " + skills);
 		return memberBoardRepository.findMemberBoardList(query, category, skills, pageable);
 	}
+    
+    // 좋아요 활성화 상태에서 검색
+    @PutMapping("/memberboard/search/{mno}")
+    public List<Object> searchMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, @RequestBody Map<String, Object> map, @PathVariable Long mno, final Pageable pageable) {
+    	
+    	List<String> query = (List<String>) map.get("query");
+    	List<String> category = (List<String>) map.get("category");
+    	List<String> skills = (List<String>) map.get("skills");
+    	System.out.println("query : " + query);
+    	System.out.println("category : " + category);
+    	System.out.println("skills : " + skills);
+    	return memberBoardRepository.findMemberBoardList(query, category, skills, mno, pageable);
+    }
     
     @PostMapping("/memberboard/update/{boardno}")
     public MemberBoard updateMemberBoard(@PathVariable String boardno, @RequestBody MemberBoard newmemberBoard)

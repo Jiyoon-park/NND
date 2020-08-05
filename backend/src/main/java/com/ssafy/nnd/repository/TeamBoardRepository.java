@@ -12,7 +12,7 @@ import com.ssafy.nnd.dto.TeamBoard;
 
 
 
-public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>, TeamBoardCustomRepository<TeamBoard>{
+public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>, TeamBoardCustomRepository<Object>{
 
 	List<TeamBoard> findAllByOrderByTeamboardNoDesc(Pageable pageable);
 	Optional<TeamBoard> findByTeamboardNo(Long teamboardno);
