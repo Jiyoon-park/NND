@@ -1,8 +1,11 @@
 package com.ssafy.nnd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.persistence.Tuple;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 
+import springfox.documentation.spring.web.json.Json;
+
 @CrossOrigin
 @RestController
 public class TeamBoardController {
@@ -32,8 +37,9 @@ public class TeamBoardController {
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
+    // 좋아요 비활성화 상태에서 검색
     @PutMapping("/teamboard/search")
-	public List<TeamBoard> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
+	public List<Object> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
 		
 		List<String> query = (List<String>) map.get("query");
 		List<String> category = (List<String>) map.get("category");
@@ -43,6 +49,20 @@ public class TeamBoardController {
 		System.out.println("skills : " + skills);
 		return teamBoardRepository.findTeamBoardList(query, category, skills, pageable);
 	}
+    
+    // 좋아요 활성화 상태에서 검색
+    @PutMapping("/teamboard/search/{mno}")
+    public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
+    	
+    	List<String> query = (List<String>) map.get("query");
+    	List<String> category = (List<String>) map.get("category");
+    	List<String> skills = (List<String>) map.get("skills");
+    	System.out.println("query : " + query);
+    	System.out.println("category : " + category);
+    	System.out.println("skills : " + skills);
+    	
+    	return teamBoardRepository.findTeamBoardList(query, category, skills, mno, pageable);
+    }
     
 //    @GetMapping("/teamboard/{id}")
 //    public TeamBoard getTeamBoard(@PathVariable String id){
