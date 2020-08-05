@@ -39,16 +39,16 @@ public class LetterController {
 	
 	// 보내는 사람 기준으로 검색
 	@GetMapping("/letter/list/send/{idx}")
-	public @ResponseBody List<Letter> getLetterBySend(@PathVariable Long idx) {
-		Optional<List<Letter>> letter = letterRepository.findBySendIdx(idx);
+	public @ResponseBody List<Object> getLetterBySend(@PathVariable Long idx) {
+		Optional<List<Object>> letter = letterRepository.findBySendIdx(idx);
 		System.out.println(letter.get());
 		return letter.get();
 	}
 	
 	// 받는 사람 기준으로 검색
 	@GetMapping("/letter/list/receive/{idx}")
-	public @ResponseBody List<Letter> getLetterByReceive(@PathVariable Long idx) {
-		Optional<List<Letter>> letter = letterRepository.findByReceiveIdx(idx);
+	public @ResponseBody List<Object> getLetterByReceive(@PathVariable Long idx) {
+		Optional<List<Object>> letter = letterRepository.findByReceiveIdx(idx);
 		System.out.println(letter.get());
 		return letter.get();
 	}

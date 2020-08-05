@@ -29,7 +29,7 @@ public class Letter {
 	@Id
 	@Column(name = "letterno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long letterNo;	// 메시지 식별번호
+	private Long letterNo;	// 메시지 식별번호
 	
 	@Column(name = "sendidx")
 	private Long sendIdx;	// 보내는 사람 idx
