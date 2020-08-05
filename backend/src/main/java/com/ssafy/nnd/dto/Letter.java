@@ -32,10 +32,10 @@ public class Letter {
 	private long letterNo;	// 메시지 식별번호
 	
 	@Column(name = "sendidx")
-	private int sendIdx;	// 보내는 사람 idx
+	private Long sendIdx;	// 보내는 사람 idx
 	
 	@Column(name = "receiveidx")
-	private int receiveIdx;	// 받는 사람 idx
+	private Long receiveIdx;	// 받는 사람 idx
 	
 	@Column(name = "content")
 	private String content;	// 메시지 내용
@@ -43,8 +43,9 @@ public class Letter {
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;	// 메시지 발수신 시각	
 	
-	@Column(name = "read")
+	@Column(name = "\"read\"")
 	private int read;		// 메시지 읽었는지 확인 (안읽음 = 0, 읽음 1)
+	
 	
 	public Letter() {
 		// TODO Auto-generated constructor stub
@@ -58,19 +59,19 @@ public class Letter {
 		this.letterNo = letterNo;
 	}
 
-	public int getSendIdx() {
+	public Long getSendIdx() {
 		return sendIdx;
 	}
 
-	public void setSendIdx(int sendIdx) {
+	public void setSendIdx(Long sendIdx) {
 		this.sendIdx = sendIdx;
 	}
 
-	public int getReceiveIdx() {
+	public Long getReceiveIdx() {
 		return receiveIdx;
 	}
 
-	public void setReceiveIdx(int receiveIdx) {
+	public void setReceiveIdx(Long receiveIdx) {
 		this.receiveIdx = receiveIdx;
 	}
 

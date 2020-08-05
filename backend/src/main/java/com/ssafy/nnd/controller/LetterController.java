@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssafy.nnd.dto.Letter;
+import com.ssafy.nnd.dto.MemberBoard;
 import com.ssafy.nnd.repository.LetterRepository;
 
 @CrossOrigin
@@ -75,14 +76,16 @@ public class LetterController {
 //		letterRepository.save(letter.get());
 //		return letter.get();
 //	}
-	@PostMapping("/letter/update/{id}")
-	public @ResponseBody Letter updateLetter(@PathVariable String id) {
-		int postID = Integer.parseInt(id);
-		Optional<Letter> letter = letterRepository.findById((long) postID);
-		letter.get().setRead(1);
-		letterRepository.save(letter.get());
-		return letter.get();
-	}
+	
+	@PostMapping("/letter/update/{letterno}")
+    public @ResponseBody Letter updateLetter(@PathVariable Long letterno)
+    {
+    	Optional<Letter> letter = letterRepository.findById(letterno);
+    	letter.get().setRead(1);
+    	letterRepository.save(letter.get());
+    	return letter.get();
+    }
+	
 	
 	// D
 	@DeleteMapping("/letter/delete/{id}")
