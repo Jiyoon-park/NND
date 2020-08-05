@@ -1,6 +1,5 @@
 <template>
   <v-row justify="center">
-    <NavBar />
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>로그인</h2>
       <v-form class="form" ref="form" v-model="valid" lazy-validation>
@@ -40,14 +39,11 @@
   </v-row>
 </template>
 <script>
-import NavBar from "../common/NavBar.vue";
 import axios from "axios";
 
 export default {
   name: "Login",
-  components: {
-    NavBar,
-  },
+  components: {},
   data: () => ({
     id: 0,
     token: "",
