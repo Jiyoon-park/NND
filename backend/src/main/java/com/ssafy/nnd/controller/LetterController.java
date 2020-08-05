@@ -67,11 +67,19 @@ public class LetterController {
 	}
 	
 	// U
+//	@PostMapping("/letter/update/{id}")
+//	public @ResponseBody Letter updateLetter(@PathVariable String id, @RequestBody Letter newLetter) {
+//		int postID = Integer.parseInt(id);
+//		Optional<Letter> letter = letterRepository.findById((long) postID);
+//		letter.get().setContent(newLetter.getContent());
+//		letterRepository.save(letter.get());
+//		return letter.get();
+//	}
 	@PostMapping("/letter/update/{id}")
-	public @ResponseBody Letter updateLetter(@PathVariable String id, @RequestBody Letter newLetter) {
+	public @ResponseBody Letter updateLetter(@PathVariable String id) {
 		int postID = Integer.parseInt(id);
 		Optional<Letter> letter = letterRepository.findById((long) postID);
-		letter.get().setContent(newLetter.getContent());
+		letter.get().setRead(1);
 		letterRepository.save(letter.get());
 		return letter.get();
 	}
@@ -87,5 +95,7 @@ public class LetterController {
 			return "error";
 		}
 	}
+	
+	
 
 }

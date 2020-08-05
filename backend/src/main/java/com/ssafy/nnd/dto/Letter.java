@@ -44,7 +44,7 @@ public class Letter {
 	private LocalDateTime createDate;	// 메시지 발수신 시각	
 	
 	@Column(name = "read")
-	private Byte read;		// 메시지 읽었는지 확인 (안읽음 = 0, 읽음 1)
+	private int read;		// 메시지 읽었는지 확인 (안읽음 = 0, 읽음 1)
 	
 	public Letter() {
 		// TODO Auto-generated constructor stub
@@ -90,11 +90,11 @@ public class Letter {
 		this.createDate = createDate;
 	}
 	
-	public Byte getRead() {
+	public int getRead() {
 		return read;
 	}
 
-	public void setRead(Byte read) {
+	public void setRead(int read) {
 		this.read = read;
 	}
 
