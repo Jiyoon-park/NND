@@ -27,30 +27,28 @@ public class LetterController {
 	
 	// R
 	// 모든 메시지
-	@GetMapping("/letter/read/all")
+	@GetMapping("/letter/list/all")
 	public @ResponseBody List<Letter> getAllLetter() {
 		return letterRepository.findAll();
 	}
 	
-	@GetMapping("/letter/read/{letterno}")
+	@GetMapping("/letter/list/{letterno}")
 	public @ResponseBody Optional<Letter> getAllLetter(@PathVariable Long letterno) {
 		return letterRepository.findById(letterno);
 	}
 	
 	// 보내는 사람 기준으로 검색
-	@GetMapping("/letter/read/send/{id}")
-	public @ResponseBody List<Letter> getLetterBySend(@PathVariable String id) {
-		int sendIdx = Integer.parseInt(id);
-		Optional<List<Letter>> letter = letterRepository.findBySendIdx(sendIdx);
+	@GetMapping("/letter/list/send/{idx}")
+	public @ResponseBody List<Letter> getLetterBySend(@PathVariable Long idx) {
+		Optional<List<Letter>> letter = letterRepository.findBySendIdx(idx);
 		System.out.println(letter.get());
 		return letter.get();
 	}
 	
 	// 받는 사람 기준으로 검색
-	@GetMapping("/letter/read/receive/{id}")
-	public @ResponseBody List<Letter> getLetterByReceive(@PathVariable String id) {
-		int receiveIdx = Integer.parseInt(id);
-		Optional<List<Letter>> letter = letterRepository.findByReceiveIdx(receiveIdx);
+	@GetMapping("/letter/list/receive/{idx}")
+	public @ResponseBody List<Letter> getLetterByReceive(@PathVariable Long idx) {
+		Optional<List<Letter>> letter = letterRepository.findByReceiveIdx(idx);
 		System.out.println(letter.get());
 		return letter.get();
 	}

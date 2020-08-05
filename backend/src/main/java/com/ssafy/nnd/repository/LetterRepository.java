@@ -9,7 +9,7 @@ import com.ssafy.nnd.dto.Letter;
 import com.ssafy.nnd.dto.Member;
 
 public interface LetterRepository extends JpaRepository<Letter, Long>  {
-	Optional<List<Letter>> findBySendIdx(int sendIdx);
-	Optional<List<Letter>> findByReceiveIdx(int receiveIdx);
+	Optional<List<Letter>> findBySendIdx(Long sendIdx);
+	Optional<List<Letter>> findByReceiveIdx(Long receiveIdx);
 	
 }
