@@ -9,18 +9,16 @@
           </v-avatar>
 
           <v-list-item-content class="float-right">
-            <v-list-item-title class="user-interface">{{
+            <v-list-item-title class="user-interface">
+              {{
               username
-            }}</v-list-item-title>
-            <v-list-item-title class="user-interface"
-              >로그아웃</v-list-item-title
-            >
+              }}
+            </v-list-item-title>
+            <v-list-item-title class="user-interface">로그아웃</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
-          <v-list-item-content
-            @click="$router.push('/profile').catch(() => {})"
-          >
+          <v-list-item-content @click="$router.push('/profile').catch(() => {})">
             <v-list-item-title>내 정보</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -52,11 +50,9 @@
       <v-spacer></v-spacer>
 
       <Search />
+      <i class="fas fa-envelope ml-2" @click="$router.push('/letter').catch(() => {})"></i>
 
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-        color="#999"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>

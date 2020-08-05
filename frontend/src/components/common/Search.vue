@@ -28,7 +28,6 @@
               color="purple darken-2"
             ></v-combobox>
           </v-list-item>
-          {{ search}}
         </v-list>
         <i class="fas fa-filter ml-3">Filter</i>
         <v-divider></v-divider>
