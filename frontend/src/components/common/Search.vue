@@ -121,7 +121,7 @@ export default {
     submit() {
       axios
         .get("localhost:8080/searchUsingFilter", {
-          query: this.searchSelection,
+          query: this.search,
           type: this.typeSelection,
           category: this.categorySelection,
           skills: this.skillSelection,
