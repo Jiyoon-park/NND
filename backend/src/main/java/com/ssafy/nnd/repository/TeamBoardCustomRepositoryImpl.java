@@ -78,11 +78,17 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 	public List findTeamBoardList(List query, List category, List skills, Long mno, final Pageable pageable) {
 		System.out.println("custom findTeamBoardList");
 		StringBuilder str = new StringBuilder();
-//		str.append("select m from TeamBoard left join (select n from LikeTeam as n where mno = " + mno + ") as m where ");
+		
+		////////////// select //////////////
 		str.append("select teamboardno, idx, email, teamname, memberemails, groupsize, deadline, title, content, techstack, category, likecnt, t.createdate as createdate, kakaolink, likeno, tboard, mno ");
-		str.append("from teamboard t left join liketeam l on teamboardno = tboard where ");
-//		str.append("select t from TeamBoard t left join t.likeTeam l where ");
-//		str.append("select t from TeamBoard t left join t.likeTeam l where ");
+		////////////// select end //////////////
+		
+		////////////// from //////////////
+		str.append("from teamboard t left join liketeam l on teamboardno = tboard ");
+		////////////// from end //////////////
+		
+		////////////// where //////////////
+		str.append("where mno = " + mno + " and ");
 		
 		// query
 		// title과 content를 대상으로 검색
@@ -121,6 +127,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		
 		// 맨마지막은 항상 1을 붙여서 AND로 종료되지 않도록 한다.
 		str.append("1 = 1");
+		////////////// where end //////////////
 		System.out.println(str.toString());
 		
 		int pageNumber = pageable.getPageNumber();
