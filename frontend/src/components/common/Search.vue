@@ -28,6 +28,7 @@
               color="purple darken-2"
             ></v-combobox>
           </v-list-item>
+          {{ search}}
         </v-list>
         <i class="fas fa-filter ml-3">Filter</i>
         <v-divider></v-divider>
@@ -109,7 +110,7 @@ import axios from "axios";
 export default {
   data: () => ({
     dialog: false,
-    search: "",
+    search: [],
     typeSelection: [],
     categorySelection: [],
     skillSelection: [],
@@ -121,7 +122,7 @@ export default {
     submit() {
       axios
         .get("localhost:8080/searchUsingFilter", {
-          query: this.search,
+          query: this.searchSelection,
           type: this.typeSelection,
           category: this.categorySelection,
           skills: this.skillSelection,
