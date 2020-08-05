@@ -1,6 +1,9 @@
 package com.ssafy.nnd.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssafy.nnd.dto.Letter;
-import com.ssafy.nnd.dto.MemberBoard;
 import com.ssafy.nnd.repository.LetterRepository;
 
 @CrossOrigin
@@ -39,18 +41,47 @@ public class LetterController {
 	
 	// 보내는 사람 기준으로 검색
 	@GetMapping("/letter/list/send/{idx}")
-	public @ResponseBody List<Object> getLetterBySend(@PathVariable Long idx) {
-		Optional<List<Object>> letter = letterRepository.findBySendIdx(idx);
-		System.out.println(letter.get());
-		return letter.get();
+	public @ResponseBody List<Map<String,Object>> getLetterBySend(@PathVariable Long idx) {
+		List<Object> letter = letterRepository.findBySendIdx(idx);
+		
+		List<Map<String, Object>> datalist = new ArrayList<Map<String,Object>>();
+
+		for (int i = 0; i <letter.size() ; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] temp = (Object[])letter.get(i);
+			map.put("name",temp[1]);
+			map.put("profile",temp[3]);
+			map.put("letterNo", temp[8]);
+			map.put("sendIdx", temp[9]);
+			map.put("receiveIdx", temp[10]);
+			map.put("content", temp[11]);
+			map.put("createDate", temp[12]);
+			map.put("read", temp[13]);
+			datalist.add(map);
+		}
+		return datalist;
 	}
 	
 	// 받는 사람 기준으로 검색
 	@GetMapping("/letter/list/receive/{idx}")
-	public @ResponseBody List<Object> getLetterByReceive(@PathVariable Long idx) {
-		Optional<List<Object>> letter = letterRepository.findByReceiveIdx(idx);
-		System.out.println(letter.get());
-		return letter.get();
+	public @ResponseBody List<Map<String,Object>> getLetterByReceive(@PathVariable Long idx) {
+		List<Object> letter = letterRepository.findByReceiveIdx(idx);
+		List<Map<String, Object>> datalist = new ArrayList<Map<String,Object>>();
+
+		for (int i = 0; i <letter.size() ; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] temp = (Object[])letter.get(i);
+			map.put("name",temp[1]);
+			map.put("profile",temp[3]);
+			map.put("letterNo", temp[8]);
+			map.put("sendIdx", temp[9]);
+			map.put("receiveIdx", temp[10]);
+			map.put("content", temp[11]);
+			map.put("createDate", temp[12]);
+			map.put("read", temp[13]);
+			datalist.add(map);
+		}
+		return datalist;
 	}
 	
 	// C

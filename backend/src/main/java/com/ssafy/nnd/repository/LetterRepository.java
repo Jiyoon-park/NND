@@ -12,9 +12,9 @@ import com.ssafy.nnd.dto.Letter;
 public interface LetterRepository extends JpaRepository<Letter, Long>  {
 	
 	@Query(value = "SELECT * FROM member RIGHT JOIN (SELECT * FROM letter WHERE sendidx=:idx) letter ON receiveidx = idx",nativeQuery=true)
-	Optional<List<Object>> findBySendIdx(@Param("idx") Long idx);
+	List<Object> findBySendIdx(@Param("idx") Long idx);
 	
 	@Query(value = "SELECT * FROM member RIGHT JOIN (SELECT * FROM letter WHERE receiveidx=:idx) letter ON sendidx=idx",nativeQuery=true)
-	Optional<List<Object>> findByReceiveIdx(@Param("idx") Long idx);
+	List<Object> findByReceiveIdx(@Param("idx") Long idx);
 	
 }
