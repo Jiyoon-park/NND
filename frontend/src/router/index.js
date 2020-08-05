@@ -9,6 +9,7 @@ import Profile from "../components/user/Profile.vue";
 import ProfileUpdate from "../components/user/ProfileUpdate.vue";
 import AddBoard from "../components/common/AddBoard.vue";
 import LetterList from "../components/letter/LetterList.vue";
+import LetterDetail from "../components/letter/LetterDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -51,7 +52,7 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
-    props: true
+    props: true,
   },
   {
     path: "/profile-update",
@@ -67,6 +68,14 @@ const routes = [
     path: "/letter",
     name: "LetterList",
     component: LetterList,
+  },
+  {
+    path: "/letter/detail",
+    name: "LetterDetail",
+    component: LetterDetail,
+    props(route) {
+      return { letter_id: route.query.letter_id };
+    },
   },
 ];
 

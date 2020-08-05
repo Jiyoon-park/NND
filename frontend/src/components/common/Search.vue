@@ -105,6 +105,7 @@
 
 <script>
 import axios from "axios";
+import EventBus from "../../main";
 
 export default {
   data: () => ({
@@ -119,22 +120,12 @@ export default {
   }),
   methods: {
     submit() {
-      axios
-        .get("localhost:8080/searchUsingFilter", {
-          query: this.search,
-          type: this.typeSelection,
-          category: this.categorySelection,
-          skills: this.skillSelection,
-        })
-        .then((response) => {
-          console.log(response);
-          alert("백엔드 전송 성공");
-          // this.goMain();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ㅠㅠ실패");
-        });
+      EventBus.$emit("search", {
+        type: this.typeSelection,
+        query: this.search,
+        category: this.categorySelection,
+        skills: this.skillSelection,
+      });
       this.dialog = false;
     },
   },
