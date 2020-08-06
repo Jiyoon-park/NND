@@ -61,18 +61,19 @@ public class HomeController {
         HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
         System.out.println("login Controller : " + userInfo);
         Member mem = new Member();
-        mem.setEmail((String)userInfo.get("email"));
-        mem.setName((String)userInfo.get("nickname"));
-        mem.setProfile((String)userInfo.get("profile"));
-        mem.setCompany((String)userInfo.get("company"));
-        
-        
+
         // db에 넣기
-        Optional<Member> member = memberRepository.findByEmailAndCompany(mem.getEmail(), mem.getCompany());
-        if (member.equals(Optional.empty())) { // 신규 유저일때
+        Optional<Member> member = memberRepository.findMemberByEmailAndCompany((String)userInfo.get("email"), (String)userInfo.get("company"));
+        if (!member.isPresent()) { // 신규 유저일때
+        	System.out.println("카카오 신규 유저");
+            mem.setEmail((String)userInfo.get("email"));
+            mem.setName((String)userInfo.get("nickname"));
+            mem.setProfile((String)userInfo.get("profile"));
+            mem.setCompany((String)userInfo.get("company"));
         	memberRepository.save(mem);	// db에 등록
 		} else {
-			mem.setIdx(member.get().getIdx());
+        	System.out.println("카카오 가입자");
+        	mem = member.get();
 		}
         
         tmpMember = mem;
