@@ -128,29 +128,43 @@ public class LetterController {
 		}
 	}
 	
-	// 신청하기 메시지 수락버튼 메소드
+	// 팀장이 개인 신청사항을 수락할 경우 
 	   @PostMapping("letter/teamaccept/{sendidx}/{receiveidx}")
 	   public @ResponseBody String teamAccept(@PathVariable Long sendidx, @PathVariable Long receiveidx) {
 	      
 	      Optional<TeamBoard> team = teamBoardRepository.findByIdx(receiveidx);
 	      Optional<Member> member = memberRepository.findById(sendidx);
-	      String currentTeamMember = team.get().getMemberEmails();
-	      String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
-	     // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
-	      team.get().setMemberEmails(changedTeamMember);
-	      return changedTeamMember;
+	      
+	      if(member.get().getTeamboardno() == 0) {  //현재 팀이 없을 경우
+	    	  String currentTeamMember = team.get().getMemberEmails();
+	    	  String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
+	    	  // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
+	    	  team.get().setMemberEmails(changedTeamMember);
+	    	  member.get().setTeamboardno(team.get().getTeamboardNo());   // member별 팀 등록
+	    	  return "success";
+	    	  
+	      }else { // 현재 팀이 있을경우 
+	    	  
+	    	  return "fail";
+	      }
 	   }
-	   
+	   //개인이 팀장의 스카웃을 수락할 경우
 	   @PostMapping("letter/memberaccept/{sendidx}/{receiveidx}")
 	   public @ResponseBody String memberAccept(@PathVariable Long sendidx, @PathVariable Long receiveidx) {
 	      
 	      Optional<TeamBoard> team = teamBoardRepository.findByIdx(sendidx);
 	      Optional<Member> member = memberRepository.findById(receiveidx);
-	      String currentTeamMember = team.get().getMemberEmails();
-	      String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
-	     // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
-	      team.get().setMemberEmails(changedTeamMember);
-	      return changedTeamMember;
+	      if(member.get().getTeamboardno()==0) {  // 팀이 결정되지 않은 경우
+	    	  String currentTeamMember = team.get().getMemberEmails();
+	    	  String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
+	    	  // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
+	    	  team.get().setMemberEmails(changedTeamMember);
+	    	  member.get().setTeamboardno(team.get().getTeamboardNo());  // member별 팀 등록
+	    	  return "success";
+	    	  
+	      }else {
+	    	  return "fail";
+	      }
 	   }
 
 }

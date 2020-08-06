@@ -8,8 +8,10 @@ CREATE TABLE `member` (
   `company` varchar(10) default NULL,
   `gitaddr` varchar(128) Default null,
   `memberstack` varchar(500) default null,
+ `teamboardno` int(10) default 0,
   PRIMARY KEY (`idx`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE `teamboard` (
   `teamboardno` int(10) NOT NULL AUTO_INCREMENT,

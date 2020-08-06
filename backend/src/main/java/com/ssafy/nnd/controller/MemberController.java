@@ -87,7 +87,7 @@ public class MemberController {
 
 		Optional<Member> memberOpt = memberRepository.findMemberByEmail(request.getEmail());
 		Member member= new Member(request.getName(),request.getEmail(), request.getProfile(), request.getPassword(),"null",request.getGitaddr(),request.getMemberstack());
-
+		//// 위 생성자에  teamboardno 안들어가있음 db 에서 자동 0값 넣기는 합니다.....
 		ResponseEntity response = null;
 
 		if (memberOpt.isPresent()) { //  있는 회원입니다.
