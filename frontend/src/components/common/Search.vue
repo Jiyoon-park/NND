@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import EventBus from "../../main";
 
 export default {

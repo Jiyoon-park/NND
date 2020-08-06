@@ -17,6 +17,7 @@
                   :key="i"
                   :letterinfo="item.letters[i]"
                 />
+                <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
               </v-list-item-group>
             </v-list>
           </v-card>
@@ -27,6 +28,7 @@
 </template>
 
 <script>
+// import InfiniteLoading from "vue-infinite-loading";
 import NavBar from "../common/NavBar.vue";
 import LetterListItem from "./LetterListItem.vue";
 import axios from "axios";
@@ -48,6 +50,9 @@ export default {
           letters: [],
         },
       ],
+      // list: [],
+      // page: 0,
+      // size: 10,
     };
   },
   created() {
