@@ -13,25 +13,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.MemberBoard;
 import com.ssafy.nnd.repository.MemberBoardRepository;
+import com.ssafy.nnd.repository.MemberRepository;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/memberboard")
 public class MemberBoardController {
 
 	@Autowired
 	MemberBoardRepository memberBoardRepository;
 
-    @GetMapping("/memberboard/list")
+	@Autowired
+	MemberRepository memberRepository;
+	
+    @GetMapping("/list")
     public List<MemberBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
     	return memberBoardRepository.findAllByOrderByBoardNoDesc(pageable);
     }
     
-    @GetMapping("/memberboard/{id}")
+    @GetMapping("/{id}")
     public MemberBoard getMemberBoard(@PathVariable String id){
     	Long postID = Long.parseLong(id);
     	
@@ -41,7 +48,7 @@ public class MemberBoardController {
     }
     
     // 좋아요 비활성화 상태에서 검색
-    @PutMapping("/memberboard/search")
+    @PutMapping("/search")
 	public List<Object> searchMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, @RequestBody Map<String, Object> map, final Pageable pageable) {
 		
 		List<String> query = (List<String>) map.get("query");
@@ -54,7 +61,7 @@ public class MemberBoardController {
 	}
     
     // 좋아요 활성화 상태에서 검색
-    @PutMapping("/memberboard/search/{mno}")
+    @PutMapping("/search/{mno}")
     public List<Object> searchMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, @RequestBody Map<String, Object> map, @PathVariable Long mno, final Pageable pageable) {
     	
     	List<String> query = (List<String>) map.get("query");
@@ -66,7 +73,7 @@ public class MemberBoardController {
     	return memberBoardRepository.findMemberBoardList(query, category, skills, mno, pageable);
     }
     
-    @PostMapping("/memberboard/update/{boardno}")
+    @PostMapping("/update/{boardno}")
     public MemberBoard updateMemberBoard(@PathVariable String boardno, @RequestBody MemberBoard newmemberBoard)
     {
     	Long postID = Long.parseLong(boardno);
@@ -81,14 +88,18 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
-    @PutMapping("/memberboard/save")
-    public MemberBoard createMemberBoard(@RequestBody MemberBoard memberBoard){
-    	System.out.println(memberBoard.toString());
+    @PutMapping("/save/{idx}")
+    public MemberBoard createMemberBoard(@PathVariable Long idx ,@RequestBody MemberBoard memberBoard){
+		Optional<Member> member = memberRepository.findMemberByIdx(idx);
+    	memberBoard.setIdx(member.get().getIdx());
+    	memberBoard.setEmail(member.get().getEmail());
+    	memberBoard.setName(member.get().getName());
+		System.out.println(memberBoard.toString());
     	MemberBoard newmemberBoard = memberBoardRepository.save(memberBoard);
     	return newmemberBoard;
 	}
 
-	@DeleteMapping("/memberboard/delete/{boardno}")
+	@DeleteMapping("/delete/{boardno}")
     public String deleteMemberBoard(@PathVariable Long boardno){
     	memberBoardRepository.deleteById(boardno);
     	return "Delete Success!";

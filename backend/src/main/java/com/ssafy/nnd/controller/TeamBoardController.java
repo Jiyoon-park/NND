@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.TeamBoard;
+import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 
 import springfox.documentation.spring.web.json.Json;
@@ -30,6 +32,9 @@ public class TeamBoardController {
 
 	@Autowired
     TeamBoardRepository teamBoardRepository;
+	
+	@Autowired
+	MemberRepository memberRepository;
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
@@ -37,7 +42,7 @@ public class TeamBoardController {
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
-    // 좋아요 비활성화 상태에서 검색
+    // 좋아요 누른거 + 안누른거 다 검색
     @PutMapping("/teamboard/search")
 	public List<Object> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
 		
@@ -50,7 +55,7 @@ public class TeamBoardController {
 		return teamBoardRepository.findTeamBoardList(query, category, skills, pageable);
 	}
     
-    // 좋아요 활성화 상태에서 검색
+    // 좋아요 누른거 만 검색
     @PutMapping("/teamboard/search/{mno}")
     public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
     	
@@ -91,8 +96,19 @@ public class TeamBoardController {
     	return teamBoard.get();
     }
     
-    @PutMapping("/teamboard/save")
-    public TeamBoard createTeamBoard(@RequestBody TeamBoard teamBoard){
+    @PutMapping("/teamboard/save/{idx}")
+    public TeamBoard createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
+    	Optional<Member> member = memberRepository.findMemberByIdx(idx);
+    	String chiefEmail = member.get().getEmail();
+    	teamBoard.setIdx(member.get().getIdx());
+    	teamBoard.setEmail(chiefEmail);
+    	teamBoard.setName(member.get().getName());
+    	String membersEmail = teamBoard.getMemberEmails();
+    	if(membersEmail.equals("[]")) {
+    		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");
+    	}else {
+    		teamBoard.setMemberEmails("[\""+chiefEmail+"\","+ membersEmail.substring(1));
+    	}
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
     	return newmemberBoard;

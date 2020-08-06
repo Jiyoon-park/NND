@@ -14,7 +14,7 @@
               username
               }}
             </v-list-item-title>
-            <v-list-item-title class="user-interface">로그아웃</v-list-item-title>
+            <v-list-item-title @click="onLogout" class="user-interface">로그아웃</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
@@ -85,7 +85,13 @@ export default {
       this.profileURL = token.object.profile;
     }
   },
-  methods: {},
+  methods: {
+    onLogout: function () {
+      this.$store.commit('logout')
+      window.$cookies.remove('nnd')
+      this.$router.push('/login')
+    }
+  },
 };
 </script>
 

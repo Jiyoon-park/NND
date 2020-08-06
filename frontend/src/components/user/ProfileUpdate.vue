@@ -9,7 +9,7 @@
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
-        <v-btn small @click="$router.push('/profile')">save</v-btn>
+        <v-btn small @click="modify">save</v-btn>
       </div>
       <v-tabs class="tabs">
         <v-spacer></v-spacer>
@@ -24,9 +24,9 @@
         <v-card-text>
           <v-text-field filled dense disabled :value="user.email" label="이메일" color="white"></v-text-field>
           <v-text-field filled dense v-model="user.name" label="이름"></v-text-field>
-          <v-text-field dense v-model="userinfo.password" label="비밀번호" filled></v-text-field>
-          <v-text-field dense v-model="userinfo.password2" label="비밀번호 확인" filled></v-text-field>
           <v-text-field dense v-model="user.gitaddr" label="GIT 주소" filled></v-text-field>
+          <v-text-field dense v-model="user.profile" label="프로필사진 링크" filled></v-text-field>
+          <v-btn type="button" @click="PreviewImg">이미지 미리보기</v-btn>
         </v-card-text>
       </div>
       <v-divider></v-divider>
@@ -92,10 +92,32 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:8080/userinfo").then((res) => {
-      this.user = res.data;
+    let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    if (token) {
+      //토큰 존재하면
+      this.user = token.object,
       this.profileURL = this.user.profile;
-    });
+    }
+  },
+  methods: {
+    PreviewImg() {
+      this.profileURL = this.user.profile;
+    },
+    modify(){
+      axios.post("http://localhost:8080/member/update",
+      {
+        email: this.user.email,
+        name: this.user.name,
+        profile: this.user.profile,
+        gitaddr: this.user.gitaddr,
+      })
+      .then((res) => {
+        console.log(res)
+        window.$cookies.remove("nnd"); //쿠키삭제
+        window.$cookies.set("nnd", res.data, "2d"); //쿠키다시저장
+        this.$router.push({name: "Profile"}); //home으로 보냄
+      });
+    }
   },
   computed: {
     target() {

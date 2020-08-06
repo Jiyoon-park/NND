@@ -85,16 +85,6 @@ public class MemberController {
 	@PostMapping("/signup")
 	public String signup(@Valid @RequestBody SignupRequest request) {
 
-		//		 try {
-		//	            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		//	            user.setPassword(passwordEncoder.encode(user.getPassword()));
-		//	            userRepository.save(user);
-		//	        } catch(Exception e) {
-		//	            return "failed";
-		//	        }
-		//	        return "success";
-		//		
-
 		Optional<Member> memberOpt = memberRepository.findMemberByEmail(request.getEmail());
 		Member member= new Member(request.getName(),request.getEmail(), request.getProfile(), request.getPassword(),"null",request.getGitaddr(),request.getMemberstack());
 
@@ -118,8 +108,31 @@ public class MemberController {
 	@GetMapping("/info/{id}")
 	public Object getuserinfo(@PathVariable long id) {
 		Optional<Member> member = memberRepository.findById(id);
-		
 		return member.get();
+	}
+	
+	@PostMapping("/update")
+	public Object updateuserinfo(@RequestBody Member member) {
+		System.out.println("update = "+member.getIdx());
+		Member NewMember;
+		Optional<Member> memberOpt = memberRepository.findMemberByEmail(member.getEmail());
+		NewMember = memberOpt.get();
+		NewMember.setName(member.getName());
+		NewMember.setProfile(member.getProfile());
+		NewMember.setGitaddr(member.getGitaddr());
+		memberRepository.save(NewMember);
+		
+		String token = jwtService.create("member", NewMember, "user");
+		
+		ResponseEntity response = null;
+
+		final BasicResponse result = new BasicResponse();
+		result.object = NewMember;
+		result.status = true;
+		result.data = token;
+		response = new ResponseEntity<>(result, HttpStatus.OK);
+
+		return response;
 	}
 
 }

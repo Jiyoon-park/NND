@@ -63,7 +63,8 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		}
 		
 		// 맨마지막은 항상 1을 붙여서 AND로 종료되지 않도록 한다.
-		str.append("1 = 1");
+		str.append("1 = 1 ");
+		str.append("order by createdate desc");
 		System.out.println(str.toString());
 		
 		int pageNumber = pageable.getPageNumber();
@@ -80,7 +81,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		StringBuilder str = new StringBuilder();
 		
 		////////////// select //////////////
-		str.append("select teamboardno, idx, email, teamname, memberemails, groupsize, deadline, title, content, techstack, category, likecnt, t.createdate as createdate, kakaolink, likeno, tboard, mno ");
+		str.append("select teamboardno, idx, email, name, teamname, memberemails, groupsize, deadline, title, content, techstack, category, likecnt, t.createdate as createdate, kakaolink, likeno, tboard, mno ");
 		////////////// select end //////////////
 		
 		////////////// from //////////////
@@ -126,7 +127,8 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		}
 		
 		// 맨마지막은 항상 1을 붙여서 AND로 종료되지 않도록 한다.
-		str.append("1 = 1");
+		str.append("1 = 1 ");
+		str.append("order by createdate desc");
 		////////////// where end //////////////
 		System.out.println(str.toString());
 		
@@ -134,7 +136,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		int pageSize = pageable.getPageSize();
 		
 		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber-1) * pageSize).setMaxResults(pageNumber * pageSize).getResultList();
-		String[] keys = {"teamboardno","idx","email","teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno"}; 
+		String[] keys = {"teamboardno","idx","email", "name", "teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno"}; 
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		for (int i = 0; i < temp.size(); i++) {
 			Map<String, Object> real = new HashMap<String, Object>();

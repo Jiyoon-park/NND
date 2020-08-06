@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssafy.nnd.dto.Letter;
+import com.ssafy.nnd.dto.Member;
+import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.repository.LetterRepository;
+import com.ssafy.nnd.repository.MemberRepository;
+import com.ssafy.nnd.repository.TeamBoardRepository;
 
 @CrossOrigin
 @Controller
@@ -26,6 +30,12 @@ public class LetterController {
 	
 	@Autowired
 	LetterRepository letterRepository;
+	
+	@Autowired
+	MemberRepository memberRepository;
+	
+	@Autowired
+	TeamBoardRepository teamBoardRepository;
 	
 	// R
 	// 모든 메시지
@@ -96,16 +106,6 @@ public class LetterController {
 		}
 	}
 	
-	// U
-//	@PostMapping("/letter/update/{id}")
-//	public @ResponseBody Letter updateLetter(@PathVariable String id, @RequestBody Letter newLetter) {
-//		int postID = Integer.parseInt(id);
-//		Optional<Letter> letter = letterRepository.findById((long) postID);
-//		letter.get().setContent(newLetter.getContent());
-//		letterRepository.save(letter.get());
-//		return letter.get();
-//	}
-	
 	@PostMapping("/letter/update/{letterno}")
     public @ResponseBody Letter updateLetter(@PathVariable Long letterno)
     {
@@ -128,6 +128,29 @@ public class LetterController {
 		}
 	}
 	
-	
+	// 신청하기 메시지 수락버튼 메소드
+	   @PostMapping("letter/teamaccept/{sendidx}/{receiveidx}")
+	   public @ResponseBody String teamAccept(@PathVariable Long sendidx, @PathVariable Long receiveidx) {
+	      
+	      Optional<TeamBoard> team = teamBoardRepository.findByIdx(receiveidx);
+	      Optional<Member> member = memberRepository.findById(sendidx);
+	      String currentTeamMember = team.get().getMemberEmails();
+	      String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
+	     // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
+	      team.get().setMemberEmails(changedTeamMember);
+	      return changedTeamMember;
+	   }
+	   
+	   @PostMapping("letter/memberaccept/{sendidx}/{receiveidx}")
+	   public @ResponseBody String memberAccept(@PathVariable Long sendidx, @PathVariable Long receiveidx) {
+	      
+	      Optional<TeamBoard> team = teamBoardRepository.findByIdx(sendidx);
+	      Optional<Member> member = memberRepository.findById(receiveidx);
+	      String currentTeamMember = team.get().getMemberEmails();
+	      String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
+	     // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
+	      team.get().setMemberEmails(changedTeamMember);
+	      return changedTeamMember;
+	   }
 
 }
