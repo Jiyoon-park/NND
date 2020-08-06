@@ -17,28 +17,28 @@ public class Member implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long idx;
+    private Long idx;
 
     @Column
-    public String name;
+    private String name;
 
     @Column
-    public String email;
+    private String email;
     
     @Column
-    public String profile;
+    private String profile;
     
 	@Column
-    public String password;
+	private String password;
 
     @Column
-    public String company;
+    private String company;
     
     @Column
-    public String gitaddr;
+    private String gitaddr;
     
     @Column
-    public String memberstack;
+    private String memberstack;
 
 
 	public Long getIdx() {

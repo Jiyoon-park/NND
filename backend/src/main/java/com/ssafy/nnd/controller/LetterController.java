@@ -1,6 +1,9 @@
 package com.ssafy.nnd.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +29,59 @@ public class LetterController {
 	
 	// R
 	// 모든 메시지
-	@GetMapping("/letter/read/all")
+	@GetMapping("/letter/list/all")
 	public @ResponseBody List<Letter> getAllLetter() {
 		return letterRepository.findAll();
 	}
 	
+	@GetMapping("/letter/list/{letterno}")
+	public @ResponseBody Optional<Letter> getAllLetter(@PathVariable Long letterno) {
+		return letterRepository.findById(letterno);
+	}
+	
 	// 보내는 사람 기준으로 검색
-	@GetMapping("/letter/read/send/{id}")
-	public @ResponseBody List<Letter> getLetterBySend(@PathVariable String id) {
-		int sendIdx = Integer.parseInt(id);
-		Optional<List<Letter>> letter = letterRepository.findBySendIdx(sendIdx);
-		System.out.println(letter.get());
-		return letter.get();
+	@GetMapping("/letter/list/send/{idx}")
+	public @ResponseBody List<Map<String,Object>> getLetterBySend(@PathVariable Long idx) {
+		List<Object> letter = letterRepository.findBySendIdx(idx);
+		
+		List<Map<String, Object>> datalist = new ArrayList<Map<String,Object>>();
+
+		for (int i = 0; i <letter.size() ; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] temp = (Object[])letter.get(i);
+			map.put("name",temp[1]);
+			map.put("profile",temp[3]);
+			map.put("letterNo", temp[8]);
+			map.put("sendIdx", temp[9]);
+			map.put("receiveIdx", temp[10]);
+			map.put("content", temp[11]);
+			map.put("createDate", temp[12]);
+			map.put("read", temp[13]);
+			datalist.add(map);
+		}
+		return datalist;
 	}
 	
 	// 받는 사람 기준으로 검색
-	@GetMapping("/letter/read/receive/{id}")
-	public @ResponseBody List<Letter> getLetterByReceive(@PathVariable String id) {
-		int receiveIdx = Integer.parseInt(id);
-		Optional<List<Letter>> letter = letterRepository.findByReceiveIdx(receiveIdx);
-		System.out.println(letter.get());
-		return letter.get();
+	@GetMapping("/letter/list/receive/{idx}")
+	public @ResponseBody List<Map<String,Object>> getLetterByReceive(@PathVariable Long idx) {
+		List<Object> letter = letterRepository.findByReceiveIdx(idx);
+		List<Map<String, Object>> datalist = new ArrayList<Map<String,Object>>();
+
+		for (int i = 0; i <letter.size() ; i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] temp = (Object[])letter.get(i);
+			map.put("name",temp[1]);
+			map.put("profile",temp[3]);
+			map.put("letterNo", temp[8]);
+			map.put("sendIdx", temp[9]);
+			map.put("receiveIdx", temp[10]);
+			map.put("content", temp[11]);
+			map.put("createDate", temp[12]);
+			map.put("read", temp[13]);
+			datalist.add(map);
+		}
+		return datalist;
 	}
 	
 	// C
@@ -62,14 +97,24 @@ public class LetterController {
 	}
 	
 	// U
-	@PostMapping("/letter/update/{id}")
-	public @ResponseBody Letter updateLetter(@PathVariable String id, @RequestBody Letter newLetter) {
-		int postID = Integer.parseInt(id);
-		Optional<Letter> letter = letterRepository.findById((long) postID);
-		letter.get().setContent(newLetter.getContent());
-		letterRepository.save(letter.get());
-		return letter.get();
-	}
+//	@PostMapping("/letter/update/{id}")
+//	public @ResponseBody Letter updateLetter(@PathVariable String id, @RequestBody Letter newLetter) {
+//		int postID = Integer.parseInt(id);
+//		Optional<Letter> letter = letterRepository.findById((long) postID);
+//		letter.get().setContent(newLetter.getContent());
+//		letterRepository.save(letter.get());
+//		return letter.get();
+//	}
+	
+	@PostMapping("/letter/update/{letterno}")
+    public @ResponseBody Letter updateLetter(@PathVariable Long letterno)
+    {
+    	Optional<Letter> letter = letterRepository.findById(letterno);
+    	letter.get().setRead(1);
+    	letterRepository.save(letter.get());
+    	return letter.get();
+    }
+	
 	
 	// D
 	@DeleteMapping("/letter/delete/{id}")
@@ -82,5 +127,7 @@ public class LetterController {
 			return "error";
 		}
 	}
+	
+	
 
 }

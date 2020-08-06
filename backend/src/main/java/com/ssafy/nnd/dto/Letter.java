@@ -29,19 +29,23 @@ public class Letter {
 	@Id
 	@Column(name = "letterno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long letterNo;	// 메시지 식별번호
+	private Long letterNo;	// 메시지 식별번호
 	
 	@Column(name = "sendidx")
-	private int sendIdx;	// 보내는 사람 idx
+	private Long sendIdx;	// 보내는 사람 idx
 	
 	@Column(name = "receiveidx")
-	private int receiveIdx;	// 받는 사람 idx
+	private Long receiveIdx;	// 받는 사람 idx
 	
 	@Column(name = "content")
 	private String content;	// 메시지 내용
 	
 	@Column(name = "createdate", insertable = false, updatable = false)
-	private LocalDateTime createDate;	// 메시지 발수신 시각
+	private LocalDateTime createDate;	// 메시지 발수신 시각	
+	
+	@Column(name = "\"read\"")
+	private int read;		// 메시지 읽었는지 확인 (안읽음 = 0, 읽음 1)
+	
 	
 	public Letter() {
 		// TODO Auto-generated constructor stub
@@ -55,19 +59,19 @@ public class Letter {
 		this.letterNo = letterNo;
 	}
 
-	public int getSendIdx() {
+	public Long getSendIdx() {
 		return sendIdx;
 	}
 
-	public void setSendIdx(int sendIdx) {
+	public void setSendIdx(Long sendIdx) {
 		this.sendIdx = sendIdx;
 	}
 
-	public int getReceiveIdx() {
+	public Long getReceiveIdx() {
 		return receiveIdx;
 	}
 
-	public void setReceiveIdx(int receiveIdx) {
+	public void setReceiveIdx(Long receiveIdx) {
 		this.receiveIdx = receiveIdx;
 	}
 
@@ -86,13 +90,21 @@ public class Letter {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+	
+	public int getRead() {
+		return read;
+	}
+
+	public void setRead(int read) {
+		this.read = read;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Letter [letterNo=").append(letterNo).append(", sendIdx=").append(sendIdx)
 				.append(", receiveIdx=").append(receiveIdx).append(", content=").append(content).append(", createDate=")
-				.append(createDate).append("]");
+				.append(createDate).append(", read=").append(read).append("]");
 		return builder.toString();
 	}
 	

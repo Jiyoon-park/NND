@@ -12,12 +12,11 @@ import com.ssafy.nnd.dto.TeamBoard;
 
 
 
-public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>, TeamBoardCustomRepository<TeamBoard>{
+public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>, TeamBoardCustomRepository<Object>{
 
 	List<TeamBoard> findAllByOrderByTeamboardNoDesc(Pageable pageable);
 	Optional<TeamBoard> findByTeamboardNo(Long teamboardno);
 
 	@Query(value="SELECT * FROM teamboard JOIN liketeam ON teamboardno=tboard WHERE mno = :mno ",nativeQuery=true)
 	List<TeamBoard> findLikeboardByMno(@Param("mno") Long mno);
-	List<TeamBoard> findTeamBoardList(List<String> query, List<String> category, List<String> skills);
 }
