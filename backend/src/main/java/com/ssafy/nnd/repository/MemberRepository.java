@@ -3,6 +3,7 @@ package com.ssafy.nnd.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.ssafy.nnd.dto.Member;
 
@@ -13,5 +14,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findMemberByEmail(String email);
     Optional<Member> findMemberByEmailAndCompany(String email, String company);
     Optional<Member> findMemberByIdx(long idx);
+    
+  
 }
 
