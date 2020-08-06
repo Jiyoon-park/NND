@@ -80,7 +80,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		StringBuilder str = new StringBuilder();
 		
 		////////////// select //////////////
-		str.append("select teamboardno, idx, email, teamname, memberemails, groupsize, deadline, title, content, techstack, category, likecnt, t.createdate as createdate, kakaolink, likeno, tboard, mno ");
+		str.append("select teamboardno, idx, email, name, teamname, memberemails, groupsize, deadline, title, content, techstack, category, likecnt, t.createdate as createdate, kakaolink, likeno, tboard, mno ");
 		////////////// select end //////////////
 		
 		////////////// from //////////////
@@ -134,7 +134,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		int pageSize = pageable.getPageSize();
 		
 		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber-1) * pageSize).setMaxResults(pageNumber * pageSize).getResultList();
-		String[] keys = {"teamboardno","idx","email","teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno"}; 
+		String[] keys = {"teamboardno","idx","email", "name", "teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno"}; 
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		for (int i = 0; i < temp.size(); i++) {
 			Map<String, Object> real = new HashMap<String, Object>();
