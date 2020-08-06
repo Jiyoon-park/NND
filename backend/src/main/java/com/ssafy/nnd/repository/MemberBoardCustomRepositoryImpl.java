@@ -62,7 +62,8 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		}
 		
 		// 맨마지막은 항상 1을 붙여서 AND로 종료되지 않도록 한다.
-		str.append("1 = 1");
+		str.append("1 = 1 ");
+		str.append("order by createdate desc");
 		
 		System.out.println(str.toString());
 		
@@ -117,7 +118,8 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		}
 		
 		// 맨마지막은 항상 1을 붙여서 AND로 종료되지 않도록 한다.
-		str.append("1 = 1");
+		str.append("1 = 1 ");
+		str.append("order by createdate desc");
 		
 		System.out.println(str.toString());
 		
