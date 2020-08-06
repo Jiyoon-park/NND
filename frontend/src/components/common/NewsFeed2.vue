@@ -27,7 +27,8 @@
                 text-color="white"
                 v-for="stack in JSON.parse(stacks)"
                 :key="stack"
-              >{{ stack }}</v-chip>
+                >{{ stack }}</v-chip
+              >
             </div>
           </v-col>
         </v-list-item>
@@ -38,14 +39,10 @@
           <v-expansion-panel>
             <v-expansion-panel-header></v-expansion-panel-header>
             <v-expansion-panel-content>
-              {{
-              teaminfo.content
-              }}
+              {{ teaminfo.content }}
             </v-expansion-panel-content>
             <v-expansion-panel-content>
-              {{
-              teaminfo.kakaoLink
-              }}
+              {{ teaminfo.kakaoLink }}
             </v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
@@ -55,7 +52,9 @@
                 <v-icon>mdi-star</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="applyform" right>신청하기</v-btn>
+              <v-btn color="green darken-1" text @click="applyform" right
+                >신청하기</v-btn
+              >
             </v-card-actions>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -64,8 +63,10 @@
           <div v-show="show">
             <v-divider />
             <v-dialog v-model="dialog" max-width="600px">
-              <v-card style="align='center';
-            justify='center';">
+              <v-card
+                style="align='center';
+            justify='center';"
+              >
                 <v-card-title>
                   <span class="headline">신청 Form</span>
                 </v-card-title>
@@ -74,22 +75,31 @@
                     <v-row>
                       <v-col cols="12" align="center" justify="center">
                         <v-avatar color="grey" size="90" class="mb-2">
-                          <span v-if="!profileURL" class="white--text headline">GD</span>
+                          <span v-if="!profileURL" class="white--text headline"
+                            >GD</span
+                          >
                           <img v-else :src="profileURL" />
                         </v-avatar>
-                        <h3>팀 장 : {{ teaminfo.email }}</h3>
+                        <h3>팀 장 : {{ username }}</h3>
                         <p>팀 이름 : {{ teaminfo.teamName }}</p>
                       </v-col>
                       <v-col cols="12">
-                        <v-textarea name="description" label="신청 메세지를 적어주세요."></v-textarea>
+                        <v-textarea
+                          name="description"
+                          label="신청 메세지를 적어주세요."
+                        ></v-textarea>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
-                  <v-btn color="blue darken-1" text @click="submit">신청하기</v-btn>
+                  <v-btn color="blue darken-1" text @click="dialog = false"
+                    >취소</v-btn
+                  >
+                  <v-btn color="blue darken-1" text @click="submit"
+                    >신청하기</v-btn
+                  >
                 </v-card-actions>
               </v-card>
             </v-dialog>

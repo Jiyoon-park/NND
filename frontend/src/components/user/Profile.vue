@@ -40,10 +40,12 @@
       <div id="skills" class="target">
         <h3># 기술스택</h3>
         <div class="skills">
-          <v-btn small color="primary" class="skill">java</v-btn>
-          <v-btn small color="primary" class="skill">C</v-btn>
-          <v-btn small color="primary" class="skill">C++</v-btn>
-          <v-btn small color="primary" class="skill">Python</v-btn>
+          <v-combobox
+          v-model="select"
+          chips
+          multiple
+          readonly
+        ></v-combobox>
         </div>
       </div>
 
@@ -75,6 +77,7 @@ export default {
       easings: Object.keys(easings),
       user: "",
       profileURL: "",
+      select:[],
     };
   },
   created() {
@@ -93,7 +96,8 @@ export default {
           console.log(resp);
           this.user = resp.data;
           this.profileURL = this.user.profile;
-        });
+          this.select = JSON.parse(this.user.memberstack)        
+          });
     }
   },
   computed: {
