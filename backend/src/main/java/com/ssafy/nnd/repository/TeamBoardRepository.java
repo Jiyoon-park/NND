@@ -19,4 +19,6 @@ public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>, Team
 
 	@Query(value="SELECT * FROM teamboard JOIN liketeam ON teamboardno=tboard WHERE mno = :mno ",nativeQuery=true)
 	List<TeamBoard> findLikeboardByMno(@Param("mno") Long mno);
+	
+	Optional<TeamBoard> findByIdx(Long idx);
 }
