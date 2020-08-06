@@ -33,14 +33,13 @@
       <div id="skills" class="target">
         <h3># 기술스택</h3>
         <div class="skills">
-          <v-chip-group column multiple>
-            <v-chip filter outlined>Java</v-chip>
-            <v-chip filter outlined>C</v-chip>
-            <v-chip filter outlined>C++</v-chip>
-            <v-chip filter outlined>Python</v-chip>
-            <v-chip filter outlined>Spring</v-chip>
-            <v-chip filter outlined>Django</v-chip>
-          </v-chip-group>
+          <v-combobox
+            v-model="select"
+            :items="items"
+            label="기술스택"
+            multiple
+            chips
+        ></v-combobox>
         </div>
       </div>
 
@@ -81,14 +80,18 @@ export default {
       hasSaved: false,
       isEditing: null,
       model: null,
-      userinfo: {
-        newName: "",
-        password: "",
-        password2: "",
-        gitaddress: "",
-      },
       user: "",
       profileURL: "",
+      items: [
+          'C',
+          'C++',
+          'JAVA',
+          'Spring',
+          'Django',
+          'C#',
+          'Go'
+        ],
+        select:[],
     };
   },
   created() {
@@ -97,6 +100,7 @@ export default {
       //토큰 존재하면
       this.user = token.object,
       this.profileURL = this.user.profile;
+      this.select = JSON.parse(this.user.memberstack)
     }
   },
   methods: {
@@ -110,6 +114,7 @@ export default {
         name: this.user.name,
         profile: this.user.profile,
         gitaddr: this.user.gitaddr,
+        memberstack: JSON.stringify(this.select),
       })
       .then((res) => {
         console.log(res)

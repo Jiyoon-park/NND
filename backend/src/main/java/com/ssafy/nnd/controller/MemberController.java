@@ -120,6 +120,8 @@ public class MemberController {
 		NewMember.setName(member.getName());
 		NewMember.setProfile(member.getProfile());
 		NewMember.setGitaddr(member.getGitaddr());
+		System.out.println(member.getMemberstack());
+		NewMember.setMemberstack(member.getMemberstack());
 		memberRepository.save(NewMember);
 		
 		String token = jwtService.create("member", NewMember, "user");
