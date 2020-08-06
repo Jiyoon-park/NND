@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.TeamBoard;
+import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 
 import springfox.documentation.spring.web.json.Json;
@@ -30,6 +32,9 @@ public class TeamBoardController {
 
 	@Autowired
     TeamBoardRepository teamBoardRepository;
+	
+	@Autowired
+	MemberRepository memberRepository;
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
@@ -91,8 +96,12 @@ public class TeamBoardController {
     	return teamBoard.get();
     }
     
-    @PutMapping("/teamboard/save")
-    public TeamBoard createTeamBoard(@RequestBody TeamBoard teamBoard){
+    @PutMapping("/teamboard/save/{idx}")
+    public TeamBoard createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
+    	Optional<Member> member = memberRepository.findMemberByIdx(idx);
+    	teamBoard.setIdx(member.get().getIdx());
+    	teamBoard.setEmail(member.get().getEmail());
+    	teamBoard.setName(member.get().getName());
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
     	return newmemberBoard;

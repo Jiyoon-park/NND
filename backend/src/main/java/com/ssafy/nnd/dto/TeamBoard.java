@@ -17,64 +17,68 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="teamboard")
-public class TeamBoard{
-	
+@Table(name = "teamboard")
+public class TeamBoard {
+
 	@Id
-	@Column (name = "teamboardno")
+	@Column(name = "teamboardno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long teamboardNo; //게시글 번호
+	private Long teamboardNo; // 게시글 번호
 
 	@Column
 	private Long idx;
-	
+
 	@Column
 	private String email; // 작성자 이메일
 
-	@Column (name = "teamname")
+	@Column(name = "teamname")
 	private String teamName; // 팀이름
-	
-	@Column (name = "memberemails")
+
+	@Column(name = "memberemails")
 	private String memberEmails;
-	
-	@Column (name = "groupsize")
+
+	@Column(name = "groupsize")
 	private int groupSize; // 총인원
-	
-	@Column (name = "deadline")
+
+	@Column(name = "deadline")
 	private String deadLine; // 마감기한
-	
+
 	@Column
 	private String title; // 제목
-	
+
 	@Column
 	private String content; // 본문내용
-	
-	@Column (name="kakaolink")
+
+	@Column(name = "kakaolink")
 	private String kakaoLink;
 
-	@Column (name = "techstack")
+	@Column(name = "techstack")
 	private String techStack; // 기술스택태그
- 
-	@Column (name = "category")
+
+	@Column(name = "category")
 	private String category; // 내용스택태그
 
-	@Column (name = "likecnt")
+	@Column(name = "likecnt")
 	private int likeCnt; // 개수
-	
-	@Column(name = "createdate" ,insertable = false, updatable = false)
+
+	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;
+
+	@Column
+	private String name;
+
 //
 //	@OneToOne(fetch=FetchType.LAZY)
 //	private Member member;
 //
-  public TeamBoard() {
-	// TODO Auto-generated constructor stub
-}
-  
+	public TeamBoard() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
-		String deadLine, String title, String content, String techStack, String category, int likeCnt,
-		LocalDateTime createDate) {
+		String deadLine, String title, String content, String kakaoLink, String techStack, String category, int likeCnt,
+		LocalDateTime createDate, String name) {
 	super();
 	this.teamboardNo = teamboardNo;
 	this.idx = idx;
@@ -85,12 +89,22 @@ public class TeamBoard{
 	this.deadLine = deadLine;
 	this.title = title;
 	this.content = content;
+	this.kakaoLink = kakaoLink;
 	this.techStack = techStack;
 	this.category = category;
 	this.likeCnt = likeCnt;
 	this.createDate = createDate;
+	this.name = name;
 }
 
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Long getTeamboardNo() {
 		return teamboardNo;
@@ -204,20 +218,16 @@ public class TeamBoard{
 		this.createDate = createDate;
 	}
 
+
 	@Override
 	public String toString() {
 		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
 				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
 				+ title + ", content=" + content + ", kakaoLink=" + kakaoLink + ", techStack=" + techStack
-				+ ", category=" + category + ", likeCnt=" + likeCnt + ", createDate=" + createDate + "]";
+				+ ", category=" + category + ", likeCnt=" + likeCnt + ", createDate=" + createDate + ", name=" + name
+				+ "]";
 	}
 
 	
-	
 
-	
-	
-
-	
-	
 }

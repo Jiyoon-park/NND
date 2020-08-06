@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.MemberBoard;
 import com.ssafy.nnd.repository.MemberBoardRepository;
+import com.ssafy.nnd.repository.MemberRepository;
 
 @CrossOrigin
 @RestController
@@ -26,6 +28,9 @@ public class MemberBoardController {
 	@Autowired
 	MemberBoardRepository memberBoardRepository;
 
+	@Autowired
+	MemberRepository memberRepository;
+	
     @GetMapping("/memberboard/list")
     public List<MemberBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
     	return memberBoardRepository.findAllByOrderByBoardNoDesc(pageable);
@@ -81,9 +86,13 @@ public class MemberBoardController {
     	return memberBoard.get();
     }
     
-    @PutMapping("/memberboard/save")
-    public MemberBoard createMemberBoard(@RequestBody MemberBoard memberBoard){
-    	System.out.println(memberBoard.toString());
+    @PutMapping("/memberboard/save/{idx}")
+    public MemberBoard createMemberBoard(@PathVariable Long idx ,@RequestBody MemberBoard memberBoard){
+		Optional<Member> member = memberRepository.findMemberByIdx(idx);
+    	memberBoard.setIdx(member.get().getIdx());
+    	memberBoard.setEmail(member.get().getEmail());
+    	memberBoard.setName(member.get().getName());
+		System.out.println(memberBoard.toString());
     	MemberBoard newmemberBoard = memberBoardRepository.save(memberBoard);
     	return newmemberBoard;
 	}
