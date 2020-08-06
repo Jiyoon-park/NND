@@ -26,7 +26,7 @@ public class ProjectHistoryController {
 	@Autowired
     ProjectHistoryRepository projectHistoryRepository;
 	
-	@GetMapping("member/projecthistory/list/{idx}")
+	@GetMapping("/projecthistory/list/{idx}")
     public @ResponseBody List<ProjectHistory> getAllProjectHistory(@PathVariable Long idx){
 		System.out.println("/projecthistory/list/{idx}");
 		return projectHistoryRepository.findByIdx(idx);
