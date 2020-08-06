@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <div>
+    <div class="mt-13">
       <v-tabs fixed-tabs v-model="tab" color="purple">
         <v-tab v-for="item in items" :key="item.tab">{{ item.tab }}</v-tab>
       </v-tabs>
@@ -11,36 +11,12 @@
           <v-card flat>
             <v-list>
               <v-list-item-group>
-                <v-list-item
-                  v-for="letter in item.letters"
-                  :key="letter.letterNo"
-                  class="letter py-3"
-                  @click="onListDetail(`${letter.letterNo}`)"
-                >
-                  <div class="mr-4">
-                    <v-avatar color="grey" size="60">
-                      <span v-if="!letter.profile" class="white--text headline"></span>
-                      <img v-else :src="letter.profile" />
-                    </v-avatar>
-                  </div>
-                  <v-list-item-content>
-                    <div>
-                      <v-list-item-title v-text="letter.name" class="font-weight-black"></v-list-item-title>
-                      <i
-                        class="fas fa-envelope float-right"
-                        style="font-size:20px; color: #7E57C2;"
-                        v-if="!letter.read"
-                      ></i>
-                      <i
-                        class="fas fa-envelope-open-text float-right"
-                        style="font-size:20px; color: #BDBDBD;"
-                        v-else
-                      ></i>
-                      <br />
-                      <v-list-item-title v-text="letter.createDate" class="text--secondary"></v-list-item-title>
-                    </div>
-                  </v-list-item-content>
-                </v-list-item>
+                <LetterListItem
+                  :item="item"
+                  v-for="(letter, i) in item.letters"
+                  :key="i"
+                  :letterinfo="item.letters[i]"
+                />
               </v-list-item-group>
             </v-list>
           </v-card>
@@ -52,11 +28,12 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
+import LetterListItem from "./LetterListItem.vue";
 import axios from "axios";
 
 export default {
   name: "LetterList",
-  components: { NavBar },
+  components: { NavBar, LetterListItem },
   data() {
     return {
       tab: null,
@@ -71,7 +48,6 @@ export default {
           letters: [],
         },
       ],
-      dialog: false,
     };
   },
   created() {
@@ -79,7 +55,7 @@ export default {
     if (token) {
       console.log(token.object.idx);
       axios
-        .get(`http://localhost:8080/letter/read/receive/${token.object.idx}`)
+        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`)
         .then((res) => {
           this.items[0].letters = res.data;
           console.log(this.items[0].letters);
@@ -89,7 +65,7 @@ export default {
         });
 
       axios
-        .get(`http://localhost:8080/letter/read/send/${token.object.idx}`)
+        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`)
         .then((res) => {
           this.items[1].letters = res.data;
           console.log(this.items[1].letters);
@@ -99,17 +75,9 @@ export default {
         });
     }
   },
-  methods: {
-    // 클릭한 편지의 편지 pk를 받아옴.
-    onListDetail: function (letterNo) {
-      alert(letterNo);
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style>
-.v-list-item:not(.on-hover) {
-  opacity: 0.6;
-}
 </style>
