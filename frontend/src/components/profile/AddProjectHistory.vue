@@ -72,10 +72,20 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:8080/userinfo").then((res) => {
-      console.log(res);
-      this.user = res.data;
-    });
+    let token = window.$cookies.get("nnd");
+    let id = token.object.idx;
+    if (token) {
+      this.$http
+        .get(`http://localhost:8080/member/info/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token, // the token is a variable which holds the token
+          },
+        })
+        .then((res) => {
+          this.user = res.data;
+          this.profileURL = this.user.profile;
+        });
+    }
   },
   methods: {
     submit() {

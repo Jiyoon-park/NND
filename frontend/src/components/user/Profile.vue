@@ -4,7 +4,7 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
@@ -79,9 +79,9 @@ export default {
   },
   created() {
     let token = window.$cookies.get("nnd");
-    let id = this.$route.params.id; //넘겨 받아야함
-    console.log(id);
     console.log(token);
+    console.log(token.object.idx);
+    let id = token.object.idx;
     if (token) {
       this.$http
         .get(`http://localhost:8080/member/info/${id}`, {
@@ -92,6 +92,8 @@ export default {
         .then((resp) => {
           console.log(resp);
           this.user = resp.data;
+          console.log(this.user.profile);
+          this.profileURL = this.user.profile;
         });
     }
   },

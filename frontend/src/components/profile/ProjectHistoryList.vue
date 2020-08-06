@@ -28,14 +28,17 @@ export default {
     };
   },
   created() {
-    let id = this.$route.params.id //넘겨 받아야함
+    let token = window.$cookies.get("nnd");
+    let id = token.object.idx;
     axios.get(`http://localhost:8080/member/info/${id}`).then((res) => {
       this.user = res.data;
-      console.log(res.data)
+      console.log(res.data);
       this.profileURL = this.user.profile;
-      console.log(this.user.idx)
+      console.log(this.user.idx);
       axios
-        .get(`http://localhost:8080/member/projecthistory/list/${this.user.idx}`)
+        .get(
+          `http://localhost:8080/member/projecthistory/list/${this.user.idx}`
+        )
         .then(({ data }) => {
           this.projects = data;
           console.log(this.projects);

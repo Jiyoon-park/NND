@@ -60,7 +60,7 @@
 
 <script>
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
-import axios from "axios";
+// import axios from "axios";
 
 import NavBar from "../common/NavBar.vue";
 import AddProjectHistory from "../profile/AddProjectHistory.vue";
@@ -92,10 +92,22 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:8080/userinfo").then((res) => {
-      this.user = res.data;
-      this.profileURL = this.user.profile;
-    });
+    let token = window.$cookies.get("nnd");
+    console.log(token);
+    console.log(token.object.idx);
+    let id = token.object.idx;
+    if (token) {
+      this.$http
+        .get(`http://localhost:8080/member/info/${id}`, {
+          headers: {
+            Authorization: "Bearer " + token, // the token is a variable which holds the token
+          },
+        })
+        .then((res) => {
+          this.user = res.data;
+          this.profileURL = this.user.profile;
+        });
+    }
   },
   computed: {
     target() {
