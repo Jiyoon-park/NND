@@ -42,7 +42,7 @@ public class TeamBoardController {
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
-    // 좋아요 비활성화 상태에서 검색
+    // 좋아요 누른거 + 안누른거 다 검색
     @PutMapping("/teamboard/search")
 	public List<Object> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
 		
@@ -55,7 +55,7 @@ public class TeamBoardController {
 		return teamBoardRepository.findTeamBoardList(query, category, skills, pageable);
 	}
     
-    // 좋아요 활성화 상태에서 검색
+    // 좋아요 누른거 만 검색
     @PutMapping("/teamboard/search/{mno}")
     public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
     	
