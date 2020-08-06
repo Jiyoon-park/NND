@@ -61,12 +61,12 @@ public class LetterController {
 			Object[] temp = (Object[])letter.get(i);
 			map.put("name",temp[1]);
 			map.put("profile",temp[3]);
-			map.put("letterNo", temp[8]);
-			map.put("sendIdx", temp[9]);
-			map.put("receiveIdx", temp[10]);
-			map.put("content", temp[11]);
-			map.put("createDate", temp[12]);
-			map.put("read", temp[13]);
+			map.put("letterNo", temp[9]);
+			map.put("sendIdx", temp[10]);
+			map.put("receiveIdx", temp[11]);
+			map.put("content", temp[12]);
+			map.put("createDate", temp[13]);
+			map.put("read", temp[14]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -136,6 +136,7 @@ public class LetterController {
 	      Optional<Member> member = memberRepository.findById(sendidx);
 	      
 	      if(member.get().getTeamboardno() == 0) {  //현재 팀이 없을 경우
+	    	  
 	    	  String currentTeamMember = team.get().getMemberEmails();
 	    	  String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
 	    	  // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
