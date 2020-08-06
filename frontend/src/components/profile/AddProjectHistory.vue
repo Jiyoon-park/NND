@@ -72,10 +72,8 @@ export default {
     };
   },
   created() {
-    axios.get("http://localhost:8080/userinfo").then((res) => {
-      console.log(res);
-      this.user = res.data;
-    });
+    let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    this.user = token.object;
   },
   methods: {
     submit() {

@@ -7,12 +7,30 @@
       </div>
 
       <div class="pa-10">
-        <v-text-field label="E-mail을 입력해주세요" v-model="email" :rules="[rules.email]" outlined dense></v-text-field>
+        <v-text-field
+          label="E-mail을 입력해주세요"
+          v-model="user.email"
+          :rules="emailRules"
+          outlined
+          dense
+        ></v-text-field>
 
-        <v-btn block large color="primary" class="mb-4" @click="authEmail">이메일로 인증번호 받기</v-btn>
+        <v-btn
+          block
+          large
+          color="green accent-4"
+          class="mb-4"
+          @click="authEmail"
+          >이메일로 인증받기</v-btn
+        >
 
-        <v-text-field single-line type="text" label="인증번호 입력해주세요" Filled class="mb-6" />
-        <v-btn class="c-20">인증</v-btn>
+        <v-text-field
+          v-model="email_code"
+          :rules="emailRules"
+          placeholder="인증번호 입력(5분 이내)"
+        />
+        <v-btn :disabled="!valid" class="mr-4" color="yellow">인증</v-btn>
+        <v-btn class="c-20" @click="$router.push('/login')">뒤로가기</v-btn>
 
         <div class="text-right">
           <a href="#">이메일 재발송</a>
@@ -23,22 +41,38 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   data() {
     return {
-      title: "Preliminary report",
-      email: "",
-      rules: {
-        // required: (value) => !!value || "이메일 형식이 아닙니다.",
-        //counter: (value) => value.length <= 20 || "Max 20 characters",
-        email: (value) => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "이메일 형식이 아닙니다";
-        },
+      user: {
+        email: "",
       },
+      valid: true,
+      title: "Preliminary report",
+      emailRules: [
+        (v) => !!v || "E-Mail은 필수 입력항목입니다",
+        (v) => /.+@.+\..+/.test(v) || "E-mail 양식이 올바르지 않습니다.",
+      ],
     };
   },
-  methods: {},
+  methods: {
+    authEmail() {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(this.user.email)
+        .then(() => {
+          alert("Check your registered email to reset the password!");
+          this.user = {
+            email: "",
+          };
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    },
+  },
 };
 </script>
 

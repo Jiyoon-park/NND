@@ -79,19 +79,20 @@ export default {
   },
   created() {
     let token = window.$cookies.get("nnd");
-    let id = this.$route.params.id; //넘겨 받아야함
-    console.log(id);
     console.log(token);
+    let id = token.object.idx; //넘겨 받아야함
+    console.log(id);
     if (token) {
       this.$http
         .get(`http://localhost:8080/member/info/${id}`, {
-          headers: {
+          headers: { 
             Authorization: "Bearer " + token, // the token is a variable which holds the token
           },
         })
         .then((resp) => {
           console.log(resp);
           this.user = resp.data;
+          this.profileURL = this.user.profile;
         });
     }
   },

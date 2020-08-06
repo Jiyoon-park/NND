@@ -4,9 +4,19 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <h2>회원가입</h2>
       <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field v-model="name" :rules="nameRule" label="이름*" required></v-text-field>
+        <v-text-field
+          v-model="name"
+          :rules="nameRule"
+          label="이름*"
+          required
+        ></v-text-field>
 
-        <v-text-field v-model="email" :rules="emailRules" label="이메일*" required></v-text-field>
+        <v-text-field
+          v-model="email"
+          :rules="emailRules"
+          label="이메일*"
+          required
+        ></v-text-field>
 
         <v-text-field
           v-model="password"
@@ -31,10 +41,16 @@
           required
         ></v-checkbox>
 
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="signup">제출</v-btn>
+        <v-btn :disabled="!valid" color="success" class="mr-4" @click="signup"
+          >제출</v-btn
+        >
         <v-btn color="error" class="mr-4" @click="reset">초기화</v-btn>
-        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')">로그인화면</v-btn>
-        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')">비밀번호찾기</v-btn>
+        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')"
+          >로그인화면</v-btn
+        >
+        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')"
+          >비밀번호찾기</v-btn
+        >
       </v-form>
     </v-col>
   </v-row>
@@ -43,6 +59,7 @@
 <script>
 import NavBar from "../common/NavBar.vue";
 import axios from "axios";
+import firebase from "firebase";
 
 export default {
   name: "SignUp",
@@ -93,13 +110,34 @@ export default {
           })
           .then((response) => {
             console.log(response);
-            alert("회원가입 완료");
-            this.$router.push("/");
+            // alert("회원가입 완료");
+            this.$router.push({
+              name: "Home",
+              params: { id: response.data.object.idx },
+            });
           })
           .catch((error) => {
             console.log(error.response);
+            // alert("이미 있는 아이디입니다");
             this.$router.push("/signup");
           });
+
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            // alert("회원가입 완료");
+            var user = firebase.auth().currentUser;
+            user.updateProfile({
+              displayName: this.name,
+            });
+            this.$router.push("/");
+          });
+        // .catch(function(error) {
+        //   var errorCode = error.code;
+        //   var errorMessage = error.message;
+        //   alert(errorMessage + errorCode);
+        // });
       }
     },
     reset() {

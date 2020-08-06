@@ -3,32 +3,29 @@
     <v-navigation-drawer v-model="drawer" fixed-tabs app right>
       <v-list dense>
         <v-list-item link>
-          <div v-if="id != null">
-            <v-icon class="mr-5">mdi-account-circle</v-icon>
-            <v-list-item-content class="float-right">
-              <v-list-item-title>홍길동</v-list-item-title>
-            </v-list-item-content>
-          </div>
-          <v-list-item-content v-else @click="$router.push('/login').catch(()=>{})">
-            <v-list-item-title>로그인</v-list-item-title>
+          <v-avatar color="grey" size="80" class="mb-2">
+            <span v-if="!profileURL" class="white--text headline"></span>
+            <img v-else :src="profileURL" />
+          </v-avatar>
+
+          <v-list-item-content class="float-right">
+            <v-list-item-title class="user-interface">
+              {{
+              username
+              }}
+            </v-list-item-title>
+            <v-list-item-title @click="onLogout" class="user-interface">로그아웃</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item link>
-          <!--this.$router.push({ name: 'Home', params: { id: response.data.object.idx }})-->
-          <v-list-item-content @click="$router.push({name : 'Profile', params: {id: id}}).catch(()=>{})">
+          <v-list-item-content @click="$router.push('/profile').catch(() => {})">
             <v-list-item-title>내 정보</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item link>
-          <v-list-item-content @click="$router.push('/').catch(()=>{})">
+          <v-list-item-content @click="$router.push('/').catch(() => {})">
             <v-list-item-title>팀/팀원 구하기</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>즐겨찾기(팀/팀원)</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -48,11 +45,12 @@
       <img
         src="../../assets/images/sm_logo.png"
         width="30px"
-        @click="$router.push('/').catch(()=>{})"
+        @click="$router.push('/').catch(() => {})"
       />
       <v-spacer></v-spacer>
 
       <Search />
+      <i class="fas fa-envelope ml-2" @click="$router.push('/letter').catch(() => {})"></i>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
@@ -71,6 +69,8 @@ export default {
   },
   data: () => ({
     id: 0,
+    username: "",
+    profileURL: "",
     drawer: null,
     items: [
       { icon: "apps", title: "Home", to: "/" },
@@ -78,12 +78,30 @@ export default {
     ],
   }),
   created() {
-    this.id = this.$route.params.id; //넘겨 받아야함
-    console.log(this.id);
+    let token = window.$cookies.get("nnd");
+    if (token) {
+      console.log(token.object.idx);
+      this.username = token.object.name;
+      this.profileURL = token.object.profile;
+    }
   },
-  methods: {},
+  methods: {
+    onLogout: function () {
+      this.$store.commit('logout')
+      window.$cookies.remove('nnd')
+      this.$router.push('/login')
+    }
+  },
 };
 </script>
 
-<style></style>
-
+<style scoped>
+.user-interface {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.mb-2 {
+  margin-top: 10px;
+}
+</style>
