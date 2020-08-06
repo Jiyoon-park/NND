@@ -46,9 +46,10 @@ public class ProjectHistoryController {
     	return "update Success";
     }
 	
-	 @PutMapping("/projecthistory/save")
-	    public @ResponseBody String createProjectHistory(@RequestBody ProjectHistory projectHistory){
+	 @PutMapping("/projecthistory/save/{idx}")
+	    public @ResponseBody String createProjectHistory(@PathVariable Long idx,@RequestBody ProjectHistory projectHistory){
 	    	System.out.println(projectHistory.toString());
+	    	projectHistory.setIdx(idx);
 	    	projectHistoryRepository.save(projectHistory);
 	    	return "save Success";
 	    }
