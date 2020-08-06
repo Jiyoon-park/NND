@@ -25,7 +25,11 @@
             v-else
           ></i>
           <br />
-          <v-list-item-title v-text="letterinfo.content" class="text--secondary"></v-list-item-title>
+          <v-list-item-title
+            v-text="letterinfo.content"
+            class="text--secondary d-inline-block text-truncate"
+            style="max-width: 180px;"
+          ></v-list-item-title>
         </div>
       </v-list-item-content>
     </v-list-item>
