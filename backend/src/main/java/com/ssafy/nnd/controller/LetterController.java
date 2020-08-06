@@ -141,6 +141,8 @@ public class LetterController {
 	    	  // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
 	    	  team.get().setMemberEmails(changedTeamMember);
 	    	  member.get().setTeamboardno(team.get().getTeamboardNo());   // member별 팀 등록
+	    	  teamBoardRepository.save(team.get());
+	    	  memberRepository.save(member.get());
 	    	  return "success";
 	    	  
 	      }else { // 현재 팀이 있을경우 
@@ -160,6 +162,8 @@ public class LetterController {
 	    	  // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
 	    	  team.get().setMemberEmails(changedTeamMember);
 	    	  member.get().setTeamboardno(team.get().getTeamboardNo());  // member별 팀 등록
+	    	  teamBoardRepository.save(team.get());
+	    	  memberRepository.save(member.get());
 	    	  return "success";
 	    	  
 	      }else {

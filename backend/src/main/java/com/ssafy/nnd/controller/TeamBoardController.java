@@ -124,6 +124,7 @@ public class TeamBoardController {
     			String email = st.nextToken();
     			Optional<Member> teammember = memberRepository.findMemberByEmail(email.substring(1,email.length()-1));
     			teammember.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);;
+    			memberRepository.save(teammember.get());
     		}
     		
     	}
