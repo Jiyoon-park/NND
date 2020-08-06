@@ -99,9 +99,16 @@ public class TeamBoardController {
     @PutMapping("/teamboard/save/{idx}")
     public TeamBoard createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
     	Optional<Member> member = memberRepository.findMemberByIdx(idx);
+    	String chiefEmail = member.get().getEmail();
     	teamBoard.setIdx(member.get().getIdx());
-    	teamBoard.setEmail(member.get().getEmail());
+    	teamBoard.setEmail(chiefEmail);
     	teamBoard.setName(member.get().getName());
+    	String membersEmail = teamBoard.getMemberEmails();
+    	if(membersEmail.equals("[]")) {
+    		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");
+    	}else {
+    		teamBoard.setMemberEmails("[\""+chiefEmail+"\","+ membersEmail.substring(1));
+    	}
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
     	return newmemberBoard;
