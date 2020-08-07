@@ -185,6 +185,7 @@ export default {
   methods: {
     submit() {
       var obj, url;
+      let token = window.$cookies.get('nnd');
       if (this.teamcheck == "팀") {
         obj = {
           email: this.email,
@@ -211,7 +212,16 @@ export default {
         url = "http://localhost:8080/memberboard/save/" + this.idx;
       }
       axios
-        .put(url, obj)
+        .put(url,
+        {
+            obj
+        },
+        {
+          headers: { 
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+        )
         .then((response) => {
           console.log(response);
           alert("등록성공");

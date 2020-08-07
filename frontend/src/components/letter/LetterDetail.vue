@@ -74,18 +74,28 @@ export default {
   },
   methods: {
     teamAccept(sendidx, receiveidx) {
+      let token = window.$cookies.get('nnd');
       axios
         .post(
-          `http://localhost:8080/letter/teamaccept/${sendidx}/${receiveidx}`
+          `http://localhost:8080/letter/teamaccept/${sendidx}/${receiveidx}`,
+           {
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+         }}
         )
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       this.changeDialog();
     },
     memberAccept(sendidx, receiveidx) {
+            let token = window.$cookies.get('nnd');
       axios
         .post(
-          `http://localhost:8080/letter/memberaccept/${sendidx}/${receiveidx}`
+          `http://localhost:8080/letter/memberaccept/${sendidx}/${receiveidx}`,
+          {
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+         }}
         )
         .then((res) => console.log(res))
         .catch((err) => console.log(err));

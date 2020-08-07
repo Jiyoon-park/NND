@@ -29,9 +29,9 @@ export default {
     if (token) {
       // kakao 토큰이
       axios.get('http://localhost:8080/userinfo',{
-        headers: { 
-      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-    },
+          headers: { 
+        Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+      },
       }).then(
         (response) => {
           console.log(response);

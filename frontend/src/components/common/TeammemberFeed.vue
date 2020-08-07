@@ -58,6 +58,7 @@ export default {
 
   methods: {
     infiniteHandler($state) {
+      let token = window.$cookies.get('nnd')
       axios
         .put(
           "http://localhost:8080/" + this.type + "board/search",
@@ -67,6 +68,9 @@ export default {
             skills: this.skills,
           },
           {
+            headers: { 
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
             params: {
               page: this.page,
               size: this.size,
