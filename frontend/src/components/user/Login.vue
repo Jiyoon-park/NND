@@ -23,7 +23,7 @@
         </v-form>
         <div class="login-body text-center">
           <div class="sns-login">
-            <p>SNS로 간편하게 로그인할 수 있어요!</p>
+            <p>✨ SNS로 간편하게 로그인할 수 있어요!</p>
 
             <a
               href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"

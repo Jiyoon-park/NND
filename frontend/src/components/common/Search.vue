@@ -2,7 +2,8 @@
   <v-dialog v-model="dialog" fullscreen hide-overlay>
     <template v-slot:activator="{ on, attrs }">
       <i
-        class="fas fa-search"
+        class="fas fa-search fa-lg"
+        style="color:#777;"
         @click="dialog = true"
         dark
         v-bind="attrs"
@@ -47,13 +48,7 @@
                   active-class="deep-purple--text text--accent-4"
                   mandatory
                 >
-                  <v-chip
-                    large
-                    v-for="type in types"
-                    :key="type"
-                    :value="type"
-                    >{{ type }}</v-chip
-                  >
+                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -65,12 +60,7 @@
           <v-list-item>
             <v-list-item-content>
               <div class="d-flex justify-center">
-                <v-switch
-                  v-model="categorySelection"
-                  label="스터디"
-                  color="red darken-3"
-                  value="스터디"
-                ></v-switch>
+                <v-switch v-model="categorySelection" label="스터디" color="red darken-3" value="스터디"></v-switch>
                 <v-switch
                   v-model="categorySelection"
                   label="프로젝트"
@@ -102,17 +92,10 @@
                     v-for="skill in skills"
                     :key="skill"
                     :value="skill"
-                    >{{ skill }}</v-chip
-                  >
+                  >{{ skill }}</v-chip>
                 </v-chip-group>
                 <!-- 기술스택 추가하기 구현 못함-->
-                <v-combobox
-                  v-model="newSkill"
-                  :newSkill="newSkill"
-                  label="기술스택 추가"
-                  multiple
-                  chips
-                ></v-combobox>
+                <v-combobox v-model="newSkill" :newSkill="newSkill" label="기술스택 추가" multiple chips></v-combobox>
               </div>
             </v-list-item-content>
           </v-list-item>

@@ -1,60 +1,53 @@
 <template>
   <div id="inspire">
     <v-navigation-drawer v-model="drawer" fixed-tabs app right>
-      <v-list dense>
-        <v-list-item link>
+      <div class="point-top"></div>
+      <div class="point-bottom">
+        <p>ⓒ 2020. 이나앨 All Rights Reserved.</p>
+      </div>
+      <v-list rounded>
+        <v-list-item link class="d-flex flex-column pt-10">
           <v-avatar color="grey" size="80" class="mb-2">
             <span v-if="!profileURL" class="white--text headline"></span>
             <img v-else :src="profileURL" />
           </v-avatar>
+          <div class="mt-2">
+            <h3 class="text-center">{{username}}</h3>
+            <v-btn x-small rounded color="#999" style="opacity:0.7;" @click="onLogout" dark>로그아웃</v-btn>
+          </div>
+        </v-list-item>
+        <v-list-item-group color="#3949AB" class="text-center">
+          <v-list-item link>
+            <v-list-item-content @click="$router.push('/profile').catch(() => {})">
+              <v-list-item-title>내 정보</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-          <v-list-item-content class="float-right">
-            <v-list-item-title class="user-interface">
-              {{
-              username
-              }}
-            </v-list-item-title>
-            <v-list-item-title @click="onLogout" class="user-interface">로그아웃</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-content @click="$router.push('/profile').catch(() => {})">
-            <v-list-item-title>내 정보</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item link>
+            <v-list-item-content @click="$router.push('/').catch(() => {})">
+              <v-list-item-title>팀/팀원 구하기</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-        <v-list-item link>
-          <v-list-item-content @click="$router.push('/').catch(() => {})">
-            <v-list-item-title>팀/팀원 구하기</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>외부 공모전</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title>외부 공모전</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
-    <!-- 자몽 -->
-    <!-- <v-app-bar color="#eb4d4b" app :flat="true" :fixed="true"> -->
-    <!-- 남색 -->
-    <!-- <v-app-bar color="#30336b" app :flat="true" :fixed="true"> -->
     <v-app-bar color="#FFF" app :flat="true" :fixed="true">
-      <img
-        src="../../assets/images/sm_logo.png"
-        width="30px"
-        @click="$router.push('/').catch(() => {})"
-      />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-
+      <!-- <img src="../../assets/images/logo_black_title.png" width="60px" alt /> -->
+      <p class="mb-0">neonaedong</p>
+      <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
         <v-icon size="30" class="ml-2" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
       </v-badge>
-
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
   </div>
 </template>
@@ -136,12 +129,29 @@ export default {
 </script>
 
 <style scoped>
-.user-interface {
+.point-top {
+  height: 90px;
+  width: 100%;
+  background-color: #3949ab;
+  position: absolute;
+  opacity: 0.6;
+}
+.point-bottom {
+  height: 50px;
+  width: 100%;
+  background-color: #283593;
+  position: absolute;
+  bottom: 0;
+  opacity: 0.7;
+  font-size: 0.8rem;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  align-items: center;
 }
-.mb-2 {
-  margin-top: 10px;
+
+.point-bottom p {
+  margin-bottom: 0;
+  color: #fff;
+  opacity: 0.8;
 }
 </style>
