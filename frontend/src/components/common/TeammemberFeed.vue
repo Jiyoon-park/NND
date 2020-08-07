@@ -1,10 +1,14 @@
 <template>
   <v-app>
-    <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>
+    <news-feed2
+      v-for="(board, i) in list"
+      v-bind:teaminfo="list[i]"
+      v-bind:key="i"
+    ></news-feed2>
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    <!-- 팀일때랑 팀원일때랑 피드 두개로 구분해주자 -->
   </v-app>
 </template>
-
 
 <script>
 import InfiniteLoading from "vue-infinite-loading";
@@ -50,4 +54,3 @@ export default {
 </script>
 
 <style></style>
-
