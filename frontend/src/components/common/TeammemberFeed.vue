@@ -1,11 +1,21 @@
 <template>
   <v-app>
-    <news-feed2
-      v-for="(board, i) in list"
-      v-bind:teaminfo="list[i]"
-      v-bind:key="i"
-    >
-    </news-feed2>
+    <div v-if="this.type == 'team'">
+      <news-feed2
+        v-for="(board, i) in list"
+        v-bind:teaminfo="list[i]"
+        v-bind:key="i"
+      >
+      </news-feed2>
+    </div>
+    <div v-if="this.type == 'member'">
+      <news-feed
+        v-for="(board, i) in list"
+        v-bind:teaminfo="list[i]"
+        v-bind:key="i"
+      >
+      </news-feed>
+    </div>
     <infinite-loading
       @infinite="infiniteHandler"
       ref="InfiniteLoading"
@@ -16,6 +26,7 @@
 <script>
 import InfiniteLoading from "vue-infinite-loading";
 import NewsFeed2 from "./NewsFeed2.vue";
+import NewsFeed from "./NewsFeed.vue";
 import axios from "axios";
 import { EventBus } from "../../main.js";
 
@@ -30,13 +41,12 @@ export default {
       query: [],
       category: [],
       skills: [],
-      st: null,
     };
   },
   created() {
     EventBus.$on("search", (obj) => {
-      console.log("버스시작");
       this.type = obj.typeSelection;
+      console.log(this.type);
       this.query = obj.search;
       this.category = obj.categorySelection;
       this.skills = obj.newSkill;
@@ -80,6 +90,7 @@ export default {
   },
   components: {
     NewsFeed2: NewsFeed2,
+    NewsFeed: NewsFeed,
 
     InfiniteLoading,
   },
