@@ -6,19 +6,7 @@
           <v-avatar color="indigo" class="mr-5">
             <v-icon dark>mdi-account-circle</v-icon>
           </v-avatar>
-          <!-- <span class="grey--text">
-              {{ teaminfo.teamName }}
-              <div class="text-right">
-                <v-chip
-                  class="ma-2"
-                  color="indigo"
-                  text-color="white"
-                  v-for="stack in JSON.parse(stacks)"
-                  :key="stack"
-                >{{ stack }}</v-chip>
-              </div>
-          </span>-->
-          <v-col cols="4" md="4">{{ teaminfo.teamName }}</v-col>
+          <v-col cols="4" md="4">{{ teaminfo.name }}</v-col>
           <v-col cols="6" md="6">
             <div class="text-right">
               <v-chip
@@ -41,9 +29,6 @@
             <v-expansion-panel-content>
               {{ teaminfo.content }}
             </v-expansion-panel-content>
-            <v-expansion-panel-content>
-              {{ teaminfo.kakaoLink }}
-            </v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
@@ -53,7 +38,7 @@
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn color="green darken-1" text @click="applyform" right
-                >신청하기</v-btn
+                >꼬시기</v-btn
               >
             </v-card-actions>
           </v-expansion-panel>
@@ -80,8 +65,7 @@
                           >
                           <img v-else :src="profileURL" />
                         </v-avatar>
-                        <h3>팀 장 : {{ username }}</h3>
-                        <p>팀 이름 : {{ teaminfo.teamName }}</p>
+                        <p>이름 : {{ teaminfo.name }}</p>
                       </v-col>
                       <v-col cols="12">
                         <v-textarea
@@ -114,7 +98,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "NewsFeed2",
+  name: "NewsFeed",
   props: ["teaminfo"],
 
   data() {
@@ -129,7 +113,9 @@ export default {
       sendIdx: "",
       receiveIdx: "",
       content: "",
-      // teamboardno:"",
+      letterType: "mboard",
+      letterNo: "",
+      createDate: "",
     };
   },
   // mounted(){
@@ -147,12 +133,16 @@ export default {
     submit() {
       this.dialog = false;
       console.log(this.sendIdx + " send");
-      console.log(this.receiveIdx + " receive");
+      console.log(this.teaminfo.idx + " receive");
+      console.log(this.letterType + " type");
+
       axios
-        .put("http://localhost:8080/letter/create", {
+        .put("http://localhost:8080/letter/create/" + this.letterType, {
           sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.teamboardNo,
+          receiveIdx: this.teaminfo.idx,
           content: this.content,
+          letterNo: this.letterNo,
+          createDate: this.createDate,
         })
         .then((response) => {
           console.log(response);
@@ -162,7 +152,7 @@ export default {
           console.log(error.response);
           alert("실패");
         });
-      alert("신청되었습니다.");
+      //alert("신청되었습니다.");
     },
     applyform() {
       this.dialog = !this.dialog;

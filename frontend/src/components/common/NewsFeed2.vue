@@ -80,7 +80,7 @@
                           >
                           <img v-else :src="profileURL" />
                         </v-avatar>
-                        <h3>팀 장 : {{ username }}</h3>
+                        <h3>팀 장 : {{ teaminfo.name }}</h3>
                         <p>팀 이름 : {{ teaminfo.teamName }}</p>
                       </v-col>
                       <v-col cols="12">
@@ -129,7 +129,9 @@ export default {
       sendIdx: "",
       receiveIdx: "",
       content: "",
-      // teamboardno:"",
+      lettertype: "tboard",
+      letterNo: "",
+      createDate: "",
     };
   },
   // mounted(){
@@ -148,11 +150,14 @@ export default {
       this.dialog = false;
       console.log(this.sendIdx + " send");
       console.log(this.receiveIdx + " receive");
+      console.log(this.lettertype + " type");
       axios
-        .put("http://localhost:8080/letter/create", {
+        .put("http://localhost:8080/letter/create/" + this.lettertype, {
           sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.teamboardNo,
+          receiveIdx: this.teaminfo.idx,
           content: this.content,
+          letterNo: this.letterNo,
+          createDate: this.createDate,
         })
         .then((response) => {
           console.log(response);
