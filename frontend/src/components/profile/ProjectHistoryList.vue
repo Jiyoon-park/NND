@@ -29,22 +29,22 @@ export default {
     };
   },
   created() {
-    let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
-    if (token) {
-      //토큰 존재하면
-      this.user = token.object;
-      console.log("###########");
-      console.log(this.user.idx);
-      axios
-        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
-        .then(({ data }) => {
-          this.projects = data;
-          console.log(this.projects);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    // if (token) {
+    //   //토큰 존재하면
+    //   this.user = token.object;
+    //   console.log("###########");
+    //   console.log(this.user.idx);
+    //   axios
+    //     .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+    //     .then(({ data }) => {
+    //       this.projects = data;
+    //       console.log(this.projects);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
 
     // EventBus.$on('delete-card',() =>{
     //    axios

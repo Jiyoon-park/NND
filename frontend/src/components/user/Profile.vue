@@ -81,12 +81,13 @@ export default {
   },
   created() {
 
-    let token = window.$cookies.get("nnd");
+    let token = window.$cookies.get("nnd")
+    console.log(token)
     let id = token.object.idx; //넘겨 받아야함
     this.$http
   .get(`http://localhost:8080/member/info/${id}`, {
     headers: { 
-      Authorization: "Bearer " + token, // the token is a variable which holds the token
+      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
     },
   })
   .then((resp) => {

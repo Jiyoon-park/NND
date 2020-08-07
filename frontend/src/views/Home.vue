@@ -28,7 +28,11 @@ export default {
     console.log(token);
     if (token) {
       // kakao 토큰이
-      axios.get("http://localhost:8080/userinfo").then(
+      axios.get('http://localhost:8080/userinfo',{
+        headers: { 
+      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+    },
+      }).then(
         (response) => {
           console.log(response);
           window.$cookies.remove("kakao"); //kakao 쿠키 없애고 새로생성
