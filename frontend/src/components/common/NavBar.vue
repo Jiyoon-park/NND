@@ -38,15 +38,18 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="#FFF" app :flat="true" :fixed="true">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
+    <v-app-bar color="#FAFAFA" app :flat="true" :fixed="true">
+      <div class="nav-icon" @click.stop="drawer = !drawer">
+        <div></div>
+      </div>
+
       <v-spacer></v-spacer>
       <!-- <img src="../../assets/images/logo_black_title.png" width="60px" alt /> -->
-      <p class="mb-0">neonaedong</p>
+      <p class="title">neonaedong</p>
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
-        <v-icon size="30" class="ml-2" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
+        <v-icon size="30" class="ml-3" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
       </v-badge>
     </v-app-bar>
   </div>
@@ -129,6 +132,14 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  margin-bottom: 0;
+  font-family: "Rowdies", cursive;
+  font-weight: 700;
+  font-style: italic;
+  color: #1565c0;
+  margin-left: 20px;
+}
 .point-top {
   height: 90px;
   width: 100%;
@@ -137,7 +148,7 @@ export default {
   opacity: 0.6;
 }
 .point-bottom {
-  height: 50px;
+  height: 40px;
   width: 100%;
   background-color: #283593;
   position: absolute;
@@ -153,5 +164,34 @@ export default {
   margin-bottom: 0;
   color: #fff;
   opacity: 0.8;
+}
+
+.nav-icon {
+  margin: 0;
+  width: 25px;
+}
+
+.nav-icon:after,
+.nav-icon:before,
+.nav-icon div {
+  background-color: #777;
+  border-radius: 5px;
+  content: "";
+  display: block;
+  height: 4px;
+  margin: 4px 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-icon:hover:before {
+  transform: translateY(8px) rotate(135deg);
+}
+
+.nav-icon:hover:after {
+  transform: translateY(-8px) rotate(-135deg);
+}
+
+.nav-icon:hover div {
+  transform: scale(0);
 }
 </style>
