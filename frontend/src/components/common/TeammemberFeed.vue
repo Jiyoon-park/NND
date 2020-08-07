@@ -67,9 +67,7 @@ export default {
           setTimeout(() => {
             if (data.length) {
               console.log("기존 스크롤 push " + this.page);
-              if (this.list == null) {
-                return;
-              }
+
               this.page += 1;
               this.list.push(...data);
               $state.loaded();
