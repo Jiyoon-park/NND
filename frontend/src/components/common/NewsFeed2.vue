@@ -80,12 +80,13 @@
                           >
                           <img v-else :src="profileURL" />
                         </v-avatar>
-                        <h3>팀 장 : {{ username }}</h3>
+                        <h3>팀 장 : {{ teaminfo.name }}</h3>
                         <p>팀 이름 : {{ teaminfo.teamName }}</p>
                       </v-col>
                       <v-col cols="12">
                         <v-textarea
-                          name="description"
+                          v-model="content"
+                          name="content"
                           label="신청 메세지를 적어주세요."
                         ></v-textarea>
                       </v-col>
@@ -111,6 +112,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "NewsFeed2",
   props: ["teaminfo"],
@@ -120,22 +122,22 @@ export default {
       show: false,
       favorite: false,
       dialog: false,
-      selected1: false,
-      selected2: false,
-      selected3: false,
-      selected4: false,
-      selected5: false,
-      selected6: false,
-      selected7: false,
       stacks: this.teaminfo.techStack,
       username: "",
       profileURL: "",
-      // teamboardno:"",
+      ///쪽찌보낼내용
+      sendIdx: "",
+      receiveIdx: "",
+      content: "",
+      lettertype: "tboard",
+      letterNo: "",
+      createDate: "",
     };
   },
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
+  created() {},
   methods: {
     addFavorite() {
       this.favorite = true;
@@ -146,6 +148,25 @@ export default {
     },
     submit() {
       this.dialog = false;
+      console.log(this.sendIdx + " send");
+      console.log(this.receiveIdx + " receive");
+      console.log(this.lettertype + " type");
+      axios
+        .put("http://localhost:8080/letter/create/" + this.lettertype, {
+          sendIdx: this.sendIdx,
+          receiveIdx: this.teaminfo.idx,
+          content: this.content,
+          letterNo: this.letterNo,
+          createDate: this.createDate,
+        })
+        .then((response) => {
+          console.log(response);
+          alert("등록성공");
+        })
+        .catch((error) => {
+          console.log(error.response);
+          alert("실패");
+        });
       alert("신청되었습니다.");
     },
     applyform() {
@@ -155,6 +176,7 @@ export default {
         console.log(token.object.idx);
         this.username = token.object.name;
         this.profileURL = token.object.profile;
+        this.sendIdx = token.object.idx;
       }
     },
   },

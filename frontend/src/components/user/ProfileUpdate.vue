@@ -34,14 +34,12 @@
         <h3># 기술스택</h3>
         <div class="skills">
           <v-combobox
-            v-model="techStack"
+            v-model="select"
             :items="items"
-            hide-selected
-            label="기술 스택"
+            label="기술스택"
             multiple
-            persistent-hint
-            small-chips
-          ></v-combobox>
+            chips
+        ></v-combobox>
         </div>
       </div>
 
@@ -82,16 +80,18 @@ export default {
       hasSaved: false,
       isEditing: null,
       model: null,
-      userinfo: {
-        newName: "",
-        password: "",
-        password2: "",
-        gitaddress: "",
-      },
       user: "",
       profileURL: "",
-      items: [],
-      techStack: null,
+      items: [
+          'C',
+          'C++',
+          'JAVA',
+          'Spring',
+          'Django',
+          'C#',
+          'Go'
+        ],
+        select:[],
     };
   },
   created() {
@@ -100,6 +100,7 @@ export default {
       //토큰 존재하면
       this.user = token.object;
       this.profileURL = this.user.profile;
+      this.select = JSON.parse(this.user.memberstack)
     }
   },
   methods: {
@@ -113,8 +114,7 @@ export default {
           name: this.user.name,
           profile: this.user.profile,
           gitaddr: this.user.gitaddr,
-          memberstack: JSON.stringify(this.techStack),
-          // memberstack: this.user.memberstack,
+          memberstack: JSON.stringify(this.select),
         })
         .then((res) => {
           console.log(res);

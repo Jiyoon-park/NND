@@ -108,7 +108,9 @@
                 <!-- 기술스택 추가하기 구현 못함-->
                 <v-combobox
                   v-model="newSkill"
+                  :newSkill="newSkill"
                   label="기술스택 추가"
+                  multiple
                   chips
                 ></v-combobox>
               </div>
@@ -126,8 +128,7 @@
 </template>
 
 <script>
-// import axios from "axios";
-import EventBus from "../../main";
+import { EventBus } from "../../main.js";
 
 export default {
   data: () => ({
@@ -136,17 +137,19 @@ export default {
     typeSelection: [],
     categorySelection: [],
     skillSelection: [],
-    newSkill: "",
+    newSkill: [],
     types: ["team", "member"],
     skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
+    info: {},
   }),
   methods: {
     submit() {
+      //console.log(this.search);
       EventBus.$emit("search", {
-        type: this.typeSelection,
-        query: this.search,
-        category: this.categorySelection,
-        skills: this.skillSelection,
+        typeSelection: this.typeSelection, //팀,팀원
+        search: this.search, //검색
+        categorySelection: this.categorySelection, //공모전,스터디
+        newSkill: this.newSkill,
       });
       this.dialog = false;
     },

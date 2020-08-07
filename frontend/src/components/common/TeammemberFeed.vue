@@ -1,33 +1,85 @@
 <template>
   <v-app>
-    <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>
+    <news-feed2
+      v-for="(board, i) in list"
+      v-bind:teaminfo="list[i]"
+      v-bind:key="i"
+    >
+    </news-feed2>
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    <!-- 팀일때랑 팀원일때랑 피드 두개로 구분해주자 -->
   </v-app>
 </template>
-
 
 <script>
 import InfiniteLoading from "vue-infinite-loading";
 import NewsFeed2 from "./NewsFeed2.vue";
 import axios from "axios";
+import { EventBus } from "../../main.js";
+
 export default {
   data() {
     return {
       list: [],
       page: 0,
-      size: 10,
+      size: 5,
+      option: {},
+      type: "team",
+      query: [],
+      category: [],
+      skills: [],
+      st: null,
     };
+  },
+  created() {
+    EventBus.$on("search", (obj) => {
+      this.type = obj.typeSelection;
+      this.query = obj.search;
+      this.category = obj.categorySelection;
+      this.skills = obj.newSkill;
+      this.page = 0;
+      if (this.page == 0) {
+        this.list = [];
+      }
+      axios
+        .put(
+          "http://localhost:8080/" + this.type + "board/search",
+          {
+            query: this.query,
+            category: this.category,
+            skills: this.skills,
+          },
+          {
+            params: {
+              page: this.page,
+              size: this.size,
+            },
+          }
+        )
+        .then(({ data }) => {
+          this.page += 1;
+          this.list.push(...data);
+        });
+    });
   },
 
   methods: {
     infiniteHandler($state) {
       axios
-        .get(`http://localhost:8080/teamboard/list`, {
-          params: {
-            page: this.page,
-            size: this.size,
+        .put(
+          "http://localhost:8080/" + this.type + "board/search",
+          {
+            query: this.query,
+            category: this.category,
+            skills: this.skills,
           },
-        })
+          {
+            params: {
+              page: this.page,
+              size: this.size,
+            },
+          }
+        )
         .then(({ data }) => {
           setTimeout(() => {
             if (data.length) {
@@ -37,7 +89,7 @@ export default {
             } else {
               $state.complete();
             }
-          }, 1500);
+          }, 1000);
         });
     },
   },
@@ -50,4 +102,3 @@ export default {
 </script>
 
 <style></style>
-
