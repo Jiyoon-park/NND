@@ -29,22 +29,27 @@ export default {
     };
   },
   created() {
-    // let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
-    // if (token) {
-    //   //토큰 존재하면
-    //   this.user = token.object;
-    //   console.log("###########");
-    //   console.log(this.user.idx);
-    //   axios
-    //     .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
-    //     .then(({ data }) => {
-    //       this.projects = data;
-    //       console.log(this.projects);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // }
+    let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    if (token) {
+      //토큰 존재하면
+      this.user = token.object;
+      console.log("###########");
+      console.log(this.user.idx);
+      axios
+        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`,
+        {
+          headers: {
+              Authorization: 'Bearer ' + token.data, // the token is a variable which holds the token
+            }
+        })
+        .then(({ data }) => {
+          this.projects = data;
+          console.log(this.projects);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     // EventBus.$on('delete-card',() =>{
     //    axios
@@ -57,10 +62,14 @@ export default {
     //       console.log(err);
     //     });
     // });
-
     EventBus.$on('create-card',() =>{
        axios
-        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`,
+        {
+          headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        }
+        })
         .then(({ data }) => {
           this.projects = data;
           console.log(this.projects);
@@ -72,16 +81,23 @@ export default {
   },
   methods: {
     onDeleteBtn(projecthistoryNo) {
+        let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       axios
         .delete(
-          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`
+          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`,{
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+         },
+          }
         )
         .then((res) => console.log(res));
     },
     onEditBtn(projecthistoryNo, i) {
+        let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       axios
         .post(
           `http://localhost:8080/projecthistory/update/${projecthistoryNo}`,
+         
           {
             idx: this.projects[i].idx,
             projectName: this.projects[i].projectName,
@@ -90,8 +106,12 @@ export default {
             usedStack: this.projects[i].usedStack,
             gitLink: this.projects[i].gitLink,
             techStack: JSON.stringify(this.projects[i].techStack),
+          },
+           {
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           }
-        )
+          })
         .then((response) => {
           console.log(response);
           this.dialog = false;

@@ -151,13 +151,20 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.receiveIdx + " receive");
       console.log(this.lettertype + " type");
+      let token = window.$cookies.get('nnd');
       axios
-        .put("http://localhost:8080/letter/create/" + this.lettertype, {
-          sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.idx,
-          content: this.content,
-          letterNo: this.letterNo,
-          createDate: this.createDate,
+        .put("http://localhost:8080/letter/create/" + this.lettertype, 
+        {
+          headers: { 
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+          params: {
+            sendIdx: this.sendIdx,
+            receiveIdx: this.teaminfo.idx,
+            content: this.content,
+            letterNo: this.letterNo,
+            createDate: this.createDate,
+        }
         })
         .then((response) => {
           console.log(response);

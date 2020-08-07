@@ -108,13 +108,21 @@ export default {
       this.profileURL = this.user.profile;
     },
     modify() {
+      let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+      console.log(token)
       axios
-        .post("http://localhost:8080/member/update", {
+        .post("http://localhost:8080/member/update", 
+        {
           email: this.user.email,
           name: this.user.name,
           profile: this.user.profile,
           gitaddr: this.user.gitaddr,
           memberstack: JSON.stringify(this.select),
+        },
+        {
+        headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        }
         })
         .then((res) => {
           console.log(res);

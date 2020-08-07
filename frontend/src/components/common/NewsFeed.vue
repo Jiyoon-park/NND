@@ -131,19 +131,27 @@ export default {
       this.favorite = false;
     },
     submit() {
+      let token = window.$cookies.get('nnd');
       this.dialog = false;
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.letterType + " type");
 
       axios
-        .put("http://localhost:8080/letter/create/" + this.letterType, {
+        .put("http://localhost:8080/letter/create/" + this.letterType,
+        {
           sendIdx: this.sendIdx,
           receiveIdx: this.teaminfo.idx,
           content: this.content,
           letterNo: this.letterNo,
           createDate: this.createDate,
-        })
+        },
+        {
+          headers: { 
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+        )
         .then((response) => {
           console.log(response);
           alert("등록성공");

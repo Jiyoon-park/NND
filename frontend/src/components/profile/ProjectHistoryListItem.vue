@@ -88,9 +88,16 @@ export default {
   },
   methods: {
     onDeleteBtn(projecthistoryNo) {
+          let token = window.$cookies.get('nnd')
+
       axios
         .delete(
-          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`
+          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`,
+          {
+            headers: { 
+                      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+             },
+          }
         )
         .then((res) =>{ 
           console.log(res)
@@ -99,18 +106,23 @@ export default {
           });
     },
     onEditBtn(projecthistoryNo) {
+          let token = window.$cookies.get('nnd')
       axios
         .post(
           `http://localhost:8080/projecthistory/update/${projecthistoryNo}`,
-          {
+         {
             idx: this.historyinfo.idx,
             projectName: this.historyinfo.projectName,
             summary: this.historyinfo.summary,
             content: this.historyinfo.content,
             usedStack: this.historyinfo.usedStack,
             gitLink: this.historyinfo.gitLink,
-          }
-        )
+        },
+        {
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+         },
+        })
         .then((response) => {
           console.log(response);
           this.dialog = false;
