@@ -67,6 +67,7 @@ public class LetterController {
 			map.put("content", temp[12]);
 			map.put("createDate", temp[13]);
 			map.put("read", temp[14]);
+			map.put("letterType",temp[15]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -89,6 +90,7 @@ public class LetterController {
 			map.put("content", temp[12]);
 			map.put("createDate", temp[13]);
 			map.put("read", temp[14]);
+			map.put("letterType",temp[15]);
 			datalist.add(map);
 		}
 		return datalist;
