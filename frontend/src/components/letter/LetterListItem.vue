@@ -49,8 +49,8 @@
 
 <script>
 import LetterDetail from "./LetterDetail.vue";
-
 import axios from "axios";
+import { EventBus } from "../../main.js";
 
 export default {
   components: {
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       dialog: false,
-      letterDate: "",
+      letterDate: "", // 포맷팅한 날짜를 저장하는 변수공간
     };
   },
   props: {
