@@ -46,6 +46,8 @@
 
 <script>
 import axios from "axios";
+import EventBus from "../../main";
+
 export default {
   props: {},
   data() {
@@ -96,6 +98,7 @@ export default {
           this.usedStack = null;
           this.content = null;
           this.gitLink = null;
+          EventBus.$emit('create-card');          //location.reload()
         })
         .catch((error) => {
           console.log(error.response);

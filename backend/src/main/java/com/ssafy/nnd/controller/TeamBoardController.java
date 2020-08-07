@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import javax.persistence.Tuple;
 
@@ -97,21 +98,44 @@ public class TeamBoardController {
     }
     
     @PutMapping("/teamboard/save/{idx}")
-    public TeamBoard createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
+    public String createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
     	Optional<Member> member = memberRepository.findMemberByIdx(idx);
     	String chiefEmail = member.get().getEmail();
+    	
+    	if(member.get().getTeamboardno()==0) {  //팀게시글 작성이 처음인 경우
+    		
+    	//teamboard에 팀장의 정보 저장
     	teamBoard.setIdx(member.get().getIdx());
     	teamBoard.setEmail(chiefEmail);
     	teamBoard.setName(member.get().getName());
-    	String membersEmail = teamBoard.getMemberEmails();
+    	
+    	Optional<TeamBoard> latestTeamboard = teamBoardRepository.findLatestTeamboardNo();
+    	member.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);
+    	memberRepository.save(member.get());
+    	String membersEmail = teamBoard.getMemberEmails(); 
     	if(membersEmail.equals("[]")) {
-    		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");
+    		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");   
     	}else {
     		teamBoard.setMemberEmails("[\""+chiefEmail+"\","+ membersEmail.substring(1));
+    		String tempmembersEmail = membersEmail.substring(1, membersEmail.length()-1);
+    		StringTokenizer st = new StringTokenizer(tempmembersEmail,",");
+    		
+    		while(st.hasMoreTokens()) {
+    			String email = st.nextToken();
+    			Optional<Member> teammember = memberRepository.findMemberByEmail(email.substring(1,email.length()-1));
+    			teammember.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);;
+    			memberRepository.save(teammember.get());
+    		}
+    		
     	}
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
-    	return newmemberBoard;
+    	
+    	return "Success";
+    	}
+    	else {  // 게시글 작성한 적 있으면 실패
+    		return "fail";
+    	}
     }
 
     @DeleteMapping("/teamboard/delete/{teamboardno}")

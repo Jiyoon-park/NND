@@ -15,6 +15,8 @@
 <script>
 import ProjectHistoryListItem from "./ProjectHistoryListItem.vue";
 import axios from "axios";
+import EventBus from "../../main";
+
 export default {
   components: {
     ProjectHistoryListItem,
@@ -43,6 +45,30 @@ export default {
           console.log(err);
         });
     }
+
+    // EventBus.$on('delete-card',() =>{
+    //    axios
+    //     .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+    //     .then(({ data }) => {
+    //       this.projects = data;
+    //       console.log(this.projects);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // });
+
+    EventBus.$on('create-card',() =>{
+       axios
+        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+        .then(({ data }) => {
+          this.projects = data;
+          console.log(this.projects);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   },
   methods: {
     onDeleteBtn(projecthistoryNo) {
