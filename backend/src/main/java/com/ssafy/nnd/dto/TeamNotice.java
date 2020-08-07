@@ -14,8 +14,8 @@ public class TeamNotice {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long teamNoticeNo; // 팀 공지사항 번호
 
-	@Column
-	private  Long teamBoardNo;  // 외래키  팀 번호
+	@Column (name = "teamboardno")
+	private  Long teamboardNo;  // 외래키  팀 번호
 	
 	@Column
 	private String title; // 글 제목
@@ -35,11 +35,11 @@ public class TeamNotice {
 	}
 
 	public Long getTeamBoardNo() {
-		return teamBoardNo;
+		return teamboardNo;
 	}
 
-	public void setTeamBoardNo(Long teamBoardNo) {
-		this.teamBoardNo = teamBoardNo;
+	public void setTeamBoardNo(Long teamboardNo) {
+		this.teamboardNo = teamboardNo;
 	}
 
 	public String getTitle() {
@@ -70,10 +70,10 @@ public class TeamNotice {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TeamNotice(Long teamNoticeNo, Long teamBoardNo, String title, String content, LocalDateTime createDate) {
+	public TeamNotice(Long teamNoticeNo, Long teamboardNo, String title, String content, LocalDateTime createDate) {
 		super();
 		this.teamNoticeNo = teamNoticeNo;
-		this.teamBoardNo = teamBoardNo;
+		this.teamboardNo = teamboardNo;
 		this.title = title;
 		this.content = content;
 		this.createDate = createDate;
@@ -81,7 +81,7 @@ public class TeamNotice {
 
 	@Override
 	public String toString() {
-		return "TeamNotice [teamNoticeNo=" + teamNoticeNo + ", teamBoardNo=" + teamBoardNo + ", title=" + title
+		return "TeamNotice [teamNoticeNo=" + teamNoticeNo + ", teamBoardNo=" + teamboardNo + ", title=" + title
 				+ ", content=" + content + ", createDate=" + createDate + "]";
 	}
 	
