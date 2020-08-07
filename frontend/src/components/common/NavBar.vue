@@ -50,7 +50,9 @@
       <v-spacer></v-spacer>
 
       <Search />
-      <i class="fas fa-envelope ml-2" @click="$router.push('/letter').catch(() => {})"></i>
+      <v-badge :content="messages" :value="messages" color="green" overlap>
+        <v-icon size="30" class="ml-2" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
+      </v-badge>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#999"></v-app-bar-nav-icon>
     </v-app-bar>
@@ -59,6 +61,9 @@
 
 <script>
 import Search from "./Search.vue";
+import axios from "axios";
+import { EventBus } from "../../main.js";
+
 export default {
   name: "LayoutsDemosBaselineFlipped",
   components: {
@@ -76,21 +81,56 @@ export default {
       { icon: "apps", title: "Home", to: "/" },
       { icon: "bubble_chart", title: "About", to: "/about" },
     ],
+    messages: 0,
+    letters: [],
   }),
   created() {
     let token = window.$cookies.get("nnd");
     if (token) {
       console.log(token.object.idx);
+      this.user = token.object;
       this.username = token.object.name;
       this.profileURL = token.object.profile;
     }
+    this.getLetters();
+
+    EventBus.$on("letterRead", () => {
+      this.messages--;
+    });
   },
   methods: {
     onLogout: function () {
-      this.$store.commit('logout')
-      window.$cookies.remove('nnd')
-      this.$router.push('/login')
-    }
+      this.$store.commit("logout");
+      window.$cookies.remove("nnd");
+      this.$router.push("/login");
+    },
+    getLetters() {
+      axios
+        .get(`http://localhost:8080/letter/list/receive/${this.user.idx}`)
+        .then((res) => {
+          console.log("#############");
+          console.log(res);
+          this.letters = res;
+          this.messages = this.checkRead(this.letters.data);
+          console.log(`message개수 :${this.messages}`);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    checkRead: function (arr) {
+      console.log("count 함수 실행!!");
+      console.log("arr: " + arr);
+      console.log("length: " + arr.length);
+      var count = 0;
+      for (let index = 0; index < arr.length; index++) {
+        console.log(`arr :${arr[index]}`);
+        if (arr[index].read == 0) {
+          count++;
+        }
+      }
+      return count;
+    },
   },
 };
 </script>
