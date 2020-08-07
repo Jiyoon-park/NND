@@ -9,9 +9,6 @@
         </v-avatar>
         <h3>{{ user.name }}</h3>
         <p># 참여중인 팀 : 앨리스</p>
-        <v-btn small @click="$router.push('/profile-update')">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
       </div>
 
       <v-tabs class="tabs">
@@ -80,15 +77,9 @@ export default {
     };
   },
   created() {
-
-    let token = window.$cookies.get("nnd")
-    console.log(token)
-    let id = token.object.idx; //넘겨 받아야함
+    let id = this.$route.params.idx;
     this.$http
   .get(`http://localhost:8080/member/info/${id}`, {
-    headers: { 
-      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-    },
   })
   .then((resp) => {
     console.log(resp);

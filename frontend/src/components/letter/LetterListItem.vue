@@ -89,6 +89,9 @@ export default {
       var c = new Date();
       var d = new Date(dt);
       var minsAgo = Math.floor((c - d) / min);
+      if (minsAgo < 0) {
+        minsAgo += 540; // 9시간이 역전되는 버그를 막는 임시 방편소스
+      }
 
       var result = {
         raw:
