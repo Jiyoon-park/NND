@@ -46,10 +46,25 @@ public class Letter {
 	@Column(name = "\"read\"")
 	private int read;		// 메시지 읽었는지 확인 (안읽음 = 0, 읽음 1)
 	
+	@Column(name = "lettertype")
+	private String letterType;
 	
 	public Letter() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public String getLetterType() {
+		return letterType;
+	}
+
+	public void setLetterType(String letterType) {
+		this.letterType = letterType;
+	}
+
+	public void setLetterNo(Long letterNo) {
+		this.letterNo = letterNo;
+	}
+
 
 	public long getLetterNo() {
 		return letterNo;
@@ -101,11 +116,10 @@ public class Letter {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Letter [letterNo=").append(letterNo).append(", sendIdx=").append(sendIdx)
-				.append(", receiveIdx=").append(receiveIdx).append(", content=").append(content).append(", createDate=")
-				.append(createDate).append(", read=").append(read).append("]");
-		return builder.toString();
+		return "Letter [letterNo=" + letterNo + ", sendIdx=" + sendIdx + ", receiveIdx=" + receiveIdx + ", content="
+				+ content + ", createDate=" + createDate + ", read=" + read + ", letterType=" + letterType + "]";
 	}
+
+	
 	
 }

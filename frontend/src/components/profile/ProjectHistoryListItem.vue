@@ -71,6 +71,7 @@
 
 <script>
 import axios from "axios";
+//import EventBus from "../../main";
 export default {
   props: {
     historyinfo: {
@@ -91,7 +92,11 @@ export default {
         .delete(
           `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`
         )
-        .then((res) => console.log(res));
+        .then((res) =>{ 
+          console.log(res)
+          location.reload();
+          //EventBus.$emit('delete-card');          //location.reload()
+          });
     },
     onEditBtn(projecthistoryNo) {
       axios
