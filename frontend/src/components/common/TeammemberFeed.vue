@@ -7,6 +7,7 @@
     >
     </news-feed2>
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    <!-- 팀일때랑 팀원일때랑 피드 두개로 구분해주자 -->
   </v-app>
 </template>
 
