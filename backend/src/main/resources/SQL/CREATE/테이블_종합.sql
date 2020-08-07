@@ -87,3 +87,24 @@ CREATE TABLE likemember(
     FOREIGN KEY (mno) REFERENCES member (idx),
     FOREIGN KEY (mboard) REFERENCES memberboard (boardno)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ CREATE TABLE `teamnotice` (  
+  `teamnoticeno` int(10) NOT NULL AUTO_INCREMENT,
+  `teamboardno` int NOT NULL, 
+  `title` varchar(128) NOT NULL,
+  `content` varchar(500) NOT NULL,
+  `createdate` varchar(128) NOT NULL,
+  PRIMARY KEY (`teamnoticeno`),
+  FOREIGN KEY(`teamboardno`) REFERENCES teamboard(`teamboardno`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ CREATE TABLE `memberrating` (  
+  `ratingno` int(10) NOT NULL AUTO_INCREMENT,
+  `idx` int NOT NULL, 
+  `commitcnt` int Default 0,
+  `issuecnt` int default 0,
+  `attendrate` int default 0,
+  PRIMARY KEY (`ratingno`),
+  FOREIGN KEY(`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
