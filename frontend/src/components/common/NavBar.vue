@@ -7,8 +7,8 @@
       </div>
       <v-list rounded>
         <v-list-item link class="d-flex flex-column pt-10">
-          <v-avatar color="grey" size="80" class="mb-2">
-            <span v-if="!profileURL" class="white--text headline"></span>
+          <v-avatar color="white" size="80" class="user-img mb-2">
+            <img v-if="!profileURL" src="https://picsum.photos/200" />
             <img v-else :src="profileURL" />
           </v-avatar>
           <div class="mt-2">
@@ -132,6 +132,9 @@ export default {
 </script>
 
 <style scoped>
+.user-img {
+  border: 2px solid;
+}
 .title {
   margin-bottom: 0;
   font-family: "Rowdies", cursive;
