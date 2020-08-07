@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       list: [],
-      page: 1,
+      page: 0,
       size: 5,
       option: {},
       type: "team",
@@ -36,8 +36,8 @@ export default {
       this.query = obj.search;
       this.category = obj.categorySelection;
       this.skills = obj.newSkill;
-      this.page = 1;
-      if (this.page == 1) {
+      this.page = 0;
+      if (this.page == 0) {
         this.list = [];
       }
       axios
