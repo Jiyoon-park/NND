@@ -98,7 +98,7 @@ export default {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
     if (token) {
       //토큰 존재하면
-      this.user = token.object,
+      this.user = token.object;
       this.profileURL = this.user.profile;
       this.select = JSON.parse(this.user.memberstack)
     }
@@ -107,22 +107,22 @@ export default {
     PreviewImg() {
       this.profileURL = this.user.profile;
     },
-    modify(){
-      axios.post("http://localhost:8080/member/update",
-      {
-        email: this.user.email,
-        name: this.user.name,
-        profile: this.user.profile,
-        gitaddr: this.user.gitaddr,
-        memberstack: JSON.stringify(this.select),
-      })
-      .then((res) => {
-        console.log(res)
-        window.$cookies.remove("nnd"); //쿠키삭제
-        window.$cookies.set("nnd", res.data, "2d"); //쿠키다시저장
-        this.$router.push({name: "Profile"}); //home으로 보냄
-      });
-    }
+    modify() {
+      axios
+        .post("http://localhost:8080/member/update", {
+          email: this.user.email,
+          name: this.user.name,
+          profile: this.user.profile,
+          gitaddr: this.user.gitaddr,
+          memberstack: JSON.stringify(this.select),
+        })
+        .then((res) => {
+          console.log(res);
+          window.$cookies.remove("nnd"); //쿠키삭제
+          window.$cookies.set("nnd", res.data, "2d"); //쿠키다시저장
+          this.$router.push({ name: "Profile" }); //home으로 보냄
+        });
+    },
   },
   computed: {
     target() {
