@@ -49,8 +49,8 @@
 
 <script>
 import LetterDetail from "./LetterDetail.vue";
-
 import axios from "axios";
+import { EventBus } from "../../main.js";
 
 export default {
   components: {
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       dialog: false,
-      letterDate: "",
+      letterDate: "", // 포맷팅한 날짜를 저장하는 변수공간
     };
   },
   props: {
@@ -76,12 +76,18 @@ export default {
   methods: {
     // 클릭한 편지의 편지 pk를 받아옴.
     onLetterDetail(letterNo) {
-      // 클릭한 편지는 읽음 처리
-      this.letterinfo.read = 1;
-      axios
-        .post(`http://localhost:8080/letter/update/${letterNo}`)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      // 안읽은 편지는 읽음 처리하기 위해 axios 요청을 보내고 아닌 경우는 if문 패스
+      if (this.letterinfo.read == 0) {
+        this.letterinfo.read = 1;
+        axios
+          .post(`http://localhost:8080/letter/update/${letterNo}`)
+          .then((res) => {
+            console.log(res);
+            EventBus.$emit("letterRead", {});
+          })
+          .catch((err) => console.log(err));
+      }
+      this.dialog = false;
     },
     dateFormatted: function (dt) {
       console.log("dt : " + dt);
