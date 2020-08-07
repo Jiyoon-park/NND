@@ -4,37 +4,37 @@
       class="mx-auto my-3 py-3"
       max-width="344"
       shaped
-      v-for="project in projects"
-      :key="project.historyNo"
+      v-for="(project, i) in projects"
+      :key="i"
     >
-      <v-list-item three-line>
-        <v-list-item-content>
-          <v-list-item-title class="headline mb-1">{{ project.projectName }}</v-list-item-title>
-          <v-list-item-subtitle>{{ project.summary }}</v-list-item-subtitle>
-          <div class="mt-3">링크 : {{ project.gitLink }}</div>
-        </v-list-item-content>
-      </v-list-item>
+      <ProjectHistoryListItem :historyinfo="projects[i]" />
     </v-card>
   </div>
 </template>
 
 <script>
+import ProjectHistoryListItem from "./ProjectHistoryListItem.vue";
 import axios from "axios";
+import EventBus from "../../main";
+
 export default {
+  components: {
+    ProjectHistoryListItem,
+  },
   data() {
     return {
       projects: [],
       user: "",
+      dialog: false,
     };
   },
   created() {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
-    let id = token.object.idx; //넘겨 받아야함
-    axios.get(`http://localhost:8080/member/info/${id}`).then((res) => {
-      this.user = res.data;
-      console.log(res.data)
-      this.profileURL = this.user.profile;
-      console.log(this.user.idx)
+    if (token) {
+      //토큰 존재하면
+      this.user = token.object;
+      console.log("###########");
+      console.log(this.user.idx);
       axios
         .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
         .then(({ data }) => {
@@ -44,7 +44,63 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    }
+
+    // EventBus.$on('delete-card',() =>{
+    //    axios
+    //     .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+    //     .then(({ data }) => {
+    //       this.projects = data;
+    //       console.log(this.projects);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // });
+
+    EventBus.$on('create-card',() =>{
+       axios
+        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+        .then(({ data }) => {
+          this.projects = data;
+          console.log(this.projects);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
+  },
+  methods: {
+    onDeleteBtn(projecthistoryNo) {
+      axios
+        .delete(
+          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`
+        )
+        .then((res) => console.log(res));
+    },
+    onEditBtn(projecthistoryNo, i) {
+      axios
+        .post(
+          `http://localhost:8080/projecthistory/update/${projecthistoryNo}`,
+          {
+            idx: this.projects[i].idx,
+            projectName: this.projects[i].projectName,
+            summary: this.projects[i].summary,
+            content: this.projects[i].content,
+            usedStack: this.projects[i].usedStack,
+            gitLink: this.projects[i].gitLink,
+            techStack: JSON.stringify(this.projects[i].techStack),
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          this.dialog = false;
+        })
+        .catch((error) => {
+          console.log(error.response);
+          this.dialog = false;
+        });
+    },
   },
 };
 </script>
