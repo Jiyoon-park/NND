@@ -7,7 +7,7 @@ import vuetify from "./plugins/vuetify";
 import VueCookie from "vue-cookies";
 import firebase from "firebase";
 
-export const EventBus = new Vue();
+export const EventBus = new Vue();   
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;

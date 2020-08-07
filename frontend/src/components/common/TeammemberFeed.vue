@@ -6,7 +6,10 @@
       v-bind:key="i"
     >
     </news-feed2>
-    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    <infinite-loading
+      @infinite="infiniteHandler"
+      ref="InfiniteLoading"
+    ></infinite-loading>
   </v-app>
 </template>
 
@@ -32,33 +35,14 @@ export default {
   },
   created() {
     EventBus.$on("search", (obj) => {
+      console.log("버스시작");
       this.type = obj.typeSelection;
       this.query = obj.search;
       this.category = obj.categorySelection;
       this.skills = obj.newSkill;
+      this.list = [];
+      this.$refs.InfiniteLoading.stateChanger.reset();
       this.page = 0;
-      if (this.page == 0) {
-        this.list = [];
-      }
-      axios
-        .put(
-          "http://localhost:8080/" + this.type + "board/search",
-          {
-            query: this.query,
-            category: this.category,
-            skills: this.skills,
-          },
-          {
-            params: {
-              page: this.page,
-              size: this.size,
-            },
-          }
-        )
-        .then(({ data }) => {
-          this.page += 1;
-          this.list.push(...data);
-        });
     });
   },
 
@@ -82,6 +66,10 @@ export default {
         .then(({ data }) => {
           setTimeout(() => {
             if (data.length) {
+              console.log("기존 스크롤 push " + this.page);
+              if (this.list == null) {
+                return;
+              }
               this.page += 1;
               this.list.push(...data);
               $state.loaded();
