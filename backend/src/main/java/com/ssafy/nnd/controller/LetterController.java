@@ -95,10 +95,17 @@ public class LetterController {
 	}
 	
 	// C
-	@PutMapping("/letter/create")
-	public @ResponseBody String createLetter(@RequestBody Letter letter) {
+	@PutMapping("/letter/create/{type}")
+	public @ResponseBody String createLetter(@PathVariable String type, @RequestBody Letter letter) {
+		
+		
 		System.out.println(letter.toString());
 		try {
+			if(type.equals("tboard")) {
+				letter.setLetterType("tboard");
+			}else if(type.equals("mboard")) {
+				letter.setLetterType("mboard");
+			}
 			letterRepository.save(letter);
 			return "success";
 		} catch (Exception e) {
