@@ -33,14 +33,15 @@
       <div id="skills" class="target">
         <h3># 기술스택</h3>
         <div class="skills">
-          <v-chip-group column multiple>
-            <v-chip filter outlined>Java</v-chip>
-            <v-chip filter outlined>C</v-chip>
-            <v-chip filter outlined>C++</v-chip>
-            <v-chip filter outlined>Python</v-chip>
-            <v-chip filter outlined>Spring</v-chip>
-            <v-chip filter outlined>Django</v-chip>
-          </v-chip-group>
+          <v-combobox
+            v-model="techStack"
+            :items="items"
+            hide-selected
+            label="기술 스택"
+            multiple
+            persistent-hint
+            small-chips
+          ></v-combobox>
         </div>
       </div>
 
@@ -89,13 +90,15 @@ export default {
       },
       user: "",
       profileURL: "",
+      items: [],
+      techStack: null,
     };
   },
   created() {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
     if (token) {
       //토큰 존재하면
-      this.user = token.object,
+      this.user = token.object;
       this.profileURL = this.user.profile;
     }
   },
@@ -103,21 +106,23 @@ export default {
     PreviewImg() {
       this.profileURL = this.user.profile;
     },
-    modify(){
-      axios.post("http://localhost:8080/member/update",
-      {
-        email: this.user.email,
-        name: this.user.name,
-        profile: this.user.profile,
-        gitaddr: this.user.gitaddr,
-      })
-      .then((res) => {
-        console.log(res)
-        window.$cookies.remove("nnd"); //쿠키삭제
-        window.$cookies.set("nnd", res.data, "2d"); //쿠키다시저장
-        this.$router.push({name: "Profile"}); //home으로 보냄
-      });
-    }
+    modify() {
+      axios
+        .post("http://localhost:8080/member/update", {
+          email: this.user.email,
+          name: this.user.name,
+          profile: this.user.profile,
+          gitaddr: this.user.gitaddr,
+          memberstack: JSON.stringify(this.techStack),
+          // memberstack: this.user.memberstack,
+        })
+        .then((res) => {
+          console.log(res);
+          window.$cookies.remove("nnd"); //쿠키삭제
+          window.$cookies.set("nnd", res.data, "2d"); //쿠키다시저장
+          this.$router.push({ name: "Profile" }); //home으로 보냄
+        });
+    },
   },
   computed: {
     target() {
