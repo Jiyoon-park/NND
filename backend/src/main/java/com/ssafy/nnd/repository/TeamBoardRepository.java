@@ -25,4 +25,6 @@ public interface TeamBoardRepository extends JpaRepository<TeamBoard,Long>, Team
 	
 	@Query(value="select * from teamboard order by teamboardno desc limit 1",nativeQuery=true)
     Optional<TeamBoard> findLatestTeamboardNo();
+	
+	
 }

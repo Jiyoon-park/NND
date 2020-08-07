@@ -134,8 +134,9 @@ public class LetterController {
 	      
 	      Optional<TeamBoard> team = teamBoardRepository.findByIdx(receiveidx);
 	      Optional<Member> member = memberRepository.findById(sendidx);
+	      Long groupMemberCount = memberRepository.countTeamMemberByTeamboardNo(team.get().getTeamboardNo());
 	      
-	      if(member.get().getTeamboardno() == 0) {  //현재 팀이 없을 경우
+	      if(member.get().getTeamboardno() == 0 && team.get().getGroupSize()>groupMemberCount ){  //현재 팀이 없거나 모집인원을 넘지 않은 경우
 	    	  
 	    	  String currentTeamMember = team.get().getMemberEmails();
 	    	  String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
@@ -146,7 +147,7 @@ public class LetterController {
 	    	  memberRepository.save(member.get());
 	    	  return "success";
 	    	  
-	      }else { // 현재 팀이 있을경우 
+	      }else { // 현재 팀이 있거나 꽉 차있을 경우
 	    	  
 	    	  return "fail";
 	      }
@@ -157,7 +158,9 @@ public class LetterController {
 	      
 	      Optional<TeamBoard> team = teamBoardRepository.findByIdx(sendidx);
 	      Optional<Member> member = memberRepository.findById(receiveidx);
-	      if(member.get().getTeamboardno()==0) {  // 팀이 결정되지 않은 경우
+	      Long groupMemberCount = memberRepository.countTeamMemberByTeamboardNo(team.get().getTeamboardNo());
+
+	      if(member.get().getTeamboardno()==0 && team.get().getGroupSize()>groupMemberCount) {  // 팀이 결정되지 않은 경우
 	    	  String currentTeamMember = team.get().getMemberEmails();
 	    	  String changedTeamMember = currentTeamMember.substring(0, currentTeamMember.length()-1) + ", \"" +member.get().getEmail() + "\"]";
 	    	  // '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
