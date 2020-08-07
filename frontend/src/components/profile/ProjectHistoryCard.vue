@@ -46,7 +46,7 @@
 
 <script>
 import axios from "axios";
-import EventBus from "../../main";
+import {EventBus} from "../../main";
 
 export default {
   props: {},

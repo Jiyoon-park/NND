@@ -6,6 +6,7 @@ import SignUp from "../components/user/SignUp.vue";
 import Findpw from "../components/user/Findpw.vue";
 import Login from "../components/user/Login.vue";
 import Profile from "../components/user/Profile.vue";
+import userProfile from "../components/user/userProfile.vue";
 import ProfileUpdate from "../components/user/ProfileUpdate.vue";
 import AddBoard from "../components/common/AddBoard.vue";
 import LetterList from "../components/letter/LetterList.vue";
@@ -52,6 +53,12 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+    props: true,
+  },
+  {
+    path: "/userprofile",
+    name: "userProfile",
+    component: userProfile,
     props: true,
   },
   {

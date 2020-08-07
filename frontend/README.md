@@ -1,24 +1,9 @@
-# frontend
+# Sub 2
 
-## Project setup
-```
-yarn install
-```
+## 7/31일 회의록
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+*링크 : <https://docs.google.com/document/d/1RyXI1QGbLqy24XWgdm2g8VZOXOgdyR-pJffXGsupp90/edit?usp=sharing />
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 8/5 회의록
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+*링크 : <https://docs.google.com/document/d/1csovg8qwTEP385o6GrkLmW58iS0a3JOmsGyTHV6alOo/edit?usp=sharing />

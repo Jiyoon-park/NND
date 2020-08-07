@@ -4,7 +4,7 @@
       <v-card outlined class="elevation-3">
         <v-list-item class="mt-3">
           <v-avatar color="indigo" class="mr-5">
-            <v-icon dark>mdi-account-circle</v-icon>
+            <v-icon @click="$router.push({name : 'userProfile', params: {idx :teaminfo.idx}}).catch(() => {})" dark>mdi-account-circle</v-icon>
           </v-avatar>
           <v-col cols="4" md="4">{{ teaminfo.name }}</v-col>
           <v-col cols="6" md="6">
@@ -168,4 +168,4 @@ export default {
 };
 </script>
 
-<style></style>
+
