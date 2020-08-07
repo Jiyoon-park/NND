@@ -4,7 +4,7 @@
     <v-col cols="10" md="8" lg="6" class="mt-15">
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-2">
-          <span v-if="!profileURL" class="white--text headline">GD</span>
+          <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
@@ -40,10 +40,15 @@
       <div id="skills" class="target">
         <h3># 기술스택</h3>
         <div class="skills">
-          <v-btn small color="primary" class="skill">java</v-btn>
-          <v-btn small color="primary" class="skill">C</v-btn>
-          <v-btn small color="primary" class="skill">C++</v-btn>
-          <v-btn small color="primary" class="skill">Python</v-btn>
+          <v-chip-group column>
+            <v-chip
+              class="ma-1"
+              color="darken-2 blue"
+              text-color="white"
+              v-for="stack in JSON.parse(user.memberstack)"
+              :key="stack"
+            >{{ stack }}</v-chip>
+          </v-chip-group>
         </div>
       </div>
 
@@ -85,7 +90,7 @@ export default {
     if (token) {
       this.$http
         .get(`http://localhost:8080/member/info/${id}`, {
-          headers: { 
+          headers: {
             Authorization: "Bearer " + token, // the token is a variable which holds the token
           },
         })
