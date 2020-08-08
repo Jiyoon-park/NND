@@ -24,12 +24,17 @@ export default {
   }),
   created() {
     axios
-      .get(`http://localhost:8080/teamboard/list`, {
-        params: {
+      .get(`http://localhost:8080/teamboard/list`, 
+        {
           page: this.page,
           size: this.size,
         },
-      })
+        {
+          headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          }
+        }
+      )
       .then(({ data }) => {
         this.boards = data;
         console.log(this.boards);

@@ -62,24 +62,15 @@ export default {
   },
   created() {
     let token = window.$cookies.get("nnd");
-    let id = token.object.idx;
-    if (token) {
-      this.$http
-        .get(`http://localhost:8080/member/info/${id}`, {
-          headers: {
-            Authorization: "Bearer " + token, // the token is a variable which holds the token
-          },
-        })
-        .then((res) => {
-          this.user = res.data;
-          this.profileURL = this.user.profile;
-        });
-    }
+    this.user = token.object;
+    this.profileURL = this.user.profile;
   },
   methods: {
     submit() {
+      let token = window.$cookies.get('nnd');
       axios
-        .put(`http://localhost:8080/projecthistory/save/${this.user.idx}`, {
+        .put(`http://localhost:8080/projecthistory/save/${this.user.idx}`, 
+        {
           idx: this.user.idx,
           projectName: this.projectName,
           summary: this.summary,
@@ -87,6 +78,10 @@ export default {
           usedStack: this.usedStack,
           gitLink: this.gitLink,
           techStack: JSON.stringify(this.techStack),
+        },{
+                headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
         })
         .then((response) => {
           this.$emit("onSubmit");
