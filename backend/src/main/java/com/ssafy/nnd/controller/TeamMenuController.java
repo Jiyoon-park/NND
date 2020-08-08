@@ -2,6 +2,7 @@ package com.ssafy.nnd.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -89,7 +90,7 @@ public class TeamMenuController {
 	public String saveTeamMember(@PathVariable Long idx, @PathVariable Long memberidx) {
 		Optional<Member> chief = memberRepository.findById(idx); // 팀장 멤버 객체
 		Optional<Member> member = memberRepository.findById(memberidx); // 추가할 팀 멤버 객체
-		Optional<TeamBoard> team = teamBoardRepository.findByIdx(chief.get().getTeamboardno()); // 팀장 팀정보
+		Optional<TeamBoard> team = teamBoardRepository.findById(chief.get().getTeamboardno()); // 팀장 팀정보
 		Long groupMemberCount = memberRepository.countTeamMemberByTeamboardNo(team.get().getTeamboardNo());
 		// 현재 팀의 멤버 수 가져오기
 
@@ -110,13 +111,31 @@ public class TeamMenuController {
 	}
 
 	// 멤버 삭제
-//	@PostMapping("teammenu/member/delete/{memberidx}")
-//	public String deleteTeamMeber(@PathVariable Long memberidx) {
-//		Optional<Member> member = memberRepository.findById(memberidx);
-//		member.get().setTeamboardno(Long.parseLong("0"));
-//		memberRepository.save(member.get());
-//		return "delete member success";
-//	}
+	@PostMapping("teammenu/member/delete/{idx}/{memberidx}")
+	public String deleteTeamMeber(@PathVariable Long idx, @PathVariable Long memberidx) {
+		Optional<Member> chief = memberRepository.findById(idx); // 팀장 멤버 객체
+		Optional<Member> member = memberRepository.findById(memberidx); // 추가할 팀 멤버 객체
+		Optional<TeamBoard> team = teamBoardRepository.findById(chief.get().getTeamboardno()); // 팀장 팀정보
+		
+		String curmembers = team.get().getMemberEmails();
+		String changedmember = "[\""+chief.get().getEmail()+"\"";
+		StringTokenizer st = new StringTokenizer(curmembers,"[,\"] ");
+		
+		while(st.hasMoreTokens()) {
+			String temp = st.nextToken();
+			if(!temp.equals(member.get().getEmail())&&!temp.equals(chief.get().getEmail())) {
+				changedmember+=", ";
+				changedmember+="\""+temp+"\"";
+			}
+		}
+		changedmember+="]";
+		team.get().setMemberEmails(changedmember);
+		member.get().setTeamboardno(Long.parseLong("0"));
+		
+		teamBoardRepository.save(team.get());
+		memberRepository.save(member.get());
+		return "delete member success";
+	}
 	// 멤버 평가
 
 	// 마감 버튼 비활성화
