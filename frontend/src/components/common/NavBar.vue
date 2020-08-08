@@ -45,7 +45,7 @@
 
       <v-spacer></v-spacer>
       <!-- <img src="../../assets/images/logo_black_title.png" width="60px" alt /> -->
-      <p class="title">neonaedong</p>
+      <p class="title" @click="$router.push('/').catch(() => {})">neonaedong</p>
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
