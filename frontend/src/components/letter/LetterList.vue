@@ -60,7 +60,11 @@ export default {
     if (token) {
       console.log(token.object.idx);
       axios
-        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`)
+        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`,
+         {
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+         }})
         .then((res) => {
           this.items[0].letters = res.data;
           console.log(this.items[0].letters);
@@ -70,7 +74,11 @@ export default {
         });
 
       axios
-        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`)
+        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`,
+         {
+            headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+         }})
         .then((res) => {
           this.items[1].letters = res.data;
           console.log(this.items[1].letters);

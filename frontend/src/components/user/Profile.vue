@@ -88,7 +88,7 @@ export default {
   .get(`http://localhost:8080/member/info/${id}`, {
     headers: { 
       Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-    },
+    }
   })
   .then((resp) => {
     console.log(resp);
