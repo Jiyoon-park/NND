@@ -10,7 +10,7 @@ import com.ssafy.nnd.dto.TeamNotice;
 
 
 
-public interface TeamNoticeRepository extends JpaRepository<TeamNotice,Long>, TeamBoardCustomRepository<Object>{
+public interface TeamNoticeRepository extends JpaRepository<TeamNotice,Long>{
 	
 	List<TeamNotice> findByTeamBoardNoOrderByTeamNoticeNoDesc(Long teamboardno,Pageable pageable);
 	

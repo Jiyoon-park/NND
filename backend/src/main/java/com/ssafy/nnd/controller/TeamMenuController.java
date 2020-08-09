@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.Member;
+import com.ssafy.nnd.dto.MemberRating;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.dto.TeamNotice;
 import com.ssafy.nnd.repository.MemberRatingRepository;
@@ -38,6 +39,7 @@ public class TeamMenuController {
 
 	@Autowired
 	MemberRepository memberRepository;
+	
 
 	// 팀 공지사항 불러오기
 	@GetMapping("teammenu/notice/{idx}")   //팀장 idx 
@@ -152,14 +154,14 @@ public class TeamMenuController {
 	}
 	// 멤버 평가
 	
-	@PutMapping("teammenu/rating/{idx}")   //버튼 눌린사람의 idx
-	public String memberRating(@PathVariable Long idx) {
-		
-		
+	@PutMapping("teammenu/rating")   // idx 꼭 넣어서 보내주세요
+	public String memberRating(@RequestBody MemberRating memberrate) {
+		memberRatingRepository.save(memberrate);
 		return "member rating success";
 	}
 	
-	// 마감 버튼 
+	// 마감 버튼     // 마감되면 git, jira issue, 출결 가져와서 디비에 넣기
+	
 	@PostMapping("teammenu/disband/{idx}")   //팀장 idx
 	public String memberDisband(@PathVariable Long idx) {
 		Optional<Member> chief = memberRepository.findById(idx);
