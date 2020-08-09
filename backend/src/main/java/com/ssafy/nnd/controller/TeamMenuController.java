@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.Member;
@@ -39,7 +40,7 @@ public class TeamMenuController {
 	MemberRepository memberRepository;
 
 	// 팀 공지사항 불러오기
-	@GetMapping("teammenu/notice/{idx}")
+	@GetMapping("teammenu/notice/{idx}")   //팀장 idx 
 	public List<TeamNotice> getAllTeamNotice(@PathVariable Long idx, Pageable pageable) {
 		Optional<Member> member = memberRepository.findById(idx);
 		Long teamboardno = member.get().getTeamboardno();
@@ -53,7 +54,7 @@ public class TeamMenuController {
 	}
 
 	// 팀 멤버 목록 불러오기
-	@GetMapping("teammenu/member/{idx}")
+	@GetMapping("teammenu/member/{idx}")  // 유저 idx 가져오기
 	public List<Member> getTeamMember(@PathVariable Long idx) {
 		Optional<Member> member = memberRepository.findById(idx);
 		Long teamboardno = member.get().getTeamboardno();
@@ -67,7 +68,7 @@ public class TeamMenuController {
 	}
 
 	// 팀 공지사항 글쓰기
-	@PutMapping("teammenu/notice/save/{idx}")
+	@PutMapping("teammenu/notice/save/{idx}")  //팀장 idx
 	public String saveTeamNotice(@PathVariable Long idx, TeamNotice teamnotice) {
 
 		Optional<Member> member = memberRepository.findById(idx);
@@ -77,16 +78,29 @@ public class TeamMenuController {
 		teamNoticeRepository.save(teamnotice);
 		return "save success";
 	}
+	
+	// 팀 공지사항 수정
+	@PostMapping("teammenu/notice/update")
+	public String updateTeamNotice(@RequestBody TeamNotice newTeamnotice) {
+		
+		Long teamnoticeno = newTeamnotice.getTeamNoticeNo();
+		Optional<TeamNotice> teamnotice = teamNoticeRepository.findById(teamnoticeno);
+		teamnotice.get().setTitle(newTeamnotice.getTitle());
+		teamnotice.get().setContent(newTeamnotice.getContent());
+		
+		teamNoticeRepository.save(teamnotice.get());
+		return "update success";
+	}
 
 	// 팀 공지사항 삭제
-	@DeleteMapping("teammenu/notice/delete/{teamnoticeno}")
+	@DeleteMapping("teammenu/notice/delete/{teamnoticeno}") 
 	public String deleteTeamNotice(@PathVariable Long teamnoticeno) {
 		teamNoticeRepository.deleteById(teamnoticeno);
 		return "delete success";
 	}
 
 	// 멤버 추가
-	@PutMapping("teammenu/member/save/{idx}/{memberidx}")
+	@PutMapping("teammenu/member/save/{idx}/{memberidx}")   // 추가된 사람 idx , 팀장 idx
 	public String saveTeamMember(@PathVariable Long idx, @PathVariable Long memberidx) {
 		Optional<Member> chief = memberRepository.findById(idx); // 팀장 멤버 객체
 		Optional<Member> member = memberRepository.findById(memberidx); // 추가할 팀 멤버 객체
@@ -111,7 +125,7 @@ public class TeamMenuController {
 	}
 
 	// 멤버 삭제
-	@PostMapping("teammenu/member/delete/{idx}/{memberidx}")
+	@PostMapping("teammenu/member/delete/{idx}/{memberidx}")   // 버튼 눌린사람의 idx
 	public String deleteTeamMeber(@PathVariable Long idx, @PathVariable Long memberidx) {
 		Optional<Member> chief = memberRepository.findById(idx); // 팀장 멤버 객체
 		Optional<Member> member = memberRepository.findById(memberidx); // 추가할 팀 멤버 객체
@@ -137,7 +151,31 @@ public class TeamMenuController {
 		return "delete member success";
 	}
 	// 멤버 평가
-
-	// 마감 버튼 비활성화
-
+	
+	@PutMapping("teammenu/rating/{idx}")   //버튼 눌린사람의 idx
+	public String memberRating(@PathVariable Long idx) {
+		
+		
+		return "member rating success";
+	}
+	
+	// 마감 버튼 
+	@PostMapping("teammenu/disband/{idx}")   //팀장 idx
+	public String memberDisband(@PathVariable Long idx) {
+		Optional<Member> chief = memberRepository.findById(idx);
+		Optional<TeamBoard> team = teamBoardRepository.findById(chief.get().getTeamboardno());
+		
+		//teamboard mebersemail 해산
+		team.get().setMemberEmails("[\"disband\"]");
+		teamBoardRepository.save(team.get());
+		//멤버별 teamboardno 0 으로 바꾸기 
+		List<Member> members = memberRepository.findByTeamboardno(chief.get().getTeamboardno());
+		
+		for (int i = 0; i < members.size(); i++) {
+			Member member = members.get(i);
+			member.setTeamboardno(Long.parseLong("0"));
+			memberRepository.save(member);
+		}
+		return "disband success";
+	}
 }
