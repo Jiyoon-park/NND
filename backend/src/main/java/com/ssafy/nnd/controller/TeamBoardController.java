@@ -109,8 +109,8 @@ public class TeamBoardController {
     	teamBoard.setEmail(chiefEmail);
     	teamBoard.setName(member.get().getName());
     	
-    	Optional<TeamBoard> latestTeamboard = teamBoardRepository.findLatestTeamboardNo();
-    	member.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);
+//    	Optional<TeamBoard> latestTeamboard = teamBoardRepository.findLatestTeamboardNo();
+//    	member.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);
     	String membersEmail = teamBoard.getMemberEmails(); 
     	if(membersEmail.equals("[]")) {
     		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");   
@@ -122,14 +122,14 @@ public class TeamBoardController {
     		while(st.hasMoreTokens()) {
     			String email = st.nextToken();
     			Optional<Member> teammember = memberRepository.findMemberByEmail(email.substring(1,email.length()-1));
-    			teammember.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);;
+//    			teammember.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);;
     			memberRepository.save(teammember.get());
     		}
     		
     	}
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
-    	memberRepository.save(member.get());
+//    	memberRepository.save(member.get());
     	
     	return "Success";
     	}
