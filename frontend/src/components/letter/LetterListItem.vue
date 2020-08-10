@@ -50,7 +50,7 @@
 <script>
 import LetterDetail from "./LetterDetail.vue";
 import axios from "axios";
-import { EventBus } from "../../main.js";
+//import { EventBus } from "../../main.js";
 
 export default {
   components: {
