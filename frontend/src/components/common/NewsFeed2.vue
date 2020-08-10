@@ -23,9 +23,21 @@
                 </div>
               </div>
             </div>
-            <p>{{ teaminfo.category }}</p>
-            <!-- <v-img :src="`../../assets/images/${teaminfo.category}`" height="194"></v-img> -->
-            <v-expansion-panel-header>
+            <div style="position:relative;">
+              <v-img
+                v-if="teaminfo.category==='스터디'"
+                src="../../assets/images/study.jpg"
+                height="194"
+              ></v-img>
+              <v-img
+                v-else-if="teaminfo.category==='프로젝트'"
+                src="../../assets/images/project.jpg"
+                height="194"
+              ></v-img>
+              <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+            </div>
+            <div style="position:absolute; top:0; left:0;">{{ teaminfo.category }}</div>
+            <v-expansion-panel-header class="text-h6 font-weight-black">
               {{ teaminfo.title }}
               <template v-slot:actions>
                 <v-icon color="teal">mdi-check</v-icon>
@@ -86,7 +98,7 @@ export default {
       show: false,
       favorite: false,
       dialog: false,
-      stacks: this.teaminfo.techStack,
+      stacks: this.teaminfo.techstack,
       username: "",
       profileURL: "",
       ///쪽찌보낼내용
