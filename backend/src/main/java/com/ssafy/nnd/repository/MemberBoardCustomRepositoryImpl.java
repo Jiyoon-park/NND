@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
-import com.ssafy.nnd.dto.MemberBoard;
 
 public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomRepository {
 	
@@ -24,7 +23,8 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 	public List findMemberBoardList(List query, List category, List skills, final Pageable pageable) {
 		System.out.println("custom findMemberBoardList");
 		StringBuilder str = new StringBuilder();
-		str.append("select m from MemberBoard as m where ");
+		str.append("select boardno,idx,email,title,content,category,techstack,m.createdate as createdate,likecnt,name,likeno,mboard,mno ");
+		str.append("from memberboard m left join likemember l on boardno = mboard ");
 		
 		// query
 		// title과 content를 대상으로 검색
@@ -70,13 +70,24 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		int pageNumber = pageable.getPageNumber();
 		int pageSize = pageable.getPageSize();
 		
-		return entityManager.createQuery(str.toString(), MemberBoard.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
+		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
+		String[] keys = {"boardno","idx","email","title","content","category","techstack","createdate","likecnt","name","likeno","mboard","mno"}; 
+		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
+		for (int i = 0; i < temp.size(); i++) {
+			Map<String, Object> real = new HashMap<String, Object>();
+			Tuple t = temp.get(i);
+			for (int j = 0; j < keys.length; j++) {
+				real.put(keys[j], t.get(keys[j]));
+			}
+			result.add(real);
+		}
+		return result;
 	}
 	
 	@Override
 	@Query(nativeQuery = true)
 	public List findMemberBoardList(List query, List category, List skills, Long mno, final Pageable pageable) {
-		System.out.println("custom findMemberBoardList");
+		System.out.println("custom findMemberBoardList only like contents");
 		StringBuilder str = new StringBuilder();
 		str.append("select boardno,idx,email,title,content,category,techstack,m.createdate as createdate,likecnt,name,likeno,mboard,mno ");
 		str.append("from memberboard m left join likemember l on boardno = mboard ");
