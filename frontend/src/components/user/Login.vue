@@ -1,42 +1,44 @@
 <template>
-  <v-row justify="center">
-    <v-col cols="10" md="8" lg="6" class="mt-15">
-      <h2>로그인</h2>
-      <v-form class="form" ref="form" v-model="valid" lazy-validation>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <v-text-field v-model="email" :rules="emailRules" label="이메일" required outlined dense></v-text-field>
-        <v-text-field
-          v-model="password"
-          :rules="[rules.required, rules.min]"
-          label="비밀번호"
-          @click:append="show = !show"
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="show ? 'text' : 'password'"
-          outlined
-          dense
-        ></v-text-field>
-        <v-btn class="button" :disabled="!valid" color="teal" @click="login">로그인</v-btn>
-        <v-checkbox v-model="checkbox" color="success" label="로그인 정보 기억"></v-checkbox>
-      </v-form>
-      <div class="login-body text-center">
-        <div class="sns-login">
-          <p>SNS로 간편하게 로그인할 수 있어요!</p>
-          <v-btn color="yellow darken-1" class="sns-btn" dark>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="10" md="8" lg="4">
+        <div class="logo-container">
+          <img class="logo" src="../../assets/images/logo_black_title.png" width="60%" />
+        </div>
+        <v-form class="form" ref="form" v-model="valid" lazy-validation>
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <v-text-field v-model="email" :rules="emailRules" label="이메일" required outlined dense></v-text-field>
+          <v-text-field
+            v-model="password"
+            :rules="[rules.required, rules.min]"
+            label="비밀번호"
+            @click:append="show = !show"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show ? 'text' : 'password'"
+            outlined
+            dense
+          ></v-text-field>
+          <v-btn large class="button" :disabled="!valid" color="#0277BD" @click="login">로그인</v-btn>
+          <v-checkbox v-model="checkbox" color="success" label="로그인 정보 기억"></v-checkbox>
+        </v-form>
+        <div class="login-body text-center">
+          <div class="sns-login">
+            <p>✨ SNS로 간편하게 로그인할 수 있어요!</p>
+
             <a
               href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"
-            >Kakao</a>
-          </v-btn>
-          <v-btn color="green accent-4" class="sns-btn" dark>Naver</v-btn>
-          <v-btn color="light-blue darken-2" class="sns-btn" dark>Google</v-btn>
+            >
+              <img src="../../assets/images/kakao_login.png" alt />
+            </a>
+          </div>
+          <div class="add-option">
+            <router-link to="/signup" class="routers">회원가입</router-link>|
+            <router-link to="/findpw" class="routers">비밀번호 찾기</router-link>
+          </div>
         </div>
-        <div class="add-option">
-          <router-link to="/signup" class="routers">회원가입</router-link>|
-          <router-link to="/findemail" class="routers">이메일 찾기</router-link>|
-          <router-link to="/findpw" class="routers">비밀번호 찾기</router-link>
-        </div>
-      </div>
-    </v-col>
-  </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import axios from "axios";
@@ -98,6 +100,10 @@ export default {
 };
 </script>
 <style scoped>
+.logo-container {
+  text-align: center;
+}
+
 .login-body {
   display: flex;
   flex-direction: column;
@@ -106,20 +112,18 @@ export default {
   /* min-height: 100vh; */
 }
 
-.container {
-  width: 300px;
-}
 h2 {
   text-align: center;
   margin: 0 0 20px;
 }
 
-.form button {
+.form .button {
   cursor: pointer;
   color: #fff;
   display: block;
   font-size: 16px;
   width: 100%;
+  padding: px;
 }
 
 .sns-login {
