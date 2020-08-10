@@ -15,3 +15,6 @@
 ## 8/7 회의록
 
 *링크 : <https://docs.google.com/document/d/1Itd4VxBL3Y8C_1mV8qC6r9tljO40IMUXApKDI89Ju_g/edit?usp=sharing />
+
+## 8/10 회의롱
+*링크 : <https://docs.google.com/document/d/1ybVgoP5f1RL31oAF-zm7F-TjDuvZlFkx5P5ekKk1pDk/edit />
