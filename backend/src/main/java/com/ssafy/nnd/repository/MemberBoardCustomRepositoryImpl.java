@@ -70,7 +70,7 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		int pageNumber = pageable.getPageNumber();
 		int pageSize = pageable.getPageSize();
 		
-		return entityManager.createQuery(str.toString(), MemberBoard.class).setFirstResult((pageNumber) * pageSize).setMaxResults((pageNumber+1) * pageSize).getResultList();
+		return entityManager.createQuery(str.toString(), MemberBoard.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
 	}
 	
 	@Override
@@ -126,7 +126,7 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		int pageNumber = pageable.getPageNumber();
 		int pageSize = pageable.getPageSize();
 		
-		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults((pageNumber+1) * pageSize).getResultList();
+		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
 		String[] keys = {"boardno","idx","email","title","content","category","techstack","createdate","likecnt","name","likeno","mboard","mno"}; 
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		for (int i = 0; i < temp.size(); i++) {
