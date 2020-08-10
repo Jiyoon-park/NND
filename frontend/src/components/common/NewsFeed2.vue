@@ -19,11 +19,15 @@
                     text-color="white"
                     v-for="stack in JSON.parse(stacks)"
                     :key="stack"
-                  >{{ stack }}</v-chip>
+                    >{{ stack }}</v-chip
+                  >
                 </div>
               </div>
             </div>
-            <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
+            <v-img
+              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+              height="194"
+            ></v-img>
             <v-expansion-panel-header>
               {{ teaminfo.title }}
               <template v-slot:actions>
@@ -52,10 +56,15 @@
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
-            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
-            <v-card-title class="header-text text-center justify-center font-italic">
-              ❝ {{ teaminfo.teamName }} 팀의
-              <br />팀원이 되고싶습니다 ❠
+            <v-img
+              class="header"
+              height="200px"
+              src="../../assets/images/team2.jpg"
+            ></v-img>
+            <v-card-title
+              class="header-text text-center justify-center font-italic"
+            >
+              ❝ {{ teaminfo.teamName }} 팀의 <br />팀원이 되고싶습니다 ❠
             </v-card-title>
 
             <v-card-text class="mt-5 pb-0">
@@ -154,7 +163,6 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
-      let token = window.$cookies.get("nnd");
       axios
         .put("http://localhost:8080/letter/create/" + this.lettertype, {
           headers: {
