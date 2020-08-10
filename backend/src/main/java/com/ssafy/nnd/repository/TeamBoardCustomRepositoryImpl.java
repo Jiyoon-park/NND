@@ -31,8 +31,10 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		////////////// from //////////////
 		str.append("from teamboard t left join liketeam l on teamboardno = tboard ");
 		////////////// from end //////////////
+
+		//////////////where //////////////
+		str.append("where ");
 		
-		////////////// where //////////////
 		// query
 		// title과 content를 대상으로 검색
 		if (query.size() > 0) {

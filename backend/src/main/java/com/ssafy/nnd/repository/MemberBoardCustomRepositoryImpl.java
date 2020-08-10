@@ -26,6 +26,9 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		str.append("select boardno,idx,email,title,content,category,techstack,m.createdate as createdate,likecnt,name,likeno,mboard,mno ");
 		str.append("from memberboard m left join likemember l on boardno = mboard ");
 		
+		//////////////where //////////////
+		str.append("where ");
+		
 		// query
 		// title과 content를 대상으로 검색
 		if (query.size() > 0) {
