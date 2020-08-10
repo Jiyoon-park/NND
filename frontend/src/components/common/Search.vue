@@ -92,6 +92,7 @@
                   multiple
                   dense
                   chips
+                  color="indigo darken-2"
                 ></v-combobox>
               </div>
             </v-list-item-content>
