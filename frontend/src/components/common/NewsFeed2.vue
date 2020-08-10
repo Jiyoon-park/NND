@@ -104,13 +104,14 @@ export default {
       lettertype: "tboard",
       letterNo: "",
       createDate: "",
+      teamboardNo: this.teaminfo.teamboardno,
     };
   },
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
   created() {
-    if (this.teaminfo.mno != null) {
+    if (this.teaminfo.mno == this.$store.state.myToken.idx) {
       console.log("즐겨찾기 상태");
       this.favorite = true;
     } else {
@@ -159,16 +160,16 @@ export default {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
-          params: {
-            sendIdx: this.sendIdx,
-            receiveIdx: this.teaminfo.idx,
-            content: this.content,
-            letterNo: this.letterNo,
-            createDate: this.createDate,
-          },
+          sendIdx: this.sendIdx,
+          receiveIdx: this.teaminfo.idx,
+          content: this.content,
+          letterNo: this.letterNo,
+          createDate: this.createDate,
+          lettertype: this.lettertype,
+          teamboardNo: this.teamboardNo,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          console.log(this.sendIdx);
           alert("등록성공");
         })
         .catch((error) => {
@@ -181,7 +182,7 @@ export default {
       this.dialog = !this.dialog;
       let token = window.$cookies.get("nnd");
       if (token) {
-        console.log(token.object.idx);
+        console.log("프로필주소 : " + token.object.profile);
         this.username = token.object.name;
         this.profileURL = token.object.profile;
         this.sendIdx = token.object.idx;
