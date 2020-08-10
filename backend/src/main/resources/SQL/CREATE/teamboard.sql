@@ -9,6 +9,7 @@ CREATE TABLE `teamboard` (
   `title` varchar(100) NOT NULL,
   `content` varchar(500) NOT NULL,
   `techstack` varchar(300) DEFAULT NULL,
+  `category` varchar(300) NOT NULL,
   `contentstack` varchar(300) DEFAULT NULL,
   `kakaolink` varchar(128) DEFAULT NULL,
   `likecnt` int (10) DEFAULT 0,

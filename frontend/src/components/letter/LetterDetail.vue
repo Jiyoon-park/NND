@@ -11,12 +11,15 @@
       <div class="d-flex align-center">
         <div>
           <v-avatar color="grey" size="48">
-            <span v-if="!letterinfo.profile" class="white--text headline"></span>
+            <span
+              v-if="!letterinfo.profile"
+              class="white--text headline"
+            ></span>
             <img v-else :src="letterinfo.profile" />
           </v-avatar>
         </div>
         <div class="ml-3">
-          <p class="mb-1" v-if="item.tab =='받은 편지함'">보낸 사람</p>
+          <p class="mb-1" v-if="item.tab == '받은 편지함'">보낸 사람</p>
           <p class="mb-1" v-else>받는 사람</p>
           <p class="mb-1">보낸 날짜</p>
         </div>
@@ -31,7 +34,7 @@
       </div>
     </v-card-text>
     <v-divider></v-divider>
-    <v-card-actions v-if="item.tab =='받은 편지함'">
+    <v-card-actions v-if="item.tab == '받은 편지함'">
       <v-spacer></v-spacer>
       <v-btn color="green darken-1" text @click="changeDialog">닫기</v-btn>
       <!-- 나를 영입하는 편지인지/다른 사람이 우리 팀에 지원하는 편지인지 분기 해서 둘 중 하나만 보여줘야 함 -->
@@ -39,12 +42,14 @@
         color="green darken-1"
         text
         @click="teamAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
-      >지원 수락하기</v-btn>
+        >지원 수락하기</v-btn
+      >
       <v-btn
         color="green darken-1"
         text
         @click="memberAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
-      >영입 수락하기</v-btn>
+        >영입 수락하기</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -73,29 +78,31 @@ export default {
     };
   },
   methods: {
-    teamAccept(sendidx, receiveidx) {
-      let token = window.$cookies.get('nnd');
+    teamAccept(sendidx, teamboardno) {
+      let token = window.$cookies.get("nnd");
       axios
         .post(
-          `http://localhost:8080/letter/teamaccept/${sendidx}/${receiveidx}`,
-           {
-            headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-         }}
+          `http://localhost:8080/letter/teamaccept/${sendidx}/${teamboardno}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       this.changeDialog();
     },
-    memberAccept(sendidx, receiveidx) {
-            let token = window.$cookies.get('nnd');
+    memberAccept(teamboardno, receiveidx) {
+      let token = window.$cookies.get("nnd");
       axios
         .post(
-          `http://localhost:8080/letter/memberaccept/${sendidx}/${receiveidx}`,
+          `http://localhost:8080/letter/memberaccept/${teamboardno}/${receiveidx}`,
           {
-            headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-         }}
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
@@ -104,7 +111,7 @@ export default {
     changeDialog() {
       this.$emit("changeDialog");
     },
-    dateFormatted: function (dt) {
+    dateFormatted: function(dt) {
       console.log("dt : " + dt);
       var d = new Date(dt);
 
@@ -131,5 +138,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
