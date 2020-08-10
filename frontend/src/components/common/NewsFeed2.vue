@@ -23,7 +23,8 @@
                 </div>
               </div>
             </div>
-            <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
+            <p>{{ teaminfo.category }}</p>
+            <!-- <v-img :src="`../../assets/images/${teaminfo.category}`" height="194"></v-img> -->
             <v-expansion-panel-header>
               {{ teaminfo.title }}
               <template v-slot:actions>
