@@ -18,18 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.MemberRating;
 import com.ssafy.nnd.dto.TeamBoard;
-import com.ssafy.nnd.dto.TeamNotice;
+import com.ssafy.nnd.dto.TeamPost;
 import com.ssafy.nnd.repository.MemberRatingRepository;
 import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.repository.TeamBoardRepository;
-import com.ssafy.nnd.repository.TeamNoticeRepository;
+import com.ssafy.nnd.repository.TeamPostRepository;
 
 @CrossOrigin
 @RestController
 public class TeamMenuController {
 
 	@Autowired
-	TeamNoticeRepository teamNoticeRepository;
+	TeamPostRepository teampostRepository;
 
 	@Autowired
 	MemberRatingRepository memberRatingRepository;
@@ -43,12 +43,12 @@ public class TeamMenuController {
 
 	// 팀 공지사항 불러오기
 	@GetMapping("teammenu/notice/{teamboardno}")   //teamboardno
-	public List<TeamNotice> getAllTeamNotice(@PathVariable Long teamboardno, Pageable pageable) {
+	public List<TeamPost> getAllTeamNotice(@PathVariable Long teamboardno, Pageable pageable) {
 		if (teamboardno == 0) {
 			return null; // 정해진 팀이 없습니다.
 		} else {
 
-			return teamNoticeRepository.findByTeamBoardNoOrderByTeamNoticeNoDesc(teamboardno, pageable);
+			return teampostRepository.findByTeamboardNoOrderByTeamPostNoDesc(teamboardno, pageable);
 		}
 	}
 
@@ -66,30 +66,30 @@ public class TeamMenuController {
 
 	// 팀 공지사항 글쓰기
 	@PutMapping("teammenu/notice/save/{teamboardno}")  //teamboardno
-	public String saveTeamNotice(@PathVariable Long teamboardno, TeamNotice teamnotice) {
+	public String saveTeamNotice(@PathVariable Long teamboardno, TeamPost teamnotice) {
 
-		teamnotice.setTeamBoardNo(teamboardno);
-		teamNoticeRepository.save(teamnotice);
+		teamnotice.setTeamboardNo(teamboardno);
+		teampostRepository.save(teamnotice);
 		return "save success";
 	}
 	
 	// 팀 공지사항 수정
 	@PostMapping("teammenu/notice/update")
-	public String updateTeamNotice(@RequestBody TeamNotice newTeamnotice) {
+	public String updateTeamNotice(@RequestBody TeamPost newTeamnotice) {
 		
-		Long teamnoticeno = newTeamnotice.getTeamNoticeNo();
-		Optional<TeamNotice> teamnotice = teamNoticeRepository.findById(teamnoticeno);
+		Long teampostno = newTeamnotice.getTeamPostNo();
+		Optional<TeamPost> teamnotice = teampostRepository.findById(teampostno);
 		teamnotice.get().setTitle(newTeamnotice.getTitle());
 		teamnotice.get().setContent(newTeamnotice.getContent());
 		
-		teamNoticeRepository.save(teamnotice.get());
+		teampostRepository.save(teamnotice.get());
 		return "update success";
 	}
 
 	// 팀 공지사항 삭제
 	@DeleteMapping("teammenu/notice/delete/{teamnoticeno}") 
 	public String deleteTeamNotice(@PathVariable Long teamnoticeno) {
-		teamNoticeRepository.deleteById(teamnoticeno);
+		teampostRepository.deleteById(teamnoticeno);
 		return "delete success";
 	}
 
