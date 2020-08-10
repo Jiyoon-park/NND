@@ -111,7 +111,6 @@ public class TeamBoardController {
     	
     	Optional<TeamBoard> latestTeamboard = teamBoardRepository.findLatestTeamboardNo();
     	member.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);
-    	memberRepository.save(member.get());
     	String membersEmail = teamBoard.getMemberEmails(); 
     	if(membersEmail.equals("[]")) {
     		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");   
@@ -130,6 +129,7 @@ public class TeamBoardController {
     	}
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
+    	memberRepository.save(member.get());
     	
     	return "Success";
     	}
