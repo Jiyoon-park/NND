@@ -1,5 +1,6 @@
 package com.ssafy.nnd.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
   	@Query(value= " select count(*) from member where teamboardno = :tboardno",nativeQuery = true)
   	Long countTeamMemberByTeamboardNo(@Param("tboardno") Long tboardno);
   
+  	List<Member> findByTeamboardno(Long teamboardno);
 }
 
