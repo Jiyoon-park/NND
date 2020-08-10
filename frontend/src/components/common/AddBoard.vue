@@ -115,7 +115,7 @@
               </v-col>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn text>취소</v-btn>
+                <v-btn text @click="$router.push('/')">취소</v-btn>
                 <v-btn
                   text
                   color="primary"
@@ -185,7 +185,7 @@ export default {
   methods: {
     submit() {
       var obj, url;
-      let token = window.$cookies.get('nnd');
+      let token = window.$cookies.get("nnd");
       if (this.teamcheck == "팀") {
         obj = {
           email: this.email,
@@ -198,9 +198,10 @@ export default {
           techStack: JSON.stringify(this.techStack),
           category: this.category,
           name: this.name,
-        }
+        };
         url = "http://localhost:8080/teamboard/save/" + this.idx;
-      } else {  // 팀원의 경우
+      } else {
+        // 팀원의 경우
         obj = {
           email: this.email,
           title: this.title,
@@ -208,19 +209,20 @@ export default {
           category: this.category,
           techStack: JSON.stringify(this.memberstack),
           name: this.name,
-        }
+        };
         url = "http://localhost:8080/memberboard/save/" + this.idx;
       }
       axios
-        .put(url,
-        {
-            obj
-        },
-        {
-          headers: { 
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        .put(
+          url,
+          {
+            obj,
           },
-        }
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((response) => {
           console.log(response);
