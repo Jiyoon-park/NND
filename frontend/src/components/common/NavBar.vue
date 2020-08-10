@@ -30,7 +30,7 @@
           </v-list-item>
 
           <v-list-item link>
-            <v-list-item-content>
+            <v-list-item-content @click="$router.push('/gongmo').catch(() => {})">
               <v-list-item-title>외부 공모전</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
