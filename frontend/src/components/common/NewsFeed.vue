@@ -4,7 +4,15 @@
       <v-card outlined class="elevation-3">
         <v-list-item class="mt-3">
           <v-avatar color="indigo" class="mr-5">
-            <v-icon @click="$router.push({name : 'userProfile', params: {idx :teaminfo.idx}}).catch(() => {})" dark>mdi-account-circle</v-icon>
+            <v-icon
+              @click="
+                $router
+                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
+                  .catch(() => {})
+              "
+              dark
+              >mdi-account-circle</v-icon
+            >
           </v-avatar>
           <v-col cols="4" md="4">{{ teaminfo.name }}</v-col>
           <v-col cols="6" md="6">
@@ -26,9 +34,9 @@
         <v-expansion-panels class="elevation-0 mt-5">
           <v-expansion-panel>
             <v-expansion-panel-header></v-expansion-panel-header>
-            <v-expansion-panel-content>
-              {{ teaminfo.content }}
-            </v-expansion-panel-content>
+            <v-expansion-panel-content>{{
+              teaminfo.content
+            }}</v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
@@ -44,52 +52,41 @@
           </v-expansion-panel>
         </v-expansion-panels>
 
-        <v-expand-transition>
-          <div v-show="show">
-            <v-divider />
-            <v-dialog v-model="dialog" max-width="600px">
-              <v-card
-                style="align='center';
-            justify='center';"
+        <v-dialog v-model="dialog" max-width="600px">
+          <v-card>
+            <v-img
+              class="header"
+              height="200px"
+              src="../../assets/images/member2.jpg"
+            ></v-img>
+            <v-card-title class="header-text justify-center font-italic">
+              ❝ {{ teaminfo.teamName }}팀으로
+              <br />
+              {{ teaminfo.name }}님을 영입합니다 ❠
+            </v-card-title>
+
+            <v-card-text class="mt-5 pb-0">
+              <div class="mt-3">
+                <p class="mb-0 pl-1">
+                  {{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉
+                </p>
+                <v-textarea
+                  filled
+                  v-model="content"
+                  name="content"
+                  placeholder="내용을 작성해주세요."
+                ></v-textarea>
+              </div>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >취소</v-btn
               >
-                <v-card-title>
-                  <span class="headline">신청 Form</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" align="center" justify="center">
-                        <v-avatar color="grey" size="90" class="mb-2">
-                          <span v-if="!profileURL" class="white--text headline"
-                            >GD</span
-                          >
-                          <img v-else :src="profileURL" />
-                        </v-avatar>
-                        <p>이름 : {{ teaminfo.name }}</p>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                          v-model="content"
-                          name="content"
-                          label="신청 메세지를 적어주세요."
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false"
-                    >취소</v-btn
-                  >
-                  <v-btn color="blue darken-1" text @click="submit"
-                    >신청하기</v-btn
-                  >
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </v-expand-transition>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="submit">영입하기</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-card>
     </v-flex>
   </v-container>
@@ -121,36 +118,62 @@ export default {
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
-  created() {},
+  created() {
+    console.log(this.teaminfo.likeno);
+    if (this.teaminfo.mno != null) {
+      console.log("즐겨찾기 상태");
+      this.favorite = true;
+    } else {
+      console.log("즐겨찾기 아닌상태");
+      this.favorite = false;
+    }
+  },
   methods: {
     addFavorite() {
-      this.favorite = true;
-      alert("즐겨찾기에 등록되었습니다.");
+      axios
+        .put(
+          "http://localhost:8080/likemember/save/" +
+            this.$store.state.myToken.idx +
+            "/" +
+            this.teaminfo.boardNo
+        )
+        .then(() => {
+          this.favorite = true;
+          alert("즐겨찾기에 등록되었습니다.");
+        });
     },
     delFavorite() {
-      this.favorite = false;
+      axios
+        .delete(
+          "http://localhost:8080/likemember/delete/" + this.teaminfo.likeno
+        )
+        .then(() => {
+          this.favorite = false;
+          alert("즐겨찾기에서 삭제되었습니다.");
+        });
     },
     submit() {
-      let token = window.$cookies.get('nnd');
+      let token = window.$cookies.get("nnd");
       this.dialog = false;
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.letterType + " type");
 
       axios
-        .put("http://localhost:8080/letter/create/" + this.letterType,
-        {
-          sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.idx,
-          content: this.content,
-          letterNo: this.letterNo,
-          createDate: this.createDate,
-        },
-        {
-          headers: { 
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        .put(
+          "http://localhost:8080/letter/create/" + this.letterType,
+          {
+            sendIdx: this.sendIdx,
+            receiveIdx: this.teaminfo.idx,
+            content: this.content,
+            letterNo: this.letterNo,
+            createDate: this.createDate,
           },
-        }
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((response) => {
           console.log(response);
@@ -175,5 +198,3 @@ export default {
   },
 };
 </script>
-
-

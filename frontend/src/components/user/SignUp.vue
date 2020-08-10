@@ -1,76 +1,64 @@
 <template>
-  <v-row justify="center">
-    <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-15">
-      <h2>회원가입</h2>
-      <v-form ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="name"
-          :rules="nameRule"
-          label="이름*"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="이메일*"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="password"
-          :rules="passwordRules"
-          :type="'password'"
-          label="비밀번호*"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="passwordchk"
-          :rules="[passwordchkRules, passwordconfirmRules]"
-          :type="'password'"
-          label="비밀번호 확인"
-          required
-        ></v-text-field>
-
-        <v-checkbox
-          v-model="checkbox"
-          :rules="[(v) => !!v || '약관동의를 해야합니다']"
-          label="약관에 동의하십니까?"
-          required
-        ></v-checkbox>
-
-        <v-btn :disabled="!valid" color="success" class="mr-4" @click="signup"
-          >제출</v-btn
-        >
-        <v-btn color="error" class="mr-4" @click="reset">초기화</v-btn>
-        <v-btn color="yellow" class="mr-4" @click="$router.push('/login')"
-          >로그인화면</v-btn
-        >
-        <v-btn color="blue" class="mr-4" @click="$router.push('/findpw')"
-          >비밀번호찾기</v-btn
-        >
-      </v-form>
-    </v-col>
-  </v-row>
+  <v-container>
+    <div class="d-flex align-center" @click="$router.push('/login')">
+      <v-btn icon>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <p class="mb-0">로그인 화면으로</p>
+    </div>
+    <v-row justify="center">
+      <v-col cols="10" md="8" lg="4">
+        <h2 class="my-5">너내동 회원가입</h2>
+        <v-form class="form" ref="form" v-model="valid" lazy-validation>
+          <v-text-field v-model="name" :rules="nameRule" label="이름" outlined dense required></v-text-field>
+          <v-text-field v-model="email" :rules="emailRules" label="이메일" outlined dense required></v-text-field>
+          <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            @click:append="show1 = !show1"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show1 ? 'text' : 'password'"
+            label="비밀번호"
+            required
+            outlined
+            dense
+          ></v-text-field>
+          <v-text-field
+            v-model="passwordchk"
+            :rules="[passwordchkRules, passwordconfirmRules]"
+            @click:append="show2 = !show2"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show2 ? 'text' : 'password'"
+            label="비밀번호 확인"
+            required
+            outlined
+            dense
+          ></v-text-field>
+          <p class="mb-0">
+            ✋ 잠깐!
+            <br />회원 가입 버튼을 클릭하면, 너내동의
+            <a>회원약관</a>에 동의하며 쿠키 사용을 포함한
+            <a>개인정보처리방침</a>을 읽었음을 인정하게 됩니다.
+          </p>
+          <v-checkbox v-model="checkbox" label="동의합니다." required color="success"></v-checkbox>
+          <v-btn large class="button" :disabled="!valid" color="#0277BD" @click="signup">회원가입</v-btn>
+        </v-form>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
 import axios from "axios";
 import firebase from "firebase";
 
 export default {
   name: "SignUp",
-  components: {
-    NavBar,
-  },
+  components: {},
   data: () => ({
     signupData: {
       name: null,
       email: null,
-      profile: null,
       password: null,
     },
 
@@ -90,6 +78,8 @@ export default {
     passwordchk: "",
     passwordchkRules: [(v) => !!v || "비밀번호 확인은 필수 입력항목입니다."],
     checkbox: false,
+    // show1: false,
+    // show2: false,
   }),
 
   computed: {
@@ -111,14 +101,11 @@ export default {
           .then((response) => {
             console.log(response);
             // alert("회원가입 완료");
-            this.$router.push({
-              name: "Home",
-              params: { id: response.data.object.idx },
-            });
+            this.$router.push("/login");
           })
           .catch((error) => {
             console.log(error.response);
-            // alert("이미 있는 아이디입니다");
+            // alert("이미 존재하는 아이디입니다");
             this.$router.push("/signup");
           });
 
@@ -126,12 +113,12 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(() => {
-            // alert("회원가입 완료");
+            alert("회원가입 완료");
             var user = firebase.auth().currentUser;
             user.updateProfile({
               displayName: this.name,
             });
-            this.$router.push("/");
+            this.$router.push("/login");
           });
         // .catch(function(error) {
         //   var errorCode = error.code;
@@ -146,3 +133,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form .button {
+  cursor: pointer;
+  color: #fff;
+  display: block;
+  font-size: 16px;
+  width: 100%;
+  padding: px;
+}
+</style>

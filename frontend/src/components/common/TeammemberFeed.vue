@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="mt-15">
     <div v-if="this.type == 'team'">
       <news-feed2
         v-for="(board, i) in list"
@@ -35,7 +35,7 @@ export default {
     return {
       list: [],
       page: 0,
-      size: 5,
+      size: 10,
       option: {},
       type: "team",
       query: [],
@@ -58,7 +58,7 @@ export default {
 
   methods: {
     infiniteHandler($state) {
-      let token = window.$cookies.get('nnd')
+      let token = window.$cookies.get("nnd");
       axios
         .put(
           "http://localhost:8080/" + this.type + "board/search",
@@ -68,8 +68,8 @@ export default {
             skills: this.skills,
           },
           {
-            headers: { 
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
             params: {
               page: this.page,
@@ -81,7 +81,6 @@ export default {
           setTimeout(() => {
             if (data.length) {
               console.log("기존 스크롤 push " + this.page);
-
               this.page += 1;
               this.list.push(...data);
               $state.loaded();
