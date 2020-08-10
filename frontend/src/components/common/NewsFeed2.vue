@@ -5,27 +5,29 @@
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
-              <v-avatar color="white" size="60" class="user-img mb-2">
+              <v-avatar color="white" size="50" class="user-img mb-2">
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
                 {{ teaminfo.teamName }}
-                <v-chip
-                  small
-                  class="mr-2 mt-1"
-                  color="indigo"
-                  text-color="white"
-                  v-for="stack in JSON.parse(stacks)"
-                  :key="stack"
-                >{{ stack }}</v-chip>
+                <div class="d-flex">
+                  <v-chip
+                    small
+                    class="mr-2 mt-1"
+                    color="indigo"
+                    text-color="white"
+                    v-for="stack in JSON.parse(stacks)"
+                    :key="stack"
+                  >{{ stack }}</v-chip>
+                </div>
               </div>
             </div>
-
+            <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
             <v-expansion-panel-header>
               {{ teaminfo.title }}
               <template v-slot:actions>
-                <v-icon>👇</v-icon>
+                <v-icon color="teal">mdi-check</v-icon>
               </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
@@ -49,9 +51,9 @@
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
             <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
-            <v-card-title class="header-text justify-center font-italic">
+            <v-card-title class="header-text text-center justify-center font-italic">
               ❝ {{ teaminfo.teamName }} 팀의
-              <br />팀원을 지원합니다 ❠
+              <br />팀원이 되고싶습니다 ❠
             </v-card-title>
 
             <v-card-text class="mt-5 pb-0">
@@ -112,11 +114,10 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.receiveIdx + " receive");
       console.log(this.lettertype + " type");
-      let token = window.$cookies.get('nnd');
+      let token = window.$cookies.get("nnd");
       axios
-        .put("http://localhost:8080/letter/create/" + this.lettertype, 
-        {
-          headers: { 
+        .put("http://localhost:8080/letter/create/" + this.lettertype, {
+          headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
           params: {
@@ -125,7 +126,7 @@ export default {
             content: this.content,
             letterNo: this.letterNo,
             createDate: this.createDate,
-        }
+          },
         })
         .then((response) => {
           console.log(response);
@@ -159,8 +160,9 @@ export default {
 
 .header-text {
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 60px;
+  left: 0;
+  right: 0;
   color: #eeeeee;
 }
 </style>
