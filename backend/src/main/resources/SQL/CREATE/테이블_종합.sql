@@ -8,7 +8,6 @@ CREATE TABLE `member` (
   `company` varchar(10) default NULL,
   `gitaddr` varchar(128) Default null,
   `memberstack` varchar(500) default null,
- `teamboardno` int(10) default 0,
   PRIMARY KEY (`idx`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -24,12 +23,35 @@ CREATE TABLE `teamboard` (
   `title` varchar(100) NOT NULL,
   `content` varchar(500) NOT NULL,
   `techstack` varchar(300) DEFAULT NULL,
+  `category` varchar(300) NOT NULL,
   `contentstack` varchar(300) DEFAULT NULL,
   `kakaolink` varchar(128) DEFAULT NULL,
   `likecnt` int (10) DEFAULT 0,
   `createdate` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`teamboardno`),
   FOREIGN KEY(`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*
+CREATE TABLE `teaminfo` (
+  `teamno` int(10) NOT NULL AUTO_INCREMENT,
+  `leaderidx` int Not NULL,  
+  `teamboardno` int not null,
+  `createdate` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`teamno`),
+  FOREIGN KEY(`leaderidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+*/
+ /* teamname, groupsize, deadline, category 가져오기 join 해서*/
+
+CREATE TABLE `teamregist` (
+  `teamregistno` int(10) NOT NULL AUTO_INCREMENT,
+  `teamboardno` int Not NULL,  
+  `memberidx` int not null,
+  `memberemail` varchar(100) not null,
+  `createdate` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`teamregistno`),
+  FOREIGN KEY(`teamboardno`) REFERENCES teamboard(`teamboardno`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY(`memberidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
  CREATE TABLE `memberboard` (  
@@ -89,13 +111,14 @@ CREATE TABLE likemember(
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
- CREATE TABLE `teamnotice` (  
-  `teamnoticeno` int(10) NOT NULL AUTO_INCREMENT,
+ CREATE TABLE `teampost` (  
+  `teampostno` int(10) NOT NULL AUTO_INCREMENT,
   `teamboardno` int NOT NULL, 
   `title` varchar(128) NOT NULL,
   `content` varchar(500) NOT NULL,
   `createdate` varchar(128) NOT NULL,
-  PRIMARY KEY (`teamnoticeno`),
+  `notice` tinyint(1) not null,
+  PRIMARY KEY (`teampostno`),
   FOREIGN KEY(`teamboardno`) REFERENCES teamboard(`teamboardno`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
