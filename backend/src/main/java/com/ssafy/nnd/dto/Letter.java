@@ -49,28 +49,31 @@ public class Letter {
 	@Column(name = "lettertype")
 	private String letterType;
 	
+	@Column(name = "teamboardno")
+	private Long teamboardNo;
+	
 	public Letter() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public String getLetterType() {
-		return letterType;
-	}
 
-	public void setLetterType(String letterType) {
-		this.letterType = letterType;
-	}
-
-	public void setLetterNo(Long letterNo) {
+	public Letter(Long letterNo, Long sendIdx, Long receiveIdx, String content, LocalDateTime createDate, int read,
+			String letterType, Long teamboardNo) {
+		super();
 		this.letterNo = letterNo;
+		this.sendIdx = sendIdx;
+		this.receiveIdx = receiveIdx;
+		this.content = content;
+		this.createDate = createDate;
+		this.read = read;
+		this.letterType = letterType;
+		this.teamboardNo = teamboardNo;
 	}
 
-
-	public long getLetterNo() {
+	public Long getLetterNo() {
 		return letterNo;
 	}
 
-	public void setLetterNo(long letterNo) {
+	public void setLetterNo(Long letterNo) {
 		this.letterNo = letterNo;
 	}
 
@@ -105,7 +108,7 @@ public class Letter {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
-	
+
 	public int getRead() {
 		return read;
 	}
@@ -114,12 +117,31 @@ public class Letter {
 		this.read = read;
 	}
 
+	public String getLetterType() {
+		return letterType;
+	}
+
+	public void setLetterType(String letterType) {
+		this.letterType = letterType;
+	}
+
+	public Long getTeamboardNo() {
+		return teamboardNo;
+	}
+
+	public void setTeamboardNo(Long teamboardNo) {
+		this.teamboardNo = teamboardNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Letter [letterNo=" + letterNo + ", sendIdx=" + sendIdx + ", receiveIdx=" + receiveIdx + ", content="
-				+ content + ", createDate=" + createDate + ", read=" + read + ", letterType=" + letterType + "]";
+				+ content + ", createDate=" + createDate + ", read=" + read + ", letterType=" + letterType
+				+ ", teamboardNo=" + teamboardNo + "]";
 	}
-
+	
+	
+	
 	
 	
 }

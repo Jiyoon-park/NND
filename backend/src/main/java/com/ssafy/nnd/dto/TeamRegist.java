@@ -15,16 +15,16 @@ public class TeamRegist {
 	public Long teamRegistNo; // 팀 공지사항 번호
 
 	@Column (name = "teamboardno")
-	private  Long teamboardNo;  // 외래키  팀 번호
+	private  Long teamboardNo;  // 팀 고유 번호
 	
 	@Column (name = "memberidx")
-	private Long memberIdx; // 글 제목
+	private Long memberIdx; // 멤버 idx
 	
 	@Column (name="memberemail")
-	private String memberEmail;   //내용
+	private String memberEmail;   //멤버 email
 	
 	@Column(name = "createdate", insertable = false, updatable = false)
-	private LocalDateTime createDate;  //작성 시간
+	private LocalDateTime createDate;  //가입 시간
 
 	public Long getTeamRegistNo() {
 		return teamRegistNo;

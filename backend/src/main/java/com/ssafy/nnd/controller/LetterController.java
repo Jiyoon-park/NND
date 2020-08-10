@@ -42,6 +42,22 @@ public class LetterController {
 	@Autowired
 	TeamRegistRepository teamregistRepository;
 
+	
+	@GetMapping("/letter/member/teamlist/{memberidx}") //현재 꼬시기 버트을 누르는 member의 idx
+	public @ResponseBody List<Map<String,Object>> getAllTeamList(@PathVariable Long memberidx) {
+		List<Object> teamList = teamregistRepository.findTeamByIdx(memberidx);
+		
+		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
+
+		for (int i = 0; i < teamList.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] temp = (Object[]) teamList.get(i);
+			map.put("teamboardno", temp[0]);
+			map.put("teamname", temp[1]);
+			datalist.add(map);
+		}
+		return datalist;
+	}
 	// R
 	// 모든 메시지
 	@GetMapping("/letter/list/all")

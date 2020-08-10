@@ -31,17 +31,6 @@ CREATE TABLE `teamboard` (
   PRIMARY KEY (`teamboardno`),
   FOREIGN KEY(`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*
-CREATE TABLE `teaminfo` (
-  `teamno` int(10) NOT NULL AUTO_INCREMENT,
-  `leaderidx` int Not NULL,  
-  `teamboardno` int not null,
-  `createdate` datetime DEFAULT current_timestamp(),
-  PRIMARY KEY (`teamno`),
-  FOREIGN KEY(`leaderidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-*/
- /* teamname, groupsize, deadline, category 가져오기 join 해서*/
 
 CREATE TABLE `teamregist` (
   `teamregistno` int(10) NOT NULL AUTO_INCREMENT,
@@ -74,6 +63,9 @@ CREATE TABLE `letter` (
   `receiveidx` int NOT NULL,
   `content` varchar(500) DEFAULT NULL,
   `createdate` datetime DEFAULT current_timestamp(),
+  `read` tinyint(1) default 0,
+  `lettertype` varchar(50) not null,
+  `teamboardno` int not null,
   PRIMARY KEY (`letterno`),
   FOREIGN KEY (`sendidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`receiveidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
