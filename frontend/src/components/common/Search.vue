@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="60%" :fullscreen="$vuetify.breakpoint.mobile" hide-overlay>
+  <v-dialog v-model="dialog" width="50%" :fullscreen="$vuetify.breakpoint.mobile" hide-overlay>
     <template v-slot:activator="{ on, attrs }">
       <i
         class="fas fa-search fa-lg"
@@ -152,7 +152,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .subheader {
   padding: 1px 0;
   background-color: #eeeeee;

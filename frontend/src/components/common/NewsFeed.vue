@@ -67,9 +67,12 @@
 
             <v-card-text class="mt-5 pb-0">
               <div class="mt-3">
-                <p class="mb-0 pl-1">
-                  {{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉
-                </p>
+                <v-row>
+                  <p class="mb-0 pl-1">
+                    {{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉
+                  </p>
+                  <select name="teamno" id="teamno"> </select>
+                </v-row>
                 <v-textarea
                   filled
                   v-model="content"
@@ -103,7 +106,7 @@ export default {
       show: false,
       favorite: false,
       dialog: false,
-      stacks: this.teaminfo.techStack,
+      stacks: this.teaminfo.techstack,
       username: "",
       profileURL: "",
       ///쪽찌보낼내용
@@ -113,13 +116,13 @@ export default {
       letterType: "mboard",
       letterNo: "",
       createDate: "",
+      teamno: ["a", "b", "c", "d"],
     };
   },
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
   created() {
-    console.log(this.teaminfo.likeno);
     if (this.teaminfo.mno != null) {
       console.log("즐겨찾기 상태");
       this.favorite = true;
@@ -135,7 +138,7 @@ export default {
           "http://localhost:8080/likemember/save/" +
             this.$store.state.myToken.idx +
             "/" +
-            this.teaminfo.boardNo
+            this.teaminfo.boardno
         )
         .then(() => {
           this.favorite = true;
@@ -161,7 +164,7 @@ export default {
 
       axios
         .put(
-          "http://localhost:8080/letter/create/" + this.letterType,
+          "http://localhost:8080/letter/create/" + this.lettertype,
           {
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,

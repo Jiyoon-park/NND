@@ -22,12 +22,15 @@
           >월</v-btn>
         </v-toolbar>
       </v-sheet>
-      <v-sheet height="600">
+      <v-sheet height="1200">
         <v-calendar
           ref="calendar"
           v-model="focus"
+          :now="today"
+          :value="today"
           color="primary"
           :events="events"
+          :event-color="getEventColor"
           :type="type"
           @click:event="showEvent"
           @click:more="viewDay"
@@ -76,37 +79,44 @@ export default {
     NavBar,
   },
   created() {
-    let token = window.$cookies.get("kakao"); //nnd가 key인 쿠키 가져옴
-    console.log(token);
-    if (token) {
-      // kakao 토큰이
-      axios
-        .get("http://localhost:8080/userinfo", {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
-        .then(
-          (response) => {
-            console.log(response);
-            window.$cookies.remove("kakao"); //kakao 쿠키 없애고 새로생성
-            window.$cookies.set("nnd", response.data, "2d"); //로그인시 쿠키 저장
-            //console.log(response.data.object.idx)
-            location.reload();
-          },
-          () => {
-            console.log("failed");
+    let token = window.$cookies.get("nnd");
+    axios
+      .get(`http://localhost:8080/contest`, 
+        {
+          headers: { 
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           }
-        );
-    }
+        }
+      )
+      .then(({ data }) => {
+        this.boards = data;
+        console.log(this.boards);
+        for (let index = 0; index < this.boards.length; index++) {
+          const allDay = this.rnd(0, 3) === 0
+          this.events.push({
+          name: this.boards[index].title,
+          start: this.boards[index].start,
+          end: this.boards[index].end,
+          color: this.colors[this.rnd(0, this.colors.length - 1)],
+          timed: !allDay,
+        })
+        }
+        console.log(this.events);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   data: () => ({
-    focus: "",
+    boards : null,
+    events: [],
+    today: "2020-08-11", //new Date() 타입수정
     type: "month",
+    colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+    focus: "",
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
-    events: [],
   }),
   mounted() {
     this.$refs.calendar.checkChange();
@@ -124,6 +134,12 @@ export default {
     },
     next() {
       this.$refs.calendar.next();
+    },
+    rnd (a, b) {
+      return Math.floor((b - a + 1) * Math.random()) + a
+    },
+    getEventColor (event) {
+      return event.color
     },
     showEvent({ nativeEvent, event }) {
       const open = () => {
@@ -144,9 +160,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-v-calender-daily {
-  interval-minutes: 1;
-}
-</style>
