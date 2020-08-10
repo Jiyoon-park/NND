@@ -6,6 +6,7 @@ CREATE TABLE `letter` (
   `createdate` datetime DEFAULT current_timestamp(),
   `read` tinyint(1) default 0,
   `lettertype` varchar(50) not null,
+  `teamboardno` int not null,
   PRIMARY KEY (`letterno`),
   FOREIGN KEY (`sendidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`receiveidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
