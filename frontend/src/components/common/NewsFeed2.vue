@@ -1,45 +1,38 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card outlined class="elevation-3">
-        <v-list-item class="mt-3">
-          <v-avatar color="white" size="60" class="user-img mb-2">
-            <img v-if="!profileURL" src="https://picsum.photos/200" />
-            <img v-else :src="profileURL" />
-          </v-avatar>
-          <!-- <span class="grey--text">
-              {{ teaminfo.teamName }}
-              <div class="text-right">
+      <v-card outlined>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <div class="d-flex mx-3 my-3 align-center">
+              <v-avatar color="white" size="60" class="user-img mb-2">
+                <img v-if="!profileURL" src="https://picsum.photos/200" />
+                <img v-else :src="profileURL" />
+              </v-avatar>
+              <div class="d-flex flex-column ml-3">
+                {{ teaminfo.teamName }}
                 <v-chip
-                  class="ma-2"
+                  small
+                  class="mr-2 mt-1"
                   color="indigo"
                   text-color="white"
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
                 >{{ stack }}</v-chip>
               </div>
-          </span>-->
-          <v-col cols="4" md="4">{{ teaminfo.teamName }}</v-col>
-          <v-col cols="6" md="6">
-            <div class="text-right">
-              <v-chip
-                class="ma-2"
-                color="indigo"
-                text-color="white"
-                v-for="stack in JSON.parse(stacks)"
-                :key="stack"
-              >{{ stack }}</v-chip>
             </div>
-          </v-col>
-        </v-list-item>
-        <v-card-title>
-          <span>{{ teaminfo.title }}</span>
-        </v-card-title>
-        <v-expansion-panels class="elevation-0 mt-5">
-          <v-expansion-panel>
-            <v-expansion-panel-header></v-expansion-panel-header>
-            <v-expansion-panel-content>{{ teaminfo.content }}</v-expansion-panel-content>
-            <v-expansion-panel-content>{{ teaminfo.kakaoLink }}</v-expansion-panel-content>
+
+            <v-expansion-panel-header>
+              {{ teaminfo.title }}
+              <template v-slot:actions>
+                <v-icon>👇</v-icon>
+              </template>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              {{ teaminfo.content }}
+              <br />
+              {{ teaminfo.kakaoLink }}
+            </v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
@@ -53,41 +46,27 @@
           </v-expansion-panel>
         </v-expansion-panels>
 
-        <v-expand-transition>
-          <div v-show="show">
-            <v-divider />
-            <v-dialog v-model="dialog" max-width="600px">
-              <v-card style="align='center';
-            justify='center';">
-                <v-card-title>
-                  <span class="headline">신청 Form</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" align="center" justify="center">
-                        <v-avatar color="grey" size="90" class="mb-2">
-                          <span v-if="!profileURL" class="white--text headline">GD</span>
-                          <img v-else :src="profileURL" />
-                        </v-avatar>
-                        <h3>팀 장 : {{ teaminfo.name }}</h3>
-                        <p>팀 이름 : {{ teaminfo.teamName }}</p>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea v-model="content" name="content" label="신청 메세지를 적어주세요."></v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
-                  <v-btn color="blue darken-1" text @click="submit">신청하기</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </v-expand-transition>
+        <v-dialog v-model="dialog" max-width="600px">
+          <v-card>
+            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
+            <v-card-title class="header-text justify-center font-italic">
+              ❝ {{ teaminfo.teamName }} 팀의
+              <br />팀원을 지원합니다 ❠
+            </v-card-title>
+
+            <v-card-text class="mt-5 pb-0">
+              <div class="mt-3">
+                <p class="mb-0 pl-1">팀장에게 보내는 어필 한마디 🙈🙉</p>
+                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+              </div>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="submit">지원하기</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-card>
     </v-flex>
   </v-container>
@@ -172,4 +151,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.header {
+  filter: brightness(60%);
+  position: relative;
+}
+
+.header-text {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  color: #eeeeee;
+}
+</style>

@@ -2,8 +2,8 @@
   <div>
     <NavBar />
     <div class="mt-13">
-      <v-tabs fixed-tabs v-model="tab" color="purple">
-        <v-tab v-for="item in items" :key="item.tab">{{ item.tab }}</v-tab>
+      <v-tabs fixed-tabs v-model="tab" color="indigo lighten-1">
+        <v-tab v-for="item in items" :key="item.tab" class="font-weight-bold">{{ item.tab }}</v-tab>
       </v-tabs>
       <v-tabs-slider color="yellow"></v-tabs-slider>
       <v-tabs-items v-model="tab">
