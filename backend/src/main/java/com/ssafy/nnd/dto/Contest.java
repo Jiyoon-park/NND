@@ -16,7 +16,8 @@ public class Contest implements Serializable {
 
 	private String link; // 홈페이지
 
-	private String term;
+	private String start;
+	private String end;
 
 	private String dday;
 
@@ -36,14 +37,13 @@ public class Contest implements Serializable {
 
 
 
-	
-
-	public Contest(String title, String link, String term, String dday, String type, String poster, String host,
-			String subject, String support, String apply, String qua, String price, String field) {
+	public Contest(String title, String link, String start, String end, String dday, String type, String poster,
+			String host, String subject, String support, String apply, String qua, String price, String field) {
 		super();
 		this.title = title;
 		this.link = link;
-		this.term = term;
+		this.start = start;
+		this.end = end;
 		this.dday = dday;
 		this.type = type;
 		this.poster = poster;
@@ -92,14 +92,23 @@ public class Contest implements Serializable {
 		this.poster = poster;
 	}
 
-	public String getTerm() {
-		return term;
+
+	public String getStart() {
+		return start;
 	}
 
-	public void setTerm(String term) {
-		this.term = term;
+	public void setStart(String start) {
+		this.start = start;
 	}
-	
+
+	public String getEnd() {
+		return end;
+	}
+
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
 	public String getHost() {
 		return host;
 	}

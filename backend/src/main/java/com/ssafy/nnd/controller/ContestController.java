@@ -57,7 +57,8 @@ public class ContestController {
 	public  List<Contest> getAllcontest() throws Exception {
 		List<Contest> list = new LinkedList<Contest>();
 		boolean flag = false; //마감flag
-		for (int i = 1; i <= 3; i++) {
+		for (int i = 1; i <= 1; i++) {  //느려서 바꾼거 실제로 i<=3
+			System.out.println(i+"번째 크롤링중......");
 			String url = "https://www.thinkcontest.com/Contest/CateField.html?page="+i+"&c=12";
 			Document doc = Jsoup.connect(url).get();
 			doc.select("div.all-contest");
@@ -90,6 +91,12 @@ public class ContestController {
 						contest.setLink(detail.select("td a").attr("href"));
 					else if(key.equals("응모분야"))
 						contest.setField(detail.select("td").text());
+					else if(key.equals("접수기간"))
+					{
+						StringTokenizer sy = new StringTokenizer(detail.select("td").text(),"~");
+						contest.setStart(sy.nextToken().trim());
+						contest.setEnd(sy.nextToken().trim());
+					}
 				}
 
 
@@ -97,7 +104,6 @@ public class ContestController {
 				contest.setHost(tdContents.get(1).text());
 				contest.setType(tdContents.get(2).select("span.labeling").text());
 				contest.setDday(tdContents.get(2).select("p").text());
-				contest.setTerm(tdContents.get(3).text());
 
 				//			System.out.println("title = "+content.select("a").text());
 				//			System.out.println("link = "+content.select("a").attr("href"));
