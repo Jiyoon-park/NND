@@ -11,6 +11,7 @@ import ProfileUpdate from "../components/user/ProfileUpdate.vue";
 import AddBoard from "../components/common/AddBoard.vue";
 import LetterList from "../components/letter/LetterList.vue";
 import LetterDetail from "../components/letter/LetterDetail.vue";
+import Gongmo from "../components/gongmo/gongmo.vue";
 
 Vue.use(VueRouter);
 
@@ -83,6 +84,11 @@ const routes = [
     props(route) {
       return { letter_id: route.query.letter_id };
     },
+  },
+  {
+    path: "/gongmo",
+    name: "gongmo",
+    component: Gongmo,
   },
 ];
 

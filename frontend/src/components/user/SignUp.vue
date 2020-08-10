@@ -59,7 +59,6 @@ export default {
     signupData: {
       name: null,
       email: null,
-      profile: null,
       password: null,
     },
 
@@ -79,8 +78,8 @@ export default {
     passwordchk: "",
     passwordchkRules: [(v) => !!v || "비밀번호 확인은 필수 입력항목입니다."],
     checkbox: false,
-    show1: false,
-    show2: false,
+    // show1: false,
+    // show2: false,
   }),
 
   computed: {
@@ -102,10 +101,7 @@ export default {
           .then((response) => {
             console.log(response);
             // alert("회원가입 완료");
-            this.$router.push({
-              name: "Home",
-              params: { id: response.data.object.idx },
-            });
+            this.$router.push("/login");
           })
           .catch((error) => {
             console.log(error.response);
@@ -117,12 +113,12 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(() => {
-            // alert("회원가입 완료");
+            alert("회원가입 완료");
             var user = firebase.auth().currentUser;
             user.updateProfile({
               displayName: this.name,
             });
-            this.$router.push("/");
+            this.$router.push("/login");
           });
         // .catch(function(error) {
         //   var errorCode = error.code;

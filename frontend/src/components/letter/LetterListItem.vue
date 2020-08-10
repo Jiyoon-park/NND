@@ -75,15 +75,14 @@ export default {
   methods: {
     // 클릭한 편지의 편지 pk를 받아옴.
     onLetterDetail(letterNo) {
-      let token = window.$cookies.get('nnd');
+      let token = window.$cookies.get("nnd");
       // 클릭한 편지는 읽음 처리
       this.letterinfo.read = 1;
       axios
-        .post(`http://localhost:8080/letter/update/${letterNo}`,
-        {
-        headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-         }
+        .post(`http://localhost:8080/letter/update/${letterNo}`, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
         })
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
