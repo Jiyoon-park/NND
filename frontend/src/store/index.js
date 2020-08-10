@@ -9,6 +9,7 @@ export default new Vuex.Store({
     token: "",
     user: {},
     log: [],
+    myToken: "", //cy
   },
   getters: {
     getCountValue: (state) => {
