@@ -215,9 +215,6 @@ export default {
       axios
         .put(url,obj,
         {
-          headers: { 
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
