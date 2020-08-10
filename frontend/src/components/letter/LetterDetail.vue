@@ -86,8 +86,14 @@ export default {
             },
           }
         )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          alert("수락완료");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("수락실패");
+        });
       this.changeDialog();
     },
     memberAccept(teamboardno, receiveidx) {
