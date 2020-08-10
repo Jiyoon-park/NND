@@ -70,7 +70,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		int pageNumber = pageable.getPageNumber();
 		int pageSize = pageable.getPageSize();
 		
-		return entityManager.createQuery(str.toString(), Object.class).setFirstResult((pageNumber) * pageSize).setMaxResults((pageNumber+1) * pageSize).getResultList();
+		return entityManager.createQuery(str.toString(), Object.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
 	}
 	
 	
@@ -135,7 +135,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		int pageNumber = pageable.getPageNumber();
 		int pageSize = pageable.getPageSize();
 		
-		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults((pageNumber+1) * pageSize).getResultList();
+		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
 		String[] keys = {"teamboardno","idx","email", "name", "teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno"}; 
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		for (int i = 0; i < temp.size(); i++) {
