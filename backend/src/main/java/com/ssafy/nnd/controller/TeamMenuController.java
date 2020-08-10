@@ -42,11 +42,8 @@ public class TeamMenuController {
 	
 
 	// 팀 공지사항 불러오기
-	@GetMapping("teammenu/notice/{idx}")   //팀장 idx 
-	public List<TeamNotice> getAllTeamNotice(@PathVariable Long idx, Pageable pageable) {
-		Optional<Member> member = memberRepository.findById(idx);
-		Long teamboardno = member.get().getTeamboardno();
-
+	@GetMapping("teammenu/notice/{teamboardno}")   //teamboardno
+	public List<TeamNotice> getAllTeamNotice(@PathVariable Long teamboardno, Pageable pageable) {
 		if (teamboardno == 0) {
 			return null; // 정해진 팀이 없습니다.
 		} else {
@@ -56,10 +53,8 @@ public class TeamMenuController {
 	}
 
 	// 팀 멤버 목록 불러오기
-	@GetMapping("teammenu/member/{idx}")  // 유저 idx 가져오기
-	public List<Member> getTeamMember(@PathVariable Long idx) {
-		Optional<Member> member = memberRepository.findById(idx);
-		Long teamboardno = member.get().getTeamboardno();
+	@GetMapping("teammenu/member/{teamboardno}")  //teamboardno
+	public List<Member> getTeamMember(@PathVariable Long teamboardno) {
 
 		if (teamboardno == 0) {
 			return null; // 정해진 팀이 없습니다.
@@ -70,11 +65,8 @@ public class TeamMenuController {
 	}
 
 	// 팀 공지사항 글쓰기
-	@PutMapping("teammenu/notice/save/{idx}")  //팀장 idx
-	public String saveTeamNotice(@PathVariable Long idx, TeamNotice teamnotice) {
-
-		Optional<Member> member = memberRepository.findById(idx);
-		Long teamboardno = member.get().getTeamboardno();
+	@PutMapping("teammenu/notice/save/{teamboardno}")  //teamboardno
+	public String saveTeamNotice(@PathVariable Long teamboardno, TeamNotice teamnotice) {
 
 		teamnotice.setTeamBoardNo(teamboardno);
 		teamNoticeRepository.save(teamnotice);
@@ -102,11 +94,10 @@ public class TeamMenuController {
 	}
 
 	// 멤버 추가
-	@PutMapping("teammenu/member/save/{idx}/{memberidx}")   // 추가된 사람 idx , 팀장 idx
-	public String saveTeamMember(@PathVariable Long idx, @PathVariable Long memberidx) {
-		Optional<Member> chief = memberRepository.findById(idx); // 팀장 멤버 객체
+	@PutMapping("teammenu/member/save/{teamboardno}/{memberidx}")   //teamboardno, 추가된 사람 idx
+	public String saveTeamMember(@PathVariable Long teamboardno, @PathVariable Long memberidx) {
 		Optional<Member> member = memberRepository.findById(memberidx); // 추가할 팀 멤버 객체
-		Optional<TeamBoard> team = teamBoardRepository.findById(chief.get().getTeamboardno()); // 팀장 팀정보
+		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno); // 팀장 팀정보
 		Long groupMemberCount = memberRepository.countTeamMemberByTeamboardNo(team.get().getTeamboardNo());
 		// 현재 팀의 멤버 수 가져오기
 
@@ -117,7 +108,7 @@ public class TeamMenuController {
 			// '"oks2238@naver.com", "hjh@naver.com"' +', "뉴멤버"'
 			team.get().setMemberEmails(changedTeamMember);
 
-			member.get().setTeamboardno(chief.get().getTeamboardno());
+			member.get().setTeamboardno(teamboardno);
 			teamBoardRepository.save(team.get());
 			memberRepository.save(member.get());
 			return "member save succes";
@@ -154,7 +145,7 @@ public class TeamMenuController {
 	}
 	// 멤버 평가
 	
-	@PutMapping("teammenu/rating")   // idx 꼭 넣어서 보내주세요
+	@PutMapping("teammenu/rating")   // 평가대상자 idx 꼭 넣어서 보내주세요
 	public String memberRating(@RequestBody MemberRating memberrate) {
 		memberRatingRepository.save(memberrate);
 		return "member rating success";
@@ -162,16 +153,15 @@ public class TeamMenuController {
 	
 	// 마감 버튼     // 마감되면 git, jira issue, 출결 가져와서 디비에 넣기
 	
-	@PostMapping("teammenu/disband/{idx}")   //팀장 idx
-	public String memberDisband(@PathVariable Long idx) {
-		Optional<Member> chief = memberRepository.findById(idx);
-		Optional<TeamBoard> team = teamBoardRepository.findById(chief.get().getTeamboardno());
+	@PostMapping("teammenu/disband/{teamboardno}")   //teamboardno
+	public String memberDisband(@PathVariable Long teamboardno) {
+		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		
 		//teamboard mebersemail 해산
 		team.get().setMemberEmails("[\"disband\"]");
 		teamBoardRepository.save(team.get());
 		//멤버별 teamboardno 0 으로 바꾸기 
-		List<Member> members = memberRepository.findByTeamboardno(chief.get().getTeamboardno());
+		List<Member> members = memberRepository.findByTeamboardno(teamboardno);
 		
 		for (int i = 0; i < members.size(); i++) {
 			Member member = members.get(i);
