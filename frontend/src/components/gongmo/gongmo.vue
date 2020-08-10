@@ -144,3 +144,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+v-calender-daily {
+  interval-minutes: 1;
+}
+</style>
