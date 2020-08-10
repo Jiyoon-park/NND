@@ -10,7 +10,7 @@
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
-                {{ teaminfo.teamName }}
+                {{ teaminfo.teamname }}
                 <div class="d-flex">
                   <v-chip
                     small
@@ -64,7 +64,7 @@
             <v-card-title
               class="header-text text-center justify-center font-italic"
             >
-              ❝ {{ teaminfo.teamName }} 팀의 <br />팀원이 되고싶습니다 ❠
+              ❝ {{ teaminfo.teamname }} 팀의 <br />팀원이 되고싶습니다 ❠
             </v-card-title>
 
             <v-card-text class="mt-5 pb-0">
