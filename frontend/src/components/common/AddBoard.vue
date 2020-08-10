@@ -212,10 +212,7 @@ export default {
         url = "http://localhost:8080/memberboard/save/" + this.idx;
       }
       axios
-        .put(url,
-        {
-            obj
-        },
+        .put(url,obj,
         {
           headers: { 
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
