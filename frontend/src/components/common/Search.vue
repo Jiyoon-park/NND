@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen hide-overlay>
+  <v-dialog v-model="dialog" width="60%" :fullscreen="$vuetify.breakpoint.mobile" hide-overlay>
     <template v-slot:activator="{ on, attrs }">
       <i
         class="fas fa-search fa-lg"
@@ -11,15 +11,15 @@
       ></i>
     </template>
     <v-card>
-      <v-toolbar dark color="purple lighten-2">
+      <v-toolbar dark color="indigo lighten-2">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Search</v-toolbar-title>
+        <v-toolbar-title>검색</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <v-container>
-        <v-list three-line subheader>
+      <v-container style="padding:3%;">
+        <v-list three-line>
           <v-list-item>
             <v-combobox
               v-model="search"
@@ -32,20 +32,20 @@
               small-chips
               outlined
               class="mt-5"
-              color="purple darken-2"
+              color="indigo darken-2"
             ></v-combobox>
           </v-list-item>
         </v-list>
         <i class="fas fa-filter ml-3">Filter</i>
         <v-divider></v-divider>
-        <v-list three-line subheader>
-          <v-subheader>By type:</v-subheader>
+        <v-list three-line>
+          <span class="ml-3 subheader">✔ 원하는 타입</span>
           <v-list-item>
             <v-list-item-content class="py-0">
               <div class="d-flex justify-center">
                 <v-chip-group
                   v-model="typeSelection"
-                  active-class="deep-purple--text text--accent-4"
+                  active-class="indigo lighten-1 white--text text--accent-4"
                   mandatory
                 >
                   <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
@@ -54,11 +54,11 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-divider></v-divider>
-        <v-list three-line subheader>
-          <v-subheader>By Category:</v-subheader>
+
+        <v-list three-line>
+          <span class="ml-3 subheader">✔ 원하는 카테고리</span>
           <v-list-item>
-            <v-list-item-content>
+            <v-list-item-content class="py-0">
               <div class="d-flex justify-center">
                 <v-switch v-model="categorySelection" label="스터디" color="red darken-3" value="스터디"></v-switch>
                 <v-switch
@@ -74,37 +74,36 @@
                   color="orange darken-3"
                   value="공모전"
                 ></v-switch>
-                <!-- {{ categorySelection }} -->
               </div>
             </v-list-item-content>
           </v-list-item>
         </v-list>
-        <v-divider></v-divider>
-        <v-list three-line subheader>
-          <v-subheader>By Skills:</v-subheader>
+
+        <v-list three-line>
+          <span class="ml-3 subheader">✔ 원하는 기술스택</span>
           <v-list-item>
             <v-list-item-content class="py-0">
               <div class="d-flex flex-column justify-center">
-                <v-chip-group v-model="skillSelection" multiple column>
-                  <v-chip
-                    filter
-                    outlined
-                    v-for="skill in skills"
-                    :key="skill"
-                    :value="skill"
-                  >{{ skill }}</v-chip>
-                </v-chip-group>
-                <!-- 기술스택 추가하기 구현 못함-->
-                <v-combobox v-model="newSkill" :newSkill="newSkill" label="기술스택 추가" multiple chips></v-combobox>
+                <v-combobox
+                  v-model="newSkill"
+                  :newSkill="newSkill"
+                  label="기술스택 추가"
+                  filled
+                  multiple
+                  dense
+                  chips
+                  color="indigo darken-2"
+                ></v-combobox>
               </div>
             </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-container>
+      <v-divider></v-divider>
       <v-card-actions>
+        <v-btn color="indigo darken-1" text class="font-weight-bold" @click="dialog = false">Close</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="submit">Search</v-btn>
+        <v-btn color="indigo darken-1" text class="font-weight-bold" @click="submit">Search</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -124,7 +123,18 @@ export default {
     types: ["team", "member"],
     skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
     info: {},
+    isMobile: false,
   }),
+  beforeDestroy() {
+    if (typeof window !== "undefined") {
+      window.removeEventListener("resize", this.onResize, { passive: true });
+    }
+  },
+
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
   methods: {
     submit() {
       //console.log(this.search);
@@ -136,8 +146,16 @@ export default {
       });
       this.dialog = false;
     },
+    onResize() {
+      this.isMobile = window.innerWidth < 600;
+    },
   },
 };
 </script>
-
-<style></style>
+<style>
+.subheader {
+  padding: 1px 0;
+  background-color: #eeeeee;
+  font-style: italic;
+}
+</style>
