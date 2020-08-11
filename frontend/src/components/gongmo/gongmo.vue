@@ -44,23 +44,31 @@
         >
           <v-card color="grey lighten-4" min-width="350px" flat>
             <v-toolbar :color="selectedEvent.color" dark>
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
             </v-toolbar>
-            <v-card-text>
-              <span v-html="selectedEvent.details"></span>
-            </v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="auto">
+                  <v-card-text>
+                    시작일 :
+                    <span v-html="selectedEvent.start" />
+                    종료일 :
+                    <span v-html="selectedEvent.end" />
+                    <br />주최 :
+                    <span v-html="selectedEvent.host" />
+                    <br />1등 시상금 :
+                    <span v-html="selectedEvent.price" />
+                    <br />상세정보 :
+                    <a v-bind:href="selectedEvent.link">상세정보</a>
+                  </v-card-text>
+                </v-col>
+                <v-col cols="auto">
+                  <img height="200" width="200" v-bind:src="getPoster()" />
+                </v-col>
+              </v-row>
+            </v-container>
             <v-card-actions>
-              <v-btn text color="secondary" @click="selectedOpen = false">취소</v-btn>
+              <v-btn text color="secondary" @click="selectedOpen = false">닫기</v-btn>
             </v-card-actions>
           </v-card>
         </v-menu>
@@ -81,25 +89,27 @@ export default {
   created() {
     let token = window.$cookies.get("nnd");
     axios
-      .get(`http://localhost:8080/contest`, 
-        {
-          headers: { 
+      .get(`http://localhost:8080/contest`, {
+        headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          }
-        }
-      )
+        },
+      })
       .then(({ data }) => {
         this.boards = data;
         console.log(this.boards);
         for (let index = 0; index < this.boards.length; index++) {
-          const allDay = this.rnd(0, 3) === 0
+          const allDay = this.rnd(0, 3) === 0;
           this.events.push({
-          name: this.boards[index].title,
-          start: this.boards[index].start,
-          end: this.boards[index].end,
-          color: this.colors[this.rnd(0, this.colors.length - 1)],
-          timed: !allDay,
-        })
+            name: this.boards[index].title,
+            start: this.boards[index].start,
+            end: this.boards[index].end,
+            color: this.colors[this.rnd(0, this.colors.length - 1)],
+            timed: !allDay,
+            host: this.boards[index].host,
+            poster: this.boards[index].poster,
+            price: this.boards[index].price,
+            link: this.boards[index].link,
+          });
         }
         console.log(this.events);
       })
@@ -108,11 +118,19 @@ export default {
       });
   },
   data: () => ({
-    boards : null,
+    boards: null,
     events: [],
     today: "2020-08-11", //new Date() 타입수정
     type: "month",
-    colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+    colors: [
+      "blue",
+      "indigo",
+      "deep-purple",
+      "cyan",
+      "green",
+      "orange",
+      "grey darken-1",
+    ],
     focus: "",
     selectedEvent: {},
     selectedElement: null,
@@ -135,11 +153,11 @@ export default {
     next() {
       this.$refs.calendar.next();
     },
-    rnd (a, b) {
-      return Math.floor((b - a + 1) * Math.random()) + a
+    rnd(a, b) {
+      return Math.floor((b - a + 1) * Math.random()) + a;
     },
-    getEventColor (event) {
-      return event.color
+    getEventColor(event) {
+      return event.color;
     },
     showEvent({ nativeEvent, event }) {
       const open = () => {
@@ -156,6 +174,9 @@ export default {
       }
 
       nativeEvent.stopPropagation();
+    },
+    getPoster() {
+      return this.selectedEvent.poster;
     },
   },
 };
