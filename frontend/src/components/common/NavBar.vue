@@ -76,7 +76,6 @@ export default {
   },
   data: () => ({
     id: 0,
-    name: [],
     username: "",
     profileURL: "",
     drawer: null,
@@ -105,7 +104,7 @@ export default {
     }
     this.getLetters();
     this.getMemberTeamList();
-
+    console.log("created : " + this.menus.children);
     EventBus.$on("letterRead", () => {
       this.messages--;
     });
@@ -148,8 +147,17 @@ export default {
         .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
           console.log("@@@@@@@@@@@");
-          console.log(res.data[0].teamName);
-          // this.menus.children = res.data;
+
+          var namelist = [];
+          for (let index = 0; index < res.data.length; index++) {
+            const teamName = res.data[index].teamName;
+            namelist.push({
+              name: teamName,
+            });
+            // console.log(namelist);
+          }
+          this.menus.children = namelist;
+          console.log(this.menus.children);
         })
         .catch((err) => {
           console.log(err);
