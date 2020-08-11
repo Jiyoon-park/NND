@@ -1,20 +1,35 @@
 <template>
   <v-card>
-    <v-toolbar dark color="purple lighten-2">
+    <v-toolbar
+      flat
+      dark
+      color="#38ada9"
+      v-if="letterinfo.letterType == 'tboard'"
+    >
       <v-btn icon dark @click="changeDialog">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title>{{ item.tab }}</v-toolbar-title>
+      <v-toolbar-title v-if="item.tab == '받은 편지함'"
+        >받은 편지</v-toolbar-title
+      >
+      <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-card-text class="mt-5">
+    <v-toolbar flat dark color="#706fd3" v-else>
+      <v-btn icon dark @click="changeDialog">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <v-toolbar-title v-if="item.tab == '받은 편지함'"
+        >받은 편지</v-toolbar-title
+      >
+      <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+    <v-card-text class="mt-5 px-3">
       <div class="d-flex align-center">
         <div>
           <v-avatar color="grey" size="48">
-            <span
-              v-if="!letterinfo.profile"
-              class="white--text headline"
-            ></span>
+            <span v-if="!letterinfo.profile" class="white--text headline"></span>
             <img v-else :src="letterinfo.profile" />
           </v-avatar>
         </div>
@@ -25,30 +40,39 @@
         </div>
         <div class="ml-3">
           <p class="mb-1">{{ letterinfo.name }}</p>
-          <!-- <p class="mb-1">{{ letterinfo.createDate }}</p> -->
           <p class="mb-1">{{ letterDate }}</p>
         </div>
       </div>
-      <div class="rounded grey lighten-2 pa-5 mt-3">
-        <p class="p-3">{{ letterinfo.content }}</p>
+      <div class="rounded grey lighten-3 pa-3 mt-3">
+        <span class="subheader" v-if="letterinfo.letterType == 'mboard'"
+          >✔ 팀 영입 제안입니다.</span
+        >
+        <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
+
+        <p class="mt-2">{{ letterinfo.content }}</p>
       </div>
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions v-if="item.tab == '받은 편지함'">
+      <v-btn color="grey" class="font-weight-bold" text @click="changeDialog"
+        >닫기</v-btn
+      >
       <v-spacer></v-spacer>
-      <v-btn color="green darken-1" text @click="changeDialog">닫기</v-btn>
-      <!-- 나를 영입하는 편지인지/다른 사람이 우리 팀에 지원하는 편지인지 분기 해서 둘 중 하나만 보여줘야 함 -->
       <v-btn
-        color="green darken-1"
+        color="#38ada9"
         text
+        class="font-weight-bold"
         @click="teamAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
-        >지원 수락하기</v-btn
+        v-if="letterinfo.letterType == 'tboard'"
+        >지원수락</v-btn
       >
       <v-btn
-        color="green darken-1"
+        color="#706fd3"
         text
+        class="font-weight-bold"
         @click="memberAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
-        >영입 수락하기</v-btn
+        v-else
+        >제안수락</v-btn
       >
     </v-card-actions>
   </v-card>
@@ -89,8 +113,14 @@ export default {
             },
           }
         )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          alert("수락완료");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("수락실패");
+        });
       this.changeDialog();
     },
     memberAccept(teamboardno, receiveidx) {
@@ -111,7 +141,7 @@ export default {
     changeDialog() {
       this.$emit("changeDialog");
     },
-    dateFormatted: function(dt) {
+    dateFormatted: function (dt) {
       console.log("dt : " + dt);
       var d = new Date(dt);
 
@@ -138,4 +168,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.subheader {
+  padding: 3px 5px;
+  background-color: rgb(188, 190, 188);
+  color: white;
+  font-style: italic;
+}
+</style>
