@@ -135,7 +135,17 @@ public class TeamBoardController {
     		}
     		
     	}
-    	return "save success";
+    	
+    	// image table에 추가
+    	/*
+    	 * imageno(자동)
+    	 * boardno(필요) - newmemberBoard.getTeamboardNo()로 획득가능
+    	 * url(필요) - team/idx(위에서 매개변수로 주니)
+    	 * type()
+    	 */
+    	// 
+    	//  / url() / type
+    	return newmemberBoard.getTeamboardNo().toString();
     	
     }
 
