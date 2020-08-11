@@ -267,7 +267,7 @@ export default {
           category: this.category,
           name: this.name,
         }
-        url = "http://localhost:8080/teamboard/save/" + this.idx;
+        url = `http://localhost:8080/teamboard/save/${this.idx}?url=${this.imageName}`;
       } else {  // 팀원의 경우
         obj = {
           email: this.email,
@@ -277,7 +277,7 @@ export default {
           techStack: JSON.stringify(this.memberstack),
           name: this.name,
         }
-        url = "http://localhost:8080/memberboard/save/" + this.idx;
+        url = `http://localhost:8080/memberboard/save/${this.idx}?url=${this.imageName}`;
       }
       axios
         .put(url, obj, {
