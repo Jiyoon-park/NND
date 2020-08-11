@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.nnd.dto.Image;
 import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.dto.TeamRegist;
+import com.ssafy.nnd.repository.ImageRepository;
 import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 import com.ssafy.nnd.repository.TeamRegistRepository;
@@ -36,6 +38,9 @@ public class TeamBoardController {
 	
 	@Autowired
 	TeamRegistRepository teamregistRepository;
+	
+	@Autowired
+	ImageRepository imageRepository;
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
@@ -98,7 +103,7 @@ public class TeamBoardController {
     }
     
     @PutMapping("/teamboard/save/{idx}") // 글쓴이 idx
-    public String createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
+    public String createTeamBoard(@PathVariable Long idx, @RequestParam("url") String url, @RequestBody TeamBoard teamBoard){
     	Optional<Member> member = memberRepository.findById(idx);
     	String leaderEmail = member.get().getEmail();
     	
@@ -106,7 +111,7 @@ public class TeamBoardController {
     	teamBoard.setIdx(member.get().getIdx());
     	teamBoard.setEmail(leaderEmail);
     	teamBoard.setName(member.get().getName());
-
+    	
     	//1차저장 teamboardno 만들기 
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
@@ -140,13 +145,12 @@ public class TeamBoardController {
     	/*
     	 * imageno(자동)
     	 * boardno(필요) - newmemberBoard.getTeamboardNo()로 획득가능
-    	 * url(필요) - team/idx(위에서 매개변수로 주니)
-    	 * type()
+    	 * url(필요) - team/idx(위에서 매개변수로 얻어오기)
+    	 * type(필요) => 여기선 team으로 고정
     	 */
-    	// 
-    	//  / url() / type
-    	return newmemberBoard.getTeamboardNo().toString();
+    	imageRepository.save(new Image(newmemberBoard.getTeamboardNo(), url, "team"));
     	
+    	return newmemberBoard.getTeamboardNo().toString();	// teamBoardNo를 반환해 firebase에 등록하는 url도 완성할 수 있도록 한다.
     }
 
     @DeleteMapping("/teamboard/delete/{teamboardno}")
