@@ -286,44 +286,50 @@ export default {
           },
         })
         .then((response) => {
+          console.log('게시판 등록 성공');
           // axios 요청등록 후 리턴받은 teamboardNo값을 route로 해서 firebase에 image 등록 
-          console.log(response);
-          console.log(`각 값들 : ${response.data}`);
-          console.log(`각 값들 : ${this.teamcheck == "팀" ? "team" : "member"}`);
-          console.log(`각 값들 : ${this.imageName}`);
-          var image_url = `${this.teamcheck == "팀" ? "team" : "member"}/${response.data}/${this.imageName}`;
-          console.log(`image_url : ${image_url}`);
-          console.log(`firebase : `);
-          console.log(`${firebase}`);
-          const storageRef = firebase.storage().ref();
-          console.log(`storageRef : `);
-          console.log(`${storageRef}`);
-          storageRef
-                    .child(`images/${image_url}`)
-                    .put(this.imageFile)
-                    .on('state_changed', snapshot => {
-                      console.log(snapshot)
-                    }, error => {
-                      console.log(error);
-                      console.log("파이어베이스 등록 실패!");
-                    }, () => {
-                      console.log('성공');
-                      alert("등록성공");
+          // console.log(response);
+          // console.log(`각 값들 : ${response.data}`);
+          // console.log(`각 값들 : ${this.teamcheck == "팀" ? "team" : "member"}`);
+          // console.log(`각 값들 : ${this.imageName}`);
+          if (this.imageName != '') { // 이미지 파일을 쓰는 경우만 파이어베이스 코드를 진행토록 한다.
+            var image_url = `${this.teamcheck == "팀" ? "team" : "member"}/${response.data}/${this.imageName}`;
+            // console.log(`image_url : ${image_url}`);
+            // console.log(`firebase : `);
+            // console.log(`${firebase}`);
+            const storageRef = firebase.storage().ref();
+            // console.log(`storageRef : `);
+            // console.log(`${storageRef}`);
+            storageRef
+                      .child(`images/${image_url}`)
+                      .put(this.imageFile)
+                      .on('state_changed', snapshot => {
+                        console.log(snapshot)
+                      }, error => {
+                        console.log(error);
+                        console.log("파이어베이스 등록 실패!");
+                      }, () => {
+                        console.log('파이어베이스 등록 성공');
+                        alert("등록성공");
 
-                      // 등록페이지 초기화
-                      this.teamName = null;
-                      this.title = null;
-                      this.content = null;
-                      this.groupSize = null;
-                      this.category = "";
-                      this.techStack = [];
-                      this.memberstack = [];
-                      this.date = new Date().toISOString().substr(0, 10);
+                        // 등록페이지 초기화
+                        this.teamName = null;
+                        this.title = null;
+                        this.content = null;
+                        this.groupSize = null;
+                        this.category = "";
+                        this.techStack = [];
+                        this.memberstack = [];
+                        this.date = new Date().toISOString().substr(0, 10);
 
-                      this.changeDialog();
-                      this.goMain();
-                    }
-                    );
+                        this.changeDialog();
+                        this.goMain();
+                      }
+                      );
+          }
+          alert("등록성공");
+          this.changeDialog();
+          this.goMain();
         })
         .catch((error) => {
           console.log(error.response);
