@@ -5,7 +5,16 @@
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
-              <v-avatar color="white" size="50" class="user-img mb-2">
+              <v-avatar
+                color="white"
+                size="50"
+                class="user-img mb-2"
+                @click="
+                $router
+                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
+                  .catch(() => {})
+              "
+              >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
               </v-avatar>
