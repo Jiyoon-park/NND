@@ -291,7 +291,7 @@ export default {
           console.log(`각 값들 : ${response.data}`);
           console.log(`각 값들 : ${this.teamcheck == "팀" ? "team" : "member"}`);
           console.log(`각 값들 : ${this.imageName}`);
-          var image_url = `${this.teamcheck == "팀" ? "team" : "member"}/1/${this.imageName}`;
+          var image_url = `${this.teamcheck == "팀" ? "team" : "member"}/${response.data}/${this.imageName}`;
           console.log(`image_url : ${image_url}`);
           console.log(`firebase : `);
           console.log(`${firebase}`);
