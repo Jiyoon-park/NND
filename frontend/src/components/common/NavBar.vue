@@ -29,10 +29,55 @@
             </v-list-item-content>
           </v-list-item>
 
+          <!-- <div class="text-center">
+            <v-menu offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn dark v-bind="attrs" v-on="on">팀 게시판 목록</v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(team, index) in teams"
+                  :key="index"
+                  @click="$router.push(`/${team.teamboardNo}`).catch(() => {})"
+                >
+                  <v-list-item-title>{{ team.teamName }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>-->
+
+          <!-- <template v-slot:activator>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title v-text="teammenu.title"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <v-list-item
+            v-for="subItem in teammenu.teams"
+            :key="subItem.teamboardNo"
+            @click="$router.push(`/${subItem.teamboardNo}`).catch(() => {})"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="subItem.teamName"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>-->
+
           <v-list-item link>
-            <!-- <v-list-item-content @click="$router.push('/').catch(() => {})"> -->
-            <v-treeview rounded hoverable activatable :items="menus"></v-treeview>
-            <!-- </v-list-item-content> -->
+            <v-expansion-panels>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <v-list-item-content>
+                    <v-list-item-title>팀 게시판 목록</v-list-item-title>
+                  </v-list-item-content>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content v-for="(team, index) in teams" :key="index">
+                  <v-btn
+                    @click="$router.push(`/${team.teamboardNo}`).catch(() => {})"
+                  >{{team.teamName}}</v-btn>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-list-item>
 
           <v-list-item link>
@@ -79,19 +124,14 @@ export default {
     username: "",
     profileURL: "",
     drawer: null,
-    menus: [
-      {
-        name: "팀 게시판 목록",
-        // children: [{ name: "앨리스" }, { name: "너내동" }, { name: "테스트" }],
-        children: [],
-      },
-    ],
+
     items: [
       { icon: "apps", title: "Home", to: "/" },
       { icon: "bubble_chart", title: "About", to: "/about" },
     ],
     messages: 0,
     letters: [],
+    teams: [],
   }),
   created() {
     let token = window.$cookies.get("nnd");
@@ -104,7 +144,7 @@ export default {
     }
     this.getLetters();
     this.getMemberTeamList();
-    console.log("created : " + this.menus.children);
+
     EventBus.$on("letterRead", () => {
       this.messages--;
     });
@@ -147,17 +187,8 @@ export default {
         .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
           console.log("@@@@@@@@@@@");
-
-          var namelist = [];
-          for (let index = 0; index < res.data.length; index++) {
-            const teamName = res.data[index].teamName;
-            namelist.push({
-              name: teamName,
-            });
-            // console.log(namelist);
-          }
-          this.menus.children = namelist;
-          console.log(this.menus.children);
+          this.teams = res.data;
+          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
