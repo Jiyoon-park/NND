@@ -47,7 +47,7 @@
           </div>
         </v-list-item-content>
       </v-list-item>
-      <v-dialog v-model="dialog" max-width="300">
+      <v-dialog v-model="dialog" min-width="350" max-width="500">
         <LetterDetail
           :item="item"
           :letterinfo="letterinfo"
