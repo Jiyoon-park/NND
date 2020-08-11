@@ -15,23 +15,55 @@
           mandatory
           class="my-3"
         >
-          <v-chip large v-for="type in types" :key="type" :value="type" class="mx-2">{{ type }} 등록</v-chip>
+          <v-chip
+            large
+            v-for="type in types"
+            :key="type"
+            :value="type"
+            class="mx-2"
+            >{{ type }} 등록</v-chip
+          >
         </v-chip-group>
       </div>
       <v-col cols="12" sm="12">
         <span class="subheader">✔ 모집 유형</span>
         <v-radio-group v-model="category" row>
-          <v-radio label="스터디" color="orange darken-3" value="스터디"></v-radio>
-          <v-radio label="프로젝트" color="red darken-3" value="프로젝트"></v-radio>
-          <v-radio label="공모전" color="indigo darken-3" value="공모전"></v-radio>
+          <v-radio
+            label="스터디"
+            color="orange darken-3"
+            value="스터디"
+          ></v-radio>
+          <v-radio
+            label="프로젝트"
+            color="red darken-3"
+            value="프로젝트"
+          ></v-radio>
+          <v-radio
+            label="공모전"
+            color="indigo darken-3"
+            value="공모전"
+          ></v-radio>
         </v-radio-group>
       </v-col>
       <span class="ml-3 subheader" v-if="teamcheck == '팀'">✔ 팀 소개</span>
       <span class="ml-3 subheader" v-else>✔ 자기 소개</span>
       <v-form ref="form">
         <v-card-text>
-          <v-text-field filled dense v-model="teamName" label="팀명" required v-if="teamcheck == '팀'"></v-text-field>
-          <v-text-field filled dense v-model="title" label="제목" required></v-text-field>
+          <v-text-field
+            filled
+            dense
+            v-model="teamName"
+            label="팀명"
+            required
+            v-if="teamcheck == '팀'"
+          ></v-text-field>
+          <v-text-field
+            filled
+            dense
+            v-model="title"
+            label="제목"
+            required
+          ></v-text-field>
           <v-textarea filled dense v-model="content" label="내용"></v-textarea>
           <v-combobox
             filled
@@ -105,8 +137,12 @@
                 </template>
                 <v-date-picker v-model="date" no-title scrollable>
                   <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                  <v-btn text color="primary" @click="menu = false"
+                    >Cancel</v-btn
+                  >
+                  <v-btn text color="primary" @click="$refs.menu.save(date)"
+                    >OK</v-btn
+                  >
                 </v-date-picker>
               </v-menu>
             </v-col>
@@ -124,14 +160,16 @@
         class="font-weight-bold"
         v-if="teamcheck == '팀'"
         @click="submit"
-      >팀 등록</v-btn>
+        >팀 등록</v-btn
+      >
       <v-btn
         color="indigo darken-1"
         text
         class="font-weight-bold"
         v-if="teamcheck == '팀원'"
         @click="submit"
-      >팀원 등록</v-btn>
+        >팀원 등록</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>

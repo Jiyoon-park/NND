@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card outlined>
+      <v-card flat>
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
