@@ -29,10 +29,7 @@
       <div class="d-flex align-center">
         <div>
           <v-avatar color="grey" size="48">
-            <span
-              v-if="!letterinfo.profile"
-              class="white--text headline"
-            ></span>
+            <span v-if="!letterinfo.profile" class="white--text headline"></span>
             <img v-else :src="letterinfo.profile" />
           </v-avatar>
         </div>
@@ -144,7 +141,7 @@ export default {
     changeDialog() {
       this.$emit("changeDialog");
     },
-    dateFormatted: function(dt) {
+    dateFormatted: function (dt) {
       console.log("dt : " + dt);
       var d = new Date(dt);
 

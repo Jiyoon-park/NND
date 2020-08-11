@@ -169,7 +169,7 @@ export default {
       console.log(this.teamno);
       axios
         .put(
-          "http://localhost:8080/letter/create/" + this.letterType,
+          "http://localhost:8080/letter/create/" + this.lettertype,
           {
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,
