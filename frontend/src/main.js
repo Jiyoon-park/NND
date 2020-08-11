@@ -6,8 +6,11 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueCookie from "vue-cookies";
 import firebase from "firebase";
+import vuemoment from "vue-moment";
 
-export const EventBus = new Vue();   
+Vue.use(vuemoment);
+
+export const EventBus = new Vue();
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
