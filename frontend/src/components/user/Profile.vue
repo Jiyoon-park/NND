@@ -8,23 +8,23 @@
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
-        <p># 참여중인 팀 : 앨리스</p>
         <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
       </div>
 
-      <v-tabs class="tabs">
-        <v-spacer></v-spacer>
+      <v-tabs fixed-tabs color="indigo lighten-1" class="tabs">
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
         <v-tab @click="$vuetify.goTo('#experience', options)">참여이력</v-tab>
-        <v-spacer></v-spacer>
       </v-tabs>
 
       <div id="my-info" class="target">
-        <h3># 내정보</h3>
-        <v-row>
+        <h3 class="mb-1">🌞 내정보 🌞</h3>
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-col cols="4" md="2">
             <p>이메일</p>
             <p>GIT 주소</p>
@@ -36,21 +36,18 @@
         </v-row>
       </div>
 
-      <hr />
       <div id="skills" class="target">
-        <h3># 기술스택</h3>
-        <div class="skills">
-          <v-combobox
-          v-model="select"
-          chips
-          multiple
-          readonly
-        ></v-combobox>
+        <h3>✨ 기술스택 ✨</h3>
+        <div
+          class="skills py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
+          <v-combobox v-model="select" chips multiple readonly></v-combobox>
         </div>
       </div>
-      <hr />
+
       <div id="experience" class="target">
-        <h3># 참여이력</h3>
+        <h3>🏅 참여이력 🏅</h3>
         <ProjectHistoryList />
       </div>
     </v-col>
@@ -76,26 +73,25 @@ export default {
       easings: Object.keys(easings),
       user: "",
       profileURL: "",
-      select:[],
+      select: [],
     };
   },
   created() {
-
-    let token = window.$cookies.get("nnd")
-    console.log(token)
+    let token = window.$cookies.get("nnd");
+    console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
-  .get(`http://localhost:8080/member/info/${id}`, {
-    headers: { 
-      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-    }
-  })
-  .then((resp) => {
-    console.log(resp);
-    this.user = resp.data;
-    this.profileURL = this.user.profile;
-    this.select = JSON.parse(this.user.memberstack)        
-    });
+      .get(`http://localhost:8080/member/info/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
+      .then((resp) => {
+        console.log(resp);
+        this.user = resp.data;
+        this.profileURL = this.user.profile;
+        this.select = JSON.parse(this.user.memberstack);
+      });
   },
   computed: {
     target() {
@@ -146,15 +142,5 @@ hr {
   margin: 30px 0;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
 
 <style></style>

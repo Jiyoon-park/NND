@@ -39,15 +39,15 @@
                 height="194"
               ></v-img>
               <span
-                class="mr-2"
-                style="color:#eeeeee; font-style:italic; font-weight:bold; position:absolute; top:0; right:0;"
+                class="mr-3 mt-1"
+                style="color:#eeeeee; font-style:italic; font-size:18px; font-weight:bold; position:absolute; top:0; right:0;"
                 >{{ teaminfo.category }}</span
               >
             </div>
 
-            <v-expansion-panel-header>
+            <v-expansion-panel-header class="mt-2">
               <div class="d-flex flex-column">
-                <span class="font-weight-black">{{ teaminfo.title }}</span>
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
                 <div class="d-flex">
                   <v-chip
                     small
@@ -64,10 +64,9 @@
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               {{ teaminfo.content }}
-              <br />
-              {{ teaminfo.kakaoLink }}
             </v-expansion-panel-content>
             <v-card-actions>
+              <span> {{ teaminfo.groupsize }}</span>
               <v-spacer></v-spacer>
 
               <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
