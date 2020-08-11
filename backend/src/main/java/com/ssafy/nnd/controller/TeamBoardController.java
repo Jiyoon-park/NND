@@ -126,7 +126,7 @@ public class TeamBoardController {
     		
     		while(st.hasMoreTokens()) {
     			String email = st.nextToken();
-    			Optional<Member> teammember = memberRepository.findMemberByEmail(email.substring(1,email.length()-1));
+    			Optional<Member> teammember = memberRepository.findMemberByEmail(email);
     			TeamRegist memberRegist = new TeamRegist();
     			memberRegist.setTeamboardNo(newmemberBoard.getTeamboardNo());
     			memberRegist.setMemberIdx(teammember.get().getIdx());
