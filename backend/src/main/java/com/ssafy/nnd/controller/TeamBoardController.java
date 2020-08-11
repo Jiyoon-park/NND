@@ -148,7 +148,9 @@ public class TeamBoardController {
     	 * url(필요) - team/idx(위에서 매개변수로 얻어오기)
     	 * type(필요) => 여기선 team으로 고정
     	 */
-    	imageRepository.save(new Image(newmemberBoard.getTeamboardNo(), url, "team"));
+    	if (!url.equals("")) {	// 사진을 사용하는 경우엔 url이 빈값이 아니기 때문에 이때만 save해주도록 한다.
+    		imageRepository.save(new Image(newmemberBoard.getTeamboardNo(), url, "team"));
+		}
     	
     	return newmemberBoard.getTeamboardNo().toString();	// teamBoardNo를 반환해 firebase에 등록하는 url도 완성할 수 있도록 한다.
     }
