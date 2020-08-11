@@ -6,13 +6,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "teamnotice")
-public class TeamNotice {
+@Table(name = "teampost")
+public class TeamPost {
 
 	@Id
-	@Column (name = "teamnoticeno")
+	@Column (name = "teampostno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long teamNoticeNo; // 팀 공지사항 번호
+	public Long teamPostNo; // 팀 공지사항 번호
 
 	@Column (name = "teamboardno")
 	private  Long teamboardNo;  // 외래키  팀 번호
@@ -22,23 +22,26 @@ public class TeamNotice {
 	
 	@Column
 	private String content;   //내용
+	
+	@Column
+	private int notice;  // 공지사항 여부 true false(1,0)
 
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;  //작성 시간
 
-	public Long getTeamNoticeNo() {
-		return teamNoticeNo;
+	public Long getTeamPostNo() {
+		return teamPostNo;
 	}
 
-	public void setTeamNoticeNo(Long teamNoticeNo) {
-		this.teamNoticeNo = teamNoticeNo;
+	public void setTeamPostNo(Long teamPostNo) {
+		this.teamPostNo = teamPostNo;
 	}
 
-	public Long getTeamBoardNo() {
+	public Long getTeamboardNo() {
 		return teamboardNo;
 	}
 
-	public void setTeamBoardNo(Long teamboardNo) {
+	public void setTeamboardNo(Long teamboardNo) {
 		this.teamboardNo = teamboardNo;
 	}
 
@@ -58,6 +61,14 @@ public class TeamNotice {
 		this.content = content;
 	}
 
+	public int getNotice() {
+		return notice;
+	}
+
+	public void setNotice(int notice) {
+		this.notice = notice;
+	}
+
 	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
@@ -65,26 +76,27 @@ public class TeamNotice {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+
 	
-	public TeamNotice() {
+	public TeamPost() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public TeamNotice(Long teamNoticeNo, Long teamboardNo, String title, String content, LocalDateTime createDate) {
+
+	public TeamPost(Long teamPostNo, Long teamboardNo, String title, String content, int notice,
+			LocalDateTime createDate) {
 		super();
-		this.teamNoticeNo = teamNoticeNo;
+		this.teamPostNo = teamPostNo;
 		this.teamboardNo = teamboardNo;
 		this.title = title;
 		this.content = content;
+		this.notice = notice;
 		this.createDate = createDate;
 	}
 
 	@Override
 	public String toString() {
-		return "TeamNotice [teamNoticeNo=" + teamNoticeNo + ", teamBoardNo=" + teamboardNo + ", title=" + title
-				+ ", content=" + content + ", createDate=" + createDate + "]";
+		return "TeamPost [teamPostNo=" + teamPostNo + ", teamboardNo=" + teamboardNo + ", title=" + title + ", content="
+				+ content + ", notice=" + notice + ", createDate=" + createDate + "]";
 	}
-	
-	
 	
 }

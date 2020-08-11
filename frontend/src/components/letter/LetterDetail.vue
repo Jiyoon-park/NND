@@ -105,26 +105,32 @@ export default {
     };
   },
   methods: {
-    teamAccept(sendidx, receiveidx) {
+    teamAccept(sendidx, teamboardno) {
       let token = window.$cookies.get("nnd");
       axios
         .post(
-          `http://localhost:8080/letter/teamaccept/${sendidx}/${receiveidx}`,
+          `http://localhost:8080/letter/teamaccept/${sendidx}/${teamboardno}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
           }
         )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          alert("수락완료");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("수락실패");
+        });
       this.changeDialog();
     },
-    memberAccept(sendidx, receiveidx) {
+    memberAccept(teamboardno, receiveidx) {
       let token = window.$cookies.get("nnd");
       axios
         .post(
-          `http://localhost:8080/letter/memberaccept/${sendidx}/${receiveidx}`,
+          `http://localhost:8080/letter/memberaccept/${teamboardno}/${receiveidx}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token

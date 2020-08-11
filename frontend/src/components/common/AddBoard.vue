@@ -263,6 +263,7 @@ export default {
           this.techStack = [];
           this.memberstack = [];
           this.date = new Date().toISOString().substr(0, 10);
+          this.$emit("changeDialog");
         })
         .catch((error) => {
           console.log(error.response);

@@ -8,6 +8,6 @@ public class KakaologinApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KakaologinApplication.class, args);
+		
 	}
-
 }

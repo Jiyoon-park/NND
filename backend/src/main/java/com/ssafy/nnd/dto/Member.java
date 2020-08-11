@@ -40,16 +40,6 @@ public class Member implements Serializable {
     @Column
     private String memberstack;
 
-    @Column
-    private Long teamboardno;
-    
-	public Long getTeamboardno() {
-		return teamboardno;
-	}
-
-	public void setTeamboardno(Long teamboardno) {
-		this.teamboardno = teamboardno;
-	}
 
 	public Long getIdx() {
 		return idx;
@@ -118,13 +108,10 @@ public class Member implements Serializable {
 
 	
 
-
-	
 	@Override
 	public String toString() {
 		return "Member [idx=" + idx + ", name=" + name + ", email=" + email + ", profile=" + profile + ", password="
-				+ password + ", company=" + company + ", gitaddr=" + gitaddr + ", memberstack=" + memberstack
-				+ ", teamboardno=" + teamboardno + "]";
+				+ password + ", company=" + company + ", gitaddr=" + gitaddr + ", memberstack=" + memberstack + "]";
 	}
 
 	public Member() {
@@ -140,7 +127,6 @@ public class Member implements Serializable {
 		this.company = m.company;
 		this.gitaddr = m.gitaddr;
 		this.memberstack = m.memberstack;
-		this.teamboardno = m.teamboardno;
 	}
 
 	public Member(String name, String email, String profile, String password, String company, String gitaddr,

@@ -5,7 +5,11 @@
         <v-list-item class="mt-3">
           <v-avatar color="indigo" class="mr-5">
             <v-icon
-              @click="$router.push({name : 'userProfile', params: {idx :teaminfo.idx}}).catch(() => {})"
+              @click="
+                $router
+                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
+                  .catch(() => {})
+              "
               dark
             >mdi-account-circle</v-icon>
           </v-avatar>
@@ -28,7 +32,11 @@
         <v-expansion-panels class="elevation-0 mt-5">
           <v-expansion-panel>
             <v-expansion-panel-header></v-expansion-panel-header>
-            <v-expansion-panel-content>{{ teaminfo.content }}</v-expansion-panel-content>
+            <v-expansion-panel-content>
+              {{
+              teaminfo.content
+              }}
+            </v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
@@ -53,7 +61,15 @@
 
             <v-card-text class="mt-5 pb-0">
               <div class="mt-3">
-                <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
+                <v-row>
+                  <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
+                  <v-overflow-btn
+                    v-model="teamno"
+                    :items="teamlist"
+                    item-text="teamName"
+                    item-value="teamboardNo"
+                  ></v-overflow-btn>
+                </v-row>
                 <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
               </div>
             </v-card-text>
@@ -80,7 +96,7 @@ export default {
       show: false,
       favorite: false,
       dialog: false,
-      stacks: this.teaminfo.techStack,
+      stacks: this.teaminfo.techstack,
       username: "",
       profileURL: "",
       ///쪽찌보낼내용
@@ -90,41 +106,83 @@ export default {
       letterType: "mboard",
       letterNo: "",
       createDate: "",
+      teamlist: [],
+      memberidx: this.teaminfo.idx,
+      teamno: "",
+      mlikeno: this.teaminfo.likeno,
     };
   },
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
-  created() {},
+  created() {
+    if (this.teaminfo.mno == this.$store.state.myToken.idx) {
+      console.log("즐겨찾기 상태");
+      this.favorite = true;
+    } else {
+      console.log("즐겨찾기 아닌상태");
+      this.favorite = false;
+    }
+  },
   methods: {
     addFavorite() {
-      this.favorite = true;
-      alert("즐겨찾기에 등록되었습니다.");
+      let token = window.$cookies.get("nnd");
+
+      axios
+        .put(
+          "http://localhost:8080/likemember/save/" +
+            this.$store.state.myToken.idx +
+            "/" +
+            this.teaminfo.boardno,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
+        .then((data) => {
+          this.favorite = true;
+          alert("즐겨찾기에 등록되었습니다.");
+          this.mlikeno = data.data;
+        });
     },
     delFavorite() {
-      this.favorite = false;
+      let token = window.$cookies.get("nnd");
+
+      axios
+        .delete("http://localhost:8080/likemember/delete/" + this.mlikeno, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
+        .then(() => {
+          this.favorite = false;
+          alert("즐겨찾기에서 삭제되었습니다.");
+        });
     },
     submit() {
-      let token = window.$cookies.get('nnd');
+      let token = window.$cookies.get("nnd");
       this.dialog = false;
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.letterType + " type");
-
+      console.log(this.teamno);
       axios
-        .put("http://localhost:8080/letter/create/" + this.letterType,
-        {
-          sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.idx,
-          content: this.content,
-          letterNo: this.letterNo,
-          createDate: this.createDate,
-        },
-        {
-          headers: { 
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        .put(
+          "http://localhost:8080/letter/create/" + this.letterType,
+          {
+            sendIdx: this.sendIdx,
+            receiveIdx: this.teaminfo.idx,
+            content: this.content,
+            letterNo: this.letterNo,
+            createDate: this.createDate,
+            teamboardNo: this.teamno,
           },
-        }
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((response) => {
           console.log(response);
@@ -145,9 +203,22 @@ export default {
         this.profileURL = token.object.profile;
         this.sendIdx = token.object.idx;
       }
+
+      axios
+        .get(
+          "http://localhost:8080/letter/member/teamlist/" +
+            this.$store.state.myToken.idx,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
+        .then((data) => {
+          this.teamlist = data.data;
+          console.log(this.teamlist);
+        });
     },
   },
 };
 </script>
-
-
