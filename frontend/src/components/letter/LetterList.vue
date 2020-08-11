@@ -1,30 +1,51 @@
 <template>
-  <div>
+  <v-card flat>
     <NavBar />
-    <div class="mt-13">
-      <v-tabs fixed-tabs v-model="tab" color="indigo lighten-1">
-        <v-tab v-for="item in items" :key="item.tab" class="font-weight-bold">{{ item.tab }}</v-tab>
+    <v-container class="mt-11">
+      <!-- 아...탭 오른쪽 왼쪽 마진 없애고 싶어 -->
+      <v-tabs
+        fixed-tabs
+        v-model="tab"
+        background-color="#FAFAFA"
+        color="indigo lighten-1"
+      >
+        <v-tab v-for="item in items" :key="item.tab" class="font-weight-bold">{{
+          item.tab
+        }}</v-tab>
       </v-tabs>
-      <v-tabs-slider color="yellow"></v-tabs-slider>
+      <v-tabs-slider></v-tabs-slider>
+
       <v-tabs-items v-model="tab">
         <v-tab-item v-for="item in items" :key="item.tab">
           <v-card flat>
             <v-list>
               <v-list-item-group>
-                <LetterListItem
-                  :item="item"
-                  v-for="(letter, i) in item.letters"
-                  :key="i"
-                  :letterinfo="item.letters[i]"
-                />
-                <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
+                <v-row justify="center">
+                  <v-col cols="12" lg="8" class="px-0">
+                    <p class="mb-2 ml-3">
+                      <v-avatar color="#706fd3" size="12" class="mr-1">
+                      </v-avatar
+                      >영입 제안 편지
+                      <v-avatar color="#38ada9" size="12" class="ml-2 mr-1">
+                      </v-avatar
+                      >팀원 지원 편지
+                    </p>
+                    <LetterListItem
+                      :item="item"
+                      v-for="(letter, i) in item.letters"
+                      :key="i"
+                      :letterinfo="item.letters[i]"
+                    />
+                    <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
+                  </v-col>
+                </v-row>
               </v-list-item-group>
             </v-list>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
-    </div>
-  </div>
+    </v-container>
+  </v-card>
 </template>
 
 <script>
@@ -60,11 +81,11 @@ export default {
     if (token) {
       console.log(token.object.idx);
       axios
-        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`,
-         {
-            headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-         }})
+        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
         .then((res) => {
           this.items[0].letters = res.data;
           console.log(this.items[0].letters);
@@ -74,11 +95,11 @@ export default {
         });
 
       axios
-        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`,
-         {
-            headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-         }})
+        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
         .then((res) => {
           this.items[1].letters = res.data;
           console.log(this.items[1].letters);
@@ -92,5 +113,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
