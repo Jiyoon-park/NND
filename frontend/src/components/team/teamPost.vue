@@ -1,25 +1,30 @@
 <template>
-  <v-card>
-    <v-list class="transparent">
-      <v-list-item-group>
-        <teamPostItem
-          :item="teamposts"
-          v-for="(post,i) in teamposts"
-          :key="i"
-          :postinfo="item.teamposts[i]"
-        />
-      </v-list-item-group>
-    </v-list>
-  </v-card>
+  <div>
+    <NavBar />
+    <v-card>
+      <v-list class="transparent">
+        <v-list-item-group>
+          <TeamPostItem
+            :item="teamposts"
+            v-for="(post, i) in teamposts"
+            :key="i"
+            :postinfo="item.teamposts[i]"
+          />
+        </v-list-item-group>
+      </v-list>
+    </v-card>
+  </div>
 </template>
 
 <script>
+import NavBar from "../common/NavBar.vue";
 import TeamPostItem from "./teamPostItem.vue";
 import axios from "axios";
 
 export default {
   name: "TeamPost",
   components: {
+    NavBar,
     TeamPostItem,
   },
   data() {
@@ -51,5 +56,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

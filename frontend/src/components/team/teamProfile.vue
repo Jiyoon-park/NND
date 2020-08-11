@@ -18,7 +18,9 @@
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
         <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
-        <v-tab @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
+        <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
+          >그래프</v-tab
+        >
         <v-spacer></v-spacer>
       </v-tabs>
 
@@ -28,16 +30,15 @@
       </div>
 
       <hr />
-      <div id="skills" class="target">
-        <h3># 기술스택</h3>
-        <div class="skills">
+      <div id="team-member" class="target">
+        <h3># 팀원목록</h3>
+        <!-- <div class="skills">
           <v-combobox v-model="select" chips multiple readonly></v-combobox>
-        </div>
+        </div> -->
       </div>
       <hr />
-      <div id="experience" class="target">
-        <h3># 참여이력</h3>
-        <ProjectHistoryList />
+      <div id="team-member-graph" class="target">
+        <h3># 그래프</h3>
       </div>
     </v-col>
   </v-row>
@@ -47,14 +48,12 @@
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
-import ProjectHistoryList from "../profile/ProjectHistoryList.vue";
-import teamPost from "../team/teamPost.vue";
+import TeamPost from "../team/teamPost.vue";
 
 export default {
   components: {
     NavBar,
-    ProjectHistoryList,
-    teamPost,
+    TeamPost,
   },
   data() {
     return {
@@ -64,7 +63,6 @@ export default {
       easings: Object.keys(easings),
       user: "",
       profileURL: "",
-      select: [],
       // labels: ['SU', 'MO', 'TU', 'WED', 'TH', 'FR', 'SA'],
       //   time: 0,
       //   forecast: [
@@ -89,7 +87,6 @@ export default {
         console.log(resp);
         this.user = resp.data;
         this.profileURL = this.user.profile;
-        this.select = JSON.parse(this.user.memberstack);
       });
   },
   computed: {
@@ -141,15 +138,5 @@ hr {
   margin: 30px 0;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
 
 <style></style>

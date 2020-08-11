@@ -1,5 +1,10 @@
 <template>
   <v-card>
+    <v-toolbar dark color="purple lighten-2">
+      <v-btn icon dark @click="changeDialog">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-toolbar>
     <v-card-text class="mt-5">
       <div class="d-flex align-center">
         <!-- <div>
@@ -45,9 +50,11 @@ export default {
   methods: {
     postUpdate() {},
     postDelete() {},
+    changeDialog() {
+      this.$emit("changeDialog");
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
