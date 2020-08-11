@@ -35,16 +35,21 @@ export default {
   },
   props: {
     userinfo: {},
+    teamboardno: {
+      type: Object,
+    },
   },
   created() {
-    let teamboardno = this.$route.params.teamboardno;
     let token = window.$cookies.get("nnd");
     axios
-      .get(`http://localhost:8080/teammenu/post/${teamboardno}`, {
-        headers: {
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-        },
-      })
+      .get(
+        `http://localhost:8080/teammenu/post/${this.teamboardno.teamboardno}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((res) => {
         console.log({ res });
         this.teamposts = res;

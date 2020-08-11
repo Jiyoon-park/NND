@@ -7,8 +7,8 @@
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
-        <h3>팀 형태 : 프로젝트</h3>
-        <p># 팀 이름 : 앨리스</p>
+        <h3>팀 형태 : {{teaminfo.category}}</h3>
+        <p># 팀 이름 : {{teaminfo.teamName}}</p>
         <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
@@ -18,15 +18,13 @@
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
         <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
-        <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
-          >그래프</v-tab
-        >
+        <v-tab @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
         <v-spacer></v-spacer>
       </v-tabs>
 
       <div id="team-post" class="target">
         <h3># 게시판</h3>
-        <team-post></team-post>
+        <TeamPost :teamboardno="teaminfo.teamboardNo" />
       </div>
 
       <hr />
@@ -34,7 +32,7 @@
         <h3># 팀원목록</h3>
         <!-- <div class="skills">
           <v-combobox v-model="select" chips multiple readonly></v-combobox>
-        </div> -->
+        </div>-->
       </div>
       <hr />
       <div id="team-member-graph" class="target">
@@ -49,6 +47,7 @@ import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
 import TeamPost from "../team/teamPost.vue";
+// import axios from "axios";
 
 export default {
   components: {
@@ -63,17 +62,11 @@ export default {
       easings: Object.keys(easings),
       user: "",
       profileURL: "",
-      // labels: ['SU', 'MO', 'TU', 'WED', 'TH', 'FR', 'SA'],
-      //   time: 0,
-      //   forecast: [
-      //     { day: 'Tuesday', icon: 'mdi-white-balance-sunny', temp: '24\xB0/12\xB0' },
-      //     { day: 'Wednesday', icon: 'mdi-white-balance-sunny', temp: '22\xB0/14\xB0' },
-      //     { day: 'Thursday', icon: 'mdi-cloud', temp: '25\xB0/15\xB0' },
-      //   ],
-      teamposts: [],
+      teaminfo: [],
     };
   },
   created() {
+    // let teamboardno = this.$route.params.teamboardNo;
     let token = window.$cookies.get("nnd");
     console.log(token);
     let id = token.object.idx; //넘겨 받아야함
@@ -88,6 +81,8 @@ export default {
         this.user = resp.data;
         this.profileURL = this.user.profile;
       });
+    //teaminfo 가져오는 메소드 spring 에서 만들어야됨
+    // axios.get()
   },
   computed: {
     target() {

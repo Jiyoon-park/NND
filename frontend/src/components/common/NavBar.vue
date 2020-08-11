@@ -73,7 +73,7 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content v-for="(team, index) in teams" :key="index">
                   <v-btn
-                    @click="$router.push(`/${team.teamboardNo}`).catch(() => {})"
+                    @click="$router.push(`/teamprofile/${team.teamboardNo}`).catch(() => {})"
                   >{{team.teamName}}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>

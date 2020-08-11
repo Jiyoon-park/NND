@@ -3,10 +3,7 @@
     <v-list-item @click.stop="dialog = true">
       <v-list-item-content>
         <div>
-          <v-list-item-title
-            v-text="postinfo.writer"
-            class="font-weight-black"
-          ></v-list-item-title>
+          <v-list-item-title v-text="postinfo.writer" class="font-weight-black"></v-list-item-title>
           <div class="d-flex">
             <v-list-item-title
               v-text="postinfo.title"
@@ -19,11 +16,7 @@
       </v-list-item-content>
     </v-list-item>
     <v-dialog v-model="dialog" max-width="300">
-      <TeamPostDetail
-        :postinfo="postinfo"
-        :dialog="dialog"
-        @changeDialog="dialog = false"
-      />
+      <TeamPostDetail :postinfo="postinfo" :dialog="dialog" @changeDialog="dialog = false" />
     </v-dialog>
   </div>
 </template>
@@ -44,9 +37,6 @@ export default {
     // item: {
     //   type: Object,
     // },
-    postinfo: {
-      type: Object,
-    },
   },
   methods: {
     // onPostDetail(teamboardno) {},
