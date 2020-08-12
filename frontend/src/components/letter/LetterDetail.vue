@@ -46,17 +46,22 @@
       <v-btn color="grey" class="font-weight-bold" text @click="changeDialog">닫기</v-btn>
       <v-spacer></v-spacer>
       <v-btn
-        v-if="letterinfo.letterType == 'tboard'"
-        color="green darken-1"
+        color="#38ada9"
         text
-        @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
-      >지원 수락하기</v-btn>
+        class="font-weight-bold"
+        @click="teamAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
+        v-if="letterinfo.letterType == 'tboard'"
+        >지원수락</v-btn
+      >
       <v-btn
-        v-else
         color="#706fd3"
         text
-        @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
-      >영입 수락하기</v-btn>
+        class="font-weight-bold"
+        @click="memberAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
+        v-else
+        >제안수락</v-btn
+      >
+    </v-card-actions>
     </v-card-actions>
   </v-card>
 </template>
