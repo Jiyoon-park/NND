@@ -39,6 +39,68 @@
             </v-list-item-content>
           </v-list-item>
 
+          <!-- <div class="text-center">
+            <v-menu offset-y>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn dark v-bind="attrs" v-on="on">팀 게시판 목록</v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(team, index) in teams"
+                  :key="index"
+                  @click="$router.push(`/${team.teamboardNo}`).catch(() => {})"
+                >
+                  <v-list-item-title>{{ team.teamName }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>-->
+
+          <!-- <template v-slot:activator>
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title v-text="teammenu.title"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <v-list-item
+            v-for="subItem in teammenu.teams"
+            :key="subItem.teamboardNo"
+            @click="$router.push(`/${subItem.teamboardNo}`).catch(() => {})"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="subItem.teamName"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>-->
+
+          <v-list-item link>
+            <v-expansion-panels :flat="true">
+              <v-expansion-panel>
+                <v-expansion-panel-header :expand-icon="null">
+                  <v-list-item-content>
+                    <v-list-item-title style="text-align: center;"
+                      >팀 게시판 목록</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content
+                  v-for="(team, index) in teams"
+                  :key="index"
+                >
+                  <v-btn
+                    text
+                    @click="
+                      $router
+                        .push(`/teamprofile/${team.teamboardNo}`)
+                        .catch(() => {})
+                    "
+                    >{{ team.teamName }}</v-btn
+                  >
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-list-item>
+
           <v-list-item link>
             <v-list-item-content
               @click="$router.push('/gongmo').catch(() => {})"
@@ -90,12 +152,14 @@ export default {
     username: "",
     profileURL: "",
     drawer: null,
+
     items: [
       { icon: "apps", title: "Home", to: "/" },
       { icon: "bubble_chart", title: "About", to: "/about" },
     ],
     messages: 0,
     letters: [],
+    teams: [],
   }),
   created() {
     let token = window.$cookies.get("nnd");
@@ -107,6 +171,7 @@ export default {
       this.$store.state.myToken = token.object;
     }
     this.getLetters();
+    this.getMemberTeamList();
 
     EventBus.$on("letterRead", () => {
       this.messages--;
@@ -144,6 +209,18 @@ export default {
         }
       }
       return count;
+    },
+    getMemberTeamList() {
+      axios
+        .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
+        .then((res) => {
+          console.log("@@@@@@@@@@@");
+          this.teams = res.data;
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
