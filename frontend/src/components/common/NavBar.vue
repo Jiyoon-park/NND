@@ -147,7 +147,9 @@ export default {
     this.getMemberTeamList();
 
     EventBus.$on("letterRead", () => {
-      this.messages--;
+      if (this.messages > 0) {
+        this.messages--;
+      }
     });
   },
   methods: {
