@@ -42,7 +42,7 @@
                     text
                     @click="
                 $router
-                  .push({ name: 'TeamProfile', params: { teamboardno: team.teamboardNo } })
+                  .push({ name: 'TeamProfile' , params: { teamboardno: team.teamboardNo }})
                   .catch(() => {})
               "
                   >{{ team.teamName }}</v-btn>

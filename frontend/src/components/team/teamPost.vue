@@ -67,6 +67,7 @@ export default {
       title: "",
       content: "",
       notice: "",
+      teamboardno: "",
     };
   },
   props: {
@@ -77,16 +78,20 @@ export default {
       type: Object,
     },
   },
-  mounted() {
+
+  created() {
     let token = window.$cookies.get("nnd");
     console.log("zzzzzzzzzzzzzzzzzzzz");
     console.log(this.teaminfo.teamboardNo);
     axios
-      .get(`http://localhost:8080/teammenu/post/${this.teaminfo.teamboardno}`, {
-        headers: {
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-        },
-      })
+      .get(
+        `http://localhost:8080/teammenu/post/` + this.$store.state.teamboardno,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((res) => {
         console.log("***************");
         console.log(res.data);

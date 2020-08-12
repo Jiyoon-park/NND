@@ -10,8 +10,9 @@ export default new Vuex.Store({
     user: {},
     log: [],
     myToken: "", //cy
-    day:"",
-    contest:[],
+    day: "",
+    contest: [],
+    teamboardno: "",
   },
   getters: {
     getCountValue: (state) => {
@@ -47,12 +48,12 @@ export default new Vuex.Store({
       state.user = "";
       state.token = "";
     },
-    setDate(state, day){
+    setDate(state, day) {
       state.day = day;
     },
-    setContest(state,contest){
+    setContest(state, contest) {
       state.contest = contest;
-    }
+    },
   },
   // actions: {
   //   async getUserFromServer(context) {
