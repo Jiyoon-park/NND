@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.nnd.dto.Image;
 import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.dto.TeamRegist;
-import com.ssafy.nnd.repository.ImageRepository;
 import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.repository.TeamBoardRepository;
 import com.ssafy.nnd.repository.TeamRegistRepository;
@@ -39,31 +37,19 @@ public class TeamBoardController {
 	@Autowired
 	TeamRegistRepository teamregistRepository;
 	
-	@Autowired
-	ImageRepository imageRepository;
-
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
 //    	System.out.println(pageable);
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
-    // 좋아요 누른거 + 안누른거 다 검색
-    @PutMapping("/teamboard/search")
-	public List<Object> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
-		
-		List<String> query = (List<String>) map.get("query");
-		List<String> category = (List<String>) map.get("category");
-		List<String> skills = (List<String>) map.get("skills");
-		System.out.println("query : " + query);
-		System.out.println("category : " + category);
-		System.out.println("skills : " + skills);
-		return teamBoardRepository.findTeamBoardList(query, category, skills, pageable);
-	}
-    
-    // 좋아요 누른거 만 검색
+    // mode값에 따라서 전체검색 / 좋아요 누른것만 검색
+    /* (mode에 따라서 쿼리가 결정되게끔 구현)
+     * 1. mode: 1 => 전체검색     
+     * 2. mode: 2 => 좋아요 누른것만 검색
+     * */
     @PutMapping("/teamboard/search/{mno}")
-    public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
+    public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("mode") Long mode, @RequestParam("size") Long size, final Pageable pageable) {
     	
     	List<String> query = (List<String>) map.get("query");
     	List<String> category = (List<String>) map.get("category");
@@ -72,7 +58,7 @@ public class TeamBoardController {
     	System.out.println("category : " + category);
     	System.out.println("skills : " + skills);
     	
-    	return teamBoardRepository.findTeamBoardList(query, category, skills, mno, pageable);
+    	return teamBoardRepository.findTeamBoardList(query, category, skills, mno, mode, pageable);
     }
     
 //    @GetMapping("/teamboard/{id}")
@@ -103,7 +89,7 @@ public class TeamBoardController {
     }
     
     @PutMapping("/teamboard/save/{idx}") // 글쓴이 idx
-    public String createTeamBoard(@PathVariable Long idx, @RequestParam("url") String url, @RequestBody TeamBoard teamBoard){
+    public String createTeamBoard(@PathVariable Long idx, @RequestBody TeamBoard teamBoard){
     	Optional<Member> member = memberRepository.findById(idx);
     	String leaderEmail = member.get().getEmail();
     	
@@ -140,17 +126,6 @@ public class TeamBoardController {
     		}
     		
     	}
-    	
-    	// image table에 추가
-    	/*
-    	 * imageno(자동)
-    	 * boardno(필요) - newmemberBoard.getTeamboardNo()로 획득가능
-    	 * url(필요) - team/idx(위에서 매개변수로 얻어오기)
-    	 * type(필요) => 여기선 team으로 고정
-    	 */
-    	if (!url.equals("")) {	// 사진을 사용하는 경우엔 url이 빈값이 아니기 때문에 이때만 save해주도록 한다.
-    		imageRepository.save(new Image(newmemberBoard.getTeamboardNo(), url, "team"));
-		}
     	
     	return newmemberBoard.getTeamboardNo().toString();	// teamBoardNo를 반환해 firebase에 등록하는 url도 완성할 수 있도록 한다.
     }

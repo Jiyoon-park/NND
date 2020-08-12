@@ -49,6 +49,9 @@ public class TeamBoard {
 	@Column
 	private String content; // 본문내용
 
+	@Column
+	private String imageurl; // 이미지 링크
+
 	@Column(name = "kakaolink")
 	private String kakaoLink;
 
@@ -67,36 +70,31 @@ public class TeamBoard {
 	@Column
 	private String name;
 
-//
-//	@OneToOne(fetch=FetchType.LAZY)
-//	private Member member;
-//
 	public TeamBoard() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
-		String deadLine, String title, String content, String kakaoLink, String techStack, String category, int likeCnt,
-		LocalDateTime createDate, String name) {
-	super();
-	this.teamboardNo = teamboardNo;
-	this.idx = idx;
-	this.email = email;
-	this.teamName = teamName;
-	this.memberEmails = memberEmails;
-	this.groupSize = groupSize;
-	this.deadLine = deadLine;
-	this.title = title;
-	this.content = content;
-	this.kakaoLink = kakaoLink;
-	this.techStack = techStack;
-	this.category = category;
-	this.likeCnt = likeCnt;
-	this.createDate = createDate;
-	this.name = name;
-}
 
+	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
+			String deadLine, String title, String content, String imageurl, String kakaoLink, String techStack,
+			String category, int likeCnt, LocalDateTime createDate, String name) {
+		super();
+		this.teamboardNo = teamboardNo;
+		this.idx = idx;
+		this.email = email;
+		this.teamName = teamName;
+		this.memberEmails = memberEmails;
+		this.groupSize = groupSize;
+		this.deadLine = deadLine;
+		this.title = title;
+		this.content = content;
+		this.imageurl = imageurl;
+		this.kakaoLink = kakaoLink;
+		this.techStack = techStack;
+		this.category = category;
+		this.likeCnt = likeCnt;
+		this.createDate = createDate;
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;
@@ -218,16 +216,25 @@ public class TeamBoard {
 		this.createDate = createDate;
 	}
 
+	public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
 
 	@Override
 	public String toString() {
-		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
-				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
-				+ title + ", content=" + content + ", kakaoLink=" + kakaoLink + ", techStack=" + techStack
-				+ ", category=" + category + ", likeCnt=" + likeCnt + ", createDate=" + createDate + ", name=" + name
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TeamBoard [teamboardNo=").append(teamboardNo).append(", idx=").append(idx).append(", email=")
+				.append(email).append(", teamName=").append(teamName).append(", memberEmails=").append(memberEmails)
+				.append(", groupSize=").append(groupSize).append(", deadLine=").append(deadLine).append(", title=")
+				.append(title).append(", content=").append(content).append(", imageurl=").append(imageurl)
+				.append(", kakaoLink=").append(kakaoLink).append(", techStack=").append(techStack).append(", category=")
+				.append(category).append(", likeCnt=").append(likeCnt).append(", createDate=").append(createDate)
+				.append(", name=").append(name).append("]");
+		return builder.toString();
 	}
-
-	
 
 }
