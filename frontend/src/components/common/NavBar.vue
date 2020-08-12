@@ -52,27 +52,6 @@
           </v-list-item>
 
           <v-list-item link>
-            <v-expansion-panels>
-              <v-expansion-panel>
-                <v-expansion-panel-header>
-                  <v-list-item-content>
-                    <v-list-item-title>팀 게시판 목록</v-list-item-title>
-                  </v-list-item-content>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content v-for="(team, index) in teams" :key="index">
-                  <v-btn
-                    @click="
-                $router
-                  .push({ name: 'TeamProfile', params: { teamboardno: team.teamboardNo } })
-                  .catch(() => {})
-              "
-                  >{{team.teamName}}</v-btn>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-list-item>
-
-          <v-list-item link>
             <v-list-item-content @click="$router.push('/gongmo').catch(() => {})">
               <v-list-item-title>외부 공모전</v-list-item-title>
             </v-list-item-content>
