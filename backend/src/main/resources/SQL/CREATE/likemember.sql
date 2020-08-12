@@ -1,3 +1,4 @@
+
 CREATE TABLE likemember(
     likeno                      int    NOT NULL PRIMARY KEY AUTO_INCREMENT, 
     mboard                     int    NOT NULL,    

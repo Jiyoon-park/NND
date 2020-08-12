@@ -1,6 +1,7 @@
 package com.ssafy.nnd.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -53,8 +54,10 @@ public class ContestController {
 	//		return id;
 	//	}
 
+	int temp = 0;
 	@GetMapping("/contest")
 	public  List<Contest> getAllcontest() throws Exception {
+
 		List<Contest> list = new LinkedList<Contest>();
 		boolean flag = false; //마감flag
 		for (int i = 1; i <= 1; i++) {  //느려서 바꾼거 실제로 i<=3

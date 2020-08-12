@@ -17,6 +17,12 @@ public class TeamPost {
 	@Column (name = "teamboardno")
 	private  Long teamboardNo;  // 외래키  팀 번호
 	
+	@Column (name = "memberidx")
+	private Long memberIdx;
+	
+	@Column
+	private String writer;
+	
 	@Column
 	private String title; // 글 제목
 	
@@ -25,16 +31,16 @@ public class TeamPost {
 	
 	@Column
 	private int notice;  // 공지사항 여부 true false(1,0)
-
+	
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;  //작성 시간
 
+	public TeamPost() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Long getTeamPostNo() {
 		return teamPostNo;
-	}
-
-	public void setTeamPostNo(Long teamPostNo) {
-		this.teamPostNo = teamPostNo;
 	}
 
 	public Long getTeamboardNo() {
@@ -43,6 +49,22 @@ public class TeamPost {
 
 	public void setTeamboardNo(Long teamboardNo) {
 		this.teamboardNo = teamboardNo;
+	}
+
+	public Long getMemberIdx() {
+		return memberIdx;
+	}
+
+	public void setMemberIdx(Long memberIdx) {
+		this.memberIdx = memberIdx;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public String getTitle() {
@@ -77,26 +99,16 @@ public class TeamPost {
 		this.createDate = createDate;
 	}
 
-	
-	public TeamPost() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public TeamPost(Long teamPostNo, Long teamboardNo, String title, String content, int notice,
-			LocalDateTime createDate) {
-		super();
+	public void setTeamPostNo(Long teamPostNo) {
 		this.teamPostNo = teamPostNo;
-		this.teamboardNo = teamboardNo;
-		this.title = title;
-		this.content = content;
-		this.notice = notice;
-		this.createDate = createDate;
 	}
 
 	@Override
 	public String toString() {
-		return "TeamPost [teamPostNo=" + teamPostNo + ", teamboardNo=" + teamboardNo + ", title=" + title + ", content="
-				+ content + ", notice=" + notice + ", createDate=" + createDate + "]";
+		return "TeamPost [teamPostNo=" + teamPostNo + ", teamboardNo=" + teamboardNo + ", memberIdx=" + memberIdx
+				+ ", writer=" + writer + ", title=" + title + ", content=" + content + ", notice=" + notice
+				+ ", createDate=" + createDate + "]";
 	}
+
 	
 }
