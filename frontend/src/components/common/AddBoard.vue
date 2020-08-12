@@ -298,20 +298,14 @@ export default {
                         this.imageUrl = '';
 
                         this.changeDialog();
-                        this.$router.go();  // 이걸 넣으면 새로고침이 된다...왜?
-                        // this.goMain();
+                        this.goMain();
                       }
                       );
           } else {
             alert("등록성공");
             this.changeDialog();
-            this.$router.go();  // 이걸 넣으면 새로고침이 된다...왜?
-            // this.goMain();
+            this.goMain();
           }
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("실패");
         })
         .catch((error) => {
           console.log(error.response);
@@ -319,9 +313,12 @@ export default {
         });
     },
     goMain() {
-      this.$router.push({
-        name: "Home",
-      });
+      console.log(`현재 url : ${this.$route.path}`);
+      if (this.$route.path == '/') {
+        this.$router.go();
+      } else {
+        this.$router.push('/');
+      }
     },
     changeDialog() {
       this.$emit("changeDialog");
