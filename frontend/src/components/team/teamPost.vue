@@ -6,7 +6,9 @@
         <v-row justify="center">
           <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">글쓰기</v-btn>
+              <v-btn color="primary" dark v-bind="attrs" v-on="on"
+                >글쓰기</v-btn
+              >
             </template>
             <v-card>
               <v-card-title>
@@ -16,13 +18,25 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field label="제목*" required v-model="title"></v-text-field>
+                      <v-text-field
+                        label="제목*"
+                        required
+                        v-model="title"
+                      ></v-text-field>
                     </v-col>
                     <v-col cols="12">
-                      <v-textarea label="내용*" required v-model="content"></v-textarea>
+                      <v-textarea
+                        label="내용*"
+                        required
+                        v-model="content"
+                      ></v-textarea>
                     </v-col>
                     <v-col cols="12" sm="6">
-                      <v-select :items="['공지']" label="공지" v-model="notice"></v-select>
+                      <v-select
+                        :items="['공지']"
+                        label="공지"
+                        v-model="notice"
+                      ></v-select>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -30,8 +44,12 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false">닫기</v-btn>
-                <v-btn color="blue darken-1" text @click="addPost()">저장</v-btn>
+                <v-btn color="blue darken-1" text @click="dialog = false"
+                  >닫기</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="addPost()"
+                  >저장</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -81,20 +99,14 @@ export default {
 
   created() {
     let token = window.$cookies.get("nnd");
-    console.log("zzzzzzzzzzzzzzzzzzzz");
-    console.log(this.teaminfo.teamboardNo);
+
     axios
-      .get(
-        `http://localhost:8080/teammenu/post/` + this.$store.state.teamboardno,
-        {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        }
-      )
+      .get(`http://localhost:8080/teammenu/post/` + this.$store.state.teamNo, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
       .then((res) => {
-        console.log("***************");
-        console.log(res.data);
         this.teamposts = res.data;
       })
       .catch((err) => {

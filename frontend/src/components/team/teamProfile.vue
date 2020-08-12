@@ -7,8 +7,8 @@
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
-        <h3>팀 형태 : {{teaminfo.category}}</h3>
-        <p># 팀 이름 : {{teaminfo.teamName}}</p>
+        <h3>팀 형태 : {{ teaminfo.category }}</h3>
+        <p># 팀 이름 : {{ teaminfo.teamName }}</p>
         <!-- <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>-->
@@ -69,7 +69,7 @@ export default {
       user: {},
       profileURL: "",
       teaminfo: {},
-      teamno: "",
+      teamboardno: "",
     };
   },
 
@@ -100,7 +100,7 @@ export default {
     //this.teamboardno = this.$store.state.teamNo;
 
     axios
-      .get(`http://localhost:8080/teamboard/list/${this.teamno}`, {
+      .get(`http://localhost:8080/teamboard/list/${this.teamboardno}`, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },

@@ -16,7 +16,9 @@
         <div class="ml-3">
           <p class="mb-1">{{ postinfo.writer }}</p>
           <!-- <p class="mb-1">{{ letterinfo.createDate }}</p> -->
-          <p class="mb-1">{{ postinfo.createDate }}</p>
+          <p class="mb-1">
+            {{ $moment(postinfo.createdate).format("YYYY-MM-DD") }}
+          </p>
         </div>
       </div>
       <div class="rounded grey lighten-2 pa-5 mt-3">
@@ -31,28 +33,41 @@
       <v-dialog v-model="updateDialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            v-if="postinfo.memberIdx==userinfo.idx"
+            v-if="postinfo.memberIdx == userinfo.idx"
             color="green darken-1"
             v-bind="attrs"
             v-on="on"
             text
-          >수정하기</v-btn>
+            >수정하기</v-btn
+          >
         </template>
         <v-card>
           <v-card-title>
-            <span class="headline">게시판 글쓰기</span>
+            <span class="headline">게시판 글쓰기 수정</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="제목*" required v-model="title"></v-text-field>
+                  <v-text-field
+                    label="제목*"
+                    required
+                    v-model="title"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea label="내용*" required v-model="content"></v-textarea>
+                  <v-textarea
+                    label="내용*"
+                    required
+                    v-model="content"
+                  ></v-textarea>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-select :items="['공지']" label="공지" v-model="notice"></v-select>
+                  <v-select
+                    :items="['공지']"
+                    label="공지"
+                    v-model="notice"
+                  ></v-select>
                 </v-col>
               </v-row>
             </v-container>
@@ -60,17 +75,20 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="updateDialog = false">닫기</v-btn>
+            <v-btn color="blue darken-1" text @click="updateDialog = false"
+              >닫기</v-btn
+            >
             <v-btn color="blue darken-1" text @click="postUpdate()">수정</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
       <v-btn
-        v-if="postinfo.memberIdx==userinfo.idx"
+        v-if="postinfo.memberIdx == userinfo.idx"
         color="green darken-1"
         text
         @click="postDelete()"
-      >삭제하기</v-btn>
+        >삭제하기</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -132,6 +150,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.$emit("changeDialog");
+          alert("성공");
         })
         .catch((err) => {
           console.log(err.response);
