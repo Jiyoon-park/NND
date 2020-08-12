@@ -15,16 +15,16 @@ import java.time.LocalDateTime;
 public class MemberBoard {
 
 	@Id
-	@Column (name = "boardno")
+	@Column(name = "boardno")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long boardNo; // 게시글 번호
 
 	@Column
-	private  Long idx;
-	
+	private Long idx;
+
 	@Column
 	private String email; // 작성자 이메일
-	
+
 	@Column
 	private String name;
 
@@ -33,6 +33,9 @@ public class MemberBoard {
 
 	@Column
 	private String content; // 내용
+
+	@Column
+	private String imageurl; // 이미지 링크
 
 	@Column(name = "category")
 	private String category; // 내용스택
@@ -46,7 +49,14 @@ public class MemberBoard {
 	@Column
 	private int likecnt; // 개수
 
-	
+	public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -95,7 +105,6 @@ public class MemberBoard {
 		this.content = content;
 	}
 
-
 	public String getTechStack() {
 		return techStack;
 	}
@@ -132,8 +141,8 @@ public class MemberBoard {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MemberBoard(Long boardNo, Long idx, String email, String name, String title, String content, String category,
-			String techStack, LocalDateTime createDate, int likecnt) {
+	public MemberBoard(Long boardNo, Long idx, String email, String name, String title, String content, String imageurl,
+			String category, String techStack, LocalDateTime createDate, int likecnt) {
 		super();
 		this.boardNo = boardNo;
 		this.idx = idx;
@@ -141,6 +150,7 @@ public class MemberBoard {
 		this.name = name;
 		this.title = title;
 		this.content = content;
+		this.imageurl = imageurl;
 		this.category = category;
 		this.techStack = techStack;
 		this.createDate = createDate;
@@ -152,9 +162,10 @@ public class MemberBoard {
 		StringBuilder builder = new StringBuilder();
 		builder.append("MemberBoard [boardNo=").append(boardNo).append(", idx=").append(idx).append(", email=")
 				.append(email).append(", name=").append(name).append(", title=").append(title).append(", content=")
-				.append(content).append(", category=").append(category).append(", techStack=").append(techStack)
-				.append(", createDate=").append(createDate).append(", likecnt=").append(likecnt).append("]");
+				.append(content).append(", imageurl=").append(imageurl).append(", category=").append(category)
+				.append(", techStack=").append(techStack).append(", createDate=").append(createDate)
+				.append(", likecnt=").append(likecnt).append("]");
 		return builder.toString();
 	}
-	
+
 }

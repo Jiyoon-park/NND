@@ -48,22 +48,13 @@ public class TeamBoardController {
     	return teamBoardRepository.findAllByOrderByTeamboardNoDesc(pageable);
     }
     
-    // 좋아요 누른거 + 안누른거 다 검색
-    @PutMapping("/teamboard/search")
-	public List<Object> searchTeamBoard(@RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
-		
-		List<String> query = (List<String>) map.get("query");
-		List<String> category = (List<String>) map.get("category");
-		List<String> skills = (List<String>) map.get("skills");
-		System.out.println("query : " + query);
-		System.out.println("category : " + category);
-		System.out.println("skills : " + skills);
-		return teamBoardRepository.findTeamBoardList(query, category, skills, pageable);
-	}
-    
-    // 좋아요 누른거 만 검색
+    // mode값에 따라서 전체검색 / 좋아요 누른것만 검색
+    /* (mode에 따라서 쿼리가 결정되게끔 구현)
+     * 1. mode: 1 => 전체검색     
+     * 2. mode: 2 => 좋아요 누른것만 검색
+     * */
     @PutMapping("/teamboard/search/{mno}")
-    public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("size") Long size, final Pageable pageable) {
+    public List<Object> searchTeamBoard(@PathVariable Long mno, @RequestBody Map<String, Object> map, @RequestParam("page") Long page, @RequestParam("mode") Long mode, @RequestParam("size") Long size, final Pageable pageable) {
     	
     	List<String> query = (List<String>) map.get("query");
     	List<String> category = (List<String>) map.get("category");
@@ -72,7 +63,7 @@ public class TeamBoardController {
     	System.out.println("category : " + category);
     	System.out.println("skills : " + skills);
     	
-    	return teamBoardRepository.findTeamBoardList(query, category, skills, mno, pageable);
+    	return teamBoardRepository.findTeamBoardList(query, category, skills, mno, mode, pageable);
     }
     
 //    @GetMapping("/teamboard/{id}")
@@ -103,7 +94,7 @@ public class TeamBoardController {
     }
     
     @PutMapping("/teamboard/save/{idx}") // 글쓴이 idx
-    public String createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
+    public String createTeamBoard(@PathVariable Long idx, @RequestBody TeamBoard teamBoard){
     	Optional<Member> member = memberRepository.findById(idx);
     	String leaderEmail = member.get().getEmail();
     	
@@ -111,7 +102,7 @@ public class TeamBoardController {
     	teamBoard.setIdx(member.get().getIdx());
     	teamBoard.setEmail(leaderEmail);
     	teamBoard.setName(member.get().getName());
-
+    	
     	//1차저장 teamboardno 만들기 
     	System.out.println(teamBoard.toString());
     	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
@@ -140,8 +131,8 @@ public class TeamBoardController {
     		}
     		
     	}
-    	return "save success";
     	
+    	return newmemberBoard.getTeamboardNo().toString();	// teamBoardNo를 반환해 firebase에 등록하는 url도 완성할 수 있도록 한다.
     }
 
     @DeleteMapping("/teamboard/delete/{teamboardno}")
