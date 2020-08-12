@@ -60,9 +60,10 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
-      user: "",
+      user: {},
       profileURL: "",
-      teaminfo: [],
+      teamboardno: "",
+      teaminfo: {},
     };
   },
   created() {
@@ -82,12 +83,10 @@ export default {
       });
 
     //teaminfo 가져오는 메소드
-    let teamboardno = this.$route.params.teamboardno;
+    this.teamboardno = this.$route.params.teamboardno;
 
-    console.log("팀보드넘버 확인");
-    console.log(teamboardno);
     axios
-      .get(`http://localhost:8080/teamboard/list/${teamboardno}`, {
+      .get(`http://localhost:8080/teamboard/list/${this.teamboardno}`, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },
