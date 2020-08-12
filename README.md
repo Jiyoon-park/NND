@@ -18,3 +18,6 @@
 
 ## 8/10 회의롱
 *링크 : <https://docs.google.com/document/d/1ybVgoP5f1RL31oAF-zm7F-TjDuvZlFkx5P5ekKk1pDk/edit />
+
+## 8/12 회의롱
+*링크 : <https://docs.google.com/document/d/1r-OnBPmL1IjS00WdqeVatwkUjDF5X2ts_zW0XW-oDtg/edit?usp=sharing />

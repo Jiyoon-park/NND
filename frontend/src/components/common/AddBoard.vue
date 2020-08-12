@@ -216,11 +216,13 @@ export default {
         .then((response) => {
           console.log(response);
           alert("등록성공");
+          this.changeDialog();
 
           this.teamName = null;
           this.title = null;
           this.content = null;
           this.groupSize = null;
+          this.memberEmails = [];
           this.category = "";
           this.techStack = [];
           this.memberstack = [];
@@ -230,15 +232,6 @@ export default {
         .catch((error) => {
           console.log(error.response);
           alert("실패");
-
-          this.teamName = null;
-          this.title = null;
-          this.content = null;
-          this.groupSize = null;
-          this.category = "";
-          this.techStack = [];
-          this.memberstack = [];
-          this.date = new Date().toISOString().substr(0, 10);
         });
     },
     goMain() {
