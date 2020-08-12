@@ -37,6 +37,11 @@ public class TeamBoardController {
 	@Autowired
 	TeamRegistRepository teamregistRepository;
 
+	@GetMapping("teamboard/list/{teamboardno}")
+	public TeamBoard getOneTeamboard(@RequestBody Long teamboardno) {
+		return teamBoardRepository.findById(teamboardno).get();
+	}
+	
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
 //    	System.out.println(pageable);
