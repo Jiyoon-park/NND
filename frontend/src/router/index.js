@@ -12,6 +12,7 @@ import AddBoard from "../components/common/AddBoard.vue";
 import LetterList from "../components/letter/LetterList.vue";
 import LetterDetail from "../components/letter/LetterDetail.vue";
 import Gongmo from "../components/gongmo/gongmo.vue";
+import TempProfile from "../components/team/teamProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -89,6 +90,11 @@ const routes = [
     path: "/gongmo",
     name: "gongmo",
     component: Gongmo,
+  },
+  {
+    path: "/teamprofile",
+    name: "TeamProfile",
+    component: TempProfile,
   },
 ];
 
