@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
+
 Vue.use(Vuex);
 
 //토큰 저장
@@ -10,9 +12,12 @@ export default new Vuex.Store({
     user: {},
     log: [],
     myToken: "", //cy
-    day:"",
-    contest:[],
+    day: "",
+    contest: [],
+    teamNo: "",
   },
+  plugins: [createPersistedState()],
+
   getters: {
     getCountValue: (state) => {
       return state.count;
@@ -31,6 +36,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    nchange: (state) => state.teamNo,
     increment(state) {
       state.count++;
     },
@@ -47,12 +53,12 @@ export default new Vuex.Store({
       state.user = "";
       state.token = "";
     },
-    setDate(state, day){
+    setDate(state, day) {
       state.day = day;
     },
-    setContest(state,contest){
+    setContest(state, contest) {
       state.contest = contest;
-    }
+    },
   },
   // actions: {
   //   async getUserFromServer(context) {
