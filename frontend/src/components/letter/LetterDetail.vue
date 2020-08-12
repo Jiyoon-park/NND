@@ -1,17 +1,10 @@
 <template>
   <v-card>
-    <v-toolbar
-      flat
-      dark
-      color="#38ada9"
-      v-if="letterinfo.letterType == 'tboard'"
-    >
+    <v-toolbar flat dark color="#38ada9" v-if="letterinfo.letterType == 'tboard'">
       <v-btn icon dark @click="changeDialog">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title v-if="item.tab == '받은 편지함'"
-        >받은 편지</v-toolbar-title
-      >
+      <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -19,9 +12,7 @@
       <v-btn icon dark @click="changeDialog">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title v-if="item.tab == '받은 편지함'"
-        >받은 편지</v-toolbar-title
-      >
+      <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -44,9 +35,7 @@
         </div>
       </div>
       <div class="rounded grey lighten-3 pa-3 mt-3">
-        <span class="subheader" v-if="letterinfo.letterType == 'mboard'"
-          >✔ 팀 영입 제안입니다.</span
-        >
+        <span class="subheader" v-if="letterinfo.letterType == 'mboard'">✔ 팀 영입 제안입니다.</span>
         <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
 
         <p class="mt-2">{{ letterinfo.content }}</p>
@@ -54,15 +43,13 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions v-if="item.tab == '받은 편지함'">
-      <v-btn color="grey" class="font-weight-bold" text @click="changeDialog"
-        >닫기</v-btn
-      >
+      <v-btn color="grey" class="font-weight-bold" text @click="changeDialog">닫기</v-btn>
       <v-spacer></v-spacer>
       <v-btn
         color="#38ada9"
         text
         class="font-weight-bold"
-        @click="teamAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
+        @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
         v-if="letterinfo.letterType == 'tboard'"
         >지원수락</v-btn
       >
@@ -70,7 +57,7 @@
         color="#706fd3"
         text
         class="font-weight-bold"
-        @click="memberAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
+        @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
         v-else
         >제안수락</v-btn
       >
