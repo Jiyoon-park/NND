@@ -1,3 +1,4 @@
+
  CREATE TABLE `memberboard` (  
   `boardno` int(10) NOT NULL AUTO_INCREMENT,
   `idx` int DEFAULT NULL, 

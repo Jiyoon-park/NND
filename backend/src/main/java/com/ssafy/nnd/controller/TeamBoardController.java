@@ -36,6 +36,11 @@ public class TeamBoardController {
 	
 	@Autowired
 	TeamRegistRepository teamregistRepository;
+
+	@GetMapping("teamboard/list/{teamboardno}")
+	public Object getOneTeamboard(@PathVariable Long teamboardno) {
+		return teamBoardRepository.findById(teamboardno);
+	}
 	
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){

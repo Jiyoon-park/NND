@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "App",
-  
+
   components: {},
 
   // created () {
@@ -30,4 +30,3 @@ export default {
   // }
 };
 </script>
-

@@ -1,49 +1,63 @@
 <template>
-  <div>
-    <v-list-item
-      class="letter py-3"
-      @click="onLetterDetail(`${letterinfo.letterNo}`)"
-      @click.stop="dialog = true"
-    >
-      <div class="mr-4">
-        <v-avatar color="grey" size="60">
-          <span v-if="!letterinfo.profile" class="white--text headline"></span>
-          <img v-else :src="letterinfo.profile" />
-        </v-avatar>
-      </div>
-      <v-list-item-content>
-        <div>
-          <v-list-item-title v-text="letterinfo.name" class="font-weight-black"></v-list-item-title>
-          <i
-            class="fas fa-envelope float-right"
-            style="font-size:20px; color: #7E57C2;"
-            v-if="!letterinfo.read"
-          ></i>
-          <i
-            class="fas fa-envelope-open-text float-right"
-            style="font-size:20px; color: #BDBDBD;"
-            v-else
-          ></i>
-          <br />
-          <div class="d-flex">
-            <v-list-item-title
-              v-text="letterinfo.content"
-              class="text--secondary d-inline-block text-truncate"
-              style="max-width: 160px;"
-            ></v-list-item-title>
-            <p class="mb-0">{{ letterDate }}</p>
-          </div>
+  <div class="letter">
+    <v-card outlined>
+      <v-list-item
+        @click="onLetterDetail(`${letterinfo.letterNo}`)"
+        @click.stop="dialog = true"
+      >
+        <div class="mr-3">
+          <v-avatar color="grey" size="60">
+            <span
+              v-if="!letterinfo.profile"
+              class="white--text headline"
+            ></span>
+            <img v-else :src="letterinfo.profile" />
+          </v-avatar>
         </div>
-      </v-list-item-content>
-    </v-list-item>
-    <v-dialog v-model="dialog" max-width="300">
-      <LetterDetail
-        :item="item"
-        :letterinfo="letterinfo"
-        :dialog="dialog"
-        @changeDialog="dialog = false"
-      />
-    </v-dialog>
+        <v-list-item-content style="position:relative;">
+          <div>
+            <v-list-item-title
+              v-text="letterinfo.name"
+              class="font-weight-black mb-2"
+            ></v-list-item-title>
+            <!-- 편지 읽음/안읽음  -->
+            <div class="d-flex">
+              <v-list-item-title
+                v-text="letterinfo.content"
+                class="text--secondary d-inline-block text-truncate"
+                style="max-width: 160px;"
+              ></v-list-item-title>
+              <p class="mb-0">{{ letterDate }}</p>
+            </div>
+          </div>
+          <div
+            v-if="item.tab == '받은 편지함'"
+            style="position:absolute; right:0;"
+          >
+            <i
+              class="fas fa-envelope"
+              style="font-size:20px; color:#7986CB"
+              v-if="!letterinfo.read"
+            ></i>
+            <i
+              class="fas fa-envelope-open-text"
+              style="font-size:20px; color: #BDBDBD;"
+              v-else
+            ></i>
+          </div>
+        </v-list-item-content>
+      </v-list-item>
+      <v-dialog v-model="dialog" min-width="350" max-width="500">
+        <LetterDetail
+          :item="item"
+          :letterinfo="letterinfo"
+          :dialog="dialog"
+          @changeDialog="dialog = false"
+        />
+      </v-dialog>
+      <div class="type-team" v-if="letterinfo.letterType == 'tboard'"></div>
+      <div class="type-member" v-else></div>
+    </v-card>
   </div>
 </template>
 
@@ -87,7 +101,7 @@ export default {
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     },
-    dateFormatted: function (dt) {
+    dateFormatted: function(dt) {
       console.log("dt : " + dt);
       var min = 60 * 1000;
       var c = new Date();
@@ -149,5 +163,26 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.letter {
+  position: relative;
+}
+
+.type-team {
+  position: absolute;
+  width: 12px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #38ada9;
+}
+
+.type-member {
+  position: absolute;
+  width: 12px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #706fd3;
+}
 </style>

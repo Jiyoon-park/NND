@@ -12,6 +12,6 @@ import com.ssafy.nnd.dto.TeamPost;
 
 public interface TeamPostRepository extends JpaRepository<TeamPost,Long>{
 	
-	List<TeamPost> findByTeamboardNoOrderByTeamPostNoDesc(Long teamboardno,Pageable pageable);
+	List<TeamPost> findByTeamboardNoOrderByTeamPostNoDesc(Long teamboardno);
 	
 }
