@@ -38,7 +38,7 @@ public class TeamBoardController {
 	TeamRegistRepository teamregistRepository;
 
 	@GetMapping("teamboard/list/{teamboardno}")
-	public TeamBoard getOneTeamboard(@RequestBody Long teamboardno) {
+	public TeamBoard getOneTeamboard(@PathVariable Long teamboardno) {
 		return teamBoardRepository.findById(teamboardno).get();
 	}
 	
