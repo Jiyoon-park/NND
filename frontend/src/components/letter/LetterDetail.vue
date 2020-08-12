@@ -49,7 +49,7 @@
         color="#38ada9"
         text
         class="font-weight-bold"
-        @click="teamAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
+        @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
         v-if="letterinfo.letterType == 'tboard'"
         >지원수락</v-btn
       >
@@ -57,11 +57,10 @@
         color="#706fd3"
         text
         class="font-weight-bold"
-        @click="memberAccept(letterinfo.sendIdx, letterinfo.receiveIdx)"
+        @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
         v-else
         >제안수락</v-btn
       >
-    </v-card-actions>
     </v-card-actions>
   </v-card>
 </template>
