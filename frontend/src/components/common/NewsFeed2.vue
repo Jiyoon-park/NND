@@ -24,7 +24,7 @@
                 </div>
               </div>
             </div>
-            <v-img v-if="!teaminfo.url"
+            <v-img v-if="teaminfo.url"
               :src="teaminfo.url"
               height="194"
             ></v-img>
