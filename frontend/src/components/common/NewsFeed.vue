@@ -11,8 +11,7 @@
                   .catch(() => {})
               "
               dark
-              >mdi-account-circle</v-icon
-            >
+            >mdi-account-circle</v-icon>
           </v-avatar>
           <v-col cols="4" md="4">{{ teaminfo.name }}</v-col>
           <v-col cols="6" md="6">
@@ -23,8 +22,7 @@
                 text-color="white"
                 v-for="stack in JSON.parse(stacks)"
                 :key="stack"
-                >{{ stack }}</v-chip
-              >
+              >{{ stack }}</v-chip>
             </div>
           </v-col>
         </v-list-item>
@@ -34,9 +32,11 @@
         <v-expansion-panels class="elevation-0 mt-5">
           <v-expansion-panel>
             <v-expansion-panel-header></v-expansion-panel-header>
-            <v-expansion-panel-content>{{
+            <v-expansion-panel-content>
+              {{
               teaminfo.content
-            }}</v-expansion-panel-content>
+              }}
+            </v-expansion-panel-content>
             <v-card-actions>
               <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
@@ -45,20 +45,14 @@
                 <v-icon>mdi-star</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="applyform" right
-                >꼬시기</v-btn
-              >
+              <v-btn color="green darken-1" text @click="applyform" right>꼬시기</v-btn>
             </v-card-actions>
           </v-expansion-panel>
         </v-expansion-panels>
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
-            <v-img
-              class="header"
-              height="200px"
-              src="../../assets/images/member2.jpg"
-            ></v-img>
+            <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
             <v-card-title class="header-text justify-center font-italic">
               ❝ {{ teaminfo.teamName }}팀으로
               <br />
@@ -68,23 +62,19 @@
             <v-card-text class="mt-5 pb-0">
               <div class="mt-3">
                 <v-row>
-                  <p class="mb-0 pl-1">
-                    {{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉
-                  </p>
-                  <select name="teamno" id="teamno"> </select>
+                  <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
+                  <v-overflow-btn
+                    v-model="teamno"
+                    :items="teamlist"
+                    item-text="teamName"
+                    item-value="teamboardNo"
+                  ></v-overflow-btn>
                 </v-row>
-                <v-textarea
-                  filled
-                  v-model="content"
-                  name="content"
-                  placeholder="내용을 작성해주세요."
-                ></v-textarea>
+                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="blue darken-1" text @click="dialog = false"
-                >취소</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="submit">영입하기</v-btn>
             </v-card-actions>
@@ -116,14 +106,17 @@ export default {
       letterType: "mboard",
       letterNo: "",
       createDate: "",
-      teamno: ["a", "b", "c", "d"],
+      teamlist: [],
+      memberidx: this.teaminfo.idx,
+      teamno: "",
+      mlikeno: this.teaminfo.likeno,
     };
   },
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
   created() {
-    if (this.teaminfo.mno != null) {
+    if (this.teaminfo.mno == this.$store.state.myToken.idx) {
       console.log("즐겨찾기 상태");
       this.favorite = true;
     } else {
@@ -133,23 +126,35 @@ export default {
   },
   methods: {
     addFavorite() {
+      let token = window.$cookies.get("nnd");
+
       axios
         .put(
           "http://localhost:8080/likemember/save/" +
             this.$store.state.myToken.idx +
             "/" +
-            this.teaminfo.boardno
+            this.teaminfo.boardno,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
-        .then(() => {
+        .then((data) => {
           this.favorite = true;
           alert("즐겨찾기에 등록되었습니다.");
+          this.mlikeno = data.data;
         });
     },
     delFavorite() {
+      let token = window.$cookies.get("nnd");
+
       axios
-        .delete(
-          "http://localhost:8080/likemember/delete/" + this.teaminfo.likeno
-        )
+        .delete("http://localhost:8080/likemember/delete/" + this.mlikeno, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
         .then(() => {
           this.favorite = false;
           alert("즐겨찾기에서 삭제되었습니다.");
@@ -161,7 +166,7 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.letterType + " type");
-
+      console.log(this.teamno);
       axios
         .put(
           "http://localhost:8080/letter/create/" + this.lettertype,
@@ -171,6 +176,7 @@ export default {
             content: this.content,
             letterNo: this.letterNo,
             createDate: this.createDate,
+            teamboardNo: this.teamno,
           },
           {
             headers: {
@@ -197,6 +203,21 @@ export default {
         this.profileURL = token.object.profile;
         this.sendIdx = token.object.idx;
       }
+
+      axios
+        .get(
+          "http://localhost:8080/letter/member/teamlist/" +
+            this.$store.state.myToken.idx,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
+        .then((data) => {
+          this.teamlist = data.data;
+          console.log(this.teamlist);
+        });
     },
   },
 };

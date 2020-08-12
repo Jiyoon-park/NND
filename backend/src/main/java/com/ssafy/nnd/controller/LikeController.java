@@ -45,7 +45,7 @@ public class LikeController {
 	
 	//개인 게시글 즐겨찾기 추가
 	@PutMapping("likemember/save/{mno}/{mboard}")
-	public @ResponseBody String createLikeMember(@PathVariable Long mno , @PathVariable Long mboard) {
+	public @ResponseBody Long createLikeMember(@PathVariable Long mno , @PathVariable Long mboard) {
 		System.out.println("회원:"+mno + "게시글 번호:"+mboard);
 		LikeMember like = new LikeMember();
 //		
@@ -53,21 +53,21 @@ public class LikeController {
 //    	Long no = Long.parseLong(boardno);
 		like.setMboard(mboard);
 		like.setMno(mno);
-		likememberRepository.save(like);
+		LikeMember newlike = likememberRepository.save(like);
 		
-		return "success";
+		return newlike.likeno;
 	}
 	//팀 게시글 즐겨찾기 추가
 	@PutMapping("liketeam/save/{mno}/{tboard}")
-	public @ResponseBody String createLikeTeam(@PathVariable Long mno , @PathVariable Long tboard) {
+	public @ResponseBody Long createLikeTeam(@PathVariable Long mno , @PathVariable Long tboard) {
 		System.out.println("회원:"+mno + "팀 게시글 번호:"+tboard);
 		LikeTeam like = new LikeTeam();
 		
     	like.setMno(mno);
 		like.setTboard(tboard);
-		liketeamRepository.save(like);
+		LikeTeam newlike = liketeamRepository.save(like);
 		
-		return "success";
+		return newlike.likeno;
 	}
 	
 	//개인 게시글 즐겨찾기 삭제

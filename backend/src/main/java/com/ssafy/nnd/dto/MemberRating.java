@@ -17,13 +17,13 @@ public class MemberRating {
 	@Column
 	private Long idx;   //외래키 평가 대상자 ( Member)
 	
-	@Column
+	@Column (name="commitcnt")
 	private Long commitCnt; // 커밋개수
 	
-	@Column 
+	@Column (name="issuecnt")
 	private Long issueCnt;   // 지라 이슈 개수
 
-	@Column
+	@Column (name="attendrate")
 	private Long attendRate; // 출석률 
 	
 	@Column

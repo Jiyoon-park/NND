@@ -13,22 +13,12 @@
           </v-avatar>
           <div class="mt-2">
             <h3 class="text-center">{{ username }}</h3>
-            <v-btn
-              x-small
-              rounded
-              color="#999"
-              style="opacity:0.7;"
-              @click="onLogout"
-              dark
-              >로그아웃</v-btn
-            >
+            <v-btn x-small rounded color="#999" style="opacity:0.7;" @click="onLogout" dark>로그아웃</v-btn>
           </div>
         </v-list-item>
         <v-list-item-group color="#3949AB" class="text-center">
           <v-list-item link>
-            <v-list-item-content
-              @click="$router.push('/profile').catch(() => {})"
-            >
+            <v-list-item-content @click="$router.push('/profile').catch(() => {})">
               <v-list-item-title>내 정보</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -40,9 +30,29 @@
           </v-list-item>
 
           <v-list-item link>
-            <v-list-item-content
-              @click="$router.push('/gongmo').catch(() => {})"
-            >
+            <v-expansion-panels :flat="true">
+              <v-expansion-panel>
+                <v-expansion-panel-header :expand-icon="null">
+                  <v-list-item-content>
+                    <v-list-item-title style="text-align: center;">팀 게시판 목록</v-list-item-title>
+                  </v-list-item-content>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content v-for="(team, index) in teams" :key="index">
+                  <v-btn
+                    text
+                    @click="
+                      $router
+                        .push(`/teamprofile/${team.teamboardNo}`)
+                        .catch(() => {})
+                    "
+                  >{{ team.teamName }}</v-btn>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-content @click="$router.push('/gongmo').catch(() => {})">
               <v-list-item-title>외부 공모전</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -61,12 +71,7 @@
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
-        <v-icon
-          size="30"
-          class="ml-3"
-          @click="$router.push('/letter').catch(() => {})"
-          >mdi-email</v-icon
-        >
+        <v-icon size="30" class="ml-3" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
       </v-badge>
     </v-app-bar>
   </div>
@@ -90,12 +95,14 @@ export default {
     username: "",
     profileURL: "",
     drawer: null,
+
     items: [
       { icon: "apps", title: "Home", to: "/" },
       { icon: "bubble_chart", title: "About", to: "/about" },
     ],
     messages: 0,
     letters: [],
+    teams: [],
   }),
   created() {
     let token = window.$cookies.get("nnd");
@@ -107,13 +114,14 @@ export default {
       this.$store.state.myToken = token.object;
     }
     this.getLetters();
+    this.getMemberTeamList();
 
     EventBus.$on("letterRead", () => {
       this.messages--;
     });
   },
   methods: {
-    onLogout: function() {
+    onLogout: function () {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
       this.$router.push("/login");
@@ -132,7 +140,7 @@ export default {
           console.log(err);
         });
     },
-    checkRead: function(arr) {
+    checkRead: function (arr) {
       console.log("count 함수 실행!!");
       console.log("arr: " + arr);
       console.log("length: " + arr.length);
@@ -144,6 +152,18 @@ export default {
         }
       }
       return count;
+    },
+    getMemberTeamList() {
+      axios
+        .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
+        .then((res) => {
+          console.log("@@@@@@@@@@@");
+          this.teams = res.data;
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };

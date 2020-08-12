@@ -37,6 +37,11 @@ public class TeamBoardController {
 	@Autowired
 	TeamRegistRepository teamregistRepository;
 
+	@GetMapping("teamboard/list/{teamboardno}")
+	public TeamBoard getOneTeamboard(@PathVariable Long teamboardno) {
+		return teamBoardRepository.findById(teamboardno).get();
+	}
+	
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
 //    	System.out.println(pageable);
@@ -126,7 +131,7 @@ public class TeamBoardController {
     		
     		while(st.hasMoreTokens()) {
     			String email = st.nextToken();
-    			Optional<Member> teammember = memberRepository.findMemberByEmail(email.substring(1,email.length()-1));
+    			Optional<Member> teammember = memberRepository.findMemberByEmail(email);
     			TeamRegist memberRegist = new TeamRegist();
     			memberRegist.setTeamboardNo(newmemberBoard.getTeamboardNo());
     			memberRegist.setMemberIdx(teammember.get().getIdx());
