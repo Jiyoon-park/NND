@@ -1,6 +1,12 @@
 <template>
   <div>
     <v-list-item @click.stop="dialog = true">
+      <div class="mr-3">
+        <v-avatar color="grey" size="60">
+          <span v-if="!userinfo.profile" class="white--text headline"></span>
+          <img v-else :src="userinfo.profile" />
+        </v-avatar>
+      </div>
       <v-list-item-content>
         <div>
           <v-list-item-title v-text="postinfo.writer" class="font-weight-black"></v-list-item-title>
