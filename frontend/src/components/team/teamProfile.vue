@@ -66,7 +66,8 @@ export default {
     };
   },
   created() {
-    // let teamboardno = this.$route.params.teamboardNo;
+    // let teamboardno = this.$route.params.teamboardno;
+
     let token = window.$cookies.get("nnd");
     console.log(token);
     let id = token.object.idx; //넘겨 받아야함

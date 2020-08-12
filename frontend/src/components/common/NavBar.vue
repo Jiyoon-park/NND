@@ -29,54 +29,15 @@
             </v-list-item-content>
           </v-list-item>
 
-          <!-- <div class="text-center">
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn dark v-bind="attrs" v-on="on">팀 게시판 목록</v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="(team, index) in teams"
-                  :key="index"
-                  @click="$router.push(`/${team.teamboardNo}`).catch(() => {})"
-                >
-                  <v-list-item-title>{{ team.teamName }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>-->
-
-          <!-- <template v-slot:activator>
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title v-text="teammenu.title"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-          <v-list-item
-            v-for="subItem in teammenu.teams"
-            :key="subItem.teamboardNo"
-            @click="$router.push(`/${subItem.teamboardNo}`).catch(() => {})"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="subItem.teamName"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>-->
-
           <v-list-item link>
             <v-expansion-panels :flat="true">
               <v-expansion-panel>
                 <v-expansion-panel-header :expand-icon="null">
                   <v-list-item-content>
-                    <v-list-item-title style="text-align: center;"
-                      >팀 게시판 목록</v-list-item-title
-                    >
+                    <v-list-item-title style="text-align: center;">팀 게시판 목록</v-list-item-title>
                   </v-list-item-content>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content
-                  v-for="(team, index) in teams"
-                  :key="index"
-                >
+                <v-expansion-panel-content v-for="(team, index) in teams" :key="index">
                   <v-btn
                     text
                     @click="
@@ -84,8 +45,7 @@
                         .push(`/teamprofile/${team.teamboardNo}`)
                         .catch(() => {})
                     "
-                    >{{ team.teamName }}</v-btn
-                  >
+                  >{{ team.teamName }}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -101,7 +61,11 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content v-for="(team, index) in teams" :key="index">
                   <v-btn
-                    @click="$router.push(`/teamprofile/${team.teamboardNo}`).catch(() => {})"
+                    @click="
+                $router
+                  .push({ name: 'TeamProfile', params: { teamboardno: team.teamboardNo } })
+                  .catch(() => {})
+              "
                   >{{team.teamName}}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>

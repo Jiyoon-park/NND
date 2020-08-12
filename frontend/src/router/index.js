@@ -93,7 +93,7 @@ const routes = [
   },
   {
     path: "/teamprofile",
-    name: "teamprofile",
+    name: "TeamProfile",
     component: TempProfile,
   },
 ];
