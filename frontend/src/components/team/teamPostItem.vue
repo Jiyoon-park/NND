@@ -16,7 +16,12 @@
       </v-list-item-content>
     </v-list-item>
     <v-dialog v-model="dialog" max-width="300">
-      <TeamPostDetail :postinfo="postinfo" :dialog="dialog" @changeDialog="dialog = false" />
+      <TeamPostDetail
+        :postinfo="postinfo"
+        :userinfo="userinfo"
+        :dialog="dialog"
+        @changeDialog="dialog = false"
+      />
     </v-dialog>
   </div>
 </template>
@@ -34,9 +39,12 @@ export default {
     };
   },
   props: {
-    // item: {
-    //   type: Object,
-    // },
+    postinfo: {
+      type: Object,
+    },
+    userinfo: {
+      type: Object,
+    },
   },
   methods: {
     // onPostDetail(teamboardno) {},

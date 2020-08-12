@@ -24,7 +24,7 @@
 
       <div id="team-post" class="target">
         <h3># 게시판</h3>
-        <TeamPost :teamboardno="teaminfo.teamboardNo" />
+        <TeamPost :teaminfo="teaminfo" :userinfo="user" />
       </div>
 
       <hr />
@@ -47,7 +47,7 @@ import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
 import TeamPost from "../team/teamPost.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   components: {
@@ -66,8 +66,6 @@ export default {
     };
   },
   created() {
-    // let teamboardno = this.$route.params.teamboardno;
-
     let token = window.$cookies.get("nnd");
     console.log(token);
     let id = token.object.idx; //넘겨 받아야함
@@ -82,8 +80,26 @@ export default {
         this.user = resp.data;
         this.profileURL = this.user.profile;
       });
-    //teaminfo 가져오는 메소드 spring 에서 만들어야됨
-    // axios.get()
+
+    //teaminfo 가져오는 메소드
+    let teamboardno = this.$route.params.teamboardno;
+
+    console.log("팀보드넘버 확인");
+    console.log(teamboardno);
+    axios
+      .get(`http://localhost:8080/teamboard/list/${teamboardno}`, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
+      .then((res) => {
+        this.teaminfo = res.data;
+        console.log("############");
+        console.log(this.teaminfo);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   computed: {
     target() {

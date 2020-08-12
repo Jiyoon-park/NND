@@ -3,13 +3,13 @@
     <NavBar />
     <v-card>
       <v-list class="transparent">
+        <div class="my-2">
+          <v-btn color="primary" fab small dark @click="addPost()">
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+        </div>
         <v-list-item-group>
-          <TeamPostItem
-            :item="teamposts"
-            v-for="(post, i) in teamposts"
-            :key="i"
-            :postinfo="item.teamposts[i]"
-          />
+          <TeamPostItem v-for="(post, i) in teamposts" :key="i" :postinfo="teamposts[i]" />
         </v-list-item-group>
       </v-list>
     </v-card>
@@ -34,22 +34,21 @@ export default {
     };
   },
   props: {
-    userinfo: {},
-    teamboardno: {
+    userinfo: {
+      type: Object,
+    },
+    teaminfo: {
       type: Object,
     },
   },
   created() {
     let token = window.$cookies.get("nnd");
     axios
-      .get(
-        `http://localhost:8080/teammenu/post/${this.teamboardno.teamboardno}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        }
-      )
+      .get(`http://localhost:8080/teammenu/post/${this.teaminfo.teamboardNo}`, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
       .then((res) => {
         console.log({ res });
         this.teamposts = res;
@@ -57,6 +56,9 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+  },
+  methods: {
+    addPost() {},
   },
 };
 </script>

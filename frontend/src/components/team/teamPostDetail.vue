@@ -45,6 +45,9 @@ export default {
     dialog: {
       type: Boolean,
     },
+    userinfo: {
+      type: Object,
+    },
   },
   // 수정 삭제 메소드
   methods: {

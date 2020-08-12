@@ -41,10 +41,10 @@
                   <v-btn
                     text
                     @click="
-                      $router
-                        .push(`/teamprofile/${team.teamboardNo}`)
-                        .catch(() => {})
-                    "
+                $router
+                  .push({ name: 'TeamProfile', params: { teamboardno: team.teamboardNo } })
+                  .catch(() => {})
+              "
                   >{{ team.teamName }}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>
