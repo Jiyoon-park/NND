@@ -2,15 +2,28 @@
   <v-row justify="center">
     <NavBar />
     <v-col cols="10" md="8" lg="6" class="mt-15">
-      <div class="user-info">
+      <div class="user-info" style="position:relative;">
         <v-avatar color="grey" size="90" class="mb-2">
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
-        <v-btn small @click="$router.push('/profile-update')">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              small
+              @click="$router.push('/profile-update')"
+              style="position:absolute; bottom:0; right:0;"
+              color="grey lighten-1"
+              dark
+            >
+              <span>내정보 수정</span>
+            </v-btn>
+          </template>
+          <span>전체 정보 수정이 가능합니다.</span>
+        </v-tooltip>
       </div>
 
       <v-tabs fixed-tabs color="indigo lighten-1" class="tabs">
@@ -21,10 +34,7 @@
 
       <div id="my-info" class="target">
         <h3 class="mb-1">🌞 내정보 🌞</h3>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
+        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="4" md="2">
             <p>이메일</p>
             <p>GIT 주소</p>
@@ -37,18 +47,23 @@
       </div>
 
       <div id="skills" class="target">
-        <h3>✨ 기술스택 ✨</h3>
-        <div
-          class="skills py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
-          <v-combobox v-model="select" chips multiple readonly></v-combobox>
-        </div>
+        <h3 class="mb-1">✨ 기술스택 ✨</h3>
+        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12">
+            <v-chip-group column>
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{ tag }}</v-chip>
+            </v-chip-group>
+          </v-col>
+        </v-row>
       </div>
 
       <div id="experience" class="target">
-        <h3>🏅 참여이력 🏅</h3>
-        <ProjectHistoryList />
+        <h3 class="mb-1">🏅 참여이력 🏅</h3>
+        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12">
+            <ProjectHistoryList />
+          </v-col>
+        </v-row>
       </div>
     </v-col>
   </v-row>
@@ -112,7 +127,8 @@ export default {
 
 <style scoped>
 .user-info {
-  margin: 10px 0;
+  margin: 5px 0;
+  padding: 30px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -128,10 +144,6 @@ export default {
 
 #my-info p {
   margin-bottom: 5px;
-}
-
-.skills {
-  margin: 5px 0;
 }
 
 .skill {

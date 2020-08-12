@@ -1,10 +1,8 @@
 <template>
   <v-card>
-    <v-card-title
-      class="headline font-weight-regular light-green lighten-1 white--text"
-    >project history</v-card-title>
+    <v-card-title class="headline font-weight-regular indigo lighten-1 white--text">project history</v-card-title>
     <v-form>
-      <v-container>
+      <v-container class="pb-0">
         <v-text-field
           v-model="projectName"
           filled
@@ -17,15 +15,22 @@
           filled
           label="프로젝트 한줄 설명"
           placeholder="내용을 입력해주세요."
+          persistent-hint
           required
         ></v-text-field>
-        <v-text-field
-          v-model="usedStack"
+        <v-combobox
           filled
+          v-model="usedStack"
+          :items="items"
+          hide-selected
           label="기술 스택"
-          placeholder="기타 기술스택 직접 입력하기"
+          placeholder="기술스택 직접 입력하기"
+          persistent-hint
+          multiple
           required
-        ></v-text-field>
+          small-chips
+        ></v-combobox>
+
         <v-textarea v-model="content" filled label="상세 업무 및 성과" placeholder="내용을 입력해주세요." required></v-textarea>
         <v-text-field
           v-model="gitLink"
@@ -35,10 +40,11 @@
           required
         ></v-text-field>
       </v-container>
+      <v-divider></v-divider>
       <v-card-actions>
+        <v-btn color="indigo darken-1" class="font-weight-bold" text @click="changeDialog">닫기</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="changeDialog">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="submit">Save</v-btn>
+        <v-btn color="indigo darken-1" class="font-weight-bold" text @click="submit">저장</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>
@@ -46,7 +52,7 @@
 
 <script>
 import axios from "axios";
-import {EventBus} from "../../main";
+import { EventBus } from "../../main";
 
 export default {
   props: {},
@@ -54,7 +60,7 @@ export default {
     return {
       projectName: null,
       summary: null,
-      usedStack: null,
+      usedStack: JSON.stringify(this.usedStack),
       content: null,
       gitLink: null,
       user: null,
@@ -67,22 +73,24 @@ export default {
   },
   methods: {
     submit() {
-      let token = window.$cookies.get('nnd');
+      let token = window.$cookies.get("nnd");
       axios
-        .put(`http://localhost:8080/projecthistory/save/${this.user.idx}`, 
-        {
-          idx: this.user.idx,
-          projectName: this.projectName,
-          summary: this.summary,
-          content: this.content,
-          usedStack: this.usedStack,
-          gitLink: this.gitLink,
-          techStack: JSON.stringify(this.techStack),
-        },{
-                headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-        },
-        })
+        .put(
+          `http://localhost:8080/projecthistory/save/${this.user.idx}`,
+          {
+            idx: this.user.idx,
+            projectName: this.projectName,
+            summary: this.summary,
+            content: this.content,
+            usedStack: JSON.stringify(this.usedStack),
+            gitLink: this.gitLink,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((response) => {
           this.$emit("onSubmit");
           console.log(response);
@@ -93,7 +101,7 @@ export default {
           this.usedStack = null;
           this.content = null;
           this.gitLink = null;
-          EventBus.$emit('create-card');          //location.reload()
+          EventBus.$emit("create-card"); //location.reload()
         })
         .catch((error) => {
           console.log(error.response);
