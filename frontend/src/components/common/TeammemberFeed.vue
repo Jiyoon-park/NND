@@ -1,12 +1,25 @@
 <template>
   <v-app class="mt-15">
     <div v-if="this.type == 'team'">
-      <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>
+      <!-- <p class="mb-0 ml-3"># 팀보드</p> -->
+      <news-feed2
+        v-for="(board, i) in list"
+        v-bind:teaminfo="list[i]"
+        v-bind:key="i"
+      ></news-feed2>
     </div>
     <div v-if="this.type == 'member'">
-      <news-feed v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed>
+      <!-- <p class="mb-0 ml-3"># 멤바보드</p> -->
+      <news-feed
+        v-for="(board, i) in list"
+        v-bind:teaminfo="list[i]"
+        v-bind:key="i"
+      ></news-feed>
     </div>
-    <infinite-loading @infinite="infiniteHandler" ref="InfiniteLoading"></infinite-loading>
+    <infinite-loading
+      @infinite="infiniteHandler"
+      ref="InfiniteLoading"
+    ></infinite-loading>
   </v-app>
 </template>
 
