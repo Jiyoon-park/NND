@@ -68,7 +68,7 @@ export default {
   methods: {
     infiniteHandler($state) {
       let token = window.$cookies.get("nnd");
-      
+
       axios
         .put(
           "http://localhost:8080/" + this.type + "board/search/" + this.idx,
@@ -97,21 +97,22 @@ export default {
               console.log(`list : `);
               console.log(this.list);
 
-              // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다 
+              // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다
               for (let i = 0; i < this.list.length; i++) {
                 var card = this.list[i];
 
-                console.log(`before imageurl : ${card.imageurl}`)
-                if (card.imageurl == "") { // url이 비어있으면 pass, 있으면 아래 코드를 진행한다.
+                console.log(`before imageurl : ${card.imageurl}`);
+                if (card.imageurl == "") {
+                  // url이 비어있으면 pass, 있으면 아래 코드를 진행한다.
                   continue;
                 }
 
-                if (this.type == 'team') {
+                if (this.type == "team") {
                   card.imageurl = `images/${this.type}/${card.teamboardno}/${card.imageurl}`;
                 } else {
                   card.imageurl = `images/${this.type}/${card.boardno}/${card.imageurl}`;
                 }
-                console.log(`parsing imageurl : ${card.imageurl}`)
+                console.log(`parsing imageurl : ${card.imageurl}`);
                 firebase
                   .storage()
                   .ref()
@@ -119,28 +120,28 @@ export default {
                   .getDownloadURL()
                   .then((imageurl) => {
                     this.list[i].imageurl = imageurl;
-                  }).catch(function(error) {
-                      // A full list of error codes is available at
-                      // https://firebase.google.com/docs/storage/web/handle-errors
-                      switch (error.code) {
-                        case 'storage/object-not-found':
-                          // File doesn't exist
-                          break;
+                  })
+                  .catch(function(error) {
+                    // A full list of error codes is available at
+                    // https://firebase.google.com/docs/storage/web/handle-errors
+                    switch (error.code) {
+                      case "storage/object-not-found":
+                        // File doesn't exist
+                        break;
 
-                        case 'storage/unauthorized':
-                          // User doesn't have permission to access the object
-                          break;
+                      case "storage/unauthorized":
+                        // User doesn't have permission to access the object
+                        break;
 
-                        case 'storage/canceled':
-                          // User canceled the upload
-                          break;
+                      case "storage/canceled":
+                        // User canceled the upload
+                        break;
 
-                        case 'storage/unknown':
-                          // Unknown error occurred, inspect the server response
-                          break;
-                      }
-                    });
-
+                      case "storage/unknown":
+                        // Unknown error occurred, inspect the server response
+                        break;
+                    }
+                  });
               }
 
               $state.loaded();
