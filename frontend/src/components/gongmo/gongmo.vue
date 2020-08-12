@@ -60,29 +60,30 @@
                   <v-card-text>
                     <div v-for="(board, index) in boards" :key="index">
                       <div v-if="index === selectedEvent.id">
-                        시작일 : {{ board.start }} <br />
-                        종료일 : {{ board.end }}<br />
+                        *시작일 : {{ board.start }} <br />
+                        *종료일 : {{ board.end }}<br />
                         <div v-if="board.host !== null">
-                          주최 : {{ board.host }}<br />
+                          *주최 : {{ board.host }}<br />
                         </div>
                         <div v-if="board.qua !== null">
-                          참가자격 : {{ board.qua }}<br />
+                          *참가자격 : {{ board.qua }}<br />
                         </div>
                         <div v-if="board.price !== null">
-                          1등 시상금 : {{ board.price }}<br />
+                          *1등 시상금 : {{ board.price }}<br />
                         </div>
-                        상세정보
+                        *상세정보 :
                         <a :href="board.link">{{ board.link }}</a>
                       </div>
                     </div>
                   </v-card-text>
                 </v-col>
-                <!-- <v-col cols="auto">
-                  <img height="200" width="200" v-bind:src="getPoster()" />
-                </v-col> -->
               </v-row>
             </v-container>
             <v-card-actions>
+              <v-btn text color="secondary" @click="$router.push('/')"
+                >팀 구성하러가기</v-btn
+              >
+              <v-spacer />
               <v-btn text color="secondary" @click="selectedOpen = false"
                 >닫기</v-btn
               >

@@ -1,7 +1,8 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card flat>
+      <v-card flat style="position:relative;">
+        <div class="ribbon" v-if="favorite"></div>
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
@@ -21,13 +22,15 @@
               <div class="d-flex flex-column ml-3">
                 <span>{{ teaminfo.name }}</span>
                 <div>
-                  <span>{{
+                  <span>
+                    {{
                     $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                  }}</span>
+                    }}
+                  </span>
                   <small class="deadline">
                     ~ {{ teaminfo.deadline }}
-                    <span style="color:#555">마감</span></small
-                  >
+                    <span style="color:#555">마감</span>
+                  </small>
                 </div>
               </div>
             </div>
@@ -42,21 +45,20 @@
                 src="../../assets/images/project.jpg"
                 height="194"
               ></v-img>
-              <v-img
-                v-else
-                src="../../assets/images/competition.jpg"
-                height="194"
-              ></v-img>
+              <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+
               <span
-                class="mr-2"
-                style="color:#eeeeee; font-style:italic; font-weight:bold; position:absolute; top:0; right:0;"
-                >{{ teaminfo.category }}</span
+                class="mr-3 mt-1"
+                style="color:#eeeeee; font-style:italic; font-size:18px; font-weight:bold; position:absolute; top:0; right:0; text-shadow:1px 1px black;"
               >
+                {{ teaminfo.category }}
+                <span>{{ teaminfo.groupsize }}</span>
+              </span>
             </div>
 
-            <v-expansion-panel-header>
+            <v-expansion-panel-header class="mt-2">
               <div class="d-flex flex-column">
-                <span class="font-weight-black">{{ teaminfo.title }}</span>
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
                 <div class="d-flex">
                   <v-chip
                     small
@@ -66,27 +68,22 @@
                     v-for="stack in JSON.parse(stacks)"
                     :key="stack"
                     style="opacity:0.7;"
-                    ># {{ stack }}</v-chip
-                  >
+                  ># {{ stack }}</v-chip>
                 </div>
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              {{ teaminfo.content }}
-              <br />
-              {{ teaminfo.kakaoLink }}
+              <div>{{ teaminfo.content }}</div>
             </v-expansion-panel-content>
             <v-card-actions>
               <v-spacer></v-spacer>
 
               <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
-                관심등록
               </v-btn>
 
               <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
                 <v-icon>mdi-star</v-icon>
-                관심해제
               </v-btn>
 
               <v-btn
@@ -94,40 +91,29 @@
                 class="ml-0"
                 color="indigo darken-1 accent-4 font-weight-bold"
                 @click="applyform"
-                ><i class="fas fa-paper-plane mr-1"></i> 지원</v-btn
               >
+                <i class="fas fa-paper-plane mr-1"></i> 지원
+              </v-btn>
             </v-card-actions>
           </v-expansion-panel>
         </v-expansion-panels>
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
-            <v-img
-              class="header"
-              height="200px"
-              src="../../assets/images/team2.jpg"
-            ></v-img>
-            <v-card-title
-              class="header-text text-center justify-center font-italic"
-            >
-              ❝ {{ teaminfo.teamname }} 팀의 <br />팀원이 되고싶습니다 ❠
+            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
+            <v-card-title class="header-text text-center justify-center font-italic">
+              ❝ {{ teaminfo.teamname }} 팀의
+              <br />팀원이 되고싶습니다 ❠
             </v-card-title>
 
             <v-card-text class="mt-5 pb-0">
               <div class="mt-3">
                 <p class="mb-0 pl-1">팀장에게 보내는 어필 한마디 🙈🙉</p>
-                <v-textarea
-                  filled
-                  v-model="content"
-                  name="content"
-                  placeholder="내용을 작성해주세요."
-                ></v-textarea>
+                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="blue darken-1" text @click="dialog = false"
-                >취소</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="submit">지원하기</v-btn>
             </v-card-actions>
@@ -197,7 +183,7 @@ export default {
         )
         .then((data) => {
           this.favorite = true;
-          alert("즐겨찾기에 등록되었습니다.");
+
           this.tlikeno = data.data;
         });
     },
@@ -211,7 +197,6 @@ export default {
         })
         .then(() => {
           this.favorite = false;
-          alert("즐겨찾기에서 삭제되었습니다.");
         });
     },
     submit() {
@@ -276,5 +261,40 @@ export default {
   font-weight: bold;
   background-color: #eeeeee;
   margin-left: 5px;
+}
+
+/* .ribbon {
+  width: 0px;
+  height: 35px;
+  background-color: transparent;
+  position: absolute;
+  top: -5px;
+  right: 19px;
+  border: solid 13px #3a52db;
+  border-bottom: solid 5px transparent;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  transition: all 0.2s;
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0.6;
+  box-shadow: 2px 0 0 0 rgb(62, 35, 138);
+} */
+
+.ribbon {
+  display: block;
+  top: -10px;
+  right: 12px;
+  position: absolute;
+  width: 0;
+  height: 45px;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition: 1s;
+  background: #f5f5f5;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  color: #e0e0e0;
+  border-top: 10px solid #0d47a1;
 }
 </style>
