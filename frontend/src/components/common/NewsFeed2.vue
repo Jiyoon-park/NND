@@ -36,22 +36,26 @@
               </div>
             </div>
             <div style="position:relative;">
-              <v-img
-                v-if="teaminfo.category === '스터디'"
-                src="../../assets/images/study.jpg"
-                height="194"
-              ></v-img>
-              <v-img
-                v-else-if="teaminfo.category === '프로젝트'"
-                src="../../assets/images/project.jpg"
-                height="194"
-              ></v-img>
-              <v-img
-                v-else
-                src="../../assets/images/competition.jpg"
-                height="194"
-              ></v-img>
-
+              <div v-if="!teaminfo.imageurl">
+                <v-img
+                  v-if="teaminfo.category === '스터디'"
+                  src="../../assets/images/study.jpg"
+                  height="194"
+                ></v-img>
+                <v-img
+                  v-else-if="teaminfo.category === '프로젝트'"
+                  src="../../assets/images/project.jpg"
+                  height="194"
+                ></v-img>
+                <v-img
+                  v-else
+                  src="../../assets/images/competition.jpg"
+                  height="194"
+                ></v-img>
+              </div>
+              <div v-else>
+                <v-img :src="teaminfo.imageurl" height="194"></v-img>
+              </div>
               <span
                 class="mr-3 mt-1"
                 style="color:#eeeeee; font-style:italic; font-size:18px; font-weight:bold; position:absolute; top:0; right:0; text-shadow:1px 1px black;"
@@ -77,22 +81,6 @@
                   >
                 </div>
               </div>
-            </v-expansion-panel-header>
-            <v-img
-              v-if="teaminfo.imageurl"
-              :src="teaminfo.imageurl"
-              height="194"
-            ></v-img>
-            <v-img
-              v-else
-              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-              height="194"
-            ></v-img>
-            <v-expansion-panel-header>
-              {{ teaminfo.title }}
-              <template v-slot:actions>
-                <v-icon color="teal">mdi-check</v-icon>
-              </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <div>{{ teaminfo.content }}</div>
