@@ -13,6 +13,7 @@ import LetterList from "../components/letter/LetterList.vue";
 import LetterDetail from "../components/letter/LetterDetail.vue";
 import Gongmo from "../components/gongmo/gongmo.vue";
 import TempProfile from "../components/team/teamProfile.vue";
+import TeamDiary from "../components/team/teamDiary.vue";
 
 Vue.use(VueRouter);
 
@@ -95,6 +96,11 @@ const routes = [
     path: "/teamprofile",
     name: "TeamProfile",
     component: TempProfile,
+  },
+  {
+    path: "/teamDiary",
+    name: "TeamDiary",
+    component: TeamDiary,
   },
 ];
 

@@ -144,4 +144,21 @@ public class TeamMenuController {
 		
 		return "disband success";
 	}
+	
+	// 팀 목록 불러오기 letter controller의 메소드와 동일 , 주소값만 다름
+    @GetMapping("teammenu/teamlist/{memberidx}") //현재 꼬시기 버트을 누르는 member의 idx
+    public  List<Map<String,Object>> getAllTeamList(@PathVariable Long memberidx) {
+        List<Object> teamList = teamregistRepository.findTeamByIdx(memberidx);
+
+        List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
+
+    for (int i = 0; i < teamList.size(); i++) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Object[] temp = (Object[]) teamList.get(i);
+        map.put("teamboardNo", temp[0]);
+        map.put("teamName", temp[1]);
+        datalist.add(map);
+    }
+    return datalist;
+}
 }

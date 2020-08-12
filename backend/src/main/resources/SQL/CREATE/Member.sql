@@ -1,3 +1,4 @@
+
 CREATE TABLE `member` (
   `idx` int NOT NULL AUTO_INCREMENT,
   `name` char(8) NOT NULL,
