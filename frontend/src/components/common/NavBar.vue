@@ -12,13 +12,23 @@
             <img v-else :src="profileURL" />
           </v-avatar>
           <div class="mt-2">
-            <h3 class="text-center">{{username}}</h3>
-            <v-btn x-small rounded color="#999" style="opacity:0.7;" @click="onLogout" dark>로그아웃</v-btn>
+            <h3 class="text-center">{{ username }}</h3>
+            <v-btn
+              x-small
+              rounded
+              color="#999"
+              style="opacity:0.7;"
+              @click="onLogout"
+              dark
+              >로그아웃</v-btn
+            >
           </div>
         </v-list-item>
         <v-list-item-group color="#3949AB" class="text-center">
           <v-list-item link>
-            <v-list-item-content @click="$router.push('/profile').catch(() => {})">
+            <v-list-item-content
+              @click="$router.push('/profile').catch(() => {})"
+            >
               <v-list-item-title>내 정보</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -30,7 +40,9 @@
           </v-list-item>
 
           <v-list-item link>
-            <v-list-item-content @click="$router.push('/gongmo').catch(() => {})">
+            <v-list-item-content
+              @click="$router.push('/gongmo').catch(() => {})"
+            >
               <v-list-item-title>외부 공모전</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -49,7 +61,12 @@
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
-        <v-icon size="30" class="ml-3" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
+        <v-icon
+          size="30"
+          class="ml-3"
+          @click="$router.push('/letter').catch(() => {})"
+          >mdi-email</v-icon
+        >
       </v-badge>
     </v-app-bar>
   </div>
@@ -87,6 +104,7 @@ export default {
       this.user = token.object;
       this.username = token.object.name;
       this.profileURL = token.object.profile;
+      this.$store.state.myToken = token.object;
     }
     this.getLetters();
 
@@ -95,7 +113,7 @@ export default {
     });
   },
   methods: {
-    onLogout: function () {
+    onLogout: function() {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
       this.$router.push("/login");
@@ -114,7 +132,7 @@ export default {
           console.log(err);
         });
     },
-    checkRead: function (arr) {
+    checkRead: function(arr) {
       console.log("count 함수 실행!!");
       console.log("arr: " + arr);
       console.log("length: " + arr.length);

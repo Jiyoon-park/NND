@@ -5,7 +5,16 @@
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
-              <v-avatar color="white" size="50" class="user-img mb-2">
+              <v-avatar
+                color="white"
+                size="50"
+                class="user-img mb-2"
+                @click="
+                $router
+                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
+                  .catch(() => {})
+              "
+              >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
               </v-avatar>
@@ -149,40 +158,82 @@ export default {
       lettertype: "tboard",
       letterNo: "",
       createDate: "",
+      teamboardNo: this.teaminfo.teamboardno,
+      tlikeno: this.teaminfo.likeno,
     };
   },
   // mounted(){
   //   this.teamboardno = this.teaminfo.teamboardNo;
   // },
-  created() {},
+  created() {
+    if (this.teaminfo.mno == this.$store.state.myToken.idx) {
+      console.log("즐겨찾기 상태");
+      this.favorite = true;
+    } else {
+      console.log("즐겨찾기 아닌상태");
+      this.favorite = false;
+    }
+  },
   methods: {
     addFavorite() {
-      this.favorite = true;
+      let token = window.$cookies.get("nnd");
+
+      console.log("팀 번호: " + this.teaminfo.teamboardno);
+      console.log("토큰: " + this.$store.state.myToken.idx);
+      //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
+      axios
+        .put(
+          "http://localhost:8080/liketeam/save/" +
+            this.$store.state.myToken.idx +
+            "/" +
+            this.teaminfo.teamboardno,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+            params: {},
+          }
+        )
+        .then((data) => {
+          this.favorite = true;
+          alert("즐겨찾기에 등록되었습니다.");
+          this.tlikeno = data.data;
+        });
     },
     delFavorite() {
-      this.favorite = false;
+      let token = window.$cookies.get("nnd");
+      axios
+        .delete("http://localhost:8080/liketeam/delete/" + this.tlikeno, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
+        .then(() => {
+          this.favorite = false;
+          alert("즐겨찾기에서 삭제되었습니다.");
+        });
     },
     submit() {
       this.dialog = false;
-      console.log(this.sendIdx + " send");
-      console.log(this.receiveIdx + " receive");
-      console.log(this.lettertype + " type");
       let token = window.$cookies.get("nnd");
+      console.log(this.sendIdx + " send");
+      console.log(this.teaminfo.idx + " receive");
+      console.log(this.lettertype + " type");
       axios
         .put("http://localhost:8080/letter/create/" + this.lettertype, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
-          params: {
-            sendIdx: this.sendIdx,
-            receiveIdx: this.teaminfo.idx,
-            content: this.content,
-            letterNo: this.letterNo,
-            createDate: this.createDate,
-          },
+          sendIdx: this.sendIdx,
+          receiveIdx: this.teaminfo.idx,
+          content: this.content,
+          letterNo: this.letterNo,
+          createDate: this.createDate,
+          lettertype: this.lettertype,
+          teamboardNo: this.teamboardNo,
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          console.log(this.sendIdx);
           alert("등록성공");
         })
         .catch((error) => {
@@ -195,7 +246,7 @@ export default {
       this.dialog = !this.dialog;
       let token = window.$cookies.get("nnd");
       if (token) {
-        console.log(token.object.idx);
+        console.log("프로필주소 : " + token.object.profile);
         this.username = token.object.name;
         this.profileURL = token.object.profile;
         this.sendIdx = token.object.idx;

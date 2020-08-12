@@ -1,5 +1,5 @@
 <template>
-  <v-app class="mt-16">
+  <v-app class="mt-15">
     <div v-if="this.type == 'team'">
       <!-- <p class="mb-0 ml-3"># 팀보드</p> -->
       <news-feed2
@@ -35,7 +35,7 @@ export default {
     return {
       list: [],
       page: 0,
-      size: 5,
+      size: 10,
       option: {},
       type: "team",
       query: [],
@@ -81,7 +81,6 @@ export default {
           setTimeout(() => {
             if (data.length) {
               console.log("기존 스크롤 push " + this.page);
-
               this.page += 1;
               this.list.push(...data);
               $state.loaded();

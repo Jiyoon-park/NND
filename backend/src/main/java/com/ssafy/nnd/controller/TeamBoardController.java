@@ -1,12 +1,9 @@
 package com.ssafy.nnd.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.StringTokenizer;
-
-import javax.persistence.Tuple;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.TeamBoard;
+import com.ssafy.nnd.dto.TeamRegist;
 import com.ssafy.nnd.repository.MemberRepository;
 import com.ssafy.nnd.repository.TeamBoardRepository;
-
-import springfox.documentation.spring.web.json.Json;
+import com.ssafy.nnd.repository.TeamRegistRepository;
 
 @CrossOrigin
 @RestController
@@ -36,6 +33,9 @@ public class TeamBoardController {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	TeamRegistRepository teamregistRepository;
 
     @GetMapping("/teamboard/list")
     public List<TeamBoard> getAllMemberBoard(@RequestParam("page") Long page,@RequestParam("size") Long size, final Pageable pageable){
@@ -97,45 +97,46 @@ public class TeamBoardController {
     	return teamBoard.get();
     }
     
-    @PutMapping("/teamboard/save/{idx}")
+    @PutMapping("/teamboard/save/{idx}") // 글쓴이 idx
     public String createTeamBoard(@PathVariable Long idx,@RequestBody TeamBoard teamBoard){
-    	Optional<Member> member = memberRepository.findMemberByIdx(idx);
-    	String chiefEmail = member.get().getEmail();
+    	Optional<Member> member = memberRepository.findById(idx);
+    	String leaderEmail = member.get().getEmail();
     	
-    	if(member.get().getTeamboardno()==0) {  //팀게시글 작성이 처음인 경우
-    		
     	//teamboard에 팀장의 정보 저장
     	teamBoard.setIdx(member.get().getIdx());
-    	teamBoard.setEmail(chiefEmail);
+    	teamBoard.setEmail(leaderEmail);
     	teamBoard.setName(member.get().getName());
+
+    	//1차저장 teamboardno 만들기 
+    	System.out.println(teamBoard.toString());
+    	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
     	
-//    	Optional<TeamBoard> latestTeamboard = teamBoardRepository.findLatestTeamboardNo();
-//    	member.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);
-    	String membersEmail = teamBoard.getMemberEmails(); 
+    	TeamRegist leaderRegist = new TeamRegist();
+    	leaderRegist.setTeamboardNo(newmemberBoard.getTeamboardNo());
+    	leaderRegist.setMemberIdx(member.get().getIdx());
+    	leaderRegist.setMemberEmail(leaderEmail);
+    	
+    	//팀장, 멤버들의 idx 와 이메일을 teamregist에 넣는다
+    	
+    	String membersEmail = newmemberBoard.getMemberEmails(); 
     	if(membersEmail.equals("[]")) {
-    		teamBoard.setMemberEmails("[\""+chiefEmail+"\"]");   
+    		teamregistRepository.save(leaderRegist);
     	}else {
-    		teamBoard.setMemberEmails("[\""+chiefEmail+"\","+ membersEmail.substring(1));
-    		String tempmembersEmail = membersEmail.substring(1, membersEmail.length()-1);
-    		StringTokenizer st = new StringTokenizer(tempmembersEmail,",");
+    		StringTokenizer st = new StringTokenizer(membersEmail,"[,\"] ");
     		
     		while(st.hasMoreTokens()) {
     			String email = st.nextToken();
     			Optional<Member> teammember = memberRepository.findMemberByEmail(email.substring(1,email.length()-1));
-//    			teammember.get().setTeamboardno(latestTeamboard.get().getTeamboardNo()+1);;
-    			memberRepository.save(teammember.get());
+    			TeamRegist memberRegist = new TeamRegist();
+    			memberRegist.setTeamboardNo(newmemberBoard.getTeamboardNo());
+    			memberRegist.setMemberIdx(teammember.get().getIdx());
+    			memberRegist.setMemberEmail(teammember.get().getEmail());
+    			teamregistRepository.save(memberRegist);
     		}
     		
     	}
-    	System.out.println(teamBoard.toString());
-    	TeamBoard newmemberBoard = teamBoardRepository.save(teamBoard);
-//    	memberRepository.save(member.get());
+    	return "save success";
     	
-    	return "Success";
-    	}
-    	else {  // 게시글 작성한 적 있으면 실패
-    		return "fail";
-    	}
     }
 
     @DeleteMapping("/teamboard/delete/{teamboardno}")
