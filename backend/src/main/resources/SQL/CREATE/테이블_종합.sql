@@ -32,6 +32,7 @@ CREATE TABLE `teamboard` (
   FOREIGN KEY(`idx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 CREATE TABLE `teamregist` (
   `teamregistno` int(10) NOT NULL AUTO_INCREMENT,
   `teamboardno` int Not NULL,  
@@ -88,8 +89,8 @@ CREATE TABLE liketeam(
     tboard                     int    NOT NULL,    
     mno                        int    NOT NULL,
     createdate                datetime DEFAULT current_timestamp(),
-    FOREIGN KEY (mno) REFERENCES member (idx),
-    FOREIGN KEY (tboard) REFERENCES teamboard (teamboardno)
+    FOREIGN KEY (mno) REFERENCES member (idx) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (tboard) REFERENCES teamboard (teamboardno) ON UPDATE CASCADE ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -98,20 +99,23 @@ CREATE TABLE likemember(
     mboard                     int    NOT NULL,    
     mno                        int    NOT NULL,
     createdate                datetime DEFAULT current_timestamp(),
-    FOREIGN KEY (mno) REFERENCES member (idx),
-    FOREIGN KEY (mboard) REFERENCES memberboard (boardno)
+    FOREIGN KEY (mno) REFERENCES member (idx) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (mboard) REFERENCES memberboard (boardno) ON UPDATE CASCADE ON DELETE CASCADE
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
  CREATE TABLE `teampost` (  
   `teampostno` int(10) NOT NULL AUTO_INCREMENT,
   `teamboardno` int NOT NULL, 
+  `memberidx` int not null,
+  `writer` varchar(30) NOT NULL,
   `title` varchar(128) NOT NULL,
   `content` varchar(500) NOT NULL,
   `createdate` varchar(128) NOT NULL,
   `notice` tinyint(1) not null,
   PRIMARY KEY (`teampostno`),
-  FOREIGN KEY(`teamboardno`) REFERENCES teamboard(`teamboardno`) ON UPDATE CASCADE ON DELETE CASCADE
+  FOREIGN KEY(`teamboardno`) REFERENCES teamboard(`teamboardno`) ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY(`memberidx`) REFERENCES member(`idx`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
  CREATE TABLE `memberrating` (  

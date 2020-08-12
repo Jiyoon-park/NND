@@ -1,38 +1,75 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card outlined>
+      <v-card flat>
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
-              <v-avatar color="white" size="50" class="user-img mb-2">
+              <v-avatar
+                color="white"
+                size="50"
+                class="user-img mb-2"
+                @click="
+                $router
+                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
+                  .catch(() => {})
+              "
+              >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
-                {{ teaminfo.teamname }}
-                <div class="d-flex">
-                  <v-chip
-                    small
-                    class="mr-2 mt-1"
-                    color="indigo"
-                    text-color="white"
-                    v-for="stack in JSON.parse(stacks)"
-                    :key="stack"
-                    >{{ stack }}</v-chip
+                <span>{{ teaminfo.name }}</span>
+                <div>
+                  <span>{{
+                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
+                  }}</span>
+                  <small class="deadline">
+                    ~ {{ teaminfo.deadline }}
+                    <span style="color:#555">마감</span></small
                   >
                 </div>
               </div>
             </div>
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-              height="194"
-            ></v-img>
+            <div style="position:relative;">
+              <v-img
+                v-if="teaminfo.category === '스터디'"
+                src="../../assets/images/study.jpg"
+                height="194"
+              ></v-img>
+              <v-img
+                v-else-if="teaminfo.category === '프로젝트'"
+                src="../../assets/images/project.jpg"
+                height="194"
+              ></v-img>
+              <v-img
+                v-else
+                src="../../assets/images/competition.jpg"
+                height="194"
+              ></v-img>
+              <span
+                class="mr-2"
+                style="color:#eeeeee; font-style:italic; font-weight:bold; position:absolute; top:0; right:0;"
+                >{{ teaminfo.category }}</span
+              >
+            </div>
+
             <v-expansion-panel-header>
-              {{ teaminfo.title }}
-              <template v-slot:actions>
-                <v-icon color="teal">mdi-check</v-icon>
-              </template>
+              <div class="d-flex flex-column">
+                <span class="font-weight-black">{{ teaminfo.title }}</span>
+                <div class="d-flex">
+                  <v-chip
+                    small
+                    class="mr-2 mt-1"
+                    color="#3949ab"
+                    text-color="white"
+                    v-for="stack in JSON.parse(stacks)"
+                    :key="stack"
+                    style="opacity:0.7;"
+                    ># {{ stack }}</v-chip
+                  >
+                </div>
+              </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               {{ teaminfo.content }}
@@ -40,15 +77,24 @@
               {{ teaminfo.kakaoLink }}
             </v-expansion-panel-content>
             <v-card-actions>
-              <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
-                <v-icon>mdi-star-outline</v-icon>
-              </v-btn>
-              <v-btn icon color="pink" v-if="favorite" @click="delFavorite">
-                <v-icon>mdi-star</v-icon>
-              </v-btn>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="applyform" right
-                >신청하기</v-btn
+
+              <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
+                <v-icon>mdi-star-outline</v-icon>
+                관심등록
+              </v-btn>
+
+              <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
+                <v-icon>mdi-star</v-icon>
+                관심해제
+              </v-btn>
+
+              <v-btn
+                text
+                class="ml-0"
+                color="indigo darken-1 accent-4 font-weight-bold"
+                @click="applyform"
+                ><i class="fas fa-paper-plane mr-1"></i> 지원</v-btn
               >
             </v-card-actions>
           </v-expansion-panel>
@@ -114,6 +160,7 @@ export default {
       letterNo: "",
       createDate: "",
       teamboardNo: this.teaminfo.teamboardno,
+      tlikeno: this.teaminfo.likeno,
     };
   },
   // mounted(){
@@ -130,6 +177,8 @@ export default {
   },
   methods: {
     addFavorite() {
+      let token = window.$cookies.get("nnd");
+
       console.log("팀 번호: " + this.teaminfo.teamboardno);
       console.log("토큰: " + this.$store.state.myToken.idx);
       //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
@@ -140,18 +189,26 @@ export default {
             "/" +
             this.teaminfo.teamboardno,
           {
-            headers: {},
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
             params: {},
           }
         )
-        .then(() => {
+        .then((data) => {
           this.favorite = true;
           alert("즐겨찾기에 등록되었습니다.");
+          this.tlikeno = data.data;
         });
     },
     delFavorite() {
+      let token = window.$cookies.get("nnd");
       axios
-        .delete("http://localhost:8080/liketeam/delete/" + this.teaminfo.likeno)
+        .delete("http://localhost:8080/liketeam/delete/" + this.tlikeno, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
         .then(() => {
           this.favorite = false;
           alert("즐겨찾기에서 삭제되었습니다.");
@@ -212,5 +269,12 @@ export default {
   left: 0;
   right: 0;
   color: #eeeeee;
+}
+
+.deadline {
+  color: #222;
+  font-weight: bold;
+  background-color: #eeeeee;
+  margin-left: 5px;
 }
 </style>
