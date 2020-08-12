@@ -11,10 +11,13 @@
                 size="50"
                 class="user-img mb-2"
                 @click="
-                $router
-                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
-                  .catch(() => {})
-              "
+                  $router
+                    .push({
+                      name: 'userProfile',
+                      params: { idx: teaminfo.idx },
+                    })
+                    .catch(() => {})
+                "
               >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
@@ -23,9 +26,7 @@
                 <span>{{ teaminfo.name }}</span>
                 <div>
                   <span>
-                    {{
-                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                    }}
+                    {{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}
                   </span>
                   <small class="deadline">
                     ~ {{ teaminfo.deadline }}
@@ -45,7 +46,11 @@
                 src="../../assets/images/project.jpg"
                 height="194"
               ></v-img>
-              <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+              <v-img
+                v-else
+                src="../../assets/images/competition.jpg"
+                height="194"
+              ></v-img>
 
               <span
                 class="mr-3 mt-1"
@@ -68,15 +73,18 @@
                     v-for="stack in JSON.parse(stacks)"
                     :key="stack"
                     style="opacity:0.7;"
-                  ># {{ stack }}</v-chip>
+                    ># {{ stack }}</v-chip
+                  >
                 </div>
               </div>
-            </div>
-            <v-img v-if="teaminfo.imageurl"
+            </v-expansion-panel-header>
+            <v-img
+              v-if="teaminfo.imageurl"
               :src="teaminfo.imageurl"
               height="194"
             ></v-img>
-            <v-img v-else
+            <v-img
+              v-else
               src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
               height="194"
             ></v-img>
@@ -114,20 +122,32 @@
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
-            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
-            <v-card-title class="header-text text-center justify-center font-italic">
-              ❝ {{ teaminfo.teamname }} 팀의
-              <br />팀원이 되고싶습니다 ❠
+            <v-img
+              class="header"
+              height="200px"
+              src="../../assets/images/team2.jpg"
+            ></v-img>
+            <v-card-title
+              class="header-text text-center justify-center font-italic"
+            >
+              ❝ {{ teaminfo.teamname }} 팀의 <br />팀원이 되고싶습니다 ❠
             </v-card-title>
 
             <v-card-text class="mt-5 pb-0">
               <div class="mt-3">
                 <p class="mb-0 pl-1">팀장에게 보내는 어필 한마디 🙈🙉</p>
-                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                <v-textarea
+                  filled
+                  v-model="content"
+                  name="content"
+                  placeholder="내용을 작성해주세요."
+                ></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >취소</v-btn
+              >
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="submit">지원하기</v-btn>
             </v-card-actions>
