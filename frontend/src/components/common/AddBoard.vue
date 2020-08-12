@@ -33,6 +33,18 @@
           <v-text-field filled dense v-model="teamName" label="팀명" required v-if="teamcheck == '팀'"></v-text-field>
           <v-text-field filled dense v-model="title" label="제목" required></v-text-field>
           <v-textarea filled dense v-model="content" label="내용"></v-textarea>
+          <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+          <img :src="imageUrl" height="150" v-if="imageUrl"/>
+          <v-text-field label="Select Image" @click='pickFile' v-model='imageName' prepend-icon='mdi-camera'></v-text-field>
+          <input
+            type="file"
+            style="display: none"
+            ref="image"
+            accept="image/*"
+            @change="onFilePicked"
+            filled
+          >
+          </v-flex>
           <v-combobox
             filled
             dense
@@ -137,8 +149,10 @@
 </template>
 
 <script>
-import axios from "axios";
-
+  import axios from "axios";
+  // Firebase App (the core Firebase SDK) is always required and must be listed first
+  import * as firebase from "firebase/app";
+  
 export default {
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
@@ -161,6 +175,10 @@ export default {
     memberEmails: [],
     name: "",
     types: ["팀", "팀원"],
+    // 이미지를 저장할 변수들
+    imageName: '',  // 이미지 파일 이름
+    imageUrl: '',   // 이미지 파일 경로
+    imageFile: '',  // 이미지 파일 객체
   }),
   components: {},
   created() {
@@ -178,9 +196,34 @@ export default {
     }
   },
   methods: {
+    pickFile() {
+      this.$refs.image.click()
+    },
+
+    onFilePicked(e) {
+      const files = e.target.files
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(files[0])
+        fr.addEventListener('load', () => {
+          this.imageUrl = fr.result
+          this.imageFile = files[0] // this is an image file that can be sent to server...
+        })
+      } else {
+        this.imageName = ''
+        this.imageFile = ''
+        this.imageUrl = ''
+      }
+    },
+
     submit() {
+      
       var obj, url;
-      let token = window.$cookies.get("nnd");
+      let token = window.$cookies.get('nnd');
       if (this.teamcheck == "팀") {
         obj = {
           email: this.email,
@@ -193,10 +236,10 @@ export default {
           techStack: JSON.stringify(this.techStack),
           category: this.category,
           name: this.name,
-        };
-        url = "http://localhost:8080/teamboard/save/" + this.idx;
-      } else {
-        // 팀원의 경우
+          imageurl: this.imageName,
+        }
+        url = `http://localhost:8080/teamboard/save/${this.idx}`;
+      } else {  // 팀원의 경우
         obj = {
           email: this.email,
           title: this.title,
@@ -204,8 +247,9 @@ export default {
           category: this.category,
           techStack: JSON.stringify(this.memberstack),
           name: this.name,
-        };
-        url = "http://localhost:8080/memberboard/save/" + this.idx;
+          imageurl: this.imageName,
+        }
+        url = `http://localhost:8080/memberboard/save/${this.idx}`;
       }
       axios
         .put(url, obj, {
@@ -214,20 +258,55 @@ export default {
           },
         })
         .then((response) => {
+          console.log('게시판 등록 성공');
+          // axios 요청등록 후 리턴받은 teamboardNo값을 route로 해서 firebase에 image 등록 
           console.log(response);
-          alert("등록성공");
-          this.changeDialog();
+          console.log(`각 값들 : ${response.data}`);
+          // console.log(`각 값들 : ${this.teamcheck == "팀" ? "team" : "member"}`);
+          // console.log(`각 값들 : ${this.imageName}`);
+          if (this.imageName != '') { // 이미지 파일을 쓰는 경우만 파이어베이스 코드를 진행토록 한다.
+            var image_url = `images/${this.teamcheck == "팀" ? "team" : "member"}/${response.data}/${this.imageName}`;
+            // console.log(`image_url : ${image_url}`);
+            // console.log(`firebase : `);
+            // console.log(`${firebase}`);
+            const storageRef = firebase.storage().ref();
+            // console.log(`storageRef : `);
+            // console.log(`${storageRef}`);
+            storageRef
+                      .child(image_url)
+                      .put(this.imageFile)
+                      .on('state_changed', snapshot => {
+                        console.log(snapshot)
+                      }, error => {
+                        console.log(error);
+                        console.log("파이어베이스 등록 실패!");
+                      }, () => {
+                        console.log('파이어베이스 등록 성공');
+                        alert("등록성공");
 
-          this.teamName = null;
-          this.title = null;
-          this.content = null;
-          this.groupSize = null;
-          this.memberEmails = [];
-          this.category = "";
-          this.techStack = [];
-          this.memberstack = [];
-          this.date = new Date().toISOString().substr(0, 10);
-          this.$emit("changeDialog");
+                        // 등록페이지 초기화
+                        this.teamName = null;
+                        this.title = null;
+                        this.content = null;
+                        this.groupSize = null;
+                        this.category = "";
+                        this.techStack = [];
+                        this.memberstack = [];
+                        this.date = new Date().toISOString().substr(0, 10);
+
+                        this.changeDialog();
+                        this.goMain();
+                      }
+                      );
+          } else {
+            alert("등록성공");
+            this.changeDialog();
+            this.goMain();
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+          alert("실패");
         })
         .catch((error) => {
           console.log(error.response);

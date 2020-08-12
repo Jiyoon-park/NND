@@ -71,6 +71,20 @@
                   ># {{ stack }}</v-chip>
                 </div>
               </div>
+            </div>
+            <v-img v-if="teaminfo.imageurl"
+              :src="teaminfo.imageurl"
+              height="194"
+            ></v-img>
+            <v-img v-else
+              src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+              height="194"
+            ></v-img>
+            <v-expansion-panel-header>
+              {{ teaminfo.title }}
+              <template v-slot:actions>
+                <v-icon color="teal">mdi-check</v-icon>
+              </template>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <div>{{ teaminfo.content }}</div>
