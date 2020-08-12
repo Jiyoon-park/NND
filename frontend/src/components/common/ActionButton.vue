@@ -53,5 +53,6 @@ npm install --save vanilla-back-to-top
 #back-to-top {
   margin-bottom: 70px;
   margin-right: -4px;
+  z-index: 3;
 }
 </style>
