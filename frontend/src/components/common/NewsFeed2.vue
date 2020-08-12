@@ -251,13 +251,27 @@ export default {
       alert("신청되었습니다.");
     },
     applyform() {
-      this.dialog = !this.dialog;
-      let token = window.$cookies.get("nnd");
-      if (token) {
-        console.log("프로필주소 : " + token.object.profile);
-        this.username = token.object.name;
-        this.profileURL = token.object.profile;
-        this.sendIdx = token.object.idx;
+      // 지원을 받기전 마감시간이 지났는지 체크하도록 한다.
+      // 지났다 = 현재시간 - 마감시간 > 0 
+      // 안지났다 = 반대
+      var curTime = new Date();
+      var endTime = new Date(this.teaminfo.deadline);
+
+      console.log(`현재시간 : ${curTime}`);
+      console.log(`마감시간 : ${endTime}`);
+      console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
+      
+      if (curTime.getTime() - endTime.getTime() > 0) {
+        alert("마감되었습니다!!!");
+      } else {
+        this.dialog = !this.dialog;
+        let token = window.$cookies.get("nnd");
+        if (token) {
+          console.log("프로필주소 : " + token.object.profile);
+          this.username = token.object.name;
+          this.profileURL = token.object.profile;
+          this.sendIdx = token.object.idx;
+        }
       }
     },
   },
