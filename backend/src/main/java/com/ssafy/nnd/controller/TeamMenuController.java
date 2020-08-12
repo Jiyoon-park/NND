@@ -48,12 +48,12 @@ public class TeamMenuController {
 
 	// 팀 게시글 불러오기
 	@GetMapping("teammenu/post/{teamboardno}") // teamboardno
-	public List<TeamPost> getAllTeamPost(@PathVariable Long teamboardno, Pageable pageable) {
+	public List<TeamPost> getAllTeamPost(@PathVariable Long teamboardno) {
 		if (teamboardno == 0) {
 			return null; // 정해진 팀이 없습니다.
 		} else {
 
-			return teampostRepository.findByTeamboardNoOrderByTeamPostNoDesc(teamboardno, pageable);
+			return teampostRepository.findByTeamboardNoOrderByTeamPostNoDesc(teamboardno);
 		}
 	}
 
@@ -74,10 +74,9 @@ public class TeamMenuController {
 	}
 
 	// 팀 게시글 글쓰기
-	@PutMapping("teammenu/post/save/{teamboardno}") // teamboardno
-	public String saveTeamPost(@PathVariable Long teamboardno, TeamPost teampost) {
+	@PutMapping("teammenu/post/save") 
+	public String saveTeamPost(@RequestBody TeamPost teampost) {
 
-		teampost.setTeamboardNo(teamboardno);
 		teampostRepository.save(teampost);
 		return "save success";
 	}
