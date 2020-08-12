@@ -293,15 +293,20 @@ export default {
                         this.techStack = [];
                         this.memberstack = [];
                         this.date = new Date().toISOString().substr(0, 10);
+                        this.imageName = '';    // 이부분 컴플릿트 나는지 조심(다른 사람이 이작업을 이미 했으므로)
+                        this.imageFile = '';
+                        this.imageUrl = '';
 
                         this.changeDialog();
-                        this.goMain();
+                        this.$router.go();  // 이걸 넣으면 새로고침이 된다...왜?
+                        // this.goMain();
                       }
                       );
           } else {
             alert("등록성공");
             this.changeDialog();
-            this.goMain();
+            this.$router.go();  // 이걸 넣으면 새로고침이 된다...왜?
+            // this.goMain();
           }
         })
         .catch((error) => {
