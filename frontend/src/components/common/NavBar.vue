@@ -64,6 +64,34 @@
           </v-list-item>-->
 
           <v-list-item link>
+            <v-expansion-panels :flat="true">
+              <v-expansion-panel>
+                <v-expansion-panel-header :expand-icon="null">
+                  <v-list-item-content>
+                    <v-list-item-title style="text-align: center;"
+                      >팀 게시판 목록</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content
+                  v-for="(team, index) in teams"
+                  :key="index"
+                >
+                  <v-btn
+                    text
+                    @click="
+                      $router
+                        .push(`/teamprofile/${team.teamboardNo}`)
+                        .catch(() => {})
+                    "
+                    >{{ team.teamName }}</v-btn
+                  >
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-list-item>
+
+          <v-list-item link>
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
