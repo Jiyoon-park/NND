@@ -24,7 +24,11 @@
                 </div>
               </div>
             </div>
-            <v-img
+            <v-img v-if="!teaminfo.url"
+              :src="teaminfo.url"
+              height="194"
+            ></v-img>
+            <v-img v-else
               src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
               height="194"
             ></v-img>

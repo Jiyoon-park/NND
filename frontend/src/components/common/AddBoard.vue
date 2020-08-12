@@ -153,36 +153,6 @@
   // Firebase App (the core Firebase SDK) is always required and must be listed first
   import * as firebase from "firebase/app";
   
-  require('dotenv').config();
-
-  console.log(process.env);
-  console.log(`value : ${process.env.VUE_APP_APIKEY}`);
-  console.log(`value : ${process.env.VUE_APP_AUTHDOMAIN}`);
-  console.log(`value : ${process.env.VUE_APP_DATABASEURL}`);
-  console.log(`value : ${process.env.VUE_APP_PROJECTID}`);
-  console.log(`value : ${process.env.VUE_APP_STORAGEBUCKET}`);
-  console.log(`value : ${process.env.VUE_APP_MESSAGINGSENDERID}`);
-  console.log(`value : ${process.env.VUE_APP_APPID}`);
-  console.log(`value : ${process.env.VUE_APP_MEASUREMENTID}`);
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: process.env.VUE_APP_APIKEY,
-    authDomain: process.env.VUE_APP_AUTHDOMAIN,
-    databaseURL: process.env.VUE_APP_DATABASEURL,
-    projectId: process.env.VUE_APP_PROJECTID,
-    storageBucket: process.env.VUE_APP_STORAGEBUCKET,
-    messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
-    appId: process.env.VUE_APP_APPID,
-    measurementId: process.env.VUE_APP_MEASUREMENTID
-  };
-  // Initialize Firebase
-  console.log(`length : ${firebase.apps.length}`);
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  } else {
-    firebase.app();
-  }
-
 export default {
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
@@ -326,10 +296,11 @@ export default {
                         this.goMain();
                       }
                       );
+          } else {
+            alert("등록성공");
+            this.changeDialog();
+            this.goMain();
           }
-          alert("등록성공");
-          this.changeDialog();
-          this.goMain();
         })
         .catch((error) => {
           console.log(error.response);
