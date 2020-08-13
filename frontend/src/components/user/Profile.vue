@@ -34,28 +34,22 @@
 
       <div id="my-info" class="target">
         <h3 class="mb-3">🌞 내정보 🌞</h3>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
-          <v-col cols="4" md="2">
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="4" md="2" class="px-4 py-4">
             <p>이메일</p>
-            <p>GIT</p>
+            <p class="mb-0">GIT</p>
           </v-col>
-          <v-col cols="8" md="10">
+          <v-col cols="8" md="10" class="px-4 py-4">
             <p>{{ user.email }}</p>
-            <p>{{ user.gitaddr }}</p>
+            <p class="mb-0">{{ user.gitaddr }}</p>
           </v-col>
         </v-row>
       </div>
 
       <div id="skills" class="target">
         <h3 class="mb-3">✨ 기술스택 ✨</h3>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
-          <v-col cols="12" sm="12">
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 py-4">
             <v-chip-group column>
               <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{
                 tag
@@ -67,13 +61,8 @@
 
       <div id="experience" class="target">
         <h3 class="mb-3">🏅 참여이력 🏅</h3>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
-          <v-col cols="12" sm="12">
-            <ProjectHistoryList :isEditPage="isEditPage" />
-          </v-col>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <ProjectHistoryList :isEditPage="isEditPage" />
         </v-row>
       </div>
     </v-col>

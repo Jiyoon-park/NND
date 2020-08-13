@@ -35,10 +35,7 @@
 
       <div id="my-info" class="target">
         <h3 class="mb-3">🌞 내정보 🌞</h3>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
+        <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-card-text>
             <v-text-field
               filled
@@ -73,11 +70,8 @@
 
       <div id="skills" class="target">
         <h3 class="mb-3">✨ 기술스택 ✨</h3>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
-          <v-col cols="12" sm="12" class="pb-0">
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 pt-4 pb-0">
             <v-combobox
               v-model="select"
               :items="items"
@@ -108,13 +102,8 @@
             </v-btn>
           </div>
         </div>
-        <v-row
-          class="py-2"
-          style="background-color: #fafafa; border-radius:10px;"
-        >
-          <v-col cols="12" sm="12" lg="6">
-            <ProjectHistoryList :isEditPage="isEditPage" :isEdit="isEdit" />
-          </v-col>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <ProjectHistoryList :isEditPage="isEditPage" :isEdit="isEdit" />
         </v-row>
       </div>
     </v-col>

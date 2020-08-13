@@ -1,14 +1,9 @@
 <template>
-  <div>
-    <v-card
-      class="mx-auto my-3 py-3"
-      max-width="344"
-      v-for="(project, i) in projects"
-      :key="i"
-    >
+  <v-col cols="12" sm="12" class="px-4 py-4">
+    <v-card class="mx-auto mb-3 py-3" v-for="(project, i) in projects" :key="i">
       <ProjectHistoryListItem :historyinfo="projects[i]" :isEdit="isEdit" />
     </v-card>
-  </div>
+  </v-col>
 </template>
 
 <script>
