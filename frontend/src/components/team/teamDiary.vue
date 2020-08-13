@@ -14,9 +14,9 @@
             <v-btn fab text small color="grey darken-2" @click="next">
               <v-icon small>mdi-chevron-right</v-icon>
             </v-btn>
-            <v-toolbar-title v-if="$refs.calendar">{{
-              $refs.calendar.title
-            }}</v-toolbar-title>
+            <v-toolbar-title v-if="$refs.calendar">
+              {{ $refs.calendar.title }}
+            </v-toolbar-title>
             <v-spacer />
             <v-btn
               v-if="type == 'week'"
@@ -60,11 +60,9 @@
 
     <v-dialog v-model="ok" max-width="600px">
       <v-card>
-        <v-card-title
-          class="header-text text-center justify-center font-italic"
+        <v-card-title class="header-text text-center justify-center font-italic"
+          >❝ 스케줄 내용 수정❠</v-card-title
         >
-          ❝ 스케줄 내용 수정❠
-        </v-card-title>
         <v-card-text class="mt-5 pb-0">
           <div class="mt-3">
             <v-textarea
@@ -121,7 +119,7 @@
 </style>
 <script>
 import NavBar from "../common/NavBar.vue";
-// import axios from "axios";
+import axios from "axios";
 
 export default {
   name: "TeamDiary",
@@ -129,35 +127,36 @@ export default {
     NavBar,
   },
   created() {
-    // let token = window.$cookies.get("nnd");
-    // axios
-    //   .get(`http://localhost:8080/contest`, {
-    //     headers: {
-    //       Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-    //     },
-    //   })
-    //   .then(({ data }) => {
-    //     this.boards = data;
-    //     console.log(this.boards);
-    //     for (let index = 0; index < this.boards.length; index++) {
-    //       const allDay = this.rnd(0, 3) === 0;
-    //       this.events.push({
-    //         name: this.boards[index].title,
-    //         start: this.boards[index].start,
-    //         end: this.boards[index].end,
-    //         color: this.colors[this.rnd(0, this.colors.length - 1)],
-    //         timed: !allDay,
-    //         host: this.boards[index].host,
-    //         poster: this.boards[index].poster,
-    //         price: this.boards[index].price,
-    //         link: this.boards[index].link,
-    //       });
-    //     }
-    //     console.log(this.events);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    console.log(this.$store.state.teamNo);
+    //디비에서 가져와야함
+    let token = window.$cookies.get("nnd");
+    axios
+      .get(
+        `http://localhost:8080/teammenu/diary/list/${this.$store.state.teamNo}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
+      .then(({ data }) => {
+        this.boards = data;
+        console.log(this.boards);
+        for (let index = 0; index < this.boards.length; index++) {
+          this.events.push({
+            no: this.boards[index].teamdiaryNo,
+            name: this.boards[index].title,
+            start: Number(this.boards[index].start),
+            end: Number(this.boards[index].end),
+            color: this.boards[index].color,
+            timed: this.boards[index].timed,
+          });
+        }
+        console.log(this.events);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   data: () => ({
     boards: null,
@@ -199,6 +198,7 @@ export default {
     startDrag({ event, timed }) {
       //눌렀는데 이벤트 있을때
       //this.ok = true;
+      console.log("startDrag");
       if (event && timed) {
         this.dragflag = true;
         this.dragEvent = event;
@@ -209,7 +209,34 @@ export default {
 
     submit() {
       const i = this.events.indexOf(this.dragmsg);
+      console.log(this.events);
+      console.log(i);
       this.events[i].name = this.msg;
+
+      let token = this.$cookies.get("nnd");
+      //update
+      axios
+        .post(
+          `http://localhost:8080/teammenu/diary/update/${this.dragmsg.no}`,
+          {
+            title: this.events[i].name,
+            color: this.events[i].color,
+            start: this.events[i].start,
+            end: this.events[i].end,
+            timed: true,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
 
       //초기화
       this.ok = false;
@@ -224,6 +251,7 @@ export default {
 
     startTime(tms) {
       const mouse = this.toTime(tms);
+      let token = window.$cookies.get("nnd");
 
       if (this.dragEvent && this.dragTime === null) {
         //이벤트가 존재하면
@@ -232,6 +260,7 @@ export default {
       } else {
         //이벤트가 존재하지 않아 새로 만듬
         this.createStart = this.roundTime(mouse);
+        console.log(typeof this.createStart);
         this.createEvent = {
           //name: `Event #${this.events.length}`,
           name: `Event #`,
@@ -242,6 +271,30 @@ export default {
         };
         //추가하시겠습니까 물어보고 세이브
         this.events.push(this.createEvent);
+        //axios 통해서 디비에 추가해야함
+        axios
+          .put(
+            `http://localhost:8080/teammenu/diary/create/${this.$store.state.teamNo}`,
+            {
+              title: this.createEvent.name,
+              color: this.createEvent.color,
+              start: this.createEvent.start,
+              end: this.createEvent.end,
+              timed: true,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then(({ data }) => {
+            this.createEvent.no = data.teamdiaryNo;
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
     extendBottom(event) {
@@ -251,9 +304,9 @@ export default {
     },
     mouseMove(tms) {
       const mouse = this.toTime(tms);
+      this.dragflag = false;
       if (this.dragEvent && this.dragTime !== null) {
         //이벤트 클릭하면
-        this.dragflag = false;
         const start = this.dragEvent.start;
         const end = this.dragEvent.end;
         const duration = end - start;
@@ -270,13 +323,64 @@ export default {
 
         this.createEvent.start = min;
         this.createEvent.end = max;
+
+        //업데이트 해줘야함
       }
     },
     endDrag() {
+      let token = window.$cookies.get("nnd");
       if (this.dragflag) {
         this.dragmsg = this.dragEvent;
         this.ok = true;
       }
+      if (this.dragEvent !== null) {
+        axios
+          .post(
+            `http://localhost:8080/teammenu/diary/update/${this.dragEvent.no}`,
+            {
+              title: this.dragEvent.name,
+              color: this.dragEvent.color,
+              start: this.dragEvent.start,
+              end: this.dragEvent.end,
+              timed: true,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      } else if (this.createEvent !== null) {
+        axios
+          .post(
+            `http://localhost:8080/teammenu/diary/update/${this.createEvent.no}`,
+            {
+              title: this.createEvent.name,
+              color: this.createEvent.color,
+              start: this.createEvent.start,
+              end: this.createEvent.end,
+              timed: true,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      }
+
       this.dragTime = null;
       this.dragEvent = null;
       this.createEvent = null;
@@ -284,10 +388,29 @@ export default {
       this.extendOriginal = null;
     },
     cancelDrag() {
-      const i = this.events.indexOf(this.dragEvent);
-      if (i !== -1) {
-        this.events.splice(i, 1);
+      console.log("cancel");
+
+      if (this.ok) {
+        //모달창으로 나간거면 삭제하지마라
+      } else {
+        const i = this.events.indexOf(this.dragEvent);
+        let token = window.$cookies.get("nnd");
+        //이벤트 삭제
+        if (i !== -1) {
+          axios
+            .delete(
+              `http://localhost:8080/teammenu/diary/delete/${this.dragEvent.no}`,
+              {
+                headers: {
+                  Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+                },
+              }
+            )
+            .then((res) => console.log(res));
+          this.events.splice(i, 1);
+        }
       }
+
       this.createEvent = null;
       this.createStart = null;
       this.dragTime = null;

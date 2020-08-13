@@ -20,6 +20,8 @@
         <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
         <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
           >그래프</v-tab
+        ><v-tab @click="$vuetify.goTo('#team-member-diary', options)"
+          >다이어리</v-tab
         >
         <v-spacer></v-spacer>
       </v-tabs>
@@ -42,6 +44,11 @@
         <h3># 그래프</h3>
         <MemberChart />
       </div>
+      <hr />
+      <div id="team-member-diary" class="target">
+        <h3># 다이어리</h3>
+        <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -53,6 +60,7 @@ import NavBar from "../common/NavBar.vue";
 import TeamPost from "../team/teamPost.vue";
 import TeamTable from "../team/teamTable.vue";
 import MemberChart from "../team/memberChart.vue";
+import TeamDiary from "../team/teamDiary";
 
 import axios from "axios";
 
@@ -62,6 +70,7 @@ export default {
     TeamPost,
     TeamTable,
     MemberChart,
+    TeamDiary,
   },
   data() {
     return {
