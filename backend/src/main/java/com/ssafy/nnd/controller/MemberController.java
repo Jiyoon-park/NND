@@ -1,5 +1,6 @@
 package com.ssafy.nnd.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -135,6 +136,12 @@ public class MemberController {
 		response = new ResponseEntity<>(result, HttpStatus.OK);
 
 		return response;
+	}
+	
+	
+	@GetMapping("/all")
+	public List<String> getallemail() {		
+		return memberRepository.findAllMemberEmail();
 	}
 
 }
