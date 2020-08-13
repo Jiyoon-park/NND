@@ -11,6 +11,6 @@ import com.ssafy.nnd.dto.MemberRating;
 
 
 public interface MemberRatingRepository extends JpaRepository<MemberRating,Long>{
-	@Query(value="select ratingno, memberrating.idx, commitcnt, issuecnt, attendrate, satisfaction, teamworkship, memberrating.createdate from memberrating JOIN teamregist ON idx=memberidx WHERE teamboardno= :teamboardno",nativeQuery=true)
+	@Query(value="select ratingno, memberrating.idx, commitcnt, issuecnt, attendrate, satisfaction, teamworkship, memberrating.createdate from memberrating JOIN teamregist ON idx=memberidx WHERE teamregist.teamboardno= :teamboardno",nativeQuery=true)
 	List<MemberRating> findMemberRatingByTeamboardNo(@Param("teamboardno") Long teamboardno);
 }

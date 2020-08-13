@@ -111,6 +111,7 @@ public class TeamBoardController {
     	leaderRegist.setTeamboardNo(newmemberBoard.getTeamboardNo());
     	leaderRegist.setMemberIdx(member.get().getIdx());
     	leaderRegist.setMemberEmail(leaderEmail);
+    	teamregistRepository.save(leaderRegist);
     	
     	//팀장, 멤버들의 idx 와 이메일을 teamregist에 넣는다
     	
