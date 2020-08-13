@@ -35,91 +35,100 @@ public class MemberRating {
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;   //평가날짜
 	
-	@Column(name="teamboardno")
-	private Long teamboardNo;
-	
+
 	public MemberRating() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public Long getRatingNo() {
 		return ratingNo;
 	}
 
+
 	public void setRatingNo(Long ratingNo) {
 		this.ratingNo = ratingNo;
 	}
+
 
 	public Long getIdx() {
 		return idx;
 	}
 
+
 	public void setIdx(Long idx) {
 		this.idx = idx;
 	}
+
 
 	public Long getCommitCnt() {
 		return commitCnt;
 	}
 
+
 	public void setCommitCnt(Long commitCnt) {
 		this.commitCnt = commitCnt;
 	}
+
 
 	public Long getIssueCnt() {
 		return issueCnt;
 	}
 
+
 	public void setIssueCnt(Long issueCnt) {
 		this.issueCnt = issueCnt;
 	}
+
 
 	public Long getAttendRate() {
 		return attendRate;
 	}
 
+
 	public void setAttendRate(Long attendRate) {
 		this.attendRate = attendRate;
 	}
+
 
 	public Long getSatisfaction() {
 		return satisfaction;
 	}
 
+
 	public void setSatisfaction(Long satisfaction) {
 		this.satisfaction = satisfaction;
 	}
+
 
 	public Long getTeamworkship() {
 		return teamworkship;
 	}
 
+
 	public void setTeamworkship(Long teamworkship) {
 		this.teamworkship = teamworkship;
 	}
+
 
 	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
+
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
 
-	public Long getTeamboardNo() {
-		return teamboardNo;
-	}
-
-	public void setTeamboardNo(Long teamboardNo) {
-		this.teamboardNo = teamboardNo;
-	}
 
 	@Override
 	public String toString() {
 		return "MemberRating [ratingNo=" + ratingNo + ", idx=" + idx + ", commitCnt=" + commitCnt + ", issueCnt="
 				+ issueCnt + ", attendRate=" + attendRate + ", satisfaction=" + satisfaction + ", teamworkship="
-				+ teamworkship + ", createDate=" + createDate + ", teamboardNo=" + teamboardNo + "]";
+				+ teamworkship + ", createDate=" + createDate + "]";
 	}
+
+	
 
 	
 	
