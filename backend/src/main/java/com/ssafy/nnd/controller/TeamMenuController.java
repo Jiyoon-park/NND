@@ -160,4 +160,40 @@ public class TeamMenuController {
     }
     return datalist;
 }
+	//모든 멤버 평가점수 가져오기  
+	//리턴 리스트
+	@GetMapping("teammenu/rating/list/{teamboardno}")
+	public List<Map<String,Object>> getAllRatingList(@PathVariable Long teamboardno) {
+		List<MemberRating> memberRating = memberRatingRepository.findMemberRatingByTeamboardNo(teamboardno);
+		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
+
+		for (int i = 0; i < memberRating.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberRating temp = memberRating.get(i);
+			map.put("commitCnt", temp.getCommitCnt());
+			map.put("issueCnt", temp.getIssueCnt());
+			map.put("attendRate", temp.getAttendRate());
+			map.put("satisfaction", temp.getSatisfaction());
+			map.put("teamworkship", temp.getTeamworkship());
+			
+			datalist.add(map);
+		}
+		return datalist;
+	}
+	//개인 멤버 평가점수 가져오기
+		@GetMapping("teammenu/rating/list/{teamboardno}/{memberidx}")
+		public MemberRating getMemberRatingList(@PathVariable Long teamboardno, @PathVariable Long memberidx) {
+			try {
+				List<MemberRating> memberRatingList = memberRatingRepository.findMemberRatingByTeamboardNo(teamboardno);
+				for (int i = 0; i < memberRatingList.size(); i++) {
+					Long temp = memberRatingList.get(i).getIdx();
+					if(temp==memberidx) {
+						return memberRatingList.get(i);
+					}
+				}
+			} catch (Exception e) {
+			}
+			return null;
+					
+		}
 }
