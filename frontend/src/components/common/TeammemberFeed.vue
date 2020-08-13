@@ -93,12 +93,14 @@ export default {
             if (data.length) {
               console.log("기존 스크롤 push " + this.page);
               this.page += 1;
+              console.log(`data의 원래 개수 : ${this.list.length}`);
+              var len = this.list.length; // 무한 스크롤을 진행 할 때마다 list엔 데이터가 쌓이게되므로, len에 변경할 url들이 위치하는 list의 인덱스를 미리 저장한다. 
               this.list.push(...data);
               console.log(`list : `);
               console.log(this.list);
 
               // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다 
-              for (let i = 0; i < this.list.length; i++) {
+              for (let i = len; i < this.list.length; i++) {
                 var card = this.list[i];
 
                 console.log(`before imageurl : ${card.imageurl}`)

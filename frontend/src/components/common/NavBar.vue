@@ -92,7 +92,7 @@
 
       <v-spacer></v-spacer>
       <!-- <img src="../../assets/images/logo_black_title.png" width="60px" alt /> -->
-      <p class="title" @click="$router.push('/').catch(() => {})">neonaedong</p>
+      <p class="title" @click="checkMainURL">neonaedong</p>
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
@@ -147,10 +147,20 @@ export default {
     this.getMemberTeamList();
 
     EventBus.$on("letterRead", () => {
-      this.messages--;
+      if (this.messages > 0) {
+        this.messages--;
+      }
     });
   },
   methods: {
+    checkMainURL() {
+      console.log(`현재 url : ${this.$route.path}`);
+      if (this.$route.path == '/') {
+        this.$router.go().catch(() => {})
+      } else {
+        this.$router.push('/').catch(() => {})
+      }
+    },
     onLogout: function() {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");

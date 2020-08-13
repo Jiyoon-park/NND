@@ -293,6 +293,9 @@ export default {
                         this.techStack = [];
                         this.memberstack = [];
                         this.date = new Date().toISOString().substr(0, 10);
+                        this.imageName = '';    // 이부분 컴플릿트 나는지 조심(다른 사람이 이작업을 이미 했으므로)
+                        this.imageFile = '';
+                        this.imageUrl = '';
 
                         this.changeDialog();
                         this.goMain();
@@ -307,16 +310,15 @@ export default {
         .catch((error) => {
           console.log(error.response);
           alert("실패");
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("실패");
         });
     },
     goMain() {
-      this.$router.push({
-        name: "Home",
-      });
+      console.log(`현재 url : ${this.$route.path}`);
+      if (this.$route.path == '/') {
+        this.$router.go();
+      } else {
+        this.$router.push('/');
+      }
     },
     changeDialog() {
       this.$emit("changeDialog");
