@@ -347,18 +347,18 @@ export default {
                   console.log("파이어베이스 등록 성공");
                   alert("등록성공");
 
-                  // 등록페이지 초기화
-                  this.teamName = null;
-                  this.title = null;
-                  this.content = null;
-                  this.groupSize = null;
-                  this.category = "";
-                  this.techStack = [];
-                  this.memberstack = [];
-                  this.imageName = ""; // 이미지 파일 이름
-                  this.imageUrl = ""; // 이미지 파일 경로
-                  this.imageFile = ""; // 이미지 파일 객체
-                  this.date = new Date().toISOString().substr(0, 10);
+                        // 등록페이지 초기화
+                        this.teamName = null;
+                        this.title = null;
+                        this.content = null;
+                        this.groupSize = null;
+                        this.category = "";
+                        this.techStack = [];
+                        this.memberstack = [];
+                        this.date = new Date().toISOString().substr(0, 10);
+                        this.imageName = '';    // 이부분 컴플릿트 나는지 조심(다른 사람이 이작업을 이미 했으므로)
+                        this.imageFile = '';
+                        this.imageUrl = '';
 
                   this.changeDialog();
                   this.goMain();
@@ -373,16 +373,15 @@ export default {
         .catch((error) => {
           console.log(error.response);
           alert("실패");
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("실패");
         });
     },
     goMain() {
-      this.$router.push({
-        name: "Home",
-      });
+      console.log(`현재 url : ${this.$route.path}`);
+      if (this.$route.path == '/') {
+        this.$router.go();
+      } else {
+        this.$router.push('/');
+      }
     },
     changeDialog() {
       this.$emit("changeDialog");

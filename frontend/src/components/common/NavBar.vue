@@ -60,15 +60,7 @@
                   v-for="(team, index) in teams"
                   :key="index"
                 >
-                  <v-btn
-                    text
-                    @click="
-                      $router
-                        .push(`/teamprofile/${team.teamboardNo}`)
-                        .catch(() => {})
-                    "
-                    >{{ team.teamName }}</v-btn
-                  >
+                  <v-btn text @click="test(team)">{{ team.teamName }}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -92,7 +84,7 @@
 
       <v-spacer></v-spacer>
       <!-- <img src="../../assets/images/logo_black_title.png" width="60px" alt /> -->
-      <p class="title" @click="$router.push('/').catch(() => {})">neonaedong</p>
+      <p class="title" @click="checkMainURL">neonaedong</p>
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
@@ -147,10 +139,28 @@ export default {
     this.getMemberTeamList();
 
     EventBus.$on("letterRead", () => {
-      this.messages--;
+      if (this.messages > 0) {
+        this.messages--;
+      }
     });
   },
   methods: {
+    checkMainURL() {
+      console.log(`현재 url : ${this.$route.path}`);
+      if (this.$route.path == '/') {
+        this.$router.go().catch(() => {})
+      } else {
+        this.$router.push('/').catch(() => {})
+      }
+    },
+     test(no) {
+      console.log(no);
+      this.$store.state.teamNo = no.teamboardNo;
+      this.$store.commit("nchange");
+      this.$router.push("TeamProfile");
+
+
+    },
     onLogout: function() {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
@@ -187,7 +197,7 @@ export default {
       axios
         .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
-          console.log("@@@@@@@@@@@");
+          //console.log("@@@@@@@@@@@");
           this.teams = res.data;
           console.log(res.data);
         })
