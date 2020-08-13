@@ -57,11 +57,19 @@
                 <v-img :src="teaminfo.imageurl" height="194"></v-img>
               </div>
               <span
-                class="mr-3 mt-1"
-                style="color:#eeeeee; font-style:italic; font-size:18px; font-weight:bold; position:absolute; top:0; right:0; text-shadow:1px 1px black;"
+                class="mr-3 mt-1 d-flex flex-column align-end"
+                style="position:absolute; top:0; right:0; font-weight:bold; font-style:italic;"
               >
-                {{ teaminfo.category }}
-                <span>{{ teaminfo.groupsize }}</span>
+                <span
+                  style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
+                  >{{ teaminfo.category }}</span
+                >
+
+                <small
+                  style="background-color:#eeeeee; opacity:0.7;"
+                  class="px-1"
+                  >모집 인원 {{ teaminfo.groupsize }}</small
+                >
               </span>
             </div>
 
