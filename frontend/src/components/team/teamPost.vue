@@ -101,14 +101,11 @@ export default {
     let token = window.$cookies.get("nnd");
 
     axios
-      .get(
-        `http://localhost:8080/teammenu/post/` + this.$store.state.teamboardno,
-        {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        }
-      )
+      .get(`http://localhost:8080/teammenu/post/` + this.$store.state.teamNo, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
       .then((res) => {
         this.teamposts = res.data;
       })

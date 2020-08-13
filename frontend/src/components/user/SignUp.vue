@@ -50,7 +50,9 @@
 
 <script>
 import axios from "axios";
-import firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 export default {
   name: "SignUp",
@@ -78,8 +80,8 @@ export default {
     passwordchk: "",
     passwordchkRules: [(v) => !!v || "비밀번호 확인은 필수 입력항목입니다."],
     checkbox: false,
-    // show1: false,
-    // show2: false,
+    show1: false,
+    show2: false,
   }),
 
   computed: {
@@ -91,6 +93,23 @@ export default {
   methods: {
     signup() {
       if (this.$refs.form.validate()) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            alert("회원가입 완료");
+            var user = firebase.auth().currentUser;
+            user.updateProfile({
+              displayName: this.name,
+            });
+            this.$router.push("/login");
+          })
+          .catch(function (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage + errorCode);
+          });
+
         axios
           .post("http://localhost:8080/member/signup", {
             name: this.name,
@@ -105,26 +124,9 @@ export default {
           })
           .catch((error) => {
             console.log(error.response);
-            // alert("이미 존재하는 아이디입니다");
+            alert("이미 존재하는 아이디입니다");
             this.$router.push("/signup");
           });
-
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then(() => {
-            alert("회원가입 완료");
-            var user = firebase.auth().currentUser;
-            user.updateProfile({
-              displayName: this.name,
-            });
-            this.$router.push("/login");
-          });
-        // .catch(function(error) {
-        //   var errorCode = error.code;
-        //   var errorMessage = error.message;
-        //   alert(errorMessage + errorCode);
-        // });
       }
     },
     reset() {

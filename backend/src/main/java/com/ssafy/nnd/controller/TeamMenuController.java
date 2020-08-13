@@ -48,12 +48,12 @@ public class TeamMenuController {
 
 	// 팀 게시글 불러오기
 	@GetMapping("teammenu/post/{teamboardno}") // teamboardno
-	public List<TeamPost> getAllTeamPost(@PathVariable Long teamboardno, Pageable pageable) {
+	public List<TeamPost> getAllTeamPost(@PathVariable Long teamboardno) {
 		if (teamboardno == 0) {
 			return null; // 정해진 팀이 없습니다.
 		} else {
 
-			return teampostRepository.findByTeamboardNoOrderByTeamPostNoDesc(teamboardno, pageable);
+			return teampostRepository.findByTeamboardNoOrderByTeamPostNoDesc(teamboardno);
 		}
 	}
 
@@ -74,10 +74,9 @@ public class TeamMenuController {
 	}
 
 	// 팀 게시글 글쓰기
-	@PutMapping("teammenu/post/save/{teamboardno}") // teamboardno
-	public String saveTeamPost(@PathVariable Long teamboardno, TeamPost teampost) {
+	@PutMapping("teammenu/post/save") 
+	public String saveTeamPost(@RequestBody TeamPost teampost) {
 
-		teampost.setTeamboardNo(teamboardno);
 		teampostRepository.save(teampost);
 		return "save success";
 	}
@@ -144,4 +143,60 @@ public class TeamMenuController {
 		
 		return "disband success";
 	}
+	
+	// 팀 목록 불러오기 letter controller의 메소드와 동일 , 주소값만 다름
+    @GetMapping("teammenu/teamlist/{memberidx}") //현재 꼬시기 버트을 누르는 member의 idx
+    public  List<Map<String,Object>> getAllTeamList(@PathVariable Long memberidx) {
+        List<Object> teamList = teamregistRepository.findTeamByIdx(memberidx);
+
+        List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
+
+    for (int i = 0; i < teamList.size(); i++) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Object[] temp = (Object[]) teamList.get(i);
+        map.put("teamboardNo", temp[0]);
+        map.put("teamName", temp[1]);
+        datalist.add(map);
+    }
+    return datalist;
+}
+	//모든 멤버 평가점수 가져오기  
+	//리턴 리스트
+	@GetMapping("teammenu/rating/list/{teamboardno}")
+	public List<Map<String,Object>> getAllRatingList(@PathVariable Long teamboardno) {
+		List<MemberRating> memberRating = memberRatingRepository.findMemberRatingByTeamboardNo(teamboardno);
+		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
+		
+		for (int i = 0; i < memberRating.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			MemberRating temp = memberRating.get(i);
+			Optional<Member> memberinfo = memberRepository.findById(temp.getIdx());
+			
+			map.put("name",memberinfo.get().getName());
+			map.put("commitCnt", temp.getCommitCnt());
+			map.put("issueCnt", temp.getIssueCnt());
+			map.put("attendRate", temp.getAttendRate());
+			map.put("satisfaction", temp.getSatisfaction());
+			map.put("teamworkship", temp.getTeamworkship());
+			
+			datalist.add(map);
+		}
+		return datalist;
+	}
+	//개인 멤버 평가점수 가져오기
+		@GetMapping("teammenu/rating/list/{teamboardno}/{memberidx}")
+		public MemberRating getMemberRatingList(@PathVariable Long teamboardno, @PathVariable Long memberidx) {
+			try {
+				List<MemberRating> memberRatingList = memberRatingRepository.findMemberRatingByTeamboardNo(teamboardno);
+				for (int i = 0; i < memberRatingList.size(); i++) {
+					Long temp = memberRatingList.get(i).getIdx();
+					if(temp==memberidx) {
+						return memberRatingList.get(i);
+					}
+				}
+			} catch (Exception e) {
+			}
+			return null;
+					
+		}
 }

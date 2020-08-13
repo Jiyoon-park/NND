@@ -9,14 +9,19 @@
       </div>
       <v-list-item-content>
         <div>
-          <v-list-item-title v-text="postinfo.writer" class="font-weight-black"></v-list-item-title>
+          <v-list-item-title
+            v-text="postinfo.writer"
+            class="font-weight-black"
+          ></v-list-item-title>
           <div class="d-flex">
             <v-list-item-title
               v-text="postinfo.title"
               class="text--secondary d-inline-block text-truncate"
               style="max-width: 160px;"
             ></v-list-item-title>
-            <p class="mb-0">{{ postinfo.createDate }}</p>
+            <p class="mb-0">
+              {{ $moment(postinfo.createdate).format("YYYY-MM-DD") }}
+            </p>
           </div>
         </div>
       </v-list-item-content>

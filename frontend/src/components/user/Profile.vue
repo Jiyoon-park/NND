@@ -2,29 +2,39 @@
   <v-row justify="center">
     <NavBar />
     <v-col cols="10" md="8" lg="6" class="mt-15">
-      <div class="user-info">
+      <div class="user-info" style="position:relative;">
         <v-avatar color="grey" size="90" class="mb-2">
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
-        <p># 참여중인 팀 : 앨리스</p>
-        <v-btn small @click="$router.push('/profile-update')">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              small
+              @click="$router.push('/profile-update')"
+              style="position:absolute; bottom:0; right:0;"
+              color="grey lighten-1"
+              dark
+            >
+              <span>내정보 수정</span>
+            </v-btn>
+          </template>
+          <span>전체 정보 수정이 가능합니다.</span>
+        </v-tooltip>
       </div>
 
-      <v-tabs class="tabs">
-        <v-spacer></v-spacer>
+      <v-tabs fixed-tabs color="indigo lighten-1" class="tabs">
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
         <v-tab @click="$vuetify.goTo('#experience', options)">참여이력</v-tab>
-        <v-spacer></v-spacer>
       </v-tabs>
 
       <div id="my-info" class="target">
-        <h3># 내정보</h3>
-        <v-row>
+        <h3 class="mb-1">🌞 내정보 🌞</h3>
+        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="4" md="2">
             <p>이메일</p>
             <p>GIT 주소</p>
@@ -36,22 +46,24 @@
         </v-row>
       </div>
 
-      <hr />
       <div id="skills" class="target">
-        <h3># 기술스택</h3>
-        <div class="skills">
-          <v-combobox
-          v-model="select"
-          chips
-          multiple
-          readonly
-        ></v-combobox>
-        </div>
+        <h3 class="mb-1">✨ 기술스택 ✨</h3>
+        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12">
+            <v-chip-group column>
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{ tag }}</v-chip>
+            </v-chip-group>
+          </v-col>
+        </v-row>
       </div>
-      <hr />
+
       <div id="experience" class="target">
-        <h3># 참여이력</h3>
-        <ProjectHistoryList />
+        <h3 class="mb-1">🏅 참여이력 🏅</h3>
+        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12">
+            <ProjectHistoryList />
+          </v-col>
+        </v-row>
       </div>
     </v-col>
   </v-row>
@@ -76,26 +88,25 @@ export default {
       easings: Object.keys(easings),
       user: "",
       profileURL: "",
-      select:[],
+      select: [],
     };
   },
   created() {
-
-    let token = window.$cookies.get("nnd")
-    console.log(token)
+    let token = window.$cookies.get("nnd");
+    console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
-  .get(`http://localhost:8080/member/info/${id}`, {
-    headers: { 
-      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-    }
-  })
-  .then((resp) => {
-    console.log(resp);
-    this.user = resp.data;
-    this.profileURL = this.user.profile;
-    this.select = JSON.parse(this.user.memberstack)        
-    });
+      .get(`http://localhost:8080/member/info/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
+      .then((resp) => {
+        console.log(resp);
+        this.user = resp.data;
+        this.profileURL = this.user.profile;
+        this.select = JSON.parse(this.user.memberstack);
+      });
   },
   computed: {
     target() {
@@ -116,7 +127,8 @@ export default {
 
 <style scoped>
 .user-info {
-  margin: 10px 0;
+  margin: 5px 0;
+  padding: 30px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -134,10 +146,6 @@ export default {
   margin-bottom: 5px;
 }
 
-.skills {
-  margin: 5px 0;
-}
-
 .skill {
   margin: 0 3px;
 }
@@ -146,15 +154,5 @@ hr {
   margin: 30px 0;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
 
 <style></style>

@@ -1,7 +1,8 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card flat>
+      <v-card flat style="position:relative;">
+        <div class="ribbon" v-if="favorite"></div>
         <v-expansion-panels>
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
@@ -10,10 +11,13 @@
                 size="50"
                 class="user-img mb-2"
                 @click="
-                $router
-                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
-                  .catch(() => {})
-              "
+                  $router
+                    .push({
+                      name: 'userProfile',
+                      params: { idx: teaminfo.idx },
+                    })
+                    .catch(() => {})
+                "
               >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
@@ -21,42 +25,57 @@
               <div class="d-flex flex-column ml-3">
                 <span>{{ teaminfo.name }}</span>
                 <div>
-                  <span>{{
-                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                  }}</span>
+                  <span>
+                    {{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}
+                  </span>
                   <small class="deadline">
                     ~ {{ teaminfo.deadline }}
-                    <span style="color:#555">마감</span></small
-                  >
+                    <span style="color:#555">마감</span>
+                  </small>
                 </div>
               </div>
             </div>
             <div style="position:relative;">
-              <v-img
-                v-if="teaminfo.category === '스터디'"
-                src="../../assets/images/study.jpg"
-                height="194"
-              ></v-img>
-              <v-img
-                v-else-if="teaminfo.category === '프로젝트'"
-                src="../../assets/images/project.jpg"
-                height="194"
-              ></v-img>
-              <v-img
-                v-else
-                src="../../assets/images/competition.jpg"
-                height="194"
-              ></v-img>
+              <div v-if="!teaminfo.imageurl">
+                <v-img
+                  v-if="teaminfo.category === '스터디'"
+                  src="../../assets/images/study.jpg"
+                  height="194"
+                ></v-img>
+                <v-img
+                  v-else-if="teaminfo.category === '프로젝트'"
+                  src="../../assets/images/project.jpg"
+                  height="194"
+                ></v-img>
+                <v-img
+                  v-else
+                  src="../../assets/images/competition.jpg"
+                  height="194"
+                ></v-img>
+              </div>
+              <div v-else>
+                <v-img :src="teaminfo.imageurl" height="194"></v-img>
+              </div>
               <span
-                class="mr-2"
-                style="color:#eeeeee; font-style:italic; font-weight:bold; position:absolute; top:0; right:0;"
-                >{{ teaminfo.category }}</span
+                class="mr-3 mt-1 d-flex flex-column align-end"
+                style="position:absolute; top:0; right:0; font-weight:bold; font-style:italic;"
               >
+                <span
+                  style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
+                  >{{ teaminfo.category }}</span
+                >
+
+                <small
+                  style="background-color:#eeeeee; opacity:0.7;"
+                  class="px-1"
+                  >모집 인원 {{ teaminfo.groupsize }}</small
+                >
+              </span>
             </div>
 
-            <v-expansion-panel-header>
+            <v-expansion-panel-header class="mt-2">
               <div class="d-flex flex-column">
-                <span class="font-weight-black">{{ teaminfo.title }}</span>
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
                 <div class="d-flex">
                   <v-chip
                     small
@@ -72,21 +91,17 @@
               </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              {{ teaminfo.content }}
-              <br />
-              {{ teaminfo.kakaoLink }}
+              <div>{{ teaminfo.content }}</div>
             </v-expansion-panel-content>
             <v-card-actions>
               <v-spacer></v-spacer>
 
               <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
-                관심등록
               </v-btn>
 
               <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
                 <v-icon>mdi-star</v-icon>
-                관심해제
               </v-btn>
 
               <v-btn
@@ -94,8 +109,9 @@
                 class="ml-0"
                 color="indigo darken-1 accent-4 font-weight-bold"
                 @click="applyform"
-                ><i class="fas fa-paper-plane mr-1"></i> 지원</v-btn
               >
+                <i class="fas fa-paper-plane mr-1"></i> 지원
+              </v-btn>
             </v-card-actions>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -197,7 +213,7 @@ export default {
         )
         .then((data) => {
           this.favorite = true;
-          alert("즐겨찾기에 등록되었습니다.");
+
           this.tlikeno = data.data;
         });
     },
@@ -211,7 +227,6 @@ export default {
         })
         .then(() => {
           this.favorite = false;
-          alert("즐겨찾기에서 삭제되었습니다.");
         });
     },
     submit() {
@@ -244,13 +259,27 @@ export default {
       alert("신청되었습니다.");
     },
     applyform() {
-      this.dialog = !this.dialog;
-      let token = window.$cookies.get("nnd");
-      if (token) {
-        console.log("프로필주소 : " + token.object.profile);
-        this.username = token.object.name;
-        this.profileURL = token.object.profile;
-        this.sendIdx = token.object.idx;
+      // 지원을 받기전 마감시간이 지났는지 체크하도록 한다.
+      // 지났다 = 현재시간 - 마감시간 > 0 
+      // 안지났다 = 반대
+      var curTime = new Date();
+      var endTime = new Date(this.teaminfo.deadline);
+
+      console.log(`현재시간 : ${curTime}`);
+      console.log(`마감시간 : ${endTime}`);
+      console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
+      
+      if (curTime.getTime() - endTime.getTime() > 0) {
+        alert("마감되었습니다!!!");
+      } else {
+        this.dialog = !this.dialog;
+        let token = window.$cookies.get("nnd");
+        if (token) {
+          console.log("프로필주소 : " + token.object.profile);
+          this.username = token.object.name;
+          this.profileURL = token.object.profile;
+          this.sendIdx = token.object.idx;
+        }
       }
     },
   },
@@ -276,5 +305,40 @@ export default {
   font-weight: bold;
   background-color: #eeeeee;
   margin-left: 5px;
+}
+
+/* .ribbon {
+  width: 0px;
+  height: 35px;
+  background-color: transparent;
+  position: absolute;
+  top: -5px;
+  right: 19px;
+  border: solid 13px #3a52db;
+  border-bottom: solid 5px transparent;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  transition: all 0.2s;
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0.6;
+  box-shadow: 2px 0 0 0 rgb(62, 35, 138);
+} */
+
+.ribbon {
+  display: block;
+  top: -10px;
+  right: 12px;
+  position: absolute;
+  width: 0;
+  height: 45px;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition: 1s;
+  background: #f5f5f5;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  color: #e0e0e0;
+  border-top: 10px solid #0d47a1;
 }
 </style>
