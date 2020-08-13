@@ -20,6 +20,8 @@
         <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
         <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
           >그래프</v-tab
+        ><v-tab @click="$vuetify.goTo('#team-member-diary', options)"
+          >다이어리</v-tab
         >
         <v-spacer></v-spacer>
       </v-tabs>
@@ -42,6 +44,11 @@
         <h3># 그래프</h3>
         <MemberChart />
       </div>
+      <hr />
+      <div id="team-member-diary" class="target">
+        <h3># 다이어리</h3>
+        <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -53,6 +60,7 @@ import NavBar from "../common/NavBar.vue";
 import TeamPost from "../team/teamPost.vue";
 import TeamTable from "../team/teamTable.vue";
 import MemberChart from "../team/memberChart.vue";
+import TeamDiary from "../team/teamDiary";
 
 import axios from "axios";
 
@@ -62,6 +70,7 @@ export default {
     TeamPost,
     TeamTable,
     MemberChart,
+    TeamDiary,
   },
   data() {
     return {
@@ -77,15 +86,8 @@ export default {
   },
 
   created() {
-    console.log("store테스트");
-    console.log(this.$store.state.teamNo);
-    console.log("store테스트");
     this.teamboardno = this.$store.state.teamNo;
-    console.log("teamboardno 테스트");
-    console.log(this.teamboardno);
-    console.log("teamboardno 테스트");
     let token = window.$cookies.get("nnd");
-    //console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
       .get(`http://localhost:8080/member/info/${id}`, {
@@ -94,13 +96,9 @@ export default {
         },
       })
       .then((resp) => {
-        console.log(resp);
         this.user = resp.data;
         this.profileURL = this.user.profile;
       });
-
-    //teaminfo 가져오는 메소드
-    //this.teamboardno = this.$store.state.teamNo;
 
     axios
       .get(`http://localhost:8080/teamboard/list/${this.teamboardno}`, {
@@ -110,11 +108,20 @@ export default {
       })
       .then((res) => {
         this.teaminfo = res.data;
-        //console.log("############");
-        //console.log(this.teaminfo);
+        // console.log("팀장idx찍어보자");
+        // console.log(this.teaminfo.idx);
+        this.$store.state.teamMaster = this.teaminfo.idx;
       })
       .catch((err) => {
         console.log(err);
+      });
+    axios
+      .get(`http://localhost:8080/teammenu/member/` + this.teamboardno)
+      .then((data) => {
+        console.log("데이터찍어보자");
+        console.log(data.data);
+        this.$store.state.teammembers = data.data;
+        this.$store.commit("saveMember");
       });
   },
   computed: {

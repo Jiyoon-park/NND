@@ -17,20 +17,16 @@ export default {
     return {
       loaded: false,
       chartData: null,
-      data: [],
     };
   },
   async mounted() {
-    this.loaded = false;
     try {
       let token = window.$cookies.get("nnd");
 
       axios
         .get(
           `http://localhost:8080/teammenu/rating/list/` +
-            this.$store.state.teamNo +
-            `/` +
-            token.object.idx,
+            this.$store.state.teamNo,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -39,22 +35,33 @@ export default {
         )
         .then((res) => {
           console.log("제발제발제발제발제발제발제발");
-          console.log(res.data.issueCnt);
+          console.log(res.data);
+
           this.chartData = {
             labels: ["지라", "팀워크", "출석률", "깃 커밋", "만족도"],
             datasets: [
-              {
-                label: "오기석",
-                data: [
-                  res.data.issueCnt,
-                  res.data.teamworkship,
-                  res.data.attendRate,
-                  res.data.commitCnt,
-                  res.data.satisfaction,
-                ],
-              },
+              // {
+              //   label: "오기석",
+              //   data: [1, 2, 3, 4, 5],
+              // },
             ],
           };
+          for (let index = 0; index < res.data.length; index++) {
+            this.chartData.datasets.push({
+              label: res.data[index].name,
+              backgroundColor: this.color(),
+
+              data: [
+                res.data[index].issueCnt,
+                res.data[index].teamworkship,
+                res.data[index].attendRate,
+                res.data[index].commitCnt,
+                res.data[index].satisfaction,
+              ],
+            });
+          }
+          console.log("chart dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
+          console.log(this.chartData);
           this.loaded = true;
         })
         .catch((err) => {
@@ -64,7 +71,16 @@ export default {
       console.error(e);
     }
   },
-  methods: {},
+  methods: {
+    color() {
+      var a = Math.floor(Math.random() * 256);
+      var b = Math.floor(Math.random() * 256);
+      var c = Math.floor(Math.random() * 256);
+
+      var str = `rgba(${a},${b},${c},0.2)`;
+      return str;
+    },
+  },
 };
 </script>
 

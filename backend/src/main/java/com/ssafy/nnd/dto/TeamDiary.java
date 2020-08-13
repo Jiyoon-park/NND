@@ -26,15 +26,21 @@ public class TeamDiary {
 	private Long teamdiaryNo; // 게시글 번호
 
 	@Column
+	private Long teamboardno; // 제목
+
+	@Column
 	private String title; // 제목
 
 	@Column
 	private String color; // 본문내용
-
+	
+	@Column
 	private String start;
-
+	
+	@Column
 	private String end; // 기술스택태그
-
+	
+	@Column
 	private boolean timed; // 내용스택태그
 
 	public TeamDiary() {
@@ -49,6 +55,14 @@ public class TeamDiary {
 		this.teamdiaryNo = teamdiaryNo;
 	}
 
+
+	public Long getTeamboardno() {
+		return teamboardno;
+	}
+
+	public void setTeamboardno(Long teamboardno) {
+		this.teamboardno = teamboardno;
+	}
 
 	public String getTitle() {
 		return title;

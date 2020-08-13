@@ -120,14 +120,21 @@
               src="../../assets/images/member2.jpg"
             ></v-img>
             <v-card-title
+              v-if="this.teamlist.length !== 0"
               class="header-text text-center justify-center font-italic"
             >
               ❝ {{ teaminfo.teamname }}팀으로
               <br />
               {{ teaminfo.name }}님을 영입합니다 ❠
             </v-card-title>
+            <v-card-title
+              v-else
+              class="header-text text-center justify-center font-italic"
+            >
+              ❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠
+            </v-card-title>
 
-            <v-card-text class="mt-5 pb-0">
+            <v-card-text v-if="this.teamlist.length !== 0" class="mt-5 pb-0">
               <div class="mt-3">
                 <v-row class="mb-0">
                   <v-col class="mb-0" cols="12">
@@ -158,7 +165,13 @@
                 >취소</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="submit">영입하기</v-btn>
+              <v-btn
+                v-if="this.teamlist.length !== 0"
+                color="blue darken-1"
+                text
+                @click="submit"
+                >영입하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
