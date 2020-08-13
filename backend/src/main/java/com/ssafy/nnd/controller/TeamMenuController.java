@@ -130,8 +130,23 @@ public class TeamMenuController {
 
 	@PutMapping("teammenu/rating") // 평가대상자 idx 꼭 넣어서 보내주세요
 	public String memberRating(@RequestBody MemberRating memberrate) {
-		memberRatingRepository.save(memberrate);
-		return "member rating success";
+		
+		try {
+			//데이터 있으면 2로 나눠서 다시 수정하기
+
+			Optional<MemberRating> origindata = memberRatingRepository.findById(memberrate.getRatingNo());
+			origindata.get().setAttendRate((origindata.get().getAttendRate()+memberrate.getAttendRate())/2);
+			origindata.get().setCommitCnt((origindata.get().getCommitCnt()+memberrate.getCommitCnt())/2);
+			origindata.get().setTeamworkship((origindata.get().getTeamworkship()+memberrate.getTeamworkship())/2);
+			origindata.get().setIssueCnt((origindata.get().getIssueCnt()+memberrate.getIssueCnt())/2);
+			origindata.get().setSatisfaction((origindata.get().getSatisfaction()+memberrate.getSatisfaction())/2);
+			memberRatingRepository.save(origindata.get());
+			return "rating success";
+		} catch (Exception e) {
+			//데이터 없으면 그냥 새로 넣기
+			memberRatingRepository.save(memberrate);
+			return "rating success";
+		}
 	}
 
 	// 마감 버튼 // 마감되면 git, jira issue, 출결 가져와서 디비에 넣기
