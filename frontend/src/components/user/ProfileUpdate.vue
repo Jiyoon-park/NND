@@ -1,9 +1,9 @@
 <template>
   <v-row justify="center">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-15">
+    <v-col cols="10" md="8" lg="6" class="mt-13">
       <div class="user-info" style="position:relative;">
-        <v-avatar color="grey" size="90" class="mb-2">
+        <v-avatar color="grey" size="90" class="mb-3">
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
@@ -13,10 +13,10 @@
             <v-btn
               v-bind="attrs"
               v-on="on"
-              small
+              x-small
               @click="modify"
-              style="position:absolute; bottom:0; right:0;"
-              color="grey lighten-1"
+              style="position:absolute; bottom:5px;"
+              color="grey"
               dark
             >
               <span>저장</span>
@@ -34,7 +34,7 @@
       </v-tabs>
 
       <div id="my-info" class="target">
-        <h3 class="mb-1">🌞 내정보 🌞</h3>
+        <h3 class="mb-3">🌞 내정보 🌞</h3>
         <v-row
           class="py-2"
           style="background-color: #fafafa; border-radius:10px;"
@@ -72,7 +72,7 @@
       </div>
 
       <div id="skills" class="target">
-        <h3 class="mb-1">✨ 기술스택 ✨</h3>
+        <h3 class="mb-3">✨ 기술스택 ✨</h3>
         <v-row
           class="py-2"
           style="background-color: #fafafa; border-radius:10px;"
@@ -92,7 +92,7 @@
 
       <div id="experience" class="target">
         <div class="d-flex justify-space-between">
-          <h3 class="mb-1">🏅 참여이력 🏅</h3>
+          <h3 class="mb-3">🏅 참여이력 🏅</h3>
           <!-- 프로젝트히스토리 추가/수정 버튼 -->
           <div v-show="isEditPage">
             <AddProjectHistory />
@@ -232,7 +232,7 @@ export default {
 }
 
 .target {
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 #my-info p {
