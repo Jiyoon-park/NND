@@ -15,6 +15,8 @@ export default new Vuex.Store({
     day: "",
     contest: [],
     teamNo: "",
+    teamMaster: "",
+    teammembers: [],
   },
   plugins: [createPersistedState()],
 
@@ -37,6 +39,7 @@ export default new Vuex.Store({
   },
   mutations: {
     nchange: (state) => state.teamNo,
+    saveMember: (state) => state.teammembers,
     increment(state) {
       state.count++;
     },

@@ -133,7 +133,6 @@ export default {
   created() {
     let token = window.$cookies.get("nnd");
     if (token) {
-      console.log(token.object.idx);
       this.user = token.object;
       this.username = token.object.name;
       this.profileURL = token.object.profile;
@@ -172,8 +171,6 @@ export default {
       axios
         .get(`http://localhost:8080/letter/list/receive/${this.user.idx}`)
         .then((res) => {
-          console.log("#############");
-          console.log(res);
           this.letters = res;
           this.messages = this.checkRead(this.letters.data);
           console.log(`message개수 :${this.messages}`);
@@ -183,9 +180,9 @@ export default {
         });
     },
     checkRead: function(arr) {
-      console.log("count 함수 실행!!");
-      console.log("arr: " + arr);
-      console.log("length: " + arr.length);
+      // console.log("count 함수 실행!!");
+      // console.log("arr: " + arr);
+      // console.log("length: " + arr.length);
       var count = 0;
       for (let index = 0; index < arr.length; index++) {
         console.log(`arr :${arr[index]}`);
@@ -199,9 +196,7 @@ export default {
       axios
         .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
-          console.log("@@@@@@@@@@@");
           this.teams = res.data;
-          console.log(res.data.length);
         })
         .catch((err) => {
           console.log(err);
