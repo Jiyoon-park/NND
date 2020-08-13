@@ -35,12 +35,37 @@
 
       <div id="my-info" class="target">
         <h3 class="mb-1">🌞 내정보 🌞</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-card-text>
-            <v-text-field filled dense disabled :value="user.email" label="이메일" color="white"></v-text-field>
-            <v-text-field filled dense v-model="user.name" label="이름"></v-text-field>
-            <v-text-field dense v-model="user.gitaddr" label="GIT 주소" filled></v-text-field>
-            <v-text-field dense v-model="user.profile" label="프로필사진 링크" filled></v-text-field>
+            <v-text-field
+              filled
+              dense
+              disabled
+              :value="user.email"
+              label="이메일"
+              color="white"
+            ></v-text-field>
+            <v-text-field
+              filled
+              dense
+              v-model="user.name"
+              label="이름"
+            ></v-text-field>
+            <v-text-field
+              dense
+              v-model="user.gitaddr"
+              label="GIT 주소"
+              filled
+            ></v-text-field>
+            <v-text-field
+              dense
+              v-model="user.profile"
+              label="프로필사진 링크"
+              filled
+            ></v-text-field>
             <v-btn type="button" @click="PreviewImg">이미지 미리보기</v-btn>
           </v-card-text>
         </v-row>
@@ -48,9 +73,19 @@
 
       <div id="skills" class="target">
         <h3 class="mb-1">✨ 기술스택 ✨</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-col cols="12" sm="12" class="pb-0">
-            <v-combobox v-model="select" :items="items" label="기술스택" multiple chips filled></v-combobox>
+            <v-combobox
+              v-model="select"
+              :items="items"
+              label="기술스택"
+              multiple
+              chips
+              filled
+            ></v-combobox>
           </v-col>
         </v-row>
       </div>
@@ -58,13 +93,27 @@
       <div id="experience" class="target">
         <div class="d-flex justify-space-between">
           <h3 class="mb-1">🏅 참여이력 🏅</h3>
-          <div>
+          <!-- 프로젝트히스토리 추가/수정 버튼 -->
+          <div v-show="isEditPage">
             <AddProjectHistory />
+            <v-btn
+              color="red darken-2"
+              dark
+              fab
+              x-small
+              class="mr-1"
+              @click="EditChange"
+            >
+              <v-icon>mdi-minus</v-icon>
+            </v-btn>
           </div>
         </div>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-col cols="12" sm="12" lg="6">
-            <ProjectHistoryList />
+            <ProjectHistoryList :isEditPage="isEditPage" :isEdit="isEdit" />
           </v-col>
         </v-row>
       </div>
@@ -99,6 +148,8 @@ export default {
       profileURL: "",
       items: ["C", "C++", "JAVA", "Spring", "Django", "C#", "Go"],
       select: [],
+      isEdit: false,
+      isEditPage: true,
     };
   },
   created() {
@@ -111,6 +162,14 @@ export default {
     }
   },
   methods: {
+    EditChange() {
+      if (this.isEdit) {
+        this.isEdit = false;
+      } else {
+        this.isEdit = true;
+      }
+      console.log(this.isEdit);
+    },
     PreviewImg() {
       this.profileURL = this.user.profile;
     },
@@ -139,6 +198,7 @@ export default {
           window.$cookies.set("nnd", res.data, "2d"); //쿠키다시저장
           this.$router.push({ name: "Profile" }); //home으로 보냄
         });
+      this.isEdit = false;
     },
   },
   computed: {

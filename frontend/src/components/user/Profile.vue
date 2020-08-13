@@ -34,7 +34,10 @@
 
       <div id="my-info" class="target">
         <h3 class="mb-1">🌞 내정보 🌞</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-col cols="4" md="2">
             <p>이메일</p>
             <p>GIT 주소</p>
@@ -48,10 +51,15 @@
 
       <div id="skills" class="target">
         <h3 class="mb-1">✨ 기술스택 ✨</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-col cols="12" sm="12">
             <v-chip-group column>
-              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{ tag }}</v-chip>
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{
+                tag
+              }}</v-chip>
             </v-chip-group>
           </v-col>
         </v-row>
@@ -59,9 +67,12 @@
 
       <div id="experience" class="target">
         <h3 class="mb-1">🏅 참여이력 🏅</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
+        <v-row
+          class="py-2"
+          style="background-color: #fafafa; border-radius:10px;"
+        >
           <v-col cols="12" sm="12">
-            <ProjectHistoryList />
+            <ProjectHistoryList :isEditPage="isEditPage" />
           </v-col>
         </v-row>
       </div>
@@ -89,6 +100,8 @@ export default {
       user: "",
       profileURL: "",
       select: [],
+      isEdit: false,
+      isEditPage: false,
     };
   },
   created() {
