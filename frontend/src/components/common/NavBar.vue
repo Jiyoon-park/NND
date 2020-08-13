@@ -175,7 +175,7 @@ export default {
     },
     getLetters() {
       axios
-        .get(`http://localhost:8080/letter/list/receive/${this.user.idx}`)
+        .get(`${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`)
         .then((res) => {
           this.letters = res;
           this.messages = this.checkRead(this.letters.data);
@@ -200,7 +200,7 @@ export default {
     },
     getMemberTeamList() {
       axios
-        .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
+        .get(`${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
           this.teams = res.data;
         })

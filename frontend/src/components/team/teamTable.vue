@@ -108,7 +108,7 @@ export default {
       console.log(this.satisfaction);
       console.log(this.teamworkship);
       axios
-        .put("http://localhost:8080/teammenu/rating", {
+        .put(`${process.env.VUE_APP_API_URL}/teammenu/rating`, {
           ratingN0: "",
           idx: this.nowNum,
           commitCnt: 4,

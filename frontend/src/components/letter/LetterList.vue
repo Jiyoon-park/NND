@@ -81,7 +81,7 @@ export default {
     if (token) {
       console.log(token.object.idx);
       axios
-        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`, {
+        .get(`${process.env.VUE_APP_API_URL}/letter/list/receive/${token.object.idx}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -95,7 +95,7 @@ export default {
         });
 
       axios
-        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`, {
+        .get(`${process.env.VUE_APP_API_URL}/letter/list/send/${token.object.idx}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },

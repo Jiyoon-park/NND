@@ -111,7 +111,7 @@ export default {
           });
 
         axios
-          .post("http://localhost:8080/member/signup", {
+          .post(`${process.env.VUE_APP_API_URL}/member/signup`, {
             name: this.name,
             email: this.email,
             profile: null,

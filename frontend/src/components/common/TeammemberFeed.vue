@@ -71,7 +71,7 @@ export default {
 
       axios
         .put(
-          "http://localhost:8080/" + this.type + "board/search/" + this.idx,
+          `${process.env.VUE_APP_API_URL}/` + this.type + "board/search/" + this.idx,
           {
             query: this.query,
             category: this.category,

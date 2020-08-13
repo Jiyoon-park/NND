@@ -67,7 +67,7 @@ export default new Vuex.Store({
   //   async getUserFromServer(context) {
   //     if (context.state.token) {
   //       axios
-  //         .get("http://localhost:8080/member", {
+  //         .get(`${process.env.VUE_APP_API_URL}/member`, {
   //           //재시작시 실행
   //           headers: {
   //             Authorization: "Bearer " + context.state.token, // the token is a variable which holds the token
@@ -92,7 +92,7 @@ export default new Vuex.Store({
   //     console.log("getUserLogById.action");
   //     if (state.user.id) {
   //       axios
-  //         .get("http://localhost:8080/member/info/?id=${state.user.id}", {
+  //         .get(`${process.env.VUE_APP_API_URL}/member/info/?id=${state.user.id}`, {
   //           headers: {
   //             Authorization: "Bearer " + state.token, // the token is a variable which holds the token
   //           },

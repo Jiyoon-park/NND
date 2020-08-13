@@ -293,7 +293,7 @@ export default {
           name: this.name,
           imageurl: this.imageName,
         };
-        url = `http://localhost:8080/teamboard/save/${this.idx}`;
+        url = `${process.env.VUE_APP_API_URL}/teamboard/save/${this.idx}`;
       } else {
         // 팀원의 경우
         obj = {
@@ -305,7 +305,7 @@ export default {
           name: this.name,
           imageurl: this.imageName,
         };
-        url = `http://localhost:8080/memberboard/save/${this.idx}`;
+        url = `${process.env.VUE_APP_API_URL}/memberboard/save/${this.idx}`;
       }
       axios
         .put(url, obj, {

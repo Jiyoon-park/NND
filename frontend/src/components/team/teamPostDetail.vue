@@ -122,7 +122,7 @@ export default {
     postUpdate() {
       this.updateDialog = false;
       axios
-        .post(`http://localhost:8080/teammenu/post/update`, {
+        .post(`${process.env.VUE_APP_API_URL}/teammenu/post/update`, {
           teamPostNo: this.postinfo.teamPostNo,
           teamboardNo: this.postinfo.teamboardNo,
           memberIdx: this.userinfo.idx,
@@ -145,7 +145,7 @@ export default {
     postDelete() {
       axios
         .delete(
-          `http://localhost:8080/teammenu/post/delete/${this.postinfo.teamPostNo}`
+          `${process.env.VUE_APP_API_URL}/teammenu/post/delete/${this.postinfo.teamPostNo}`
         )
         .then((response) => {
           console.log(response);

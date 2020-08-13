@@ -132,7 +132,7 @@ export default {
     let token = window.$cookies.get("nnd");
     axios
       .get(
-        `http://localhost:8080/teammenu/diary/list/${this.$store.state.teamNo}`,
+        `${process.env.VUE_APP_API_URL}/teammenu/diary/list/${this.$store.state.teamNo}`,
         {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
