@@ -73,7 +73,7 @@
               </span>
 
               <div
-                style="position:absolute; right:15px; bottom:-30px; z-index:2;"
+                style="position:absolute; right:15px; bottom:-32px; z-index:2;"
               >
                 <i
                   class="far fa-bookmark"
@@ -83,7 +83,7 @@
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
               <div
-                style="position:absolute; left:15px; bottom:-30px; z-index:2;"
+                style="position:absolute; left:15px; bottom:-32px; z-index:2;"
               >
                 <i @click="applyform" class="fas fa-paper-plane"
                   ><small class="ml-1">지원하기</small></i
@@ -91,7 +91,7 @@
               </div>
             </div>
 
-            <div class="shrink mt-10 mx-4 mb-6">
+            <div class="shrink mt-10 mx-4 mb-4">
               <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
                 <small
