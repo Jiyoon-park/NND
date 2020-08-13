@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     goSurvey() {
-      //axios.get(`http://localhost:8080/teammenu/member/` + 1);
+      //axios.get(`${process.env.VUE_APP_API_URL}/teammenu/member/` + 1);
     },
   },
 };

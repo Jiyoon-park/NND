@@ -24,7 +24,7 @@ export default {
   }),
   created() {
     axios
-      .get(`http://localhost:8080/teamboard/list`, 
+      .get(`${process.env.VUE_APP_API_URL}/teamboard/list`, 
         {
           page: this.page,
           size: this.size,

@@ -96,7 +96,7 @@ export default {
     console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
-      .get(`http://localhost:8080/member/info/${id}`, {
+      .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },

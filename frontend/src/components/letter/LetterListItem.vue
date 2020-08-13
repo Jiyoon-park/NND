@@ -95,7 +95,7 @@ export default {
       if (this.letterinfo.read == 0) {
         this.letterinfo.read = 1;
         axios
-          .post(`http://localhost:8080/letter/update/${letterNo}`, {
+          .post(`${process.env.VUE_APP_API_URL}/letter/update/${letterNo}`, {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },

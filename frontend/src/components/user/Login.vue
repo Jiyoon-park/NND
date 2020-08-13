@@ -26,7 +26,7 @@
             <p>✨ SNS로 간편하게 로그인할 수 있어요!</p>
 
             <a
-              href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"
+              :href="this.redirectURL"
             >
               <img src="../../assets/images/kakao_login.png" alt />
             </a>
@@ -47,6 +47,7 @@ export default {
   name: "Login",
   components: {},
   data: () => ({
+    redirectURL: `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}login&response_type=code`,
     id: 0,
     token: "",
     valid: true,
@@ -72,10 +73,13 @@ export default {
     }
   },
   methods: {
+    makeURL() {
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}/login&response_type=code`; 
+    },
     login() {
       if (this.$refs.form.validate()) {
         axios
-          .post("http://localhost:8080/member/login", {
+          .post(`${process.env.VUE_APP_API_URL}/member/login`, {
             email: this.email,
             password: this.password,
           })

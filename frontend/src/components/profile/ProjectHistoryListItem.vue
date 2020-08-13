@@ -92,7 +92,7 @@ export default {
 
       axios
         .delete(
-          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`,
+          `${process.env.VUE_APP_API_URL}/projecthistory/delete/${projecthistoryNo}`,
           {
             headers: { 
                       Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -109,7 +109,7 @@ export default {
           let token = window.$cookies.get('nnd')
       axios
         .post(
-          `http://localhost:8080/projecthistory/update/${projecthistoryNo}`,
+          `${process.env.VUE_APP_API_URL}/projecthistory/update/${projecthistoryNo}`,
          {
             idx: this.historyinfo.idx,
             projectName: this.historyinfo.projectName,

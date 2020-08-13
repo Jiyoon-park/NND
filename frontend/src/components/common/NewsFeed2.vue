@@ -200,10 +200,7 @@ export default {
       //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
-          "http://localhost:8080/liketeam/save/" +
-            this.$store.state.myToken.idx +
-            "/" +
-            this.teaminfo.teamboardno,
+          `${process.env.VUE_APP_API_URL}/liketeam/save/${this.$store.state.myToken.idx}/${this.teaminfo.teamboardno}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -220,7 +217,7 @@ export default {
     delFavorite() {
       let token = window.$cookies.get("nnd");
       axios
-        .delete("http://localhost:8080/liketeam/delete/" + this.tlikeno, {
+        .delete(`${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -236,7 +233,7 @@ export default {
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
       axios
-        .put("http://localhost:8080/letter/create/" + this.lettertype, {
+        .put(`${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },

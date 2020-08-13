@@ -76,7 +76,7 @@ export default {
       let token = window.$cookies.get("nnd");
       axios
         .put(
-          `http://localhost:8080/projecthistory/save/${this.user.idx}`,
+          `${process.env.VUE_APP_API_URL}/projecthistory/save/${this.user.idx}`,
           {
             idx: this.user.idx,
             projectName: this.projectName,

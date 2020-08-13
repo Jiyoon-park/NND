@@ -119,7 +119,7 @@ export default {
       console.log(token);
       axios
         .post(
-          "http://localhost:8080/member/update",
+          `${process.env.VUE_APP_API_URL}/member/update`,
           {
             email: this.user.email,
             name: this.user.name,

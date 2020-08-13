@@ -36,7 +36,7 @@ export default {
       console.log("###########");
       console.log(this.user.idx);
       axios
-        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`,
+        .get(`${process.env.VUE_APP_API_URL}/projecthistory/list/${this.user.idx}`,
         {
           headers: {
               Authorization: 'Bearer ' + token.data, // the token is a variable which holds the token
@@ -53,7 +53,7 @@ export default {
 
     // EventBus.$on('delete-card',() =>{
     //    axios
-    //     .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`)
+    //     .get(`${process.env.VUE_APP_API_URL}/projecthistory/list/${this.user.idx}`)
     //     .then(({ data }) => {
     //       this.projects = data;
     //       console.log(this.projects);
@@ -64,7 +64,7 @@ export default {
     // });
     EventBus.$on('create-card',() =>{
        axios
-        .get(`http://localhost:8080/projecthistory/list/${this.user.idx}`,
+        .get(`${process.env.VUE_APP_API_URL}/projecthistory/list/${this.user.idx}`,
         {
           headers: { 
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -84,7 +84,7 @@ export default {
         let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       axios
         .delete(
-          `http://localhost:8080/projecthistory/delete/${projecthistoryNo}`,{
+          `${process.env.VUE_APP_API_URL}/projecthistory/delete/${projecthistoryNo}`,{
             headers: { 
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
          },
@@ -96,7 +96,7 @@ export default {
         let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       axios
         .post(
-          `http://localhost:8080/projecthistory/update/${projecthistoryNo}`,
+          `${process.env.VUE_APP_API_URL}/projecthistory/update/${projecthistoryNo}`,
          
           {
             idx: this.projects[i].idx,

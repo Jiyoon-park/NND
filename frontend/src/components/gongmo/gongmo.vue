@@ -114,7 +114,7 @@ export default {
       console.log(this.$store.state.day - t);
       this.$store.commit("setDate", t);
       axios
-        .get(`http://localhost:8080/contest`, {
+        .get(`${process.env.VUE_APP_API_URL}/contest`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
