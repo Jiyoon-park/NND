@@ -147,19 +147,22 @@ export default {
   methods: {
     checkMainURL() {
       console.log(`현재 url : ${this.$route.path}`);
-      if (this.$route.path == '/') {
-        this.$router.go().catch(() => {})
+      if (this.$route.path == "/") {
+        this.$router.go().catch(() => {});
       } else {
-        this.$router.push('/').catch(() => {})
+        this.$router.push("/").catch(() => {});
       }
     },
-     test(no) {
+    test(no) {
       console.log(no);
+      console.log(`현재 url : ${this.$route.path}`);
       this.$store.state.teamNo = no.teamboardNo;
       this.$store.commit("nchange");
-      this.$router.push("TeamProfile");
-
-
+      if (this.$route.path == "/TeamProfile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/TeamProfile").catch(() => {});
+      }
     },
     onLogout: function() {
       this.$store.commit("logout");
