@@ -144,21 +144,21 @@
         </v-expansion-panels>
 
         <v-dialog v-model="dialog" max-width="600px">
-          <v-card>
+          <v-card style="border: 3px solid #eeeeee;">
             <v-img
               class="header"
               height="200px"
               src="../../assets/images/team2.jpg"
             ></v-img>
-            <v-card-title
-              class="header-text text-center justify-center font-italic"
-            >
-              ❝ {{ teaminfo.teamname }} 팀의 <br />팀원이 되고싶습니다 ❠
+            <v-card-title class="header-text text-center justify-center body-1">
+              ❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠
             </v-card-title>
 
-            <v-card-text class="mt-5 pb-0">
-              <div class="mt-3">
-                <p class="mb-0 pl-1">팀장에게 보내는 어필 한마디 🙈🙉</p>
+            <v-card-text class="pb-0">
+              <div class="mt-4">
+                <p class="mb-3 pl-1" style="font-size:1rem;">
+                  팀장에게 보내는 어필 한마디 🙈🙉
+                </p>
                 <v-textarea
                   filled
                   v-model="content"
@@ -167,12 +167,18 @@
                 ></v-textarea>
               </div>
             </v-card-text>
-            <v-card-actions>
+            <v-card-actions class="pt-0">
               <v-btn color="blue darken-1" text @click="dialog = false"
                 >취소</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="submit">지원하기</v-btn>
+              <v-btn
+                color="blue darken-1"
+                class="font-weight-bold"
+                text
+                @click="submit"
+                >지원하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -322,7 +328,8 @@ export default {
 
 .header-text {
   position: absolute;
-  top: 60px;
+  font-size: 0.5rem;
+  top: 80px;
   left: 0;
   right: 0;
   color: #eeeeee;
