@@ -166,10 +166,13 @@ public class TeamMenuController {
 	public List<Map<String,Object>> getAllRatingList(@PathVariable Long teamboardno) {
 		List<MemberRating> memberRating = memberRatingRepository.findMemberRatingByTeamboardNo(teamboardno);
 		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
-
+		
 		for (int i = 0; i < memberRating.size(); i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			MemberRating temp = memberRating.get(i);
+			Optional<Member> memberinfo = memberRepository.findById(temp.getIdx());
+			
+			map.put("name",memberinfo.get().getName());
 			map.put("commitCnt", temp.getCommitCnt());
 			map.put("issueCnt", temp.getIssueCnt());
 			map.put("attendRate", temp.getAttendRate());
