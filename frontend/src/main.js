@@ -5,8 +5,39 @@ import axios from "axios";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueCookie from "vue-cookies";
-import firebase from "firebase";
 import vuemoment from "vue-moment";
+
+import * as firebase from "firebase/app";
+  
+  require('dotenv').config();
+
+  console.log(process.env);
+  console.log(`value : ${process.env.VUE_APP_APIKEY}`);
+  console.log(`value : ${process.env.VUE_APP_AUTHDOMAIN}`);
+  console.log(`value : ${process.env.VUE_APP_DATABASEURL}`);
+  console.log(`value : ${process.env.VUE_APP_PROJECTID}`);
+  console.log(`value : ${process.env.VUE_APP_STORAGEBUCKET}`);
+  console.log(`value : ${process.env.VUE_APP_MESSAGINGSENDERID}`);
+  console.log(`value : ${process.env.VUE_APP_APPID}`);
+  console.log(`value : ${process.env.VUE_APP_MEASUREMENTID}`);
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: process.env.VUE_APP_APIKEY,
+    authDomain: process.env.VUE_APP_AUTHDOMAIN,
+    databaseURL: process.env.VUE_APP_DATABASEURL,
+    projectId: process.env.VUE_APP_PROJECTID,
+    storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
+    appId: process.env.VUE_APP_APPID,
+    measurementId: process.env.VUE_APP_MEASUREMENTID
+  };
+  // Initialize Firebase
+  console.log(`length : ${firebase.apps.length}`);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  } else {
+    firebase.app();
+  }
 
 Vue.use(vuemoment);
 
@@ -17,17 +48,6 @@ Vue.config.productionTip = false;
 Vue.use(VueCookie);
 
 Vue.config.productionTip = false;
-var config = {
-  apiKey: "AIzaSyDrGjK4k58OdMBChAfYWlml_m6LwPF-vh0",
-  authDomain: "signup-95e15.firebaseapp.com",
-  databaseURL: "https://signup-95e15.firebaseio.com",
-  projectId: "signup-95e15",
-  storageBucket: "signup-95e15.appspot.com",
-  messagingSenderId: "779627961819",
-  appId: "1:779627961819:web:6be596853eb5be2b67dbfe",
-  measurementId: "G-G6LZ10T7SW",
-};
-firebase.initializeApp(config);
 
 new Vue({
   router,

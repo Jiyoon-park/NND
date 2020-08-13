@@ -7,24 +7,28 @@
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
-        <h3>팀 형태 : {{teaminfo.category}}</h3>
-        <p># 팀 이름 : {{teaminfo.teamName}}</p>
-        <v-btn small @click="$router.push('/profile-update')">
+        <h3>팀 형태 : {{ teaminfo.category }}</h3>
+        <p># 팀 이름 : {{ teaminfo.teamName }}</p>
+        <!-- <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
-        </v-btn>
+        </v-btn>-->
       </div>
 
       <v-tabs class="tabs">
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
         <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
-        <v-tab @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
+        <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
+          >그래프</v-tab
+        ><v-tab @click="$vuetify.goTo('#team-member-diary', options)"
+          >다이어리</v-tab
+        >
         <v-spacer></v-spacer>
       </v-tabs>
 
       <div id="team-post" class="target">
         <h3># 게시판</h3>
-        <TeamPost :teamboardno="teaminfo.teamboardNo" />
+        <TeamPost :teaminfo="teaminfo" :userinfo="user" />
       </div>
 
       <hr />
@@ -33,10 +37,17 @@
         <!-- <div class="skills">
           <v-combobox v-model="select" chips multiple readonly></v-combobox>
         </div>-->
+        <team-table></team-table>
       </div>
       <hr />
       <div id="team-member-graph" class="target">
         <h3># 그래프</h3>
+        <MemberChart />
+      </div>
+      <hr />
+      <div id="team-member-diary" class="target">
+        <h3># 다이어리</h3>
+        <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
       </div>
     </v-col>
   </v-row>
@@ -47,12 +58,19 @@ import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
 import TeamPost from "../team/teamPost.vue";
-// import axios from "axios";
+import TeamTable from "../team/teamTable.vue";
+import MemberChart from "../team/memberChart.vue";
+import TeamDiary from "../team/teamDiary";
+
+import axios from "axios";
 
 export default {
   components: {
     NavBar,
     TeamPost,
+    TeamTable,
+    MemberChart,
+    TeamDiary,
   },
   data() {
     return {
@@ -60,16 +78,16 @@ export default {
       offset: 0,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
-      user: "",
+      user: {},
       profileURL: "",
-      teaminfo: [],
+      teaminfo: {},
+      teamboardno: "",
     };
   },
-  created() {
-    // let teamboardno = this.$route.params.teamboardno;
 
+  created() {
+    this.teamboardno = this.$store.state.teamNo;
     let token = window.$cookies.get("nnd");
-    console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
       .get(`http://localhost:8080/member/info/${id}`, {
@@ -78,12 +96,33 @@ export default {
         },
       })
       .then((resp) => {
-        console.log(resp);
         this.user = resp.data;
         this.profileURL = this.user.profile;
       });
-    //teaminfo 가져오는 메소드 spring 에서 만들어야됨
-    // axios.get()
+
+    axios
+      .get(`http://localhost:8080/teamboard/list/${this.teamboardno}`, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
+      .then((res) => {
+        this.teaminfo = res.data;
+        // console.log("팀장idx찍어보자");
+        // console.log(this.teaminfo.idx);
+        this.$store.state.teamMaster = this.teaminfo.idx;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`http://localhost:8080/teammenu/member/` + this.teamboardno)
+      .then((data) => {
+        console.log("데이터찍어보자");
+        console.log(data.data);
+        this.$store.state.teammembers = data.data;
+        this.$store.commit("saveMember");
+      });
   },
   computed: {
     target() {

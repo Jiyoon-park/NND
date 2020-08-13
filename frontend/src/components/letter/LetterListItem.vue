@@ -64,6 +64,7 @@
 <script>
 import LetterDetail from "./LetterDetail.vue";
 import axios from "axios";
+import { EventBus } from "../../main.js";
 
 export default {
   components: {
@@ -91,15 +92,20 @@ export default {
     onLetterDetail(letterNo) {
       let token = window.$cookies.get("nnd");
       // 클릭한 편지는 읽음 처리
-      this.letterinfo.read = 1;
-      axios
-        .post(`http://localhost:8080/letter/update/${letterNo}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+      if (this.letterinfo.read == 0) {
+        this.letterinfo.read = 1;
+        axios
+          .post(`http://localhost:8080/letter/update/${letterNo}`, {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            EventBus.$emit("letterRead");
+          })
+          .catch((err) => console.log(err));
+      }
     },
     dateFormatted: function(dt) {
       console.log("dt : " + dt);

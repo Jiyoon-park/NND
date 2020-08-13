@@ -1,51 +1,95 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card outlined class="elevation-3">
-        <v-list-item class="mt-3">
-          <v-avatar color="indigo" class="mr-5">
-            <v-icon
-              @click="
+      <v-card flat style="position:relative;">
+        <div class="ribbon" v-if="favorite"></div>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <div class="d-flex mx-3 my-3 align-center">
+              <v-avatar
+                color="white"
+                size="50"
+                class="user-img mb-2"
+                @click="
                 $router
                   .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
                   .catch(() => {})
               "
-              dark
-            >mdi-account-circle</v-icon>
-          </v-avatar>
-          <v-col cols="4" md="4">{{ teaminfo.name }}</v-col>
-          <v-col cols="6" md="6">
-            <div class="text-right">
-              <v-chip
-                class="ma-2"
-                color="indigo"
-                text-color="white"
-                v-for="stack in JSON.parse(stacks)"
-                :key="stack"
-              >{{ stack }}</v-chip>
+              >
+                <img v-if="!profileURL" src="https://picsum.photos/200" />
+                <img v-else :src="profileURL" />
+              </v-avatar>
+              <div class="d-flex flex-column ml-3">
+                <span>{{ teaminfo.name }}</span>
+                <div>
+                  <span>{{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}</span>
+                </div>
+              </div>
             </div>
-          </v-col>
-        </v-list-item>
-        <v-card-title>
-          <span>{{ teaminfo.title }}</span>
-        </v-card-title>
-        <v-expansion-panels class="elevation-0 mt-5">
-          <v-expansion-panel>
-            <v-expansion-panel-header></v-expansion-panel-header>
+            <div style="position:relative;">
+              <div v-if="!teaminfo.imageurl">
+                <v-img
+                  v-if="teaminfo.category === '스터디'"
+                  src="../../assets/images/study.jpg"
+                  height="194"
+                ></v-img>
+                <v-img
+                  v-else-if="teaminfo.category === '프로젝트'"
+                  src="../../assets/images/project.jpg"
+                  height="194"
+                ></v-img>
+                <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+              </div>
+              <div v-else>
+                <v-img :src="teaminfo.imageurl" height="194"></v-img>
+              </div>
+              <span
+                class="mr-3 mt-1"
+                style="position:absolute; top:0; right:0; font-weight:bold; font-style:italic;"
+              >
+                <span
+                  style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
+                >{{ teaminfo.category }}</span>
+              </span>
+            </div>
+
+            <v-expansion-panel-header class="mt-2">
+              <div class="d-flex flex-column">
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
+                <div class="d-flex">
+                  <v-chip
+                    small
+                    class="mr-2 mt-1"
+                    color="#3949ab"
+                    text-color="white"
+                    v-for="stack in JSON.parse(stacks)"
+                    :key="stack"
+                    style="opacity:0.7;"
+                  ># {{ stack }}</v-chip>
+                </div>
+              </div>
+            </v-expansion-panel-header>
             <v-expansion-panel-content>
-              {{
-              teaminfo.content
-              }}
+              <div>{{ teaminfo.content }}</div>
             </v-expansion-panel-content>
             <v-card-actions>
-              <v-btn icon color="pink" v-if="!favorite" @click="addFavorite">
+              <v-spacer></v-spacer>
+
+              <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
                 <v-icon>mdi-star-outline</v-icon>
               </v-btn>
-              <v-btn icon color="pink" v-if="favorite" @click="delFavorite">
+
+              <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
                 <v-icon>mdi-star</v-icon>
               </v-btn>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="applyform" right>꼬시기</v-btn>
+              <v-btn
+                text
+                class="ml-0"
+                color="indigo darken-1 accent-4 font-weight-bold"
+                @click="applyform"
+              >
+                <i class="fas fa-paper-plane mr-1"></i> 영입
+              </v-btn>
             </v-card-actions>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -53,23 +97,28 @@
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
             <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
-            <v-card-title class="header-text justify-center font-italic">
-              ❝ {{ teaminfo.teamName }}팀으로
+            <v-card-title class="header-text text-center justify-center font-italic">
+              ❝ {{ teaminfo.teamname }}팀으로
               <br />
               {{ teaminfo.name }}님을 영입합니다 ❠
             </v-card-title>
 
             <v-card-text class="mt-5 pb-0">
               <div class="mt-3">
-                <v-row>
-                  <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
-                  <v-overflow-btn
-                    v-model="teamno"
-                    :items="teamlist"
-                    item-text="teamName"
-                    item-value="teamboardNo"
-                  ></v-overflow-btn>
+                <v-row class="mb-0">
+                  <v-col class="mb-0" cols="12">
+                    <v-overflow-btn
+                      filled
+                      v-model="teamno"
+                      :items="teamlist"
+                      label="영입할 팀을 선택하세요"
+                      item-text="teamName"
+                      item-value="teamboardNo"
+                    ></v-overflow-btn>
+                  </v-col>
                 </v-row>
+                <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
+
                 <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
               </div>
             </v-card-text>
@@ -142,7 +191,7 @@ export default {
         )
         .then((data) => {
           this.favorite = true;
-          alert("즐겨찾기에 등록되었습니다.");
+
           this.mlikeno = data.data;
         });
     },
@@ -157,7 +206,6 @@ export default {
         })
         .then(() => {
           this.favorite = false;
-          alert("즐겨찾기에서 삭제되었습니다.");
         });
     },
     submit() {
@@ -222,3 +270,42 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.header {
+  filter: brightness(60%);
+  position: relative;
+}
+
+.header-text {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  color: #eeeeee;
+}
+
+.deadline {
+  color: #222;
+  font-weight: bold;
+  background-color: #eeeeee;
+  margin-left: 5px;
+}
+
+.ribbon {
+  display: block;
+  top: -10px;
+  right: 12px;
+  position: absolute;
+  width: 0;
+  height: 45px;
+  padding: 10px 10px;
+  text-decoration: none;
+  transition: 1s;
+  background: #f5f5f5;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  color: #e0e0e0;
+  border-top: 10px solid #0d47a1;
+}
+</style>
