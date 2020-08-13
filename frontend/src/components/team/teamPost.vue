@@ -55,7 +55,9 @@
           </v-dialog>
         </v-row>
         <v-list-item-group>
+          <p v-if="this.teamposts.length == 0">작성된 글이 없습니다</p>
           <TeamPostItem
+            v-else
             v-for="(post, i) in teamposts"
             :key="i"
             :postinfo="teamposts[i]"

@@ -1,25 +1,24 @@
 <template>
-  <div>
-    <v-card
-      class="mx-auto my-3 py-3"
-      max-width="344"
-      shaped
-      v-for="(project, i) in projects"
-      :key="i"
-    >
-      <ProjectHistoryListItem :historyinfo="projects[i]" />
+  <v-col cols="12" sm="12" class="px-4 py-4">
+    <v-card class="mx-auto mb-3 py-3" v-for="(project, i) in projects" :key="i">
+      <ProjectHistoryListItem :historyinfo="projects[i]" :isEdit="isEdit" />
     </v-card>
-  </div>
+  </v-col>
 </template>
 
 <script>
 import ProjectHistoryListItem from "./ProjectHistoryListItem.vue";
 import axios from "axios";
-import {EventBus} from "../../main";
+import { EventBus } from "../../main";
 
 export default {
   components: {
     ProjectHistoryListItem,
+  },
+  props: {
+    isEdit: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -39,8 +38,8 @@ export default {
         .get(`${process.env.VUE_APP_API_URL}/projecthistory/list/${this.user.idx}`,
         {
           headers: {
-              Authorization: 'Bearer ' + token.data, // the token is a variable which holds the token
-            }
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
         })
         .then(({ data }) => {
           this.projects = data;
@@ -81,7 +80,7 @@ export default {
   },
   methods: {
     onDeleteBtn(projecthistoryNo) {
-        let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+      let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       axios
         .delete(
           `${process.env.VUE_APP_API_URL}/projecthistory/delete/${projecthistoryNo}`,{
@@ -93,7 +92,7 @@ export default {
         .then((res) => console.log(res));
     },
     onEditBtn(projecthistoryNo, i) {
-        let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+      let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/projecthistory/update/${projecthistoryNo}`,
@@ -107,11 +106,12 @@ export default {
             gitLink: this.projects[i].gitLink,
             techStack: JSON.stringify(this.projects[i].techStack),
           },
-           {
-            headers: { 
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
           }
-          })
+        )
         .then((response) => {
           console.log(response);
           this.dialog = false;
@@ -125,5 +125,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

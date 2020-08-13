@@ -18,11 +18,11 @@
       <v-tabs-items v-model="tab">
         <v-tab-item v-for="item in items" :key="item.tab">
           <v-card flat>
-            <v-list>
+            <v-list class="pt-0">
               <v-list-item-group>
                 <v-row justify="center">
                   <v-col cols="12" lg="8" class="px-0">
-                    <p class="mb-2 ml-3">
+                    <p class="mb-3 ml-3 body-2">
                       <v-avatar color="#706fd3" size="12" class="mr-1">
                       </v-avatar
                       >영입 제안 편지

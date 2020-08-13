@@ -8,19 +8,20 @@
       disable-resize-watcher="true"
       temporary="true"
     >
-      <div class="point-top"></div>
+      <!-- <div class="point-top"></div>
       <div class="point-bottom">
         <p>ⓒ 2020. 이나앨 All Rights Reserved.</p>
-      </div>
+      </div> -->
       <v-list rounded>
-        <v-list-item link class="d-flex flex-column pt-10">
-          <v-avatar color="white" size="80" class="user-img mb-2">
+        <v-list-item link class="d-flex flex-column pt-8 mb-0">
+          <v-avatar color="white" size="80" class="user-img mb-1">
             <img v-if="!profileURL" src="https://picsum.photos/200" />
             <img v-else :src="profileURL" />
           </v-avatar>
           <div class="mt-2">
             <h3 class="text-center">{{ username }}</h3>
             <v-btn
+              class="mt-2"
               x-small
               rounded
               color="#999"
@@ -56,7 +57,11 @@
                     >
                   </v-list-item-content>
                 </v-expansion-panel-header>
+                <v-expansion-panel-content v-if="this.teams.length == 0">
+                  팀 목록이 없습니다.
+                </v-expansion-panel-content>
                 <v-expansion-panel-content
+                  v-else
                   v-for="(team, index) in teams"
                   :key="index"
                 >
@@ -129,7 +134,6 @@ export default {
   created() {
     let token = window.$cookies.get("nnd");
     if (token) {
-      console.log(token.object.idx);
       this.user = token.object;
       this.username = token.object.name;
       this.profileURL = token.object.profile;
@@ -147,19 +151,22 @@ export default {
   methods: {
     checkMainURL() {
       console.log(`현재 url : ${this.$route.path}`);
-      if (this.$route.path == '/') {
-        this.$router.go().catch(() => {})
+      if (this.$route.path == "/") {
+        this.$router.go().catch(() => {});
       } else {
-        this.$router.push('/').catch(() => {})
+        this.$router.push("/").catch(() => {});
       }
     },
-     test(no) {
+    test(no) {
       console.log(no);
+      console.log(`현재 url : ${this.$route.path}`);
       this.$store.state.teamNo = no.teamboardNo;
       this.$store.commit("nchange");
-      this.$router.push("TeamProfile");
-
-
+      if (this.$route.path == "/TeamProfile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/TeamProfile").catch(() => {});
+      }
     },
     onLogout: function() {
       this.$store.commit("logout");
@@ -170,8 +177,6 @@ export default {
       axios
         .get(`${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`)
         .then((res) => {
-          console.log("#############");
-          console.log(res);
           this.letters = res;
           this.messages = this.checkRead(this.letters.data);
           console.log(`message개수 :${this.messages}`);
@@ -181,9 +186,9 @@ export default {
         });
     },
     checkRead: function(arr) {
-      console.log("count 함수 실행!!");
-      console.log("arr: " + arr);
-      console.log("length: " + arr.length);
+      // console.log("count 함수 실행!!");
+      // console.log("arr: " + arr);
+      // console.log("length: " + arr.length);
       var count = 0;
       for (let index = 0; index < arr.length; index++) {
         console.log(`arr :${arr[index]}`);
@@ -197,9 +202,7 @@ export default {
       axios
         .get(`${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
-          //console.log("@@@@@@@@@@@");
           this.teams = res.data;
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
@@ -211,7 +214,7 @@ export default {
 
 <style scoped>
 .user-img {
-  border: 2px solid;
+  border: 2px solid black;
 }
 .title {
   margin-bottom: 0;
