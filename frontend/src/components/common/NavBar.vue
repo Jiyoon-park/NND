@@ -60,15 +60,7 @@
                   v-for="(team, index) in teams"
                   :key="index"
                 >
-                  <v-btn
-                    text
-                    @click="
-                      $router
-                        .push(`/teamprofile/${team.teamboardNo}`)
-                        .catch(() => {})
-                    "
-                    >{{ team.teamName }}</v-btn
-                  >
+                  <v-btn text @click="test(team)">{{ team.teamName }}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -161,6 +153,14 @@ export default {
         this.$router.push('/').catch(() => {})
       }
     },
+     test(no) {
+      console.log(no);
+      this.$store.state.teamNo = no.teamboardNo;
+      this.$store.commit("nchange");
+      this.$router.push("TeamProfile");
+
+
+    },
     onLogout: function() {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
@@ -197,7 +197,7 @@ export default {
       axios
         .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
         .then((res) => {
-          console.log("@@@@@@@@@@@");
+          //console.log("@@@@@@@@@@@");
           this.teams = res.data;
           console.log(res.data);
         })
