@@ -71,48 +71,75 @@
                   >모집 인원 {{ teaminfo.groupsize }}</small
                 >
               </span>
+
+              <div
+                style="position:absolute; right:15px; bottom:-30px; z-index:2;"
+              >
+                <i
+                  class="far fa-bookmark"
+                  v-if="!favorite"
+                  @click="addFavorite"
+                ></i>
+                <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
+              </div>
+              <div
+                style="position:absolute; left:15px; bottom:-30px; z-index:2;"
+              >
+                <i @click="applyform" class="fas fa-paper-plane"
+                  ><small class="ml-1">지원하기</small></i
+                >
+              </div>
             </div>
 
-            <v-expansion-panel-header class="mt-2">
-              <div class="d-flex flex-column">
+            <div class="shrink mt-10 mx-4 mb-6">
+              <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <div class="d-flex">
-                  <v-chip
-                    small
-                    class="mr-2 mt-1"
-                    color="#3949ab"
-                    text-color="white"
-                    v-for="stack in JSON.parse(stacks)"
-                    :key="stack"
-                    style="opacity:0.7;"
-                    ># {{ stack }}</v-chip
-                  >
-                </div>
+                <small
+                  @click="expand = !expand"
+                  style="cursor:pointer; color:primary"
+                >
+                  더보기
+                </small>
               </div>
+              <v-expand-transition>
+                <v-card flat v-show="expand" class="mx-auto"
+                  >{{ teaminfo.content }}
+                  <div class="d-flex">
+                    <v-chip
+                      small
+                      class="mr-2 mt-1"
+                      color="#3949ab"
+                      text-color="white"
+                      v-for="stack in JSON.parse(stacks)"
+                      :key="stack"
+                      style="opacity:0.7;"
+                      ># {{ stack }}</v-chip
+                    >
+                  </div>
+                </v-card>
+              </v-expand-transition>
+            </div>
+            <!-- <v-expansion-panel-header class="mt-7 pb-0">
+              <div class="d-flex flex-column">
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span> -->
+            <!-- 
+            <div class="d-flex">
+              <v-chip
+                small
+                class="mr-2 mt-1"
+                color="#3949ab"
+                text-color="white"
+                v-for="stack in JSON.parse(stacks)"
+                :key="stack"
+                style="opacity:0.7;"
+                ># {{ stack }}</v-chip
+              >
+            </div> -->
+            <!-- </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <div>{{ teaminfo.content }}</div>
-            </v-expansion-panel-content>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
-                <v-icon>mdi-star-outline</v-icon>
-              </v-btn>
-
-              <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
-                <v-icon>mdi-star</v-icon>
-              </v-btn>
-
-              <v-btn
-                text
-                class="ml-0"
-                color="indigo darken-1 accent-4 font-weight-bold"
-                @click="applyform"
-              >
-                <i class="fas fa-paper-plane mr-1"></i> 지원
-              </v-btn>
-            </v-card-actions>
+            </v-expansion-panel-content> -->
           </v-expansion-panel>
         </v-expansion-panels>
 
@@ -177,6 +204,7 @@ export default {
       createDate: "",
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
+      expand: false,
     };
   },
   // mounted(){
@@ -260,7 +288,7 @@ export default {
     },
     applyform() {
       // 지원을 받기전 마감시간이 지났는지 체크하도록 한다.
-      // 지났다 = 현재시간 - 마감시간 > 0 
+      // 지났다 = 현재시간 - 마감시간 > 0
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
@@ -268,7 +296,7 @@ export default {
       console.log(`현재시간 : ${curTime}`);
       console.log(`마감시간 : ${endTime}`);
       console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
-      
+
       if (curTime.getTime() - endTime.getTime() > 0) {
         alert("마감되었습니다!!!");
       } else {
@@ -306,24 +334,6 @@ export default {
   background-color: #eeeeee;
   margin-left: 5px;
 }
-
-/* .ribbon {
-  width: 0px;
-  height: 35px;
-  background-color: transparent;
-  position: absolute;
-  top: -5px;
-  right: 19px;
-  border: solid 13px #3a52db;
-  border-bottom: solid 5px transparent;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  transition: all 0.2s;
-  cursor: pointer;
-  z-index: 2;
-  opacity: 0.6;
-  box-shadow: 2px 0 0 0 rgb(62, 35, 138);
-} */
 
 .ribbon {
   display: block;
