@@ -94,7 +94,7 @@
             filled
             dense
             v-model="memberEmails"
-            :items="memberEmails"
+            :items="allmemberEmails"
             hide-selected
             label="참여 확정 팀원 이메일"
             multiple
@@ -217,7 +217,27 @@ export default {
     menu2: false,
     dropdown_font: [3, 4, 5, 6],
     categoryList: ["스터디", "프로젝트", "공모전"],
-    items: [],
+    items: [
+      "C",
+      "C++",
+      "JAVA",
+      "Spring",
+      "Django",
+      "C#",
+      "Go",
+      "R",
+      "Javascript",
+      "vue.js",
+      "Linux",
+      "MYSQL",
+      "Mariadb",
+      "RestApi",
+      "Python",
+      "Pytorch",
+      "Tensorflow",
+      "Spirngboot",
+      "Ruby",
+    ],
     teamName: null,
     title: null,
     content: null,
@@ -229,6 +249,7 @@ export default {
     teamcheck: null,
     idx: null,
     memberEmails: [],
+    allmemberEmails: [],
     name: "",
     types: ["팀", "팀원"],
     // 이미지를 저장할 변수들
@@ -250,6 +271,20 @@ export default {
       console.log("유저의 name: " + this.name);
       console.log("유저의 memberstack: " + this.memberstack);
     }
+    axios
+      .get("${process.env.VUE_APP_API_URL}/member/all", {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.allmemberEmails = response.data;
+      })
+      .catch((error) => {
+        console.log(error.response);
+        alert("실패");
+      });
   },
   methods: {
     pickFile() {
@@ -293,7 +328,7 @@ export default {
           name: this.name,
           imageurl: this.imageName,
         };
-        url = `http://localhost:8080/teamboard/save/${this.idx}`;
+        url = `${process.env.VUE_APP_API_URL}/teamboard/save/${this.idx}`;
       } else {
         // 팀원의 경우
         obj = {
@@ -305,7 +340,7 @@ export default {
           name: this.name,
           imageurl: this.imageName,
         };
-        url = `http://localhost:8080/memberboard/save/${this.idx}`;
+        url = `${process.env.VUE_APP_API_URL}/memberboard/save/${this.idx}`;
       }
       axios
         .put(url, obj, {
@@ -347,18 +382,18 @@ export default {
                   console.log("파이어베이스 등록 성공");
                   alert("등록성공");
 
-                        // 등록페이지 초기화
-                        this.teamName = null;
-                        this.title = null;
-                        this.content = null;
-                        this.groupSize = null;
-                        this.category = "";
-                        this.techStack = [];
-                        this.memberstack = [];
-                        this.date = new Date().toISOString().substr(0, 10);
-                        this.imageName = '';    // 이부분 컴플릿트 나는지 조심(다른 사람이 이작업을 이미 했으므로)
-                        this.imageFile = '';
-                        this.imageUrl = '';
+                  // 등록페이지 초기화
+                  this.teamName = null;
+                  this.title = null;
+                  this.content = null;
+                  this.groupSize = null;
+                  this.category = "";
+                  this.techStack = [];
+                  this.memberstack = [];
+                  this.date = new Date().toISOString().substr(0, 10);
+                  this.imageName = ""; // 이부분 컴플릿트 나는지 조심(다른 사람이 이작업을 이미 했으므로)
+                  this.imageFile = "";
+                  this.imageUrl = "";
 
                   this.changeDialog();
                   this.goMain();
@@ -377,10 +412,10 @@ export default {
     },
     goMain() {
       console.log(`현재 url : ${this.$route.path}`);
-      if (this.$route.path == '/') {
+      if (this.$route.path == "/") {
         this.$router.go();
       } else {
-        this.$router.push('/');
+        this.$router.push("/");
       }
     },
     changeDialog() {

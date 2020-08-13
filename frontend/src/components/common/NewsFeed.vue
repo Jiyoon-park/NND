@@ -11,10 +11,13 @@
                 size="50"
                 class="user-img mb-2"
                 @click="
-                $router
-                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
-                  .catch(() => {})
-              "
+                  $router
+                    .push({
+                      name: 'userProfile',
+                      params: { idx: teaminfo.idx },
+                    })
+                    .catch(() => {})
+                "
               >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
@@ -22,7 +25,9 @@
               <div class="d-flex flex-column ml-3">
                 <span>{{ teaminfo.name }}</span>
                 <div>
-                  <span>{{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}</span>
+                  <span>{{
+                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -38,7 +43,11 @@
                   src="../../assets/images/project.jpg"
                   height="194"
                 ></v-img>
-                <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+                <v-img
+                  v-else
+                  src="../../assets/images/competition.jpg"
+                  height="194"
+                ></v-img>
               </div>
               <div v-else>
                 <v-img :src="teaminfo.imageurl" height="194"></v-img>
@@ -49,61 +58,83 @@
               >
                 <span
                   style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                >{{ teaminfo.category }}</span>
+                  >{{ teaminfo.category }}</span
+                >
               </span>
+
+              <div
+                style="position:absolute; right:15px; bottom:-32px; z-index:2;"
+              >
+                <i
+                  class="far fa-bookmark"
+                  v-if="!favorite"
+                  @click="addFavorite"
+                ></i>
+                <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
+              </div>
+              <div
+                style="position:absolute; left:15px; bottom:-32px; z-index:2;"
+              >
+                <i @click="applyform" class="fas fa-paper-plane"
+                  ><small class="ml-1">지원하기</small></i
+                >
+              </div>
             </div>
 
-            <v-expansion-panel-header class="mt-2">
-              <div class="d-flex flex-column">
+            <div class="shrink mt-10 mx-4 mb-6">
+              <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <div class="d-flex">
-                  <v-chip
-                    small
-                    class="mr-2 mt-1"
-                    color="#3949ab"
-                    text-color="white"
-                    v-for="stack in JSON.parse(stacks)"
-                    :key="stack"
-                    style="opacity:0.7;"
-                  ># {{ stack }}</v-chip>
-                </div>
+                <small
+                  @click="expand = !expand"
+                  style="cursor:pointer; color:primary"
+                >
+                  더보기
+                </small>
               </div>
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div>{{ teaminfo.content }}</div>
-            </v-expansion-panel-content>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
-                <v-icon>mdi-star-outline</v-icon>
-              </v-btn>
-
-              <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
-                <v-icon>mdi-star</v-icon>
-              </v-btn>
-              <v-btn
-                text
-                class="ml-0"
-                color="indigo darken-1 accent-4 font-weight-bold"
-                @click="applyform"
-              >
-                <i class="fas fa-paper-plane mr-1"></i> 영입
-              </v-btn>
-            </v-card-actions>
+              <v-expand-transition>
+                <v-card flat v-show="expand" class="mx-auto"
+                  >{{ teaminfo.content }}
+                  <div class="d-flex">
+                    <v-chip
+                      small
+                      class="mr-2 mt-1"
+                      color="#3949ab"
+                      text-color="white"
+                      v-for="stack in JSON.parse(stacks)"
+                      :key="stack"
+                      style="opacity:0.7;"
+                      ># {{ stack }}</v-chip
+                    >
+                  </div>
+                </v-card>
+              </v-expand-transition>
+            </div>
           </v-expansion-panel>
         </v-expansion-panels>
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
-            <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
-            <v-card-title class="header-text text-center justify-center font-italic">
+            <v-img
+              class="header"
+              height="200px"
+              src="../../assets/images/member2.jpg"
+            ></v-img>
+            <v-card-title
+              v-if="this.teamlist.length !== 0"
+              class="header-text text-center justify-center font-italic"
+            >
               ❝ {{ teaminfo.teamname }}팀으로
               <br />
               {{ teaminfo.name }}님을 영입합니다 ❠
             </v-card-title>
+            <v-card-title
+              v-else
+              class="header-text text-center justify-center font-italic"
+            >
+              ❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠
+            </v-card-title>
 
-            <v-card-text class="mt-5 pb-0">
+            <v-card-text v-if="this.teamlist.length !== 0" class="mt-5 pb-0">
               <div class="mt-3">
                 <v-row class="mb-0">
                   <v-col class="mb-0" cols="12">
@@ -117,15 +148,30 @@
                     ></v-overflow-btn>
                   </v-col>
                 </v-row>
-                <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
+                <p class="mb-0 pl-1">
+                  {{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉
+                </p>
 
-                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                <v-textarea
+                  filled
+                  v-model="content"
+                  name="content"
+                  placeholder="내용을 작성해주세요."
+                ></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >취소</v-btn
+              >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="submit">영입하기</v-btn>
+              <v-btn
+                v-if="this.teamlist.length !== 0"
+                color="blue darken-1"
+                text
+                @click="submit"
+                >영입하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -159,6 +205,7 @@ export default {
       memberidx: this.teaminfo.idx,
       teamno: "",
       mlikeno: this.teaminfo.likeno,
+      expand: false,
     };
   },
   // mounted(){
@@ -179,7 +226,7 @@ export default {
 
       axios
         .put(
-          "http://localhost:8080/likemember/save/" +
+          `${process.env.VUE_APP_API_URL}/likemember/save/` +
             this.$store.state.myToken.idx +
             "/" +
             this.teaminfo.boardno,
@@ -199,7 +246,7 @@ export default {
       let token = window.$cookies.get("nnd");
 
       axios
-        .delete("http://localhost:8080/likemember/delete/" + this.mlikeno, {
+        .delete(`${process.env.VUE_APP_API_URL}/likemember/delete/${this.mlikeno}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -217,7 +264,7 @@ export default {
       console.log(this.teamno);
       axios
         .put(
-          "http://localhost:8080/letter/create/" + this.lettertype,
+          `${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`,
           {
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,
@@ -254,8 +301,7 @@ export default {
 
       axios
         .get(
-          "http://localhost:8080/letter/member/teamlist/" +
-            this.$store.state.myToken.idx,
+          `${process.env.VUE_APP_API_URL}/letter/member/teamlist/${this.$store.state.myToken.idx}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token

@@ -5,8 +5,8 @@
         @click="onLetterDetail(`${letterinfo.letterNo}`)"
         @click.stop="dialog = true"
       >
-        <div class="mr-3">
-          <v-avatar color="grey" size="60">
+        <div class="ml-2 mr-3">
+          <v-avatar color="grey" size="50">
             <span
               v-if="!letterinfo.profile"
               class="white--text headline"
@@ -18,7 +18,7 @@
           <div>
             <v-list-item-title
               v-text="letterinfo.name"
-              class="font-weight-black mb-2"
+              class="font-weight-black mb-1"
             ></v-list-item-title>
             <!-- 편지 읽음/안읽음  -->
             <div class="d-flex">
@@ -27,12 +27,16 @@
                 class="text--secondary d-inline-block text-truncate"
                 style="max-width: 160px;"
               ></v-list-item-title>
-              <p class="mb-0">{{ letterDate }}</p>
             </div>
           </div>
+          <small
+            class="mb-0 text--secondary"
+            style="position:absolute; right:0; top:15px"
+            >{{ letterDate }}</small
+          >
           <div
             v-if="item.tab == '받은 편지함'"
-            style="position:absolute; right:0;"
+            style="position:absolute; right:7px; top:35px"
           >
             <i
               class="fas fa-envelope"
@@ -95,7 +99,7 @@ export default {
       if (this.letterinfo.read == 0) {
         this.letterinfo.read = 1;
         axios
-          .post(`http://localhost:8080/letter/update/${letterNo}`, {
+          .post(`${process.env.VUE_APP_API_URL}/letter/update/${letterNo}`, {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },

@@ -71,67 +71,94 @@
                   >모집 인원 {{ teaminfo.groupsize }}</small
                 >
               </span>
+
+              <div
+                style="position:absolute; right:15px; bottom:-32px; z-index:2;"
+              >
+                <i
+                  class="far fa-bookmark"
+                  v-if="!favorite"
+                  @click="addFavorite"
+                ></i>
+                <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
+              </div>
+              <div
+                style="position:absolute; left:15px; bottom:-32px; z-index:2;"
+              >
+                <i @click="applyform" class="fas fa-paper-plane"
+                  ><small class="ml-1">지원하기</small></i
+                >
+              </div>
             </div>
 
-            <v-expansion-panel-header class="mt-2">
-              <div class="d-flex flex-column">
+            <div class="shrink mt-10 mx-4 mb-4">
+              <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <div class="d-flex">
-                  <v-chip
-                    small
-                    class="mr-2 mt-1"
-                    color="#3949ab"
-                    text-color="white"
-                    v-for="stack in JSON.parse(stacks)"
-                    :key="stack"
-                    style="opacity:0.7;"
-                    ># {{ stack }}</v-chip
-                  >
-                </div>
+                <small
+                  @click="expand = !expand"
+                  style="cursor:pointer; color:primary"
+                >
+                  더보기
+                </small>
               </div>
+              <v-expand-transition>
+                <v-card flat v-show="expand" class="mx-auto"
+                  >{{ teaminfo.content }}
+                  <div class="d-flex">
+                    <v-chip
+                      small
+                      class="mr-2 mt-1"
+                      color="#3949ab"
+                      text-color="white"
+                      v-for="stack in JSON.parse(stacks)"
+                      :key="stack"
+                      style="opacity:0.7;"
+                      ># {{ stack }}</v-chip
+                    >
+                  </div>
+                </v-card>
+              </v-expand-transition>
+            </div>
+            <!-- <v-expansion-panel-header class="mt-7 pb-0">
+              <div class="d-flex flex-column">
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span> -->
+            <!-- 
+            <div class="d-flex">
+              <v-chip
+                small
+                class="mr-2 mt-1"
+                color="#3949ab"
+                text-color="white"
+                v-for="stack in JSON.parse(stacks)"
+                :key="stack"
+                style="opacity:0.7;"
+                ># {{ stack }}</v-chip
+              >
+            </div> -->
+            <!-- </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <div>{{ teaminfo.content }}</div>
-            </v-expansion-panel-content>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
-                <v-icon>mdi-star-outline</v-icon>
-              </v-btn>
-
-              <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
-                <v-icon>mdi-star</v-icon>
-              </v-btn>
-
-              <v-btn
-                text
-                class="ml-0"
-                color="indigo darken-1 accent-4 font-weight-bold"
-                @click="applyform"
-              >
-                <i class="fas fa-paper-plane mr-1"></i> 지원
-              </v-btn>
-            </v-card-actions>
+            </v-expansion-panel-content> -->
           </v-expansion-panel>
         </v-expansion-panels>
 
         <v-dialog v-model="dialog" max-width="600px">
-          <v-card>
+          <v-card style="border: 3px solid #eeeeee;">
             <v-img
               class="header"
               height="200px"
               src="../../assets/images/team2.jpg"
             ></v-img>
-            <v-card-title
-              class="header-text text-center justify-center font-italic"
-            >
-              ❝ {{ teaminfo.teamname }} 팀의 <br />팀원이 되고싶습니다 ❠
+            <v-card-title class="header-text text-center justify-center body-1">
+              ❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠
             </v-card-title>
 
-            <v-card-text class="mt-5 pb-0">
-              <div class="mt-3">
-                <p class="mb-0 pl-1">팀장에게 보내는 어필 한마디 🙈🙉</p>
+            <v-card-text class="pb-0">
+              <div class="mt-4">
+                <p class="mb-3 pl-1" style="font-size:1rem;">
+                  팀장에게 보내는 어필 한마디 🙈🙉
+                </p>
                 <v-textarea
                   filled
                   v-model="content"
@@ -140,12 +167,18 @@
                 ></v-textarea>
               </div>
             </v-card-text>
-            <v-card-actions>
+            <v-card-actions class="pt-0">
               <v-btn color="blue darken-1" text @click="dialog = false"
                 >취소</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="submit">지원하기</v-btn>
+              <v-btn
+                color="blue darken-1"
+                class="font-weight-bold"
+                text
+                @click="submit"
+                >지원하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -177,6 +210,7 @@ export default {
       createDate: "",
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
+      expand: false,
     };
   },
   // mounted(){
@@ -200,10 +234,7 @@ export default {
       //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
-          "http://localhost:8080/liketeam/save/" +
-            this.$store.state.myToken.idx +
-            "/" +
-            this.teaminfo.teamboardno,
+          `${process.env.VUE_APP_API_URL}/liketeam/save/${this.$store.state.myToken.idx}/${this.teaminfo.teamboardno}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -220,7 +251,7 @@ export default {
     delFavorite() {
       let token = window.$cookies.get("nnd");
       axios
-        .delete("http://localhost:8080/liketeam/delete/" + this.tlikeno, {
+        .delete(`${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -236,7 +267,7 @@ export default {
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
       axios
-        .put("http://localhost:8080/letter/create/" + this.lettertype, {
+        .put(`${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -260,7 +291,7 @@ export default {
     },
     applyform() {
       // 지원을 받기전 마감시간이 지났는지 체크하도록 한다.
-      // 지났다 = 현재시간 - 마감시간 > 0 
+      // 지났다 = 현재시간 - 마감시간 > 0
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
@@ -268,7 +299,7 @@ export default {
       console.log(`현재시간 : ${curTime}`);
       console.log(`마감시간 : ${endTime}`);
       console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
-      
+
       if (curTime.getTime() - endTime.getTime() > 0) {
         alert("마감되었습니다!!!");
       } else {
@@ -294,7 +325,8 @@ export default {
 
 .header-text {
   position: absolute;
-  top: 60px;
+  font-size: 0.5rem;
+  top: 80px;
   left: 0;
   right: 0;
   color: #eeeeee;
@@ -306,24 +338,6 @@ export default {
   background-color: #eeeeee;
   margin-left: 5px;
 }
-
-/* .ribbon {
-  width: 0px;
-  height: 35px;
-  background-color: transparent;
-  position: absolute;
-  top: -5px;
-  right: 19px;
-  border: solid 13px #3a52db;
-  border-bottom: solid 5px transparent;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  transition: all 0.2s;
-  cursor: pointer;
-  z-index: 2;
-  opacity: 0.6;
-  box-shadow: 2px 0 0 0 rgb(62, 35, 138);
-} */
 
 .ribbon {
   display: block;

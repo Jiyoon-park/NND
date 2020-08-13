@@ -18,11 +18,11 @@
       <v-tabs-items v-model="tab">
         <v-tab-item v-for="item in items" :key="item.tab">
           <v-card flat>
-            <v-list>
+            <v-list class="pt-0">
               <v-list-item-group>
                 <v-row justify="center">
                   <v-col cols="12" lg="8" class="px-0">
-                    <p class="mb-2 ml-3">
+                    <p class="mb-3 ml-3 body-2">
                       <v-avatar color="#706fd3" size="12" class="mr-1">
                       </v-avatar
                       >영입 제안 편지
@@ -81,7 +81,7 @@ export default {
     if (token) {
       console.log(token.object.idx);
       axios
-        .get(`http://localhost:8080/letter/list/receive/${token.object.idx}`, {
+        .get(`${process.env.VUE_APP_API_URL}/letter/list/receive/${token.object.idx}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -95,7 +95,7 @@ export default {
         });
 
       axios
-        .get(`http://localhost:8080/letter/list/send/${token.object.idx}`, {
+        .get(`${process.env.VUE_APP_API_URL}/letter/list/send/${token.object.idx}`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },

@@ -25,7 +25,7 @@ export default {
 
       axios
         .get(
-          `http://localhost:8080/teammenu/rating/list/` +
+          `${process.env.VUE_APP_API_URL}/teammenu/rating/list/` +
             this.$store.state.teamNo,
           {
             headers: {

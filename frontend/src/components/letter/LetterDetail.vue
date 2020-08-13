@@ -93,7 +93,7 @@ export default {
       let token = window.$cookies.get("nnd");
       axios
         .post(
-          `http://localhost:8080/letter/teamaccept/${sendidx}/${teamboardno}`,
+          `${process.env.VUE_APP_API_URL}/letter/teamaccept/${sendidx}/${teamboardno}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -114,7 +114,7 @@ export default {
       let token = window.$cookies.get("nnd");
       axios
         .post(
-          `http://localhost:8080/letter/memberaccept/${teamboardno}/${receiveidx}`,
+          `${process.env.VUE_APP_API_URL}/letter/memberaccept/${teamboardno}/${receiveidx}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token

@@ -132,7 +132,7 @@ export default {
     let token = window.$cookies.get("nnd");
     axios
       .get(
-        `http://localhost:8080/teammenu/diary/list/${this.$store.state.teamNo}`,
+        `${process.env.VUE_APP_API_URL}/teammenu/diary/list/${this.$store.state.teamNo}`,
         {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -217,7 +217,7 @@ export default {
       //update
       axios
         .post(
-          `http://localhost:8080/teammenu/diary/update/${this.dragmsg.no}`,
+          `${process.env.VUE_APP_API_URL}/teammenu/diary/update/${this.dragmsg.no}`,
           {
             title: this.events[i].name,
             color: this.events[i].color,
@@ -274,7 +274,7 @@ export default {
         //axios 통해서 디비에 추가해야함
         axios
           .put(
-            `http://localhost:8080/teammenu/diary/create/${this.$store.state.teamNo}`,
+            `${process.env.VUE_APP_API_URL}/teammenu/diary/create/${this.$store.state.teamNo}`,
             {
               title: this.createEvent.name,
               color: this.createEvent.color,
@@ -336,7 +336,7 @@ export default {
       if (this.dragEvent !== null) {
         axios
           .post(
-            `http://localhost:8080/teammenu/diary/update/${this.dragEvent.no}`,
+            `${process.env.VUE_APP_API_URL}/teammenu/diary/update/${this.dragEvent.no}`,
             {
               title: this.dragEvent.name,
               color: this.dragEvent.color,
@@ -359,7 +359,7 @@ export default {
       } else if (this.createEvent !== null) {
         axios
           .post(
-            `http://localhost:8080/teammenu/diary/update/${this.createEvent.no}`,
+            `${process.env.VUE_APP_API_URL}/teammenu/diary/update/${this.createEvent.no}`,
             {
               title: this.createEvent.name,
               color: this.createEvent.color,
@@ -399,7 +399,7 @@ export default {
         if (i !== -1) {
           axios
             .delete(
-              `http://localhost:8080/teammenu/diary/delete/${this.dragEvent.no}`,
+              `${process.env.VUE_APP_API_URL}/teammenu/diary/delete/${this.dragEvent.no}`,
               {
                 headers: {
                   Authorization: "Bearer " + token.data, // the token is a variable which holds the token

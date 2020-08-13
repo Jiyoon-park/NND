@@ -55,7 +55,9 @@
           </v-dialog>
         </v-row>
         <v-list-item-group>
+          <p v-if="this.teamposts.length == 0">작성된 글이 없습니다</p>
           <TeamPostItem
+            v-else
             v-for="(post, i) in teamposts"
             :key="i"
             :postinfo="teamposts[i]"
@@ -101,7 +103,7 @@ export default {
     let token = window.$cookies.get("nnd");
 
     axios
-      .get(`http://localhost:8080/teammenu/post/` + this.$store.state.teamNo, {
+      .get(`${process.env.VUE_APP_API_URL}/teammenu/post/` + this.$store.state.teamNo, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },
@@ -133,7 +135,7 @@ export default {
         notice: this.notice,
         createDate: "",
       };
-      url = "http://localhost:8080/teammenu/post/save/";
+      url = `${process.env.VUE_APP_API_URL}/teammenu/post/save/`;
 
       axios
         .put(url, obj, {
