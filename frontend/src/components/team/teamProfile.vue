@@ -40,6 +40,7 @@
       <hr />
       <div id="team-member-graph" class="target">
         <h3># 그래프</h3>
+        <MemberChart />
       </div>
     </v-col>
   </v-row>
@@ -51,6 +52,7 @@ import * as easings from "vuetify/es5/services/goto/easing-patterns";
 import NavBar from "../common/NavBar.vue";
 import TeamPost from "../team/teamPost.vue";
 import TeamTable from "../team/teamTable.vue";
+import MemberChart from "../team/memberChart.vue";
 
 import axios from "axios";
 
@@ -59,6 +61,7 @@ export default {
     NavBar,
     TeamPost,
     TeamTable,
+    MemberChart,
   },
   data() {
     return {
