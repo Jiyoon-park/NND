@@ -56,7 +56,11 @@
                     >
                   </v-list-item-content>
                 </v-expansion-panel-header>
+                <v-expansion-panel-content v-if="this.teams.length == 0">
+                  팀 목록이 없습니다.
+                </v-expansion-panel-content>
                 <v-expansion-panel-content
+                  v-else
                   v-for="(team, index) in teams"
                   :key="index"
                 >
@@ -146,19 +150,17 @@ export default {
   methods: {
     checkMainURL() {
       console.log(`현재 url : ${this.$route.path}`);
-      if (this.$route.path == '/') {
-        this.$router.go().catch(() => {})
+      if (this.$route.path == "/") {
+        this.$router.go().catch(() => {});
       } else {
-        this.$router.push('/').catch(() => {})
+        this.$router.push("/").catch(() => {});
       }
     },
-     test(no) {
+    test(no) {
       console.log(no);
       this.$store.state.teamNo = no.teamboardNo;
       this.$store.commit("nchange");
       this.$router.push("TeamProfile");
-
-
     },
     onLogout: function() {
       this.$store.commit("logout");
