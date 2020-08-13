@@ -11,10 +11,13 @@
                 size="50"
                 class="user-img mb-2"
                 @click="
-                $router
-                  .push({ name: 'userProfile', params: { idx: teaminfo.idx } })
-                  .catch(() => {})
-              "
+                  $router
+                    .push({
+                      name: 'userProfile',
+                      params: { idx: teaminfo.idx },
+                    })
+                    .catch(() => {})
+                "
               >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
@@ -22,7 +25,9 @@
               <div class="d-flex flex-column ml-3">
                 <span>{{ teaminfo.name }}</span>
                 <div>
-                  <span>{{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}</span>
+                  <span>{{
+                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -38,7 +43,11 @@
                   src="../../assets/images/project.jpg"
                   height="194"
                 ></v-img>
-                <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+                <v-img
+                  v-else
+                  src="../../assets/images/competition.jpg"
+                  height="194"
+                ></v-img>
               </div>
               <div v-else>
                 <v-img :src="teaminfo.imageurl" height="194"></v-img>
@@ -49,7 +58,8 @@
               >
                 <span
                   style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                >{{ teaminfo.category }}</span>
+                  >{{ teaminfo.category }}</span
+                >
               </span>
             </div>
 
@@ -65,7 +75,8 @@
                     v-for="stack in JSON.parse(stacks)"
                     :key="stack"
                     style="opacity:0.7;"
-                  ># {{ stack }}</v-chip>
+                    ># {{ stack }}</v-chip
+                  >
                 </div>
               </div>
             </v-expansion-panel-header>
@@ -96,14 +107,27 @@
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card>
-            <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
-            <v-card-title class="header-text text-center justify-center font-italic">
+            <v-img
+              class="header"
+              height="200px"
+              src="../../assets/images/member2.jpg"
+            ></v-img>
+            <v-card-title
+              v-if="this.teamlist.length !== 0"
+              class="header-text text-center justify-center font-italic"
+            >
               ❝ {{ teaminfo.teamname }}팀으로
               <br />
               {{ teaminfo.name }}님을 영입합니다 ❠
             </v-card-title>
+            <v-card-title
+              v-else
+              class="header-text text-center justify-center font-italic"
+            >
+              ❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠
+            </v-card-title>
 
-            <v-card-text class="mt-5 pb-0">
+            <v-card-text v-if="this.teamlist.length !== 0" class="mt-5 pb-0">
               <div class="mt-3">
                 <v-row class="mb-0">
                   <v-col class="mb-0" cols="12">
@@ -117,15 +141,30 @@
                     ></v-overflow-btn>
                   </v-col>
                 </v-row>
-                <p class="mb-0 pl-1">{{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉</p>
+                <p class="mb-0 pl-1">
+                  {{ teaminfo.name }}에게 보내는 어필 한마디 🙈🙉
+                </p>
 
-                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                <v-textarea
+                  filled
+                  v-model="content"
+                  name="content"
+                  placeholder="내용을 작성해주세요."
+                ></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >취소</v-btn
+              >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="submit">영입하기</v-btn>
+              <v-btn
+                v-if="this.teamlist.length !== 0"
+                color="blue darken-1"
+                text
+                @click="submit"
+                >영입하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
