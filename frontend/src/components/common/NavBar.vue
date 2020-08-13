@@ -8,19 +8,20 @@
       disable-resize-watcher="true"
       temporary="true"
     >
-      <div class="point-top"></div>
+      <!-- <div class="point-top"></div>
       <div class="point-bottom">
         <p>ⓒ 2020. 이나앨 All Rights Reserved.</p>
-      </div>
+      </div> -->
       <v-list rounded>
-        <v-list-item link class="d-flex flex-column pt-10">
-          <v-avatar color="white" size="80" class="user-img mb-2">
+        <v-list-item link class="d-flex flex-column pt-8 mb-0">
+          <v-avatar color="white" size="80" class="user-img mb-1">
             <img v-if="!profileURL" src="https://picsum.photos/200" />
             <img v-else :src="profileURL" />
           </v-avatar>
           <div class="mt-2">
             <h3 class="text-center">{{ username }}</h3>
             <v-btn
+              class="mt-2"
               x-small
               rounded
               color="#999"
@@ -158,9 +159,14 @@ export default {
     },
     test(no) {
       console.log(no);
+      console.log(`현재 url : ${this.$route.path}`);
       this.$store.state.teamNo = no.teamboardNo;
       this.$store.commit("nchange");
-      this.$router.push("TeamProfile");
+      if (this.$route.path == "/TeamProfile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/TeamProfile").catch(() => {});
+      }
     },
     onLogout: function() {
       this.$store.commit("logout");
@@ -208,7 +214,7 @@ export default {
 
 <style scoped>
 .user-img {
-  border: 2px solid;
+  border: 2px solid black;
 }
 .title {
   margin-bottom: 0;
