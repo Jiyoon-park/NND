@@ -35,26 +35,12 @@ public class MemberRating {
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;   //평가날짜
 	
+	@Column(name="teamboardno")
+	private Long teamboardNo;
+	
 	public MemberRating() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
-
-	public MemberRating(Long ratingNo, Long idx, Long commitCnt, Long issueCnt, Long attendRate, Long satisfaction,
-			Long teamworkship, LocalDateTime createDate) {
-		super();
-		this.ratingNo = ratingNo;
-		this.idx = idx;
-		this.commitCnt = commitCnt;
-		this.issueCnt = issueCnt;
-		this.attendRate = attendRate;
-		this.satisfaction = satisfaction;
-		this.teamworkship = teamworkship;
-		this.createDate = createDate;
-	}
-
-
 
 	public Long getRatingNo() {
 		return ratingNo;
@@ -96,6 +82,22 @@ public class MemberRating {
 		this.attendRate = attendRate;
 	}
 
+	public Long getSatisfaction() {
+		return satisfaction;
+	}
+
+	public void setSatisfaction(Long satisfaction) {
+		this.satisfaction = satisfaction;
+	}
+
+	public Long getTeamworkship() {
+		return teamworkship;
+	}
+
+	public void setTeamworkship(Long teamworkship) {
+		this.teamworkship = teamworkship;
+	}
+
 	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
@@ -104,39 +106,22 @@ public class MemberRating {
 		this.createDate = createDate;
 	}
 
-
-
-	public Long getSatisfaction() {
-		return satisfaction;
+	public Long getTeamboardNo() {
+		return teamboardNo;
 	}
 
-
-
-	public void setSatisfaction(Long satisfaction) {
-		this.satisfaction = satisfaction;
+	public void setTeamboardNo(Long teamboardNo) {
+		this.teamboardNo = teamboardNo;
 	}
-
-
-
-	public Long getTeamworkship() {
-		return teamworkship;
-	}
-
-
-
-	public void setTeamworkship(Long teamworkship) {
-		this.teamworkship = teamworkship;
-	}
-
-
 
 	@Override
 	public String toString() {
 		return "MemberRating [ratingNo=" + ratingNo + ", idx=" + idx + ", commitCnt=" + commitCnt + ", issueCnt="
 				+ issueCnt + ", attendRate=" + attendRate + ", satisfaction=" + satisfaction + ", teamworkship="
-				+ teamworkship + ", createDate=" + createDate + "]";
+				+ teamworkship + ", createDate=" + createDate + ", teamboardNo=" + teamboardNo + "]";
 	}
 
+	
 	
 	
 }
