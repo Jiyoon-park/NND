@@ -146,19 +146,17 @@ export default {
   methods: {
     checkMainURL() {
       console.log(`현재 url : ${this.$route.path}`);
-      if (this.$route.path == '/') {
-        this.$router.go().catch(() => {})
+      if (this.$route.path == "/") {
+        this.$router.go().catch(() => {});
       } else {
-        this.$router.push('/').catch(() => {})
+        this.$router.push("/").catch(() => {});
       }
     },
-     test(no) {
+    test(no) {
       console.log(no);
       this.$store.state.teamNo = no.teamboardNo;
       this.$store.commit("nchange");
       this.$router.push("TeamProfile");
-
-
     },
     onLogout: function() {
       this.$store.commit("logout");
@@ -166,8 +164,17 @@ export default {
       this.$router.push("/login");
     },
     getLetters() {
+      let token = window.$cookies.get("nnd");
+
       axios
-        .get(`http://localhost:8080/letter/list/receive/${this.user.idx}`)
+        .get(
+          `${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((res) => {
           this.letters = res;
           this.messages = this.checkRead(this.letters.data);
@@ -191,8 +198,17 @@ export default {
       return count;
     },
     getMemberTeamList() {
+      let token = window.$cookies.get("nnd");
+
       axios
-        .get(`http://localhost:8080/teammenu/teamlist/${this.user.idx}`)
+        .get(
+          `${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((res) => {
           this.teams = res.data;
         })

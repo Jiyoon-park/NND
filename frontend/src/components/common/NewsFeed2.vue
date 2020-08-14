@@ -200,15 +200,15 @@ export default {
       //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
-          "http://localhost:8080/liketeam/save/" +
+          `${process.env.VUE_APP_API_URL}/liketeam/save/` +
             this.$store.state.myToken.idx +
             "/" +
             this.teaminfo.teamboardno,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
-            params: {},
           }
         )
         .then((data) => {
@@ -220,11 +220,14 @@ export default {
     delFavorite() {
       let token = window.$cookies.get("nnd");
       axios
-        .delete("http://localhost:8080/liketeam/delete/" + this.tlikeno, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
+        .delete(
+          `${process.env.VUE_APP_API_URL}/liketeam/delete/` + this.tlikeno,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {
           this.favorite = false;
         });
@@ -235,19 +238,26 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
+      console.log(this.teamboardNo);
       axios
-        .put("http://localhost:8080/letter/create/" + this.lettertype, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        .put(
+          `${process.env.VUE_APP_API_URL}/letter/create/` + this.lettertype,
+          {
+            read: "",
+            sendIdx: this.sendIdx,
+            receiveIdx: this.teaminfo.idx,
+            content: this.content,
+            letterNo: this.letterNo,
+            createDate: this.createDate,
+            lettertype: this.lettertype,
+            teamboardNo: this.teamboardNo,
           },
-          sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.idx,
-          content: this.content,
-          letterNo: this.letterNo,
-          createDate: this.createDate,
-          lettertype: this.lettertype,
-          teamboardNo: this.teamboardNo,
-        })
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {
           console.log(this.sendIdx);
           alert("등록성공");
@@ -260,7 +270,7 @@ export default {
     },
     applyform() {
       // 지원을 받기전 마감시간이 지났는지 체크하도록 한다.
-      // 지났다 = 현재시간 - 마감시간 > 0 
+      // 지났다 = 현재시간 - 마감시간 > 0
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
@@ -268,7 +278,7 @@ export default {
       console.log(`현재시간 : ${curTime}`);
       console.log(`마감시간 : ${endTime}`);
       console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
-      
+
       if (curTime.getTime() - endTime.getTime() > 0) {
         alert("마감되었습니다!!!");
       } else {

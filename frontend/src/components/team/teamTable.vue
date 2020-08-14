@@ -9,7 +9,10 @@
     >
       <template slot="table-row" slot-scope="props">
         <span v-if="props.column.field === 'survey'">
-          <v-btn v-if="props.row.memberIdx == myidx" color="primary" disabled
+          <v-btn
+            v-if="props.row.memberIdx == myidx || props.row.rated == '1'"
+            color="primary"
+            disabled
             >평가하기</v-btn
           >
           <member-btn v-else :props="props"></member-btn>

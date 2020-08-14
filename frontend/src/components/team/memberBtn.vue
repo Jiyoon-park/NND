@@ -50,19 +50,31 @@ export default {
       this.nowNum = props.row.memberIdx;
     },
     sendRating() {
+      let token = window.$cookies.get("nnd");
+
       this.dialog = false;
       console.log(this.satisfaction);
       console.log(this.teamworkship);
       axios
-        .put("http://localhost:8080/teammenu/rating", {
-          ratingNo: "",
-          idx: this.nowNum,
-          commitCnt: getRandomInt(5),
-          issueCnt: getRandomInt(5),
-          attendRate: getRandomInt(5),
-          satisfaction: this.satisfaction,
-          teamworkship: this.teamworkship,
-        })
+        .put(
+          `${process.env.VUE_APP_API_URL}/teammenu/rating/` +
+            this.$store.state.teamNo,
+          {
+            ratingNo: "",
+            idx: this.nowNum,
+            commitCnt: getRandomInt(5),
+            issueCnt: getRandomInt(5),
+            attendRate: getRandomInt(5),
+            satisfaction: this.satisfaction,
+            teamworkship: this.teamworkship,
+            rated: "1",
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {});
       this.btnStatus = true;
       console.log("btnStatus찍어보자");

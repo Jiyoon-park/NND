@@ -205,10 +205,11 @@ export default {
 
       axios
         .put(
-          "http://localhost:8080/likemember/save/" +
+          `${process.env.VUE_APP_API_URL}/likemember/save/` +
             this.$store.state.myToken.idx +
             "/" +
             this.teaminfo.boardno,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -225,11 +226,14 @@ export default {
       let token = window.$cookies.get("nnd");
 
       axios
-        .delete("http://localhost:8080/likemember/delete/" + this.mlikeno, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
+        .delete(
+          `${process.env.VUE_APP_API_URL}/likemember/delete/` + this.mlikeno,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {
           this.favorite = false;
         });
@@ -243,7 +247,8 @@ export default {
       console.log(this.teamno);
       axios
         .put(
-          "http://localhost:8080/letter/create/" + this.letterType,
+          `${process.env.VUE_APP_API_URL}/letter/create/` + this.letterType,
+
           {
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,
@@ -280,7 +285,7 @@ export default {
 
       axios
         .get(
-          "http://localhost:8080/letter/member/teamlist/" +
+          `${process.env.VUE_APP_API_URL}/letter/member/teamlist/` +
             this.$store.state.myToken.idx,
           {
             headers: {
