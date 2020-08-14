@@ -92,6 +92,45 @@ export default {
   }),
   created() {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    axios
+      .get(`${process.env.VUE_APP_API_URL}/contest`, {
+        // headers: {
+        //   Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        // },
+      })
+      .then(({ data }) => {
+        this.boards = data;
+
+        this.$store.commit("setContest", this.boards);
+        console.log(this.boards);
+        // for (let index = 0; index < this.boards.length; index++) {
+        //   var ncolor =
+        //     "#" + Math.round(Math.random() * 0xffffff).toString(16);
+        //   const allDay = this.rnd(0, 3) === 0;
+        //   this.events.push({
+        //     id: index,
+        //     name: this.boards[index].title,
+        //     start: this.boards[index].start,
+        //     end: this.boards[index].start,
+        //     color: ncolor,
+        //     timed: !allDay,
+        //     poster: this.boards[index].poster,
+        //   });
+
+        //   this.events.push({
+        //     id: index,
+        //     name: this.boards[index].title,
+        //     start: this.boards[index].end,
+        //     end: this.boards[index].end,
+        //     color: ncolor,
+        //     timed: !allDay,
+        //     poster: this.boards[index].poster,
+        //   });
+        // }
+      })
+      .catch((err) => {
+        console.log(err);
+      }); //endaxios
     if (token) {
       //토큰 존재하면
       console.log("already-login");

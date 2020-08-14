@@ -32,4 +32,6 @@ public interface TeamRegistRepository extends JpaRepository<TeamRegist,Long>{
 	void deleteAllByTeamboardNo(@Param("teamboardno") Long teamboardno);
 	
 	TeamRegist findByTeamboardNoAndMemberIdx(Long teamboardno, Long memberidx);
+	
+	int countByTeamboardNo(Long teamboardno);
 }

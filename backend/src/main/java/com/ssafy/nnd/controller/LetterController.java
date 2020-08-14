@@ -167,7 +167,12 @@ public class LetterController {
 		
 		List<Object> teamList = teamregistRepository.findTeamByIdx(sendidx);
 		boolean check = true;
-		
+		int groupsize = team.get().getGroupSize();
+		String message ="success";
+		if(teamregistRepository.countByTeamboardNo(teamboardno)>=groupsize) {
+			check=false;
+			message="already full";
+		}
 		for (int i = 0; i < teamList.size(); i++) {
 			Object[] temp = (Object[]) teamList.get(i);
 			if(Long.parseLong(temp[0].toString())==teamboardno) {
@@ -181,9 +186,12 @@ public class LetterController {
 			memberRegist.setMemberEmail(member.get().getEmail());
 			teamregistRepository.save(memberRegist);
 			
-			return "success";
+			return message;
 		}
-		else return "already joined";
+		else {
+			message="already joinded";
+			return message;
+		}
 	}
 
 	// 개인이 팀장의 스카웃을 수락할 경우
@@ -195,6 +203,12 @@ public class LetterController {
 		
 		List<Object> teamList = teamregistRepository.findTeamByIdx(receiveidx);
 		boolean check = true;
+		int groupsize = team.get().getGroupSize();
+		String message = "success";
+		if(teamregistRepository.countByTeamboardNo(teamboardno)>=groupsize) {
+			check=false;
+			message="already full";
+		}
 		
 		for (int i = 0; i < teamList.size(); i++) {
 			Object[] temp = (Object[]) teamList.get(i);
@@ -210,9 +224,10 @@ public class LetterController {
 		memberRegist.setMemberEmail(member.get().getEmail());
 		teamregistRepository.save(memberRegist);
 		
-		return "success";
+		return message;
 		}else {
-			return "already joined";
+			message="already joined";
+			return message;
 		}
 
 	}
