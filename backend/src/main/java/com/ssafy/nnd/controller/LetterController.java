@@ -237,5 +237,16 @@ public class LetterController {
 		}
 
 	}
+	
+	@GetMapping("letter/check/overlap/{memberidx}/{receiveidx}/{type}/{teamboardno}")
+	public @ResponseBody String checkOverlap(@PathVariable Long memberidx, @PathVariable Long receiveidx, @PathVariable String type,@PathVariable Long teamboardno) {
+		try {
+			Optional<Letter> letter =letterRepository.findBySendIdxAndReceiveIdxAndLetterTypeAndTeamboardNo(memberidx, receiveidx, type, teamboardno);
+			letter.get();
+			return "overlap letter";
+		} catch (Exception e) {	
+			return "success";
+		}
+	}
 
 }

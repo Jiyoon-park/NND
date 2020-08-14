@@ -17,4 +17,5 @@ public interface LetterRepository extends JpaRepository<Letter, Long>  {
 	@Query(value = "SELECT * FROM member RIGHT JOIN (SELECT * FROM letter WHERE receiveidx=:idx) letter ON sendidx=idx",nativeQuery=true)
 	List<Object> findByReceiveIdx(@Param("idx") Long idx);
 	
+	Optional<Letter> findBySendIdxAndReceiveIdxAndLetterTypeAndTeamboardNo(Long sendidx, Long receiveidx, String lettertype, Long teamboardno);
 }
