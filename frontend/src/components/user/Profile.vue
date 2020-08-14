@@ -1,9 +1,9 @@
 <template>
   <v-row justify="center">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-15">
+    <v-col cols="10" md="8" lg="6" class="mt-13">
       <div class="user-info" style="position:relative;">
-        <v-avatar color="grey" size="90" class="mb-2">
+        <v-avatar color="grey" size="90" class="mb-3">
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
@@ -13,10 +13,10 @@
             <v-btn
               v-bind="attrs"
               v-on="on"
-              small
+              x-small
               @click="$router.push('/profile-update')"
-              style="position:absolute; bottom:0; right:0;"
-              color="grey lighten-1"
+              style="position:absolute; bottom:5px;"
+              color="grey"
               dark
             >
               <span>내정보 수정</span>
@@ -33,36 +33,36 @@
       </v-tabs>
 
       <div id="my-info" class="target">
-        <h3 class="mb-1">🌞 내정보 🌞</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
-          <v-col cols="4" md="2">
+        <h3 class="mb-3">🌞 내정보 🌞</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="4" md="2" class="px-4 py-4">
             <p>이메일</p>
-            <p>GIT 주소</p>
+            <p class="mb-0">GIT</p>
           </v-col>
-          <v-col cols="8" md="10">
+          <v-col cols="8" md="10" class="px-4 py-4">
             <p>{{ user.email }}</p>
-            <p>{{ user.gitaddr }}</p>
+            <p class="mb-0">{{ user.gitaddr }}</p>
           </v-col>
         </v-row>
       </div>
 
       <div id="skills" class="target">
-        <h3 class="mb-1">✨ 기술스택 ✨</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
-          <v-col cols="12" sm="12">
+        <h3 class="mb-3">✨ 기술스택 ✨</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 py-4">
             <v-chip-group column>
-              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{ tag }}</v-chip>
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{
+                tag
+              }}</v-chip>
             </v-chip-group>
           </v-col>
         </v-row>
       </div>
 
       <div id="experience" class="target">
-        <h3 class="mb-1">🏅 참여이력 🏅</h3>
-        <v-row class="py-2" style="background-color: #fafafa; border-radius:10px;">
-          <v-col cols="12" sm="12">
-            <ProjectHistoryList />
-          </v-col>
+        <h3 class="mb-3">🏅 참여이력 🏅</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <ProjectHistoryList :isEditPage="isEditPage" />
         </v-row>
       </div>
     </v-col>
@@ -89,6 +89,8 @@ export default {
       user: "",
       profileURL: "",
       select: [],
+      isEdit: false,
+      isEditPage: false,
     };
   },
   created() {
@@ -96,7 +98,7 @@ export default {
     console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
-      .get(`http://localhost:8080/member/info/${id}`, {
+      .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },
@@ -139,7 +141,7 @@ export default {
 }
 
 .target {
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 #my-info p {

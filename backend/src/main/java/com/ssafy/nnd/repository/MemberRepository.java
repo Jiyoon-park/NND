@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ssafy.nnd.dto.Member;
+import com.ssafy.nnd.dto.ProjectHistory;
+import com.ssafy.nnd.dto.TeamBoard;
 
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -16,6 +18,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findMemberByEmail(String email);
     Optional<Member> findMemberByEmailAndCompany(String email, String company);
     Optional<Member> findMemberByIdx(long idx);
-  
+    
+    @Query(value="SELECT email FROM member",nativeQuery=true)
+	List<String> findAllMemberEmail();
 }
 

@@ -61,47 +61,54 @@
                   >{{ teaminfo.category }}</span
                 >
               </span>
+
+              <div
+                style="position:absolute; right:15px; bottom:-32px; z-index:2;"
+              >
+                <i
+                  class="far fa-bookmark"
+                  v-if="!favorite"
+                  @click="addFavorite"
+                ></i>
+                <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
+              </div>
+              <div
+                style="position:absolute; left:15px; bottom:-32px; z-index:2;"
+              >
+                <i @click="applyform" class="fas fa-paper-plane"
+                  ><small class="ml-1">지원하기</small></i
+                >
+              </div>
             </div>
 
-            <v-expansion-panel-header class="mt-2">
-              <div class="d-flex flex-column">
+            <div class="shrink mt-10 mx-4 mb-6">
+              <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <div class="d-flex">
-                  <v-chip
-                    small
-                    class="mr-2 mt-1"
-                    color="#3949ab"
-                    text-color="white"
-                    v-for="stack in JSON.parse(stacks)"
-                    :key="stack"
-                    style="opacity:0.7;"
-                    ># {{ stack }}</v-chip
-                  >
-                </div>
+                <small
+                  @click="expand = !expand"
+                  style="cursor:pointer; color:primary"
+                >
+                  더보기
+                </small>
               </div>
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div>{{ teaminfo.content }}</div>
-            </v-expansion-panel-content>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn text color="indigo" v-if="!favorite" @click="addFavorite">
-                <v-icon>mdi-star-outline</v-icon>
-              </v-btn>
-
-              <v-btn text color="indigo" v-if="favorite" @click="delFavorite">
-                <v-icon>mdi-star</v-icon>
-              </v-btn>
-              <v-btn
-                text
-                class="ml-0"
-                color="indigo darken-1 accent-4 font-weight-bold"
-                @click="applyform"
-              >
-                <i class="fas fa-paper-plane mr-1"></i> 영입
-              </v-btn>
-            </v-card-actions>
+              <v-expand-transition>
+                <v-card flat v-show="expand" class="mx-auto"
+                  >{{ teaminfo.content }}
+                  <div class="d-flex">
+                    <v-chip
+                      small
+                      class="mr-2 mt-1"
+                      color="#3949ab"
+                      text-color="white"
+                      v-for="stack in JSON.parse(stacks)"
+                      :key="stack"
+                      style="opacity:0.7;"
+                      ># {{ stack }}</v-chip
+                    >
+                  </div>
+                </v-card>
+              </v-expand-transition>
+            </div>
           </v-expansion-panel>
         </v-expansion-panels>
 
@@ -113,14 +120,21 @@
               src="../../assets/images/member2.jpg"
             ></v-img>
             <v-card-title
+              v-if="this.teamlist.length !== 0"
               class="header-text text-center justify-center font-italic"
             >
               ❝ {{ teaminfo.teamname }}팀으로
               <br />
               {{ teaminfo.name }}님을 영입합니다 ❠
             </v-card-title>
+            <v-card-title
+              v-else
+              class="header-text text-center justify-center font-italic"
+            >
+              ❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠
+            </v-card-title>
 
-            <v-card-text class="mt-5 pb-0">
+            <v-card-text v-if="this.teamlist.length !== 0" class="mt-5 pb-0">
               <div class="mt-3">
                 <v-row class="mb-0">
                   <v-col class="mb-0" cols="12">
@@ -151,7 +165,13 @@
                 >취소</v-btn
               >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="submit">영입하기</v-btn>
+              <v-btn
+                v-if="this.teamlist.length !== 0"
+                color="blue darken-1"
+                text
+                @click="submit"
+                >영입하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -185,6 +205,7 @@ export default {
       memberidx: this.teaminfo.idx,
       teamno: "",
       mlikeno: this.teaminfo.likeno,
+      expand: false,
     };
   },
   // mounted(){
@@ -226,14 +247,11 @@ export default {
       let token = window.$cookies.get("nnd");
 
       axios
-        .delete(
-          `${process.env.VUE_APP_API_URL}/likemember/delete/` + this.mlikeno,
-          {
-            headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
-          }
-        )
+        .delete(`${process.env.VUE_APP_API_URL}/likemember/delete/${this.mlikeno}`, {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        })
         .then(() => {
           this.favorite = false;
         });
@@ -247,8 +265,7 @@ export default {
       console.log(this.teamno);
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/letter/create/` + this.letterType,
-
+          `${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`,
           {
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,
@@ -285,8 +302,7 @@ export default {
 
       axios
         .get(
-          `${process.env.VUE_APP_API_URL}/letter/member/teamlist/` +
-            this.$store.state.myToken.idx,
+          `${process.env.VUE_APP_API_URL}/letter/member/teamlist/${this.$store.state.myToken.idx}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token

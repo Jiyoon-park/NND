@@ -1,7 +1,15 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="green" dark v-bind="attrs" v-on="on" fab small class="mr-1">
+      <v-btn
+        color="green"
+        dark
+        v-bind="attrs"
+        v-on="on"
+        fab
+        x-small
+        class="mr-1"
+      >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </template>
@@ -33,5 +41,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

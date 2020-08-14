@@ -27,7 +27,7 @@ export default {
     if (token) {
       // kakao 토큰이
       axios
-        .get("http://localhost:8080/userinfo", {
+        .get(`${process.env.VUE_APP_API_URL}/userinfo`, {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
           },
@@ -44,6 +44,13 @@ export default {
             console.log("failed");
           }
         );
+    }
+    let ntoken = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    if (!ntoken) {
+      alert("로그인해주세요!");
+      this.$store.commit("logout");
+      window.$cookies.remove("nnd");
+      this.$router.push("/login");
     }
   },
 };

@@ -3,11 +3,26 @@
     <v-row justify="center">
       <v-col cols="10" md="8" lg="4">
         <div class="logo-container">
-          <img class="logo" src="../../assets/images/logo_black_title.png" width="60%" />
+          <img
+            class="logo"
+            src="../../assets/images/logo_black_title.png"
+            width="60%"
+          />
         </div>
         <v-form class="form" ref="form" v-model="valid" lazy-validation>
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <v-text-field v-model="email" :rules="emailRules" label="이메일" required outlined dense></v-text-field>
+          <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          />
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="이메일"
+            required
+            outlined
+            dense
+          ></v-text-field>
           <v-text-field
             v-model="password"
             :rules="[rules.required, rules.min]"
@@ -18,22 +33,33 @@
             outlined
             dense
           ></v-text-field>
-          <v-btn large class="button" :disabled="!valid" color="#0277BD" @click="login">로그인</v-btn>
-          <v-checkbox v-model="checkbox" color="success" label="로그인 정보 기억"></v-checkbox>
+          <v-btn
+            large
+            class="button"
+            :disabled="!valid"
+            color="#0277BD"
+            @click="login"
+            >로그인</v-btn
+          >
+          <v-checkbox
+            v-model="checkbox"
+            color="success"
+            label="로그인 정보 기억"
+          ></v-checkbox>
         </v-form>
         <div class="login-body text-center">
           <div class="sns-login">
             <p>✨ SNS로 간편하게 로그인할 수 있어요!</p>
 
-            <a
-              href="https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=http://localhost:8080/login&response_type=code"
-            >
+            <a :href="this.redirectURL">
               <img src="../../assets/images/kakao_login.png" alt />
             </a>
           </div>
           <div class="add-option">
             <router-link to="/signup" class="routers">회원가입</router-link>|
-            <router-link to="/findpw" class="routers">비밀번호 찾기</router-link>
+            <router-link to="/findpw" class="routers"
+              >비밀번호 찾기</router-link
+            >
           </div>
         </div>
       </v-col>
@@ -47,6 +73,7 @@ export default {
   name: "Login",
   components: {},
   data: () => ({
+    redirectURL: `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}login&response_type=code`,
     id: 0,
     token: "",
     valid: true,
@@ -72,10 +99,13 @@ export default {
     }
   },
   methods: {
+    makeURL() {
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}/login&response_type=code`;
+    },
     login() {
       if (this.$refs.form.validate()) {
         axios
-          .post("http://localhost:8080/member/login", {
+          .post(`${process.env.VUE_APP_API_URL}/member/login`, {
             email: this.email,
             password: this.password,
           })
@@ -91,6 +121,7 @@ export default {
               });
             },
             () => {
+              alert("비밀번호가 틀렸습니다.");
               console.log("failed");
             }
           );
