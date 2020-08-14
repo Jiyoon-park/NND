@@ -1,17 +1,10 @@
 <template>
   <v-card>
-    <v-toolbar
-      flat
-      dark
-      color="#38ada9"
-      v-if="letterinfo.letterType == 'tboard'"
-    >
+    <v-toolbar flat dark color="#38ada9" v-if="letterinfo.letterType == 'tboard'">
       <v-btn icon dark @click="changeDialog">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title v-if="item.tab == '받은 편지함'"
-        >받은 편지</v-toolbar-title
-      >
+      <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -19,9 +12,7 @@
       <v-btn icon dark @click="changeDialog">
         <v-icon>mdi-close</v-icon>
       </v-btn>
-      <v-toolbar-title v-if="item.tab == '받은 편지함'"
-        >받은 편지</v-toolbar-title
-      >
+      <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
@@ -29,10 +20,7 @@
       <div class="d-flex align-center">
         <div>
           <v-avatar color="grey" size="48">
-            <span
-              v-if="!letterinfo.profile"
-              class="white--text headline"
-            ></span>
+            <span v-if="!letterinfo.profile" class="white--text headline"></span>
             <img v-else :src="letterinfo.profile" />
           </v-avatar>
         </div>
@@ -47,9 +35,7 @@
         </div>
       </div>
       <div class="rounded grey lighten-3 pa-3 mt-3">
-        <span class="subheader" v-if="letterinfo.letterType == 'mboard'"
-          >✔ 팀 영입 제안입니다.</span
-        >
+        <span class="subheader" v-if="letterinfo.letterType == 'mboard'">✔ 팀 영입 제안입니다.</span>
         <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
 
         <p class="mt-2">{{ letterinfo.content }}</p>
@@ -57,9 +43,7 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions v-if="item.tab == '받은 편지함'">
-      <v-btn color="grey" class="font-weight-bold" text @click="changeDialog"
-        >닫기</v-btn
-      >
+      <v-btn color="grey" class="font-weight-bold" text @click="changeDialog">닫기</v-btn>
       <v-spacer></v-spacer>
       <v-btn
         color="#38ada9"
@@ -67,16 +51,14 @@
         class="font-weight-bold"
         @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
         v-if="letterinfo.letterType == 'tboard'"
-        >지원수락</v-btn
-      >
+      >지원수락</v-btn>
       <v-btn
         color="#706fd3"
         text
         class="font-weight-bold"
         @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
         v-else
-        >제안수락</v-btn
-      >
+      >제안수락</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -119,11 +101,17 @@ export default {
         )
         .then((res) => {
           console.log(res);
-          alert("수락완료");
+          if (res.data == "success") {
+            alert("수락완료");
+          } else if (res.data == "already full") {
+            alert("멤버 모집이 끝났습니다.");
+          } else if (res.data == "already joined") {
+            alert("이미 가입했습니다.");
+          }
         })
         .catch((err) => {
           console.log(err);
-          alert("수락실패");
+          alert("멤버가 없거나 팀이 삭제되었습니다.");
         });
       this.changeDialog();
     },
@@ -139,14 +127,26 @@ export default {
             },
           }
         )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          if (res.data == "success") {
+            alert("수락완료");
+          } else if (res.data == "already full") {
+            alert("멤버 모집이 끝났습니다.");
+          } else if (res.data == "already joined") {
+            alert("이미 가입했습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("멤버가 없거나 팀이 삭제되었습니다.");
+        });
       this.changeDialog();
     },
     changeDialog() {
       this.$emit("changeDialog");
     },
-    dateFormatted: function(dt) {
+    dateFormatted: function (dt) {
       console.log("dt : " + dt);
       var d = new Date(dt);
 
