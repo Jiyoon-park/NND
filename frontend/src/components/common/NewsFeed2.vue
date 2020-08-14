@@ -234,12 +234,15 @@ export default {
       //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/liketeam/save/${this.$store.state.myToken.idx}/${this.teaminfo.teamboardno}`,
+          `${process.env.VUE_APP_API_URL}/liketeam/save/` +
+            this.$store.state.myToken.idx +
+            "/" +
+            this.teaminfo.teamboardno,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
-            params: {},
           }
         )
         .then((data) => {
@@ -251,11 +254,14 @@ export default {
     delFavorite() {
       let token = window.$cookies.get("nnd");
       axios
-        .delete(`${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
+        .delete(
+          `${process.env.VUE_APP_API_URL}/liketeam/delete/` + this.tlikeno,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {
           this.favorite = false;
         });
@@ -266,19 +272,26 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
+      console.log(this.teamboardNo);
       axios
-        .put(`${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        .put(
+          `${process.env.VUE_APP_API_URL}/letter/create/` + this.lettertype,
+          {
+            read: "",
+            sendIdx: this.sendIdx,
+            receiveIdx: this.teaminfo.idx,
+            content: this.content,
+            letterNo: this.letterNo,
+            createDate: this.createDate,
+            lettertype: this.lettertype,
+            teamboardNo: this.teamboardNo,
           },
-          sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.idx,
-          content: this.content,
-          letterNo: this.letterNo,
-          createDate: this.createDate,
-          lettertype: this.lettertype,
-          teamboardNo: this.teamboardNo,
-        })
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {
           console.log(this.sendIdx);
           alert("등록성공");
