@@ -272,7 +272,7 @@ export default {
       console.log("유저의 memberstack: " + this.memberstack);
     }
     axios
-      .get("${process.env.VUE_APP_API_URL}/member/all", {
+      .get(`${process.env.VUE_APP_API_URL}/member/all`, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },
