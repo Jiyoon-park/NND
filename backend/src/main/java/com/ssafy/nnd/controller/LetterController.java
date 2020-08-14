@@ -161,17 +161,29 @@ public class LetterController {
 	@PostMapping("letter/teamaccept/{sendidx}/{teamboardno}")
 	public @ResponseBody String teamAccept(@PathVariable Long sendidx, @PathVariable Long teamboardno) {
 
+		
 		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		Optional<Member> member = memberRepository.findById(sendidx);
 		
-		TeamRegist memberRegist = new TeamRegist();
-		memberRegist.setTeamboardNo(team.get().getTeamboardNo());
-		memberRegist.setMemberIdx(member.get().getIdx());
-		memberRegist.setMemberEmail(member.get().getEmail());
-		teamregistRepository.save(memberRegist);
-
-		return "success";
-
+		List<Object> teamList = teamregistRepository.findTeamByIdx(sendidx);
+		boolean check = true;
+		
+		for (int i = 0; i < teamList.size(); i++) {
+			Object[] temp = (Object[]) teamList.get(i);
+			if(Long.parseLong(temp[0].toString())==teamboardno) {
+				check=false;
+			}
+		}
+		if(check) {
+			TeamRegist memberRegist = new TeamRegist();
+			memberRegist.setTeamboardNo(team.get().getTeamboardNo());
+			memberRegist.setMemberIdx(member.get().getIdx());
+			memberRegist.setMemberEmail(member.get().getEmail());
+			teamregistRepository.save(memberRegist);
+			
+			return "success";
+		}
+		else return "already joined";
 	}
 
 	// 개인이 팀장의 스카웃을 수락할 경우
@@ -181,6 +193,17 @@ public class LetterController {
 		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		Optional<Member> member = memberRepository.findById(receiveidx);
 		
+		List<Object> teamList = teamregistRepository.findTeamByIdx(receiveidx);
+		boolean check = true;
+		
+		for (int i = 0; i < teamList.size(); i++) {
+			Object[] temp = (Object[]) teamList.get(i);
+			if(Long.parseLong(temp[0].toString())==teamboardno) {
+				check=false;
+			}
+		}
+		if(check) {
+			
 		TeamRegist memberRegist = new TeamRegist();
 		memberRegist.setTeamboardNo(team.get().getTeamboardNo());
 		memberRegist.setMemberIdx(member.get().getIdx());
@@ -188,6 +211,9 @@ public class LetterController {
 		teamregistRepository.save(memberRegist);
 		
 		return "success";
+		}else {
+			return "already joined";
+		}
 
 	}
 
