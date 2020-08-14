@@ -174,8 +174,17 @@ export default {
       this.$router.push("/login");
     },
     getLetters() {
+      let token = window.$cookies.get("nnd");
+
       axios
-        .get(`${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`)
+        .get(
+          `${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((res) => {
           this.letters = res;
           this.messages = this.checkRead(this.letters.data);
@@ -199,8 +208,17 @@ export default {
       return count;
     },
     getMemberTeamList() {
+      let token = window.$cookies.get("nnd");
+
       axios
-        .get(`${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`)
+        .get(
+          `${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((res) => {
           this.teams = res.data;
         })

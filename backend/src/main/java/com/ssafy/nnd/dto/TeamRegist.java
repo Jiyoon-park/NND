@@ -25,6 +25,13 @@ public class TeamRegist {
 	
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;  //가입 시간
+	
+	@Column
+	private Long rated;
+
+	public TeamRegist() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Long getTeamRegistNo() {
 		return teamRegistNo;
@@ -66,25 +73,21 @@ public class TeamRegist {
 		this.createDate = createDate;
 	}
 
-	public TeamRegist() {
-		// TODO Auto-generated constructor stub
+	public Long getRated() {
+		return rated;
 	}
 
-	public TeamRegist(Long teamRegistNo, Long teamboardNo, Long memberIdx, String memberEmail,
-			LocalDateTime createDate) {
-		super();
-		this.teamRegistNo = teamRegistNo;
-		this.teamboardNo = teamboardNo;
-		this.memberIdx = memberIdx;
-		this.memberEmail = memberEmail;
-		this.createDate = createDate;
+	public void setRated(Long rated) {
+		this.rated = rated;
 	}
 
 	@Override
 	public String toString() {
 		return "TeamRegist [teamRegistNo=" + teamRegistNo + ", teamboardNo=" + teamboardNo + ", memberIdx=" + memberIdx
-				+ ", memberEmail=" + memberEmail + ", createDate=" + createDate + "]";
+				+ ", memberEmail=" + memberEmail + ", createDate=" + createDate + ", rated=" + rated + "]";
 	}
+	
+
 	
 	
 	

@@ -76,6 +76,7 @@ public class TeamMenuController {
 			Object[] temp = (Object[]) teamMemberList.get(i);
 			map.put("memberIdx", temp[0]);
 			map.put("memberName", temp[1]);
+			map.put("rated",temp[2]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -134,24 +135,26 @@ public class TeamMenuController {
 			return "delete member fail";
 		}
 	}
+	
 	// 멤버 평가
-
-	@PutMapping("teammenu/rating") // 평가대상자 idx 꼭 넣어서 보내주세요
-	public String memberRating(@RequestBody MemberRating memberrate) {
+	@PutMapping("teammenu/rating/{teamboardno}") // 평가대상자 idx 꼭 넣어서 보내주세요
+	public String memberRating(@PathVariable Long teamboardno, @RequestBody MemberRating memberrate) {
 		
+		TeamRegist teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno,memberrate.getIdx()); 
 		try {
 			//데이터 있으면 2로 나눠서 다시 수정하기
-
-			Optional<MemberRating> origindata = memberRatingRepository.findById(memberrate.getRatingNo());
+			Optional<MemberRating> origindata = memberRatingRepository.findByIdx(memberrate.getIdx());
 			origindata.get().setAttendRate((origindata.get().getAttendRate()+memberrate.getAttendRate())/2);
 			origindata.get().setCommitCnt((origindata.get().getCommitCnt()+memberrate.getCommitCnt())/2);
 			origindata.get().setTeamworkship((origindata.get().getTeamworkship()+memberrate.getTeamworkship())/2);
 			origindata.get().setIssueCnt((origindata.get().getIssueCnt()+memberrate.getIssueCnt())/2);
 			origindata.get().setSatisfaction((origindata.get().getSatisfaction()+memberrate.getSatisfaction())/2);
+			teamregist.setRated(Long.parseLong("1"));
 			memberRatingRepository.save(origindata.get());
 			return "rating success";
 		} catch (Exception e) {
 			//데이터 없으면 그냥 새로 넣기
+			teamregist.setRated(Long.parseLong("1"));
 			memberRatingRepository.save(memberrate);
 			return "rating success";
 		}

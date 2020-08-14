@@ -101,11 +101,14 @@ export default {
       });
 
     axios
-      .get(`${process.env.VUE_APP_API_URL}/teamboard/list/${this.teamboardno}`, {
-        headers: {
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-        },
-      })
+      .get(
+        `${process.env.VUE_APP_API_URL}/teamboard/list/${this.teamboardno}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((res) => {
         this.teaminfo = res.data;
         // console.log("팀장idx찍어보자");
@@ -116,7 +119,14 @@ export default {
         console.log(err);
       });
     axios
-      .get(`${process.env.VUE_APP_API_URL}/teammenu/member/` + this.teamboardno)
+      .get(
+        `${process.env.VUE_APP_API_URL}/teammenu/member/` + this.teamboardno,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((data) => {
         console.log("데이터찍어보자");
         console.log(data.data);

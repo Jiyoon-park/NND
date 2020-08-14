@@ -99,11 +99,15 @@ export default {
       if (this.letterinfo.read == 0) {
         this.letterinfo.read = 1;
         axios
-          .post(`${process.env.VUE_APP_API_URL}/letter/update/${letterNo}`, {
-            headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
-          })
+          .post(
+            `${process.env.VUE_APP_API_URL}/letter/update/${letterNo}`,
+            {},
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
           .then((res) => {
             console.log(res);
             EventBus.$emit("letterRead");
