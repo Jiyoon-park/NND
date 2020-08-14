@@ -2,24 +2,14 @@
   <v-app class="mt-15">
     <div v-if="this.type == 'team'">
       <!-- <p class="mb-0 ml-3"># 팀보드</p> -->
-      <news-feed2
-        v-for="(board, i) in list"
-        v-bind:teaminfo="list[i]"
-        v-bind:key="i"
-      ></news-feed2>
+      <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>
     </div>
     <div v-if="this.type == 'member'">
       <!-- <p class="mb-0 ml-3"># 멤바보드</p> -->
-      <news-feed
-        v-for="(board, i) in list"
-        v-bind:teaminfo="list[i]"
-        v-bind:key="i"
-      ></news-feed>
+      <news-feed v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed>
     </div>
-    <infinite-loading
-      @infinite="infiniteHandler"
-      ref="InfiniteLoading"
-    ></infinite-loading>
+    <ActionButton />
+    <infinite-loading @infinite="infiniteHandler" ref="InfiniteLoading"></infinite-loading>
   </v-app>
 </template>
 
@@ -30,6 +20,7 @@ import NewsFeed from "./NewsFeed.vue";
 import axios from "axios";
 import { EventBus } from "../../main.js";
 import * as firebase from "firebase/app";
+import ActionButton from "./ActionButton.vue";
 
 export default {
   data() {
@@ -71,7 +62,10 @@ export default {
 
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/` + this.type + "board/search/" + this.idx,
+          `${process.env.VUE_APP_API_URL}/` +
+            this.type +
+            "board/search/" +
+            this.idx,
           {
             query: this.query,
             category: this.category,
@@ -94,12 +88,12 @@ export default {
               console.log("기존 스크롤 push " + this.page);
               this.page += 1;
               console.log(`data의 원래 개수 : ${this.list.length}`);
-              var len = this.list.length; // 무한 스크롤을 진행 할 때마다 list엔 데이터가 쌓이게되므로, len에 변경할 url들이 위치하는 list의 인덱스를 미리 저장한다. 
+              var len = this.list.length; // 무한 스크롤을 진행 할 때마다 list엔 데이터가 쌓이게되므로, len에 변경할 url들이 위치하는 list의 인덱스를 미리 저장한다.
               this.list.push(...data);
               console.log(`list : `);
               console.log(this.list);
 
-              // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다 
+              // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다
               for (let i = len; i < this.list.length; i++) {
                 var card = this.list[i];
 
@@ -123,7 +117,7 @@ export default {
                   .then((imageurl) => {
                     this.list[i].imageurl = imageurl;
                   })
-                  .catch(function(error) {
+                  .catch(function (error) {
                     // A full list of error codes is available at
                     // https://firebase.google.com/docs/storage/web/handle-errors
                     switch (error.code) {
@@ -157,7 +151,7 @@ export default {
   components: {
     NewsFeed2: NewsFeed2,
     NewsFeed: NewsFeed,
-
+    ActionButton,
     InfiniteLoading,
   },
 };

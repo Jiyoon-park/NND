@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="10" md="8" lg="4">
+      <v-col cols="10" sm="8" md="6" lg="4" style="max-height:800px; ">
         <div class="logo-container">
           <img class="logo" src="../../assets/images/logo_black_title.png" width="60%" />
         </div>
@@ -25,9 +25,7 @@
           <div class="sns-login">
             <p>✨ SNS로 간편하게 로그인할 수 있어요!</p>
 
-            <a
-              :href="this.redirectURL"
-            >
+            <a :href="this.redirectURL">
               <img src="../../assets/images/kakao_login.png" alt />
             </a>
           </div>
@@ -47,7 +45,7 @@ export default {
   name: "Login",
   components: {},
   data: () => ({
-    redirectURL: `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}login&response_type=code`,
+    redirectURL: `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}/login&response_type=code`,
     id: 0,
     token: "",
     valid: true,
@@ -74,7 +72,7 @@ export default {
   },
   methods: {
     makeURL() {
-      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}/login&response_type=code`; 
+      location.href = `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}/login&response_type=code`;
     },
     login() {
       if (this.$refs.form.validate()) {

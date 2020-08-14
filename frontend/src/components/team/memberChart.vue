@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Radar Chart Example in Vue</h3>
     <RadarChart v-if="loaded" :chartData="chartData" :options="options" />
   </div>
 </template>

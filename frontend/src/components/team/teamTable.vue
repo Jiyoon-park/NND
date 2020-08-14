@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ml-10 mt-10">
+  <v-card>
     <vue-good-table
       :columns="columns"
       :rows="members"
@@ -9,16 +9,13 @@
     >
       <template slot="table-row" slot-scope="props">
         <span v-if="props.column.field === 'survey'">
-          <v-btn v-if="props.row.memberIdx == myidx" color="primary" disabled
-            >평가하기</v-btn
-          >
+          <v-btn v-if="props.row.memberIdx == myidx" color="primary" disabled>평가하기</v-btn>
           <v-btn
             v-else
             color="primary"
             @click="goSurvey(props)"
             :disabled="btnStatus[props.index]"
-            >평가하기</v-btn
-          >
+          >평가하기</v-btn>
         </span>
       </template>
     </vue-good-table>
@@ -34,9 +31,7 @@
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false"
-            >취소</v-btn
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">취소</v-btn>
           <v-btn color="green darken-1" text @click="sendRating">확인</v-btn>
         </v-card-actions>
       </v-card>

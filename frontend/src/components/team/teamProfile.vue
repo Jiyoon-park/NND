@@ -1,52 +1,51 @@
 <template>
   <v-row justify="center">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-15">
+    <v-col cols="10" md="8" lg="6" class="mt-13">
       <div class="user-info">
-        <v-avatar color="grey" size="90" class="mb-2">
+        <v-avatar color="grey" size="90" class="mb-3">
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
-        <h3>팀 형태 : {{ teaminfo.category }}</h3>
-        <p># 팀 이름 : {{ teaminfo.teamName }}</p>
+        <small>{{ teaminfo.category }}</small>
+        <h4>{{ teaminfo.teamName }}</h4>
         <!-- <v-btn small @click="$router.push('/profile-update')">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>-->
       </div>
 
-      <v-tabs class="tabs">
-        <v-spacer></v-spacer>
-        <v-tab @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
-        <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
-        <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
-          >그래프</v-tab
-        ><v-tab @click="$vuetify.goTo('#team-member-diary', options)"
-          >다이어리</v-tab
-        >
-        <v-spacer></v-spacer>
+      <v-tabs show-arrows fixed-tabs color="indigo lighten-1" class="tabs">
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member-diary', options)">다이어리</v-tab>
       </v-tabs>
 
       <div id="team-post" class="target">
-        <h3># 게시판</h3>
+        <h3 class="mb-3">게시판</h3>
         <TeamPost :teaminfo="teaminfo" :userinfo="user" />
       </div>
 
-      <hr />
-      <div id="team-member" class="target">
-        <h3># 팀원목록</h3>
-        <!-- <div class="skills">
+      <v-row>
+        <v-col cols="12" lg="6">
+          <div id="team-member" class="target">
+            <h3 class="mb-3">팀원목록</h3>
+            <!-- <div class="skills">
           <v-combobox v-model="select" chips multiple readonly></v-combobox>
-        </div>-->
-        <team-table></team-table>
-      </div>
-      <hr />
-      <div id="team-member-graph" class="target">
-        <h3># 그래프</h3>
-        <MemberChart />
-      </div>
-      <hr />
+            </div>-->
+            <TeamTable />
+          </div>
+        </v-col>
+        <v-col cols="12" lg="6">
+          <div id="team-member-graph" class="target">
+            <h3 class="mb-3">그래프</h3>
+            <MemberChart />
+          </div>
+        </v-col>
+      </v-row>
+
       <div id="team-member-diary" class="target">
-        <h3># 다이어리</h3>
+        <h3 class="mb-3">다이어리</h3>
         <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
       </div>
     </v-col>
@@ -101,11 +100,14 @@ export default {
       });
 
     axios
-      .get(`${process.env.VUE_APP_API_URL}/teamboard/list/${this.teamboardno}`, {
-        headers: {
-          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-        },
-      })
+      .get(
+        `${process.env.VUE_APP_API_URL}/teamboard/list/${this.teamboardno}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((res) => {
         this.teaminfo = res.data;
         // console.log("팀장idx찍어보자");
@@ -149,29 +151,16 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .tabs {
   margin-bottom: 30px;
 }
 
 .target {
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 #my-info p {
   margin-bottom: 5px;
 }
-
-.skills {
-  margin: 5px 0;
-}
-
-.skill {
-  margin: 0 3px;
-}
-
-hr {
-  margin: 30px 0;
-}
 </style>
-
-<style></style>
