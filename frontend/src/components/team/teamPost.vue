@@ -10,7 +10,7 @@
               small
               v-bind="attrs"
               v-on="on"
-              style="position:absolute; top:-40px; right:0;"
+              style="position:absolute; top:-55px; right:-10px;"
             >글쓰기</v-btn>
           </template>
           <v-card>

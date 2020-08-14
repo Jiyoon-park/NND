@@ -7,7 +7,8 @@
           <v-expansion-panel>
             <div class="d-flex mx-3 my-3 align-center">
               <v-avatar
-                color="white"
+                style="cursor:pointer;"
+                color="#eeeeee"
                 size="50"
                 class="user-img mb-2"
                 @click="
@@ -19,15 +20,24 @@
                     .catch(() => {})
                 "
               >
-                <img v-if="!profileURL" src="https://picsum.photos/200" />
+                <i v-if="!profileURL" class="fas fa-user"></i>
+                <!-- <img  v-if="!profileURL" src="https://picsum.photos/200" /> -->
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
-                <span>{{ teaminfo.name }}</span>
+                <span
+                  style="cursor:pointer;"
+                  @click="
+                  $router
+                    .push({
+                      name: 'userProfile',
+                      params: { idx: teaminfo.idx },
+                    })
+                    .catch(() => {})
+                "
+                >{{ teaminfo.name }}</span>
                 <div>
-                  <span>
-                    {{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}
-                  </span>
+                  <span>{{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}</span>
                   <small class="deadline">
                     ~ {{ teaminfo.deadline }}
                     <span style="color:#555">마감</span>
@@ -47,11 +57,7 @@
                   src="../../assets/images/project.jpg"
                   height="194"
                 ></v-img>
-                <v-img
-                  v-else
-                  src="../../assets/images/competition.jpg"
-                  height="194"
-                ></v-img>
+                <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
               </div>
               <div v-else>
                 <v-img :src="teaminfo.imageurl" height="194"></v-img>
@@ -62,66 +68,47 @@
               >
                 <span
                   style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                  >{{ teaminfo.category }}</span
-                >
+                >{{ teaminfo.category }}</span>
 
                 <small
                   style="background-color:#eeeeee; opacity:0.7;"
                   class="px-1"
-                  >모집 인원 {{ teaminfo.groupsize }}</small
-                >
+                >모집 인원 {{ teaminfo.groupsize }}</small>
               </span>
 
-              <div
-                style="position:absolute; right:15px; bottom:-32px; z-index:2;"
-              >
-                <i
-                  class="far fa-bookmark"
-                  v-if="!favorite"
-                  @click="addFavorite"
-                ></i>
+              <div style="position:absolute; right:15px; bottom:-32px; z-index:2; cursor:pointer;">
+                <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
-              <div
-                style="position:absolute; left:15px; bottom:-32px; z-index:2;"
-              >
-                <i @click="applyform" class="fas fa-paper-plane"
-                  ><small class="ml-1">지원하기</small></i
-                >
+              <div style="position:absolute; left:15px; bottom:-32px; z-index:2; cursor:pointer;">
+                <i @click="applyform" class="fas fa-paper-plane">
+                  <span class="ml-1" style="font-size:14px;">지원하기</span>
+                </i>
               </div>
             </div>
 
             <div class="shrink mt-10 mx-4 mb-4">
               <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <small
-                  @click="expand = !expand"
-                  style="cursor:pointer; color:primary"
-                >
-                  더보기
-                </small>
+                <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto"
-                  >{{ teaminfo.content }}
-                  <div class="d-flex">
-                    <v-chip
-                      small
-                      class="mr-2 mt-1"
-                      color="#3949ab"
-                      text-color="white"
-                      v-for="stack in JSON.parse(stacks)"
-                      :key="stack"
-                      style="opacity:0.7;"
-                      ># {{ stack }}</v-chip
-                    >
-                  </div>
-                </v-card>
+                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}</v-card>
               </v-expand-transition>
+              <div class="d-flex">
+                <v-chip
+                  small
+                  class="mr-2 mt-1"
+                  color="#0277BD"
+                  text-color="white"
+                  v-for="stack in JSON.parse(stacks)"
+                  :key="stack"
+                ># {{ stack }}</v-chip>
+              </div>
             </div>
             <!-- <v-expansion-panel-header class="mt-7 pb-0">
               <div class="d-flex flex-column">
-                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span> -->
+            <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>-->
             <!-- 
             <div class="d-flex">
               <v-chip
@@ -134,51 +121,32 @@
                 style="opacity:0.7;"
                 ># {{ stack }}</v-chip
               >
-            </div> -->
+            </div>-->
             <!-- </div>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
               <div>{{ teaminfo.content }}</div>
-            </v-expansion-panel-content> -->
+            </v-expansion-panel-content>-->
           </v-expansion-panel>
         </v-expansion-panels>
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card style="border: 3px solid #eeeeee;">
-            <v-img
-              class="header"
-              height="200px"
-              src="../../assets/images/team2.jpg"
-            ></v-img>
-            <v-card-title class="header-text text-center justify-center body-1">
-              ❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠
-            </v-card-title>
+            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
+            <v-card-title
+              class="header-text text-center justify-center body-1"
+            >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title>
 
             <v-card-text class="pb-0">
               <div class="mt-4">
-                <p class="mb-3 pl-1" style="font-size:1rem;">
-                  팀장에게 보내는 어필 한마디 🙈🙉
-                </p>
-                <v-textarea
-                  filled
-                  v-model="content"
-                  name="content"
-                  placeholder="내용을 작성해주세요."
-                ></v-textarea>
+                <p class="mb-3 pl-1" style="font-size:1rem;">팀장에게 보내는 어필 한마디 🙈🙉</p>
+                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions class="pt-0">
-              <v-btn color="blue darken-1" text @click="dialog = false"
-                >취소</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
               <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                class="font-weight-bold"
-                text
-                @click="submit"
-                >지원하기</v-btn
-              >
+              <v-btn color="blue darken-1" class="font-weight-bold" text @click="submit">지원하기</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -251,11 +219,14 @@ export default {
     delFavorite() {
       let token = window.$cookies.get("nnd");
       axios
-        .delete(`${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
+        .delete(
+          `${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then(() => {
           this.favorite = false;
         });
@@ -267,18 +238,21 @@ export default {
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
       axios
-        .put(`${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-          sendIdx: this.sendIdx,
-          receiveIdx: this.teaminfo.idx,
-          content: this.content,
-          letterNo: this.letterNo,
-          createDate: this.createDate,
-          lettertype: this.lettertype,
-          teamboardNo: this.teamboardNo,
-        })
+        .put(
+          `${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+            sendIdx: this.sendIdx,
+            receiveIdx: this.teaminfo.idx,
+            content: this.content,
+            letterNo: this.letterNo,
+            createDate: this.createDate,
+            lettertype: this.lettertype,
+            teamboardNo: this.teamboardNo,
+          }
+        )
         .then(() => {
           console.log(this.sendIdx);
           alert("등록성공");
@@ -353,6 +327,6 @@ export default {
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.4);
   z-index: 2;
   color: #e0e0e0;
-  border-top: 10px solid #0d47a1;
+  border-top: 10px solid #0277bd;
 }
 </style>

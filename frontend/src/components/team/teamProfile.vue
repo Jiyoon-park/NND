@@ -23,30 +23,43 @@
 
       <div id="team-post" class="target">
         <h3 class="mb-3">게시판</h3>
-        <TeamPost :teaminfo="teaminfo" :userinfo="user" />
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 py-4">
+            <TeamPost :teaminfo="teaminfo" :userinfo="user" />
+          </v-col>
+        </v-row>
       </div>
 
-      <v-row>
-        <v-col cols="12" lg="6">
+      <v-row class="py-0 px-0">
+        <v-col cols="12" sm="12" lg="6">
           <div id="team-member" class="target">
             <h3 class="mb-3">팀원목록</h3>
-            <!-- <div class="skills">
-          <v-combobox v-model="select" chips multiple readonly></v-combobox>
-            </div>-->
-            <TeamTable />
+            <v-row>
+              <v-col cols="12" sm="12">
+                <TeamTable />
+              </v-col>
+            </v-row>
           </div>
         </v-col>
-        <v-col cols="12" lg="6">
+        <v-col cols="12" sm="12" lg="6">
           <div id="team-member-graph" class="target">
             <h3 class="mb-3">그래프</h3>
-            <MemberChart />
+            <v-row class="py-0 px-0">
+              <v-col cols="12" sm="12">
+                <MemberChart />
+              </v-col>
+            </v-row>
           </div>
         </v-col>
       </v-row>
 
       <div id="team-member-diary" class="target">
         <h3 class="mb-3">다이어리</h3>
-        <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 py-4">
+            <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
+          </v-col>
+        </v-row>
       </div>
     </v-col>
   </v-row>

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="mt-15">
+  <v-app class="mt-16">
     <div v-if="this.type == 'team'">
       <!-- <p class="mb-0 ml-3"># 팀보드</p> -->
       <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>
@@ -9,7 +9,7 @@
       <news-feed v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed>
     </div>
     <ActionButton />
-    <infinite-loading @infinite="infiniteHandler" ref="InfiniteLoading"></infinite-loading>
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots" ref="InfiniteLoading"></infinite-loading>
   </v-app>
 </template>
 

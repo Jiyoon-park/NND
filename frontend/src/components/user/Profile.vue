@@ -3,8 +3,8 @@
     <NavBar />
     <v-col cols="10" md="8" lg="6" class="mt-13">
       <div class="user-info" style="position:relative;">
-        <v-avatar color="grey" size="90" class="mb-3">
-          <span v-if="!profileURL" class="white--text headline"></span>
+        <v-avatar color="#eeeeee" size="90" class="mb-3">
+          <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
