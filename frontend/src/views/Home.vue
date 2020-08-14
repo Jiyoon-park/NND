@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color:#eceff1;">
     <NavBar />
     <TeammemberFeed />
   </div>

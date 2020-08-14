@@ -1,5 +1,5 @@
 <template>
-  <v-app class="mt-16">
+  <v-app class="mt-16" style="background-color:#eceff1;">
     <div v-if="this.type == 'team'">
       <!-- <p class="mb-0 ml-3"># 팀보드</p> -->
       <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>

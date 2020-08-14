@@ -47,20 +47,15 @@
             </div>
             <div style="position:relative;">
               <div v-if="!teaminfo.imageurl">
-                <v-img
-                  v-if="teaminfo.category === '스터디'"
-                  src="../../assets/images/study.jpg"
-                  height="194"
-                ></v-img>
+                <v-img v-if="teaminfo.category === '스터디'" src="../../assets/images/study.jpg"></v-img>
                 <v-img
                   v-else-if="teaminfo.category === '프로젝트'"
                   src="../../assets/images/project.jpg"
-                  height="194"
                 ></v-img>
                 <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
               </div>
               <div v-else>
-                <v-img :src="teaminfo.imageurl" height="194"></v-img>
+                <v-img :src="teaminfo.imageurl"></v-img>
               </div>
               <span
                 class="mr-3 mt-1 d-flex flex-column align-end"
