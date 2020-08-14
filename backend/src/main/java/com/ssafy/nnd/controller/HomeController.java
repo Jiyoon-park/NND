@@ -77,7 +77,8 @@ public class HomeController {
 		}
         
         tmpMember = mem;
-        return "redirect:http://localhost:8081/";
+        return "redirect:http://i3a404.p.ssafy.io/";	// 서버에서 돌릴때
+//        return "redirect:http://localhost:8081/";		// 로컬에서 돌릴때
     }
 
 //  
