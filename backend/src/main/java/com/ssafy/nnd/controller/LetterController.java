@@ -167,12 +167,14 @@ public class LetterController {
 		
 		List<Object> teamList = teamregistRepository.findTeamByIdx(sendidx);
 		boolean check = true;
+		int curgroupsize= team.get().getMemCnt();
 		int groupsize = team.get().getGroupSize();
 		String message ="success";
-		if(teamregistRepository.countByTeamboardNo(teamboardno)>=groupsize) {
+		if(curgroupsize>=groupsize) {
 			check=false;
-			message="already full";
+			return message="already full";
 		}
+		
 		for (int i = 0; i < teamList.size(); i++) {
 			Object[] temp = (Object[]) teamList.get(i);
 			if(Long.parseLong(temp[0].toString())==teamboardno) {
@@ -185,7 +187,8 @@ public class LetterController {
 			memberRegist.setMemberIdx(member.get().getIdx());
 			memberRegist.setMemberEmail(member.get().getEmail());
 			teamregistRepository.save(memberRegist);
-			
+			team.get().setMemCnt(++curgroupsize);
+			teamBoardRepository.save(team.get());
 			return message;
 		}
 		else {
@@ -203,11 +206,12 @@ public class LetterController {
 		
 		List<Object> teamList = teamregistRepository.findTeamByIdx(receiveidx);
 		boolean check = true;
+		int curgroupsize= team.get().getMemCnt();
 		int groupsize = team.get().getGroupSize();
 		String message = "success";
-		if(teamregistRepository.countByTeamboardNo(teamboardno)>=groupsize) {
+		if(curgroupsize>=groupsize) {
 			check=false;
-			message="already full";
+			return message="already full";
 		}
 		
 		for (int i = 0; i < teamList.size(); i++) {
@@ -223,6 +227,8 @@ public class LetterController {
 		memberRegist.setMemberIdx(member.get().getIdx());
 		memberRegist.setMemberEmail(member.get().getEmail());
 		teamregistRepository.save(memberRegist);
+		team.get().setMemCnt(++curgroupsize);
+		teamBoardRepository.save(team.get());
 		
 		return message;
 		}else {
