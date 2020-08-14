@@ -142,7 +142,7 @@ public class TeamMenuController {
 		try {
 			//데이터 있으면 2로 나눠서 다시 수정하기
 
-			Optional<MemberRating> origindata = memberRatingRepository.findById(memberrate.getRatingNo());
+			Optional<MemberRating> origindata = memberRatingRepository.findByIdx(memberrate.getIdx());
 			origindata.get().setAttendRate((origindata.get().getAttendRate()+memberrate.getAttendRate())/2);
 			origindata.get().setCommitCnt((origindata.get().getCommitCnt()+memberrate.getCommitCnt())/2);
 			origindata.get().setTeamworkship((origindata.get().getTeamworkship()+memberrate.getTeamworkship())/2);
