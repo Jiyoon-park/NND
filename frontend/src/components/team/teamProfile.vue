@@ -116,7 +116,7 @@ export default {
         console.log(err);
       });
     axios
-      .get(`${process.env.VUE_APP_API_URL}/teammenu/member/` + this.teamboardno)
+      .get(`http://localhost:8080/teammenu/member/` + this.teamboardno)
       .then((data) => {
         console.log("데이터찍어보자");
         console.log(data.data);
