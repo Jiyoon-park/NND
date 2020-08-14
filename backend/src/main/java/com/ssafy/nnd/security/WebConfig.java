@@ -12,7 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
         "/member/login",
         "/error/**",
         "/login/**",
-        "/userinfo",
+        "/contest/**",
         "/swagger-ui.html/**"
     };
  
