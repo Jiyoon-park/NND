@@ -16,7 +16,7 @@
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-card-text class="mt-5 px-3">
+    <v-card-text class="mt-5 px-5">
       <div class="d-flex align-center">
         <div>
           <v-avatar color="grey" size="48">
@@ -51,16 +51,14 @@
         class="font-weight-bold"
         @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
         v-if="letterinfo.letterType == 'tboard'"
-        >지원수락</v-btn
-      >
+      >지원수락</v-btn>
       <v-btn
         color="#706fd3"
         text
         class="font-weight-bold"
         @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
         v-else
-        >제안수락</v-btn
-      >
+      >제안수락</v-btn>
     </v-card-actions>
   </v-card>
 </template>
