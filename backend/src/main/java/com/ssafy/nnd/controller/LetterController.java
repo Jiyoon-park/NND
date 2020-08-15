@@ -42,11 +42,10 @@ public class LetterController {
 	@Autowired
 	TeamRegistRepository teamregistRepository;
 
-	
-	@GetMapping("/letter/member/teamlist/{memberidx}") //현재 꼬시기 버트을 누르는 member의 idx
-	public @ResponseBody List<Map<String,Object>> getAllTeamList(@PathVariable Long memberidx) {
+	@GetMapping("/letter/member/teamlist/{memberidx}") // 현재 꼬시기 버트을 누르는 member의 idx
+	public @ResponseBody List<Map<String, Object>> getAllTeamList(@PathVariable Long memberidx) {
 		List<Object> teamList = teamregistRepository.findTeamByIdx(memberidx);
-		
+
 		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
 
 		for (int i = 0; i < teamList.size(); i++) {
@@ -58,6 +57,7 @@ public class LetterController {
 		}
 		return datalist;
 	}
+
 	// R
 	// 모든 메시지
 	@GetMapping("/letter/list/all")
@@ -89,7 +89,7 @@ public class LetterController {
 			map.put("createDate", temp[12]);
 			map.put("read", temp[13]);
 			map.put("letterType", temp[14]);
-			map.put("teamboardNo",temp[15] );
+			map.put("teamboardNo", temp[15]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -113,7 +113,7 @@ public class LetterController {
 			map.put("createDate", temp[12]);
 			map.put("read", temp[13]);
 			map.put("letterType", temp[14]);
-			map.put("teamboardNo",temp[15] );
+			map.put("teamboardNo", temp[15]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -161,27 +161,21 @@ public class LetterController {
 	@PostMapping("letter/teamaccept/{sendidx}/{teamboardno}")
 	public @ResponseBody String teamAccept(@PathVariable Long sendidx, @PathVariable Long teamboardno) {
 
-		
 		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		Optional<Member> member = memberRepository.findById(sendidx);
-		
-		List<Object> teamList = teamregistRepository.findTeamByIdx(sendidx);
+
 		boolean check = true;
-		int curgroupsize= team.get().getMemCnt();
+		int curgroupsize = team.get().getMemCnt();
 		int groupsize = team.get().getGroupSize();
-		String message ="success";
-		if(curgroupsize>=groupsize) {
+		String message = "success";
+		if (curgroupsize >= groupsize) {
+			check = false;
+			return message = "already full";
+		}
+		if (teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, sendidx).isPresent()) {
 			check=false;
-			return message="already full";
 		}
-		
-		for (int i = 0; i < teamList.size(); i++) {
-			Object[] temp = (Object[]) teamList.get(i);
-			if(Long.parseLong(temp[0].toString())==teamboardno) {
-				check=false;
-			}
-		}
-		if(check) {
+		if (check) {
 			TeamRegist memberRegist = new TeamRegist();
 			memberRegist.setTeamboardNo(team.get().getTeamboardNo());
 			memberRegist.setMemberIdx(member.get().getIdx());
@@ -190,9 +184,8 @@ public class LetterController {
 			team.get().setMemCnt(++curgroupsize);
 			teamBoardRepository.save(team.get());
 			return message;
-		}
-		else {
-			message="already joinded";
+		} else {
+			message = "already joinded";
 			return message;
 		}
 	}
@@ -203,48 +196,48 @@ public class LetterController {
 
 		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		Optional<Member> member = memberRepository.findById(receiveidx);
-		
-		List<Object> teamList = teamregistRepository.findTeamByIdx(receiveidx);
+
 		boolean check = true;
-		int curgroupsize= team.get().getMemCnt();
+		int curgroupsize = team.get().getMemCnt();
 		int groupsize = team.get().getGroupSize();
 		String message = "success";
-		if(curgroupsize>=groupsize) {
+		if (curgroupsize >= groupsize) {
+			check = false;
+			return message = "already full";
+		}
+
+		if (teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, receiveidx).isPresent()) {
 			check=false;
-			return message="already full";
 		}
-		
-		for (int i = 0; i < teamList.size(); i++) {
-			Object[] temp = (Object[]) teamList.get(i);
-			if(Long.parseLong(temp[0].toString())==teamboardno) {
-				check=false;
-			}
-		}
-		if(check) {
-			
-		TeamRegist memberRegist = new TeamRegist();
-		memberRegist.setTeamboardNo(team.get().getTeamboardNo());
-		memberRegist.setMemberIdx(member.get().getIdx());
-		memberRegist.setMemberEmail(member.get().getEmail());
-		teamregistRepository.save(memberRegist);
-		team.get().setMemCnt(++curgroupsize);
-		teamBoardRepository.save(team.get());
-		
-		return message;
-		}else {
-			message="already joined";
+		if (check) {
+
+			TeamRegist memberRegist = new TeamRegist();
+			memberRegist.setTeamboardNo(team.get().getTeamboardNo());
+			memberRegist.setMemberIdx(member.get().getIdx());
+			memberRegist.setMemberEmail(member.get().getEmail());
+			teamregistRepository.save(memberRegist);
+			team.get().setMemCnt(++curgroupsize);
+			teamBoardRepository.save(team.get());
+
+			return message;
+		} else {
+			message = "already joined";
 			return message;
 		}
 
 	}
-	
+
 	@GetMapping("letter/check/overlap/{memberidx}/{receiveidx}/{type}/{teamboardno}")
-	public @ResponseBody String checkOverlap(@PathVariable Long memberidx, @PathVariable Long receiveidx, @PathVariable String type,@PathVariable Long teamboardno) {
+	public @ResponseBody String checkOverlap(@PathVariable Long memberidx, @PathVariable Long receiveidx,
+			@PathVariable String type, @PathVariable Long teamboardno) {
 		try {
-			Optional<Letter> letter =letterRepository.findBySendIdxAndReceiveIdxAndLetterTypeAndTeamboardNo(memberidx, receiveidx, type, teamboardno);
+			Optional<Letter> letter = letterRepository.findBySendIdxAndReceiveIdxAndLetterTypeAndTeamboardNo(memberidx,
+					receiveidx, type, teamboardno);
 			letter.get();
+			Optional<TeamRegist> teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, memberidx);
+			teamregist.get();
 			return "overlap letter";
-		} catch (Exception e) {	
+		} catch (Exception e) {
 			return "success";
 		}
 	}
