@@ -173,7 +173,7 @@ public class LetterController {
 			return message = "already full";
 		}
 		if (teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, sendidx).isPresent()) {
-			check=false;
+			check = false;
 		}
 		if (check) {
 			TeamRegist memberRegist = new TeamRegist();
@@ -207,7 +207,7 @@ public class LetterController {
 		}
 
 		if (teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, receiveidx).isPresent()) {
-			check=false;
+			check = false;
 		}
 		if (check) {
 
@@ -231,14 +231,16 @@ public class LetterController {
 	public @ResponseBody String checkOverlap(@PathVariable Long memberidx, @PathVariable Long receiveidx,
 			@PathVariable String type, @PathVariable Long teamboardno) {
 		try {
-			Optional<Letter> letter = letterRepository.findBySendIdxAndReceiveIdxAndLetterTypeAndTeamboardNo(memberidx,
-					receiveidx, type, teamboardno);
-			letter.get();
-			Optional<TeamRegist> teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, memberidx);
-			teamregist.get();
-			return "overlap letter";
+			Optional<Letter> letter = letterRepository.findByVariableCol(memberidx, receiveidx, type, teamboardno);
+			Optional<TeamRegist> teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno,
+					memberidx);
+			if(!letter.isPresent()&&!teamregist.isPresent()) {
+				return "success";
+			}else {
+				return "overlap letter";
+			}
 		} catch (Exception e) {
-			return "success";
+			return "error";
 		}
 	}
 
