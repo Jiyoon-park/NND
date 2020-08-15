@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.MemberRating;
-import com.ssafy.nnd.dto.ProjectHistory;
 import com.ssafy.nnd.dto.TeamDiary;
 import com.ssafy.nnd.dto.TeamPost;
 import com.ssafy.nnd.dto.TeamRegist;
@@ -140,7 +138,7 @@ public class TeamMenuController {
 	@PutMapping("teammenu/rating/{teamboardno}") // 평가대상자 idx 꼭 넣어서 보내주세요
 	public String memberRating(@PathVariable Long teamboardno, @RequestBody MemberRating memberrate) {
 		
-		TeamRegist teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno,memberrate.getIdx()); 
+		Optional<TeamRegist>teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno,memberrate.getIdx()); 
 		try {
 			//데이터 있으면 2로 나눠서 다시 수정하기
 			Optional<MemberRating> origindata = memberRatingRepository.findByIdx(memberrate.getIdx());
@@ -149,12 +147,12 @@ public class TeamMenuController {
 			origindata.get().setTeamworkship((origindata.get().getTeamworkship()+memberrate.getTeamworkship())/2);
 			origindata.get().setIssueCnt((origindata.get().getIssueCnt()+memberrate.getIssueCnt())/2);
 			origindata.get().setSatisfaction((origindata.get().getSatisfaction()+memberrate.getSatisfaction())/2);
-			teamregist.setRated(Long.parseLong("1"));
+			teamregist.get().setRated(Long.parseLong("1"));
 			memberRatingRepository.save(origindata.get());
 			return "rating success";
 		} catch (Exception e) {
 			//데이터 없으면 그냥 새로 넣기
-			teamregist.setRated(Long.parseLong("1"));
+			teamregist.get().setRated(Long.parseLong("1"));
 			memberRatingRepository.save(memberrate);
 			return "rating success";
 		}

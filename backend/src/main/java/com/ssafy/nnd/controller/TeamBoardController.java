@@ -102,6 +102,7 @@ public class TeamBoardController {
     	teamBoard.setIdx(member.get().getIdx());
     	teamBoard.setEmail(leaderEmail);
     	teamBoard.setName(member.get().getName());
+    	teamBoard.setMemCnt(1);
     	
     	//1차저장 teamboardno 만들기 
     	System.out.println(teamBoard.toString());
@@ -114,9 +115,10 @@ public class TeamBoardController {
     	teamregistRepository.save(leaderRegist);
     	
     	//팀장, 멤버들의 idx 와 이메일을 teamregist에 넣는다
-    	
+    	int count=1;
     	String membersEmail = newmemberBoard.getMemberEmails(); 
     	if(membersEmail.equals("[]")) {
+    		
     		teamregistRepository.save(leaderRegist);
     	}else {
     		StringTokenizer st = new StringTokenizer(membersEmail,"[,\"] ");
@@ -128,6 +130,8 @@ public class TeamBoardController {
     			memberRegist.setTeamboardNo(newmemberBoard.getTeamboardNo());
     			memberRegist.setMemberIdx(teammember.get().getIdx());
     			memberRegist.setMemberEmail(teammember.get().getEmail());
+    			newmemberBoard.setMemCnt(++count);
+    			teamBoardRepository.save(newmemberBoard);
     			teamregistRepository.save(memberRegist);
     		}
     		
