@@ -18,11 +18,8 @@
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
         <v-tab @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
-        <v-tab @click="$vuetify.goTo('#team-member-graph', options)"
-          >그래프</v-tab
-        ><v-tab @click="$vuetify.goTo('#team-member-diary', options)"
-          >다이어리</v-tab
-        >
+        <v-tab @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
+        <v-tab @click="$vuetify.goTo('#team-member-diary', options)">다이어리</v-tab>
         <v-spacer></v-spacer>
       </v-tabs>
 
@@ -120,7 +117,7 @@ export default {
       });
     axios
       .get(
-        `${process.env.VUE_APP_API_URL}/teammenu/member/` + this.teamboardno,
+        `${process.env.VUE_APP_API_URL}/teammenu/member/${this.teamboardno}/${id}`,
         {
           headers: {
             Authorization: "Bearer " + token.data, // the token is a variable which holds the token
