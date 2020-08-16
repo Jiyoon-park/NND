@@ -35,4 +35,6 @@ public interface TeamRegistRepository extends JpaRepository<TeamRegist,Long>{
 	Optional<TeamRegist> findByTeamboardNoAndMemberIdx(Long teamboardno, Long memberidx);
 	
 	int countByTeamboardNo(Long teamboardno);
+	
+	List<TeamRegist> findByTeamboardNo(Long teamboardno);
 }
