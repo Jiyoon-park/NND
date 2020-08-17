@@ -4,6 +4,7 @@
     <v-container>
       <v-row class="mt-13">
         <v-col cols="12" sm="12" lg="12" class="px-0 pt-0">
+          <h2 class="my-4 ml-4 text-center">[ 외부 공모전 일정 ]</h2>
           <v-sheet height="64">
             <v-toolbar flat color="white" style="position:relative;">
               <div class="d-flex justify-center align-center">
