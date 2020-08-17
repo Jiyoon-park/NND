@@ -1,75 +1,57 @@
 <template>
   <div class="class1">
-    <v-row class="mt-16">
-      <NavBar />
-      <v-col>
-        <v-sheet height="64">
-          <v-toolbar flat color="white">
-            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday"
-              >오늘</v-btn
-            >
-            <v-btn fab text small color="grey darken-2" @click="prev">
-              <v-icon small>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn fab text small color="grey darken-2" @click="next">
-              <v-icon small>mdi-chevron-right</v-icon>
-            </v-btn>
-            <v-toolbar-title v-if="$refs.calendar">
-              {{ $refs.calendar.title }}
-            </v-toolbar-title>
-            <v-spacer />
-            <v-btn
-              v-if="type == 'week'"
-              outlined
-              class="mr-4"
-              color="grey darken-3"
-              @click="type = 'month'"
-              >이전</v-btn
-            >
-          </v-toolbar>
-        </v-sheet>
-        <v-sheet height="600">
-          <v-calendar
-            ref="calendar"
-            v-model="focus"
-            color="primary"
-            :type="type"
-            :events="events"
-            :event-color="getEventColor"
-            :event-ripple="false"
-            @click:more="viewDay"
-            @click:date="viewDay"
-            @mousedown:event="startDrag"
-            @mousedown:time="startTime"
-            @mousemove:time="mouseMove"
-            @mouseup:time="endDrag"
-            @mouseleave.native="cancelDrag"
-          >
-            <template #event="{ event, timed, eventSummary }">
-              <div class="v-event-draggable" v-html="eventSummary()"></div>
-              <div
-                v-if="timed"
-                class="v-event-drag-bottom"
-                @mousedown.stop="extendBottom(event)"
-              ></div>
-            </template>
-          </v-calendar>
-        </v-sheet>
-      </v-col>
-    </v-row>
+    <v-sheet height="64">
+      <v-toolbar flat color="white" style="position:relative;">
+        <v-btn fab text small color="grey darken-2" @click="prev">
+          <v-icon small>mdi-chevron-left</v-icon>
+        </v-btn>
+        <v-toolbar-title v-if="$refs.calendar">{{ $refs.calendar.title }}</v-toolbar-title>
+        <v-btn fab text small color="grey darken-2" @click="next">
+          <v-icon small>mdi-chevron-right</v-icon>
+        </v-btn>
+        <div style="position:absolute; right:10px;">
+          <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">오늘</v-btn>
+          <v-btn
+            v-if="type == 'week'"
+            outlined
+            class="mr-4"
+            color="grey darken-3"
+            @click="type = 'month'"
+          >이전</v-btn>
+        </div>
+      </v-toolbar>
+    </v-sheet>
+
+    <v-sheet height="100%">
+      <v-calendar
+        ref="calendar"
+        v-model="focus"
+        color="primary"
+        :type="type"
+        :events="events"
+        :event-color="getEventColor"
+        :event-ripple="false"
+        @click:more="viewDay"
+        @click:date="viewDay"
+        @mousedown:event="startDrag"
+        @mousedown:time="startTime"
+        @mousemove:time="mouseMove"
+        @mouseup:time="endDrag"
+        @mouseleave.native="cancelDrag"
+      >
+        <template #event="{ event, timed, eventSummary }">
+          <div class="v-event-draggable" v-html="eventSummary()"></div>
+          <div v-if="timed" class="v-event-drag-bottom" @mousedown.stop="extendBottom(event)"></div>
+        </template>
+      </v-calendar>
+    </v-sheet>
 
     <v-dialog v-model="ok" max-width="600px">
       <v-card>
-        <v-card-title class="header-text text-center justify-center font-italic"
-          >❝ 스케줄 내용 수정❠</v-card-title
-        >
+        <v-card-title class="header-text text-center justify-center font-italic">❝ 스케줄 내용 수정❠</v-card-title>
         <v-card-text class="mt-5 pb-0">
           <div class="mt-3">
-            <v-textarea
-              filled
-              v-model="msg"
-              placeholder="내용을 작성해주세요."
-            ></v-textarea>
+            <v-textarea filled v-model="msg" placeholder="내용을 작성해주세요."></v-textarea>
           </div>
         </v-card-text>
         <v-card-actions>
@@ -82,50 +64,12 @@
   </div>
 </template>
 
-<style>
-.v-event-draggable {
-  padding-left: 6px;
-}
-
-.v-event-timed {
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.v-event-drag-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 4px;
-  height: 4px;
-  cursor: ns-resize;
-}
-
-.v-event-drag-bottom::after {
-  display: none;
-  position: absolute;
-  left: 50%;
-  height: 4px;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  width: 16px;
-  margin-left: -8px;
-  opacity: 0.8;
-  content: "";
-}
-:hover::after {
-  display: block;
-}
-</style>
 <script>
-import NavBar from "../common/NavBar.vue";
 import axios from "axios";
 
 export default {
   name: "TeamDiary",
-  components: {
-    NavBar,
-  },
+  components: {},
   created() {
     console.log(this.$store.state.teamNo);
     //디비에서 가져와야함
@@ -448,3 +392,38 @@ export default {
   },
 };
 </script>
+<style>
+.v-event-draggable {
+  padding-left: 6px;
+}
+
+.v-event-timed {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.v-event-drag-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 4px;
+  cursor: ns-resize;
+}
+
+.v-event-drag-bottom::after {
+  display: none;
+  position: absolute;
+  left: 50%;
+  height: 4px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  width: 16px;
+  margin-left: -8px;
+  opacity: 0.8;
+  content: "";
+}
+:hover::after {
+  display: block;
+}
+</style>

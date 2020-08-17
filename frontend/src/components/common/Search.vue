@@ -8,7 +8,7 @@
     <template v-slot:activator="{ on, attrs }">
       <i
         class="fas fa-search fa-lg"
-        style="color:#777;"
+        style="color:#eeeeee;"
         @click="dialog = true"
         dark
         v-bind="attrs"

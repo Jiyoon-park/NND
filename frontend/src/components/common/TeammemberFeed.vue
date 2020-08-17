@@ -1,24 +1,15 @@
 <template>
-  <v-app class="mt-15">
+  <v-app class="mt-16" style="background-color:#eceff1;">
     <div v-if="this.type == 'team'">
       <!-- <p class="mb-0 ml-3"># 팀보드</p> -->
-      <news-feed2
-        v-for="(board, i) in list"
-        v-bind:teaminfo="list[i]"
-        v-bind:key="i"
-        v-bind:boardtype="type"
-      ></news-feed2>
+      <news-feed2 v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed2>
     </div>
     <div v-if="this.type == 'member'">
       <!-- <p class="mb-0 ml-3"># 멤바보드</p> -->
-      <news-feed
-        v-for="(board, i) in list"
-        v-bind:teaminfo="list[i]"
-        v-bind:key="i"
-        :boardtype="type"
-      ></news-feed>
+      <news-feed v-for="(board, i) in list" v-bind:teaminfo="list[i]" v-bind:key="i"></news-feed>
     </div>
-    <infinite-loading @infinite="infiniteHandler" ref="InfiniteLoading"></infinite-loading>
+    <ActionButton />
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots" ref="InfiniteLoading"></infinite-loading>
   </v-app>
 </template>
 
@@ -29,6 +20,7 @@ import NewsFeed from "./NewsFeed.vue";
 import axios from "axios";
 import { EventBus } from "../../main.js";
 import * as firebase from "firebase/app";
+import ActionButton from "./ActionButton.vue";
 
 export default {
   data() {
@@ -159,7 +151,7 @@ export default {
   components: {
     NewsFeed2: NewsFeed2,
     NewsFeed: NewsFeed,
-
+    ActionButton,
     InfiniteLoading,
   },
 };

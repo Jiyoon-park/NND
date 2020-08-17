@@ -14,8 +14,8 @@
       </div>-->
       <v-list rounded>
         <v-list-item link class="d-flex flex-column pt-8 mb-0">
-          <v-avatar color="white" size="80" class="user-img mb-1">
-            <img v-if="!profileURL" src="https://picsum.photos/200" />
+          <v-avatar color="#eeeeee" size="70" class="user-img mb-1">
+            <i v-if="!profileURL" class="fas fa-user"></i>
             <img v-else :src="profileURL" />
           </v-avatar>
           <div class="mt-2">
@@ -69,7 +69,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="#FAFAFA" app :flat="true" :fixed="true">
+    <v-app-bar color="#0277BD" app :flat="true" :fixed="true">
       <div class="nav-icon" @click.stop="drawer = !drawer">
         <div></div>
       </div>
@@ -80,7 +80,12 @@
       <v-spacer></v-spacer>
       <Search />
       <v-badge :content="messages" :value="messages" color="green" overlap>
-        <v-icon size="30" class="ml-3" @click="$router.push('/letter').catch(() => {})">mdi-email</v-icon>
+        <v-icon
+          size="30"
+          color="#eeeeee"
+          class="ml-3"
+          @click="$router.push('/letter').catch(() => {})"
+        >mdi-email</v-icon>
       </v-badge>
     </v-app-bar>
   </div>
@@ -230,7 +235,7 @@ export default {
   font-family: "Rowdies", cursive;
   font-weight: 700;
   font-style: italic;
-  color: #1565c0;
+  color: #eeeeee;
   margin-left: 20px;
 }
 .point-top {
@@ -267,7 +272,7 @@ export default {
 .nav-icon:after,
 .nav-icon:before,
 .nav-icon div {
-  background-color: #777;
+  background-color: #eeeeee;
   border-radius: 5px;
   content: "";
   display: block;
