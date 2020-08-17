@@ -48,7 +48,9 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="close">취소</v-btn>
-              <v-btn color="blue darken-1" text @click="save">저장</v-btn>
+              <v-btn color="blue darken-1" text @click="save" :disabled="status"
+                >저장</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -77,6 +79,8 @@ export default {
     search: "",
     checkNum: 1,
     postSize: 0,
+    status: false,
+    myIdx: "",
     headers: [
       {
         text: "번호",
@@ -89,7 +93,7 @@ export default {
         value: "title",
       },
       { text: "이름", value: "writer" },
-      { text: "수정/삭제", value: "actions", sortable: false },
+      { text: "상세보기/삭제", value: "actions", sortable: false },
     ],
     teampost: [],
 
@@ -106,6 +110,7 @@ export default {
       notice: 0,
     },
   }),
+
   props: {
     userinfo: {
       type: Object,
@@ -116,7 +121,7 @@ export default {
   },
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "게시글 작성" : "게시글 수정";
+      return this.editedIndex === -1 ? "게시글 작성" : "상세보기";
     },
   },
 
@@ -127,7 +132,6 @@ export default {
       val || this.close();
     },
   },
-
   created() {
     this.showPost();
   },
@@ -135,6 +139,7 @@ export default {
   methods: {
     showPost() {
       let token = window.$cookies.get("nnd");
+
       axios
         .get(
           `${process.env.VUE_APP_API_URL}/teammenu/post/` +
@@ -160,6 +165,11 @@ export default {
     },
 
     editItem(item) {
+      if (this.$store.state.myToken.idx == item.memberIdx) {
+        this.status = false;
+      } else {
+        this.status = true;
+      }
       this.editedIndex = this.teampost.indexOf(item);
       this.editedItem = Object.assign({}, item); //병합
       this.dialog = true;
