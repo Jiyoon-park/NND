@@ -1,17 +1,13 @@
 <template>
   <v-card>
     <v-toolbar flat dark color="#38ada9" v-if="letterinfo.letterType == 'tboard'">
-      <v-toolbar-title v-if="item.tab == '받은 편지함'"
-        >받은 편지</v-toolbar-title
-      >
+      <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
       <i class="fas fa-trash" @click="deleteLetter"></i>
     </v-toolbar>
     <v-toolbar flat dark color="#706fd3" v-else>
-      <v-toolbar-title v-if="item.tab == '받은 편지함'"
-        >받은 편지</v-toolbar-title
-      >
+      <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
       <i class="fas fa-trash" @click="deleteLetter"></i>
@@ -38,7 +34,9 @@
       <div class="rounded grey lighten-3 pa-3 mt-3">
         <span class="subheader" v-if="letterinfo.letterType == 'mboard'">✔ 팀 영입 제안입니다.</span>
         <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
-
+        <div style="height:300px; width:300px; margin:auto;" v-if="item.tab == '받은 편지함'">
+          <MemberChart :axiostype="axiostype" :letteridx="letterinfo" />
+        </div>
         <p class="mt-2">{{ letterinfo.content }}</p>
       </div>
     </v-card-text>
@@ -66,8 +64,11 @@
 
 <script>
 import axios from "axios";
+import MemberChart from "../team/memberChart.vue";
 export default {
-  components: {},
+  components: {
+    MemberChart,
+  },
   props: {
     letterinfo: {
       type: Object,
@@ -85,12 +86,11 @@ export default {
   data() {
     return {
       letterDate: "",
+      axiostype: "memberlist",
     };
   },
   methods: {
-    deleteLetter() {
-
-    },
+    deleteLetter() {},
     teamAccept(sendidx, teamboardno) {
       let token = window.$cookies.get("nnd");
       axios
