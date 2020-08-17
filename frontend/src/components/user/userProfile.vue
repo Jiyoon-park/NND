@@ -35,9 +35,11 @@
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
             <v-chip-group column>
-              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>
+                {{
                 tag
-              }}</v-chip>
+                }}
+              </v-chip>
             </v-chip-group>
           </v-col>
         </v-row>
@@ -77,7 +79,7 @@ export default {
     };
   },
   created() {
-    let id = this.$route.params.idx;
+    let id = this.$store.state.profileidx;
     let token = window.$cookies.get("nnd");
     this.$http
       .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {
