@@ -14,6 +14,7 @@ import LetterDetail from "../components/letter/LetterDetail.vue";
 import Gongmo from "../components/gongmo/gongmo.vue";
 import TempProfile from "../components/team/teamProfile.vue";
 import TeamDiary from "../components/team/teamDiary.vue";
+import PageNotFound from "../views/er/PageNotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -101,6 +102,15 @@ const routes = [
     path: "/teamDiary",
     name: "TeamDiary",
     component: TeamDiary,
+  },
+  {
+    path: "*",
+    redirect: "/404",
+  },
+  {
+    path: "/404",
+    name: "PageNotFound",
+    component: PageNotFound,
   },
 ];
 
