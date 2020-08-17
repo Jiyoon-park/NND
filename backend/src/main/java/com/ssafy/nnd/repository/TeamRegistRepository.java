@@ -22,6 +22,9 @@ public interface TeamRegistRepository extends JpaRepository<TeamRegist,Long>{
 	@Query(value="select member.idx, member.name, rated from member JOIN teamregist ON member.idx=teamregist.memberidx WHERE teamboardno= :teamboardno",nativeQuery=true)
 	List<Object> findMemberByTeamboardNo(@Param("teamboardno") Long teamboardno);
 	
+	@Query(value="select member.name, member.profile from member JOIN teamregist ON member.idx=teamregist.memberidx WHERE teamboardno= :teamboardno",nativeQuery=true)
+	List<Object> findMembersProfileByTeamboardNo(@Param("teamboardno") Long teamboardno);
+	
 	@Transactional
 	@Modifying
 	@Query(value="DELETE FROM teamregist WHERE teamboardno = :teamboardno AND memberidx = :memberidx",nativeQuery=true)

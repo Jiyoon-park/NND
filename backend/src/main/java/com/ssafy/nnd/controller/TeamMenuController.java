@@ -264,4 +264,20 @@ public class TeamMenuController {
 	}
 
 
+	// 프로필 사진과 이름을 불러오기 위해 팀 멤버 목록 불러오기
+	@GetMapping("teammenu/member/{teamboardno}") // teamboardno
+	public List<Map<String, Object>> getTeamMembers(@PathVariable Long teamboardno) {
+		List<Object> teamMemberList = teamregistRepository.findMembersProfileByTeamboardNo(teamboardno);
+		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
+		
+		for (int i = 0; i < teamMemberList.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] temp = (Object[]) teamMemberList.get(i);
+			map.put("memberName", temp[0]);
+			map.put("memberProfile", temp[1]);
+			datalist.add(map);
+		}
+		return datalist;
+	}
+
 }
