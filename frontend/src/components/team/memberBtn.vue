@@ -1,20 +1,22 @@
 <template>
   <div>
     <v-btn color="primary" @click="goSurvey(props)" :disabled="btnStatus">평가하기</v-btn>
-    <v-dialog v-model="dialog" persistent max-width="600">
+    <v-dialog v-model="dialog" persistent max-width="400">
       <v-card>
-        <v-card-title class="headline">팀워크</v-card-title>
-        <div class="text-center">
-          <v-rating v-model="teamworkship"></v-rating>
-        </div>
-        <v-card-title class="headline">만족도</v-card-title>
-        <div class="text-center">
-          <v-rating v-model="satisfaction"></v-rating>
+        <div class="d-flex flex-column align-center py-3">
+          <v-card-title class="h5 pb-2 font-weight-bold">팀워크</v-card-title>
+          <div>
+            <v-rating color="indigo" medium v-model="teamworkship"></v-rating>
+          </div>
+          <v-card-title class="h5 pb-2 mt-2 font-weight-bold">만족도</v-card-title>
+          <div>
+            <v-rating color="indigo" medium v-model="satisfaction"></v-rating>
+          </div>
         </div>
         <v-card-actions>
+          <v-btn color="#3949AB" class="font-weight-bold" text @click="dialog = false">취소</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false">취소</v-btn>
-          <v-btn color="green darken-1" text @click="sendRating">확인</v-btn>
+          <v-btn color="#3949AB" class="font-weight-bold" text @click="sendRating">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
