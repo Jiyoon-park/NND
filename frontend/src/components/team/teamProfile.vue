@@ -13,8 +13,10 @@
           <i v-if="!teaminfo.imageurl">{{ teaminfo.category }}</i>
           <img v-else :src="teaminfo.imgaeurl" />
         </v-avatar>-->
-        <small>{{ teaminfo.category }}</small>
-        <h4>{{ teaminfo.teamName }}</h4>
+
+        <v-btn rounded small dark color="#0277BD" class="mb-2">{{ teaminfo.category }}</v-btn>
+
+        <h2>{{ teaminfo.teamName }}</h2>
       </div>
 
       <v-tabs show-arrows fixed-tabs background-color="#fafafa" color="#0277BD" class="tabs">
@@ -42,7 +44,7 @@
       </div>
 
       <v-row class="py-0 px-0">
-        <v-col cols="12" sm="12" lg="6">
+        <v-col cols="12" sm="12" md="6">
           <div id="team-member" class="target">
             <h3 class="mb-3">🏃 팀원목록 🏃</h3>
             <v-row>
@@ -52,7 +54,7 @@
             </v-row>
           </div>
         </v-col>
-        <v-col cols="12" sm="12" lg="6">
+        <v-col cols="12" sm="12" md="6">
           <div id="team-member-graph" class="target">
             <h3 class="mb-3">📈 그래프 📉</h3>
             <v-row class="py-0 px-0">
@@ -170,7 +172,8 @@ export default {
 
 <style scoped>
 .user-info {
-  margin: 10px 0;
+  margin-top: 30px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
