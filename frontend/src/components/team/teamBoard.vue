@@ -3,7 +3,8 @@
     :headers="headers"
     :items="teampost"
     :search="search"
-    sort-by="writer"
+    :sort-by="['num']"
+    :sort-desc="[true]"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -74,10 +75,17 @@ export default {
   data: () => ({
     dialog: false,
     search: "",
+    checkNum: 1,
+    postSize: 0,
     headers: [
       {
-        text: "제목",
+        text: "번호",
         align: "start",
+        value: "num",
+      },
+      {
+        text: "제목",
+        // align: "start",
         value: "title",
       },
       { text: "이름", value: "writer" },
@@ -139,6 +147,12 @@ export default {
         )
         .then((res) => {
           this.teampost = res.data;
+          this.checkNum = this.teampost.length - 1;
+          this.postSize = this.teampost.length;
+
+          for (var i = this.teampost.length - 1; i >= 0; i--) {
+            this.teampost[this.teampost.length - i - 1].num = this.checkNum--;
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -146,11 +160,8 @@ export default {
     },
 
     editItem(item) {
-      console.log(item);
-      console.log("editItem");
       this.editedIndex = this.teampost.indexOf(item);
       this.editedItem = Object.assign({}, item); //병합
-      console.log(this.editedItem);
       this.dialog = true;
     },
 
@@ -160,8 +171,6 @@ export default {
     },
 
     close() {
-      console.log("close");
-
       this.dialog = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -175,11 +184,8 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.teampost[this.editedIndex], this.editedItem);
       } else {
-        // console.log("save");
-        // console.log(this.teampost);
         this.editedItem.writer = this.userinfo.name;
         this.teampost.push(this.editedItem);
-        // console.log(this.teampost);
         axios.put(
           `${process.env.VUE_APP_API_URL}/teammenu/post/save`,
           {
@@ -197,6 +203,7 @@ export default {
             },
           }
         );
+        this.teampost[this.postSize].num = this.postSize++;
       }
       this.close();
     },
