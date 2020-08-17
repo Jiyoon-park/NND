@@ -2,12 +2,19 @@
   <v-data-table
     :headers="headers"
     :items="teampost"
+    :search="search"
     sort-by="writer"
     class="elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
-        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
@@ -66,6 +73,7 @@ import axios from "axios";
 export default {
   data: () => ({
     dialog: false,
+    search: "",
     headers: [
       {
         text: "제목",
@@ -148,8 +156,7 @@ export default {
 
     deleteItem(item) {
       const index = this.teampost.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.teampost.splice(index, 1);
+      confirm("삭제하시겠습니까?") && this.teampost.splice(index, 1);
     },
 
     close() {
