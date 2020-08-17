@@ -6,24 +6,20 @@
       color="#38ada9"
       v-if="letterinfo.letterType == 'tboard'"
     >
-      <v-btn icon dark @click="changeDialog">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
       <v-toolbar-title v-if="item.tab == '받은 편지함'"
         >받은 편지</v-toolbar-title
       >
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
+      <i class="fas fa-trash" @click="deleteLetter"></i>
     </v-toolbar>
     <v-toolbar flat dark color="#706fd3" v-else>
-      <v-btn icon dark @click="changeDialog">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
       <v-toolbar-title v-if="item.tab == '받은 편지함'"
         >받은 편지</v-toolbar-title
       >
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
+      <i class="fas fa-trash" @click="deleteLetter"></i>
     </v-toolbar>
     <v-card-text class="mt-5 px-3">
       <div class="d-flex align-center">
@@ -39,7 +35,8 @@
         <div class="ml-3">
           <p class="mb-1" v-if="item.tab == '받은 편지함'">보낸 사람</p>
           <p class="mb-1" v-else>받는 사람</p>
-          <p class="mb-1">보낸 날짜</p>
+          <p class="mb-1" v-if="item.tab == '받은 편지함'">받은 날짜</p>
+          <p class="mb-1" v-else>보낸 날짜</p>
         </div>
         <div class="ml-3">
           <p class="mb-1">{{ letterinfo.name }}</p>
@@ -105,6 +102,9 @@ export default {
     };
   },
   methods: {
+    deleteLetter() {
+
+    },
     teamAccept(sendidx, teamboardno) {
       let token = window.$cookies.get("nnd");
       axios
