@@ -31,7 +31,7 @@
             >로그아웃</v-btn>
           </div>
         </v-list-item>
-        <v-list-item-group color="#3949AB" class="text-center">
+        <v-list-item-group color="#0277BD" class="text-center">
           <v-list-item link>
             <v-list-item-content @click="profileMove(user.idx)">
               <v-list-item-title>내 정보</v-list-item-title>
