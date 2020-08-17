@@ -21,7 +21,9 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">게시글 추가</v-btn>
+            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
+              >게시글 추가</v-btn
+            >
           </template>
           <v-card>
             <v-card-title>
@@ -30,17 +32,25 @@
             <v-card-text>
               <v-container>
                 <v-col cols="12">
-                  <v-text-field v-model="editedItem.title" label="제목"></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.title"
+                    label="제목"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea v-model="editedItem.content" label="내용"></v-textarea>
+                  <v-textarea
+                    v-model="editedItem.content"
+                    label="내용"
+                  ></v-textarea>
                 </v-col>
               </v-container>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="close">취소</v-btn>
-              <v-btn color="blue darken-1" text @click="save" :disabled="status">저장</v-btn>
+              <v-btn color="blue darken-1" text @click="save" :disabled="status"
+                >저장</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -72,6 +82,7 @@ export default {
         text: "번호",
         align: "start",
         value: "num",
+        sortable: false,
       },
       {
         text: "제목",
@@ -113,8 +124,6 @@ export default {
 
   watch: {
     dialog(val) {
-      console.log("watch");
-
       val || this.close();
     },
   },
@@ -162,8 +171,20 @@ export default {
     },
 
     deleteItem(item) {
+      let token = window.$cookies.get("nnd");
+
       const index = this.teampost.indexOf(item);
-      confirm("삭제하시겠습니까?") && this.teampost.splice(index, 1);
+      confirm("삭제하시겠습니까?") &&
+        this.teampost.splice(index, 1) &&
+        axios.delete(
+          `${process.env.VUE_APP_API_URL}/teammenu/post/delete/` +
+            item.teamPostNo,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        );
     },
 
     close() {
@@ -179,6 +200,20 @@ export default {
 
       if (this.editedIndex > -1) {
         Object.assign(this.teampost[this.editedIndex], this.editedItem);
+        axios.post(
+          `${process.env.VUE_APP_API_URL}/teammenu/post/update`,
+          {
+            teamboardNo: this.teaminfo.teamboardNo,
+            teamPostNo: this.teampost[this.editedIndex].teamPostNo,
+            title: this.editedItem.title,
+            content: this.editedItem.content,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        );
       } else {
         this.editedItem.writer = this.userinfo.name;
         this.teampost.push(this.editedItem);
