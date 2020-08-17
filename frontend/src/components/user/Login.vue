@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="10" md="8" lg="4">
+      <v-col cols="10" sm="8" md="6" lg="4" style="max-height:800px; ">
         <div class="logo-container">
           <img
             class="logo"

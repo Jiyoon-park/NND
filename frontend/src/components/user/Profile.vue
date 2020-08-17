@@ -3,8 +3,8 @@
     <NavBar />
     <v-col cols="10" md="8" lg="6" class="mt-13">
       <div class="user-info" style="position:relative;">
-        <v-avatar color="grey" size="90" class="mb-3">
-          <span v-if="!profileURL" class="white--text headline"></span>
+        <v-avatar color="#eeeeee" size="90" class="mb-3">
+          <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
@@ -51,9 +51,11 @@
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
             <v-chip-group column>
-              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>{{
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>
+                {{
                 tag
-              }}</v-chip>
+                }}
+              </v-chip>
             </v-chip-group>
           </v-col>
         </v-row>
