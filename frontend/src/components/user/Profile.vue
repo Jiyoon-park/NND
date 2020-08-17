@@ -1,7 +1,13 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="mt-13" style="background-color:#eceff1;">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-13">
+    <v-col
+      cols="10"
+      md="8"
+      lg="6"
+      class="my-6"
+      style="background-color:#fafafa; border-radius:10px;"
+    >
       <div class="user-info" style="position:relative;">
         <v-avatar color="#eeeeee" size="90" class="mb-3">
           <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
@@ -26,7 +32,7 @@
         </v-tooltip>
       </div>
 
-      <v-tabs fixed-tabs color="indigo lighten-1" class="tabs">
+      <v-tabs fixed-tabs background-color="#fafafa" color="#0277BD" class="tabs">
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
         <v-tab @click="$vuetify.goTo('#experience', options)">참여이력</v-tab>
@@ -35,11 +41,11 @@
       <div id="my-info" class="target">
         <h3 class="mb-3">🌞 내정보 🌞</h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
-          <v-col cols="4" md="2" class="px-4 py-4">
+          <v-col cols="3" md="2" class="px-4 py-4">
             <p>이메일</p>
             <p class="mb-0">GIT</p>
           </v-col>
-          <v-col cols="8" md="10" class="px-4 py-4">
+          <v-col cols="9" md="10" class="px-4 py-4">
             <p>{{ user.email }}</p>
             <p class="mb-0">{{ user.gitaddr }}</p>
           </v-col>
@@ -132,7 +138,7 @@ export default {
 <style scoped>
 .user-info {
   margin: 5px 0;
-  padding: 30px 0;
+  padding: 10px 0 30px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
