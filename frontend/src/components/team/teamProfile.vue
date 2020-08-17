@@ -15,17 +15,29 @@
       </div>
 
       <v-tabs show-arrows fixed-tabs color="indigo lighten-1" class="tabs">
-        <v-tab class="px-0" @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
-        <v-tab class="px-0" @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
-        <v-tab class="px-0" @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
-        <v-tab class="px-0" @click="$vuetify.goTo('#team-member-diary', options)">다이어리</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-post', options)"
+          >게시판</v-tab
+        >
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member', options)"
+          >팀원목록</v-tab
+        >
+        <v-tab
+          class="px-0"
+          @click="$vuetify.goTo('#team-member-graph', options)"
+          >그래프</v-tab
+        >
+        <v-tab
+          class="px-0"
+          @click="$vuetify.goTo('#team-member-diary', options)"
+          >다이어리</v-tab
+        >
       </v-tabs>
 
       <div id="team-post" class="target">
         <h3 class="mb-3">📢 게시판 📢</h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
-            <TeamPost :teaminfo="teaminfo" :userinfo="user" />
+            <team-board :teaminfo="teaminfo" :userinfo="user"></team-board>
           </v-col>
         </v-row>
       </div>
@@ -36,7 +48,7 @@
             <h3 class="mb-3">🏃 팀원목록 🏃</h3>
             <v-row>
               <v-col cols="12" sm="12">
-                <TeamTable />
+                <TeamTable :teamdata="this.$store.state.teammembers" />
               </v-col>
             </v-row>
           </div>
@@ -69,20 +81,22 @@
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
-import TeamPost from "../team/teamPost.vue";
+//import TeamPost from "../team/teamPost.vue";
 import TeamTable from "../team/teamTable.vue";
 import MemberChart from "../team/memberChart.vue";
 import TeamDiary from "../team/teamDiary";
+import TeamBoard from "../team/teamBoard";
 
 import axios from "axios";
 
 export default {
   components: {
     NavBar,
-    TeamPost,
+    //TeamPost,
     TeamTable,
     MemberChart,
     TeamDiary,
+    TeamBoard,
   },
   data() {
     return {
