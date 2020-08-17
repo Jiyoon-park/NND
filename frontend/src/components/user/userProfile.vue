@@ -1,16 +1,22 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="mt-13" style="background-color:#eceff1;">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-13">
+    <v-col
+      cols="10"
+      md="8"
+      lg="6"
+      class="my-6"
+      style="background-color:#fafafa; border-radius:10px;"
+    >
       <div class="user-info" style="position:relative;">
         <v-avatar color="grey" size="90" class="mb-3">
-          <span v-if="!profileURL" class="white--text headline"></span>
+          <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
       </div>
 
-      <v-tabs fixed-tabs color="#0277BD" class="tabs">
+      <v-tabs fixed-tabs background-color="#fafafa" color="#0277BD" class="tabs">
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
         <v-tab @click="$vuetify.goTo('#experience', options)">참여이력</v-tab>
@@ -19,11 +25,11 @@
       <div id="my-info" class="target">
         <h3 class="mb-3">🌞 내정보 🌞</h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
-          <v-col cols="4" md="2" class="px-4 py-4">
+          <v-col cols="3" md="2" class="px-4 py-4">
             <p>이메일</p>
             <p class="mb-0">GIT</p>
           </v-col>
-          <v-col cols="8" md="10" class="px-4 py-4">
+          <v-col cols="9" md="10" class="px-4 py-4">
             <p>{{ user.email }}</p>
             <p class="mb-0">{{ user.gitaddr }}</p>
           </v-col>

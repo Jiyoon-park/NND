@@ -1,10 +1,16 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="mt-13" style="background-color:#eceff1;">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-13">
+    <v-col
+      cols="10"
+      md="8"
+      lg="6"
+      class="my-6"
+      style="background-color:#fafafa; border-radius:10px;"
+    >
       <div class="user-info" style="position:relative;">
-        <v-avatar color="grey" size="90" class="mb-3">
-          <span v-if="!profileURL" class="white--text headline"></span>
+        <v-avatar color="#eeeeee" size="90" class="mb-3">
+          <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
@@ -25,7 +31,7 @@
           <span>변경된 정보를 저장 합니다.</span>
         </v-tooltip>
       </div>
-      <v-tabs fixed-tabs color="#0277BD" class="tabs">
+      <v-tabs fixed-tabs background-color="#fafafa" color="#0277BD" class="tabs">
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
