@@ -23,8 +23,9 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 	public List findMemberBoardList(List query, List category, List skills, Long mno, Long mode, final Pageable pageable) {
 		System.out.println("custom findMemberBoardList");
 		StringBuilder str = new StringBuilder();
-		str.append("select m.boardno as boardno,idx,email,title,content,category,techstack,m.createdate as createdate,likecnt,name,likeno,mboard,mno,imageurl ");
-		str.append("from memberboard m left join (select likeno, mboard, mno from likemember where mno = " + mno + ") l on boardno = mboard ");
+		str.append("select m.boardno as boardno,idx,email,title,content,category,techstack,"
+				+ "m.createdate as createdate,likecnt,name,likeno,mboard,mno,imageurl,profile ");
+		str.append("from (memberboard m left join (select likeno, mboard, mno from likemember where mno = " + mno + ") l on boardno = mboard) natural join member ");
 		
 		str.append("where ");
 		if (mode == 2) {
@@ -76,7 +77,7 @@ public class MemberBoardCustomRepositoryImpl implements MemberBoardCustomReposit
 		int pageSize = pageable.getPageSize();
 		
 		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
-		String[] keys = {"boardno","idx","email","title","content","category","techstack","createdate","likecnt","name","likeno","mboard","mno","imageurl"}; 
+		String[] keys = {"boardno","idx","email","title","content","category","techstack","createdate","likecnt","name","likeno","mboard","mno","imageurl", "profile"}; 
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		for (int i = 0; i < temp.size(); i++) {
 			Map<String, Object> real = new HashMap<String, Object>();
