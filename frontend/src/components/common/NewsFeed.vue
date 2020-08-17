@@ -17,17 +17,7 @@
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
-                <span
-                  style="cursor:pointer;"
-                  @click="
-                  $router
-                    .push({
-                      name: 'userProfile',
-                      params: { idx: teaminfo.idx },
-                    })
-                    .catch(() => {})
-                "
-                >{{ teaminfo.name }}</span>
+                <span style="cursor:pointer;" @click="profileMove(teaminfo.idx)">{{ teaminfo.name }}</span>
                 <div>
                   <span>
                     {{
