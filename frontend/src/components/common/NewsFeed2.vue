@@ -69,11 +69,11 @@
                 >모집 인원 {{teaminfo.memcnt}}/{{ teaminfo.groupsize }}</small>
               </span>
 
-              <div style="position:absolute; right:15px; bottom:-32px; z-index:2;">
+              <div style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;">
                 <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
-              <div style="position:absolute; left:15px; bottom:-32px; z-index:2;">
+              <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
                 <i @click="applyform" class="fas fa-paper-plane">
                   <small class="ml-1">지원하기</small>
                 </i>
@@ -267,13 +267,12 @@ export default {
         )
         .then(() => {
           console.log(this.sendIdx);
-          alert("등록성공");
+          alert("신청되었습니다.");
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
+          alert("실패했습니다.");
         });
-      alert("신청되었습니다.");
     },
     applyform() {
       let token = window.$cookies.get("nnd");
@@ -306,9 +305,9 @@ export default {
           if (res.data == "overlap letter") {
             alert("중복 지원입니다.");
           } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
-            alert("모집인원을 초과했습니다");
+            alert("모집인원을 초과했습니다.");
           } else if (curTime.getTime() - endTime.getTime() > 0) {
-            alert("마감되었습니다!!!");
+            alert("마감되었습니다.");
           } else {
             this.dialog = !this.dialog;
             if (token) {
