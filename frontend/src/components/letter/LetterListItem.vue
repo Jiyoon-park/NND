@@ -6,11 +6,8 @@
         @click.stop="dialog = true"
       >
         <div class="ml-2 mr-3">
-          <v-avatar color="grey" size="50">
-            <span
-              v-if="!letterinfo.profile"
-              class="white--text headline"
-            ></span>
+          <v-avatar color="grey" size="50" @click="profileMove(item.tab == '받은 편지함' ? letterinfo.sendIdx : letterinfo.receiveIdx)">
+            <i v-if="!letterinfo.profile" class="fas fa-user"></i>
             <img v-else :src="letterinfo.profile" />
           </v-avatar>
         </div>
@@ -92,6 +89,17 @@ export default {
     this.letterDate = this.dateFormatted(this.letterinfo.createDate);
   },
   methods: {
+    // 클릭한 프로필 페이지로 이동하는 함수
+    profileMove(no) {
+      console.log(`no 번호: ${no}`);
+      this.$store.state.profileidx = no;
+      this.$store.commit("pchange");
+      if (this.$route.path == "/userProfile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/userProfile").catch(() => {});
+      }
+    },
     // 클릭한 편지의 편지 pk를 받아옴.
     onLetterDetail(letterNo) {
       let token = window.$cookies.get("nnd");

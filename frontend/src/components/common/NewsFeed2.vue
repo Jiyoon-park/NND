@@ -90,20 +90,19 @@
                 >
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}</v-card>
+                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}
                 <div class="d-flex mx-3 my-3 align-center">
-                  <v-avatar
-                    style="cursor:pointer;"
+                  <v-avatar v-for="profile in teaminfo.profile" v-bind:key="profile.memberProfile"
+                    style="cursor:pointer; margin-right:10px"
                     color="#eeeeee"
-                    size="50"
+                    size="30"
                     class="user-img mb-2"
-                    @click="profileMove(teaminfo.idx)"
-                  >
-                    <i v-if="!profileURL" class="fas fa-user"></i>
-                    <!-- <img  v-if="!profileURL" src="https://picsum.photos/200" /> -->
-                    <img v-else :src="profileURL" />
+                    @click="profileMove(profile.memberIdx)">
+                    <i v-if="!profile.memberProfile" class="fas fa-user"></i>
+                    <img v-else :src="profile.memberProfile" />
                   </v-avatar>
                 </div>
+                </v-card>
               </v-expand-transition>
               <div class="d-flex">
                 <v-chip
