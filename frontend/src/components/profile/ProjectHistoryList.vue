@@ -36,7 +36,7 @@ export default {
       console.log(this.user.idx);
       axios
         .get(
-          `${process.env.VUE_APP_API_URL}/projecthistory/list/${this.user.idx}`,
+          `${process.env.VUE_APP_API_URL}/projecthistory/list/${this.$store.state.profileidx}`,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
