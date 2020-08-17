@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-btn color="primary" @click="goSurvey(props)" :disabled="btnStatus"
-      >평가하기</v-btn
-    >
+    <v-btn color="primary" @click="goSurvey(props)" :disabled="btnStatus">평가하기</v-btn>
     <v-dialog v-model="dialog" persistent max-width="600">
       <v-card>
         <v-card-title class="headline">팀워크</v-card-title>
@@ -15,9 +13,7 @@
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false"
-            >취소</v-btn
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">취소</v-btn>
           <v-btn color="green darken-1" text @click="sendRating">확인</v-btn>
         </v-card-actions>
       </v-card>
@@ -57,8 +53,7 @@ export default {
       console.log(this.teamworkship);
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/teammenu/rating/` +
-            this.$store.state.teamNo,
+          `${process.env.VUE_APP_API_URL}/teammenu/rating/`,
           {
             ratingNo: "",
             idx: this.nowNum,
@@ -67,7 +62,9 @@ export default {
             attendRate: getRandomInt(5),
             satisfaction: this.satisfaction,
             teamworkship: this.teamworkship,
-            rated: "1",
+            rated: "",
+            ratedIdx: token.object.idx,
+            teamboardNo: this.$store.state.teamNo,
           },
           {
             headers: {

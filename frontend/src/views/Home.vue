@@ -1,15 +1,14 @@
 <template>
-  <div>
+  <div style="background-color:#eceff1;">
     <NavBar />
     <TeammemberFeed />
-    <ActionButton />
   </div>
 </template>
 
 <script>
 import NavBar from "../components/common/NavBar.vue";
 import TeammemberFeed from "../components/common/TeammemberFeed.vue";
-import ActionButton from "../components/common/ActionButton.vue";
+
 import axios from "axios";
 
 // @ is an alias to /src
@@ -19,7 +18,6 @@ export default {
   components: {
     NavBar,
     TeammemberFeed,
-    ActionButton,
   },
   created() {
     let token = window.$cookies.get("kakao"); //nnd가 key인 쿠키 가져옴

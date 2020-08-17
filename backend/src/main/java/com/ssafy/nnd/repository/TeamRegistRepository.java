@@ -1,6 +1,7 @@
 package com.ssafy.nnd.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,7 +32,9 @@ public interface TeamRegistRepository extends JpaRepository<TeamRegist,Long>{
 	@Query(value="DELETE FROM teamregist WHERE teamboardno = :teamboardno",nativeQuery=true)
 	void deleteAllByTeamboardNo(@Param("teamboardno") Long teamboardno);
 	
-	TeamRegist findByTeamboardNoAndMemberIdx(Long teamboardno, Long memberidx);
+	Optional<TeamRegist> findByTeamboardNoAndMemberIdx(Long teamboardno, Long memberidx);
 	
 	int countByTeamboardNo(Long teamboardno);
+	
+	List<TeamRegist> findByTeamboardNo(Long teamboardno);
 }

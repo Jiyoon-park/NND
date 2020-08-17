@@ -15,55 +15,23 @@
           mandatory
           class="my-3"
         >
-          <v-chip
-            large
-            v-for="type in types"
-            :key="type"
-            :value="type"
-            class="mx-2"
-            >{{ type }} 등록</v-chip
-          >
+          <v-chip large v-for="type in types" :key="type" :value="type" class="mx-2">{{ type }} 등록</v-chip>
         </v-chip-group>
       </div>
       <v-col cols="12" sm="12">
         <span class="subheader">✔ 모집 유형</span>
         <v-radio-group v-model="category" row>
-          <v-radio
-            label="스터디"
-            color="orange darken-3"
-            value="스터디"
-          ></v-radio>
-          <v-radio
-            label="프로젝트"
-            color="red darken-3"
-            value="프로젝트"
-          ></v-radio>
-          <v-radio
-            label="공모전"
-            color="indigo darken-3"
-            value="공모전"
-          ></v-radio>
+          <v-radio label="스터디" color="orange darken-3" value="스터디"></v-radio>
+          <v-radio label="프로젝트" color="red darken-3" value="프로젝트"></v-radio>
+          <v-radio label="공모전" color="indigo darken-3" value="공모전"></v-radio>
         </v-radio-group>
       </v-col>
       <span class="ml-3 subheader" v-if="teamcheck == '팀'">✔ 팀 소개</span>
       <span class="ml-3 subheader" v-else>✔ 자기 소개</span>
       <v-form ref="form">
         <v-card-text>
-          <v-text-field
-            filled
-            dense
-            v-model="teamName"
-            label="팀명"
-            required
-            v-if="teamcheck == '팀'"
-          ></v-text-field>
-          <v-text-field
-            filled
-            dense
-            v-model="title"
-            label="제목"
-            required
-          ></v-text-field>
+          <v-text-field filled dense v-model="teamName" label="팀명" required v-if="teamcheck == '팀'"></v-text-field>
+          <v-text-field filled dense v-model="title" label="제목" required></v-text-field>
           <v-textarea filled dense v-model="content" label="내용"></v-textarea>
 
           <v-combobox
@@ -106,7 +74,7 @@
         <!-- <v-flex
           xs12
           class="text-xs-center text-sm-center text-md-center text-lg-center"
-        > -->
+        >-->
 
         <v-card-text>
           <span class="subheader">✔ 관련 사진 업로드</span>
@@ -141,6 +109,7 @@
               <v-overflow-btn
                 outlined
                 v-model="groupSize"
+                :rules="groupsizeRules"
                 :items="dropdown_font"
                 label="선택하세요"
                 class="mt-2 pl-0"
@@ -170,9 +139,7 @@
                 <v-date-picker v-model="date" no-title scrollable>
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false">취소</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(date)"
-                    >선택</v-btn
-                  >
+                  <v-btn text color="primary" @click="$refs.menu.save(date)">선택</v-btn>
                 </v-date-picker>
               </v-menu>
             </v-col>
@@ -190,16 +157,14 @@
         class="font-weight-bold"
         v-if="teamcheck == '팀'"
         @click="submit"
-        >팀 등록</v-btn
-      >
+      >팀 등록</v-btn>
       <v-btn
         color="indigo darken-1"
         text
         class="font-weight-bold"
         v-if="teamcheck == '팀원'"
         @click="submit"
-        >팀원 등록</v-btn
-      >
+      >팀원 등록</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -252,11 +217,24 @@ export default {
     allmemberEmails: [],
     name: "",
     types: ["팀", "팀원"],
+
     // 이미지를 저장할 변수들
     imageName: "", // 이미지 파일 이름
     imageUrl: "", // 이미지 파일 경로
     imageFile: "", // 이미지 파일 객체
   }),
+  computed: {
+    groupsizeRules() {
+      const rules = [
+        (v) => !!v || "모집 인원수를 선탁해야합니다.",
+        (v) =>
+          v > this.memberEmails.length ||
+          "모집 인원이 입력한 팀원수 보다 값이 작습니다.",
+      ];
+      return rules;
+    },
+  },
+
   components: {},
   created() {
     let token = window.$cookies.get("nnd");

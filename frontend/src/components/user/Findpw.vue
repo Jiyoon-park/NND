@@ -1,13 +1,17 @@
 <template>
   <v-container>
-    <div class="d-flex align-center" @click="$router.push('/login')">
-      <v-btn icon>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-      <p class="mb-0">로그인 화면으로</p>
-    </div>
     <v-row justify="center">
-      <v-col cols="10" md="8" lg="4">
+      <v-col cols="10" sm="8" md="6" lg="4" class="px-0">
+        <div class="d-flex align-center" @click="$router.push('/login')">
+          <v-btn icon>
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+          <p class="mb-0">로그인 화면으로</p>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="10" sm="8" md="6" lg="4">
         <h2 class="my-5">비밀번호 찾기</h2>
         <div>
           <v-text-field
