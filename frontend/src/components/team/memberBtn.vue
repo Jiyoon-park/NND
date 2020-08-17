@@ -41,16 +41,11 @@ export default {
   methods: {
     goSurvey(props) {
       this.dialog = true;
-      console.log("props찍어보자");
-      console.log(props);
       this.nowNum = props.row.memberIdx;
     },
     sendRating() {
       let token = window.$cookies.get("nnd");
-
       this.dialog = false;
-      console.log(this.satisfaction);
-      console.log(this.teamworkship);
       axios
         .put(
           `${process.env.VUE_APP_API_URL}/teammenu/rating/`,
@@ -74,8 +69,6 @@ export default {
         )
         .then(() => {});
       this.btnStatus = true;
-      console.log("btnStatus찍어보자");
-      console.log(this.btnStatus);
     },
   },
 };
