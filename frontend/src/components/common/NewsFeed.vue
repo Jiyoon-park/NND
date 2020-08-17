@@ -17,17 +17,7 @@
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
-                <span
-                  style="cursor:pointer;"
-                  @click="
-                  $router
-                    .push({
-                      name: 'userProfile',
-                      params: { idx: teaminfo.idx },
-                    })
-                    .catch(() => {})
-                "
-                >{{ teaminfo.name }}</span>
+                <span style="cursor:pointer;" @click="profileMove(teaminfo.idx)">{{ teaminfo.name }}</span>
                 <div>
                   <span>
                     {{
@@ -63,11 +53,11 @@
                 >{{ teaminfo.category }}</span>
               </span>
 
-              <div style="position:absolute; right:15px; bottom:-32px; z-index:2;">
+              <div style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;">
                 <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
-              <div style="position:absolute; left:15px; bottom:-32px; z-index:2;">
+              <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
                 <i @click="applyform" class="fas fa-paper-plane">
                   <small class="ml-1">영입하기</small>
                 </i>
@@ -91,7 +81,12 @@
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
                 ># {{ stack }}</v-chip>
+                                <v-spacer></v-spacer>
+                <v-icon right @click="memberDelete" :disabled=!status>
+                   mdi-delete
+                </v-icon>
               </div>
+                              
             </div>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -158,6 +153,8 @@ export default {
       stacks: this.teaminfo.techstack,
       username: "",
       profileURL: "",
+            status: false,
+
       ///쪽찌보낼내용
       sendIdx: "",
       receiveIdx: "",
@@ -182,6 +179,11 @@ export default {
     } else {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
+    }
+        if (this.teaminfo.idx == this.$store.state.myToken.idx) {
+      this.status = true;
+    } else {
+      this.status = false;
     }
 
     // profileURL을 초기화
@@ -261,13 +263,12 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          alert("등록성공");
+          alert("신청되었습니다.");
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
+          alert("실패했습니다.");
         });
-      //alert("신청되었습니다.");
     },
     applyform() {
       this.dialog = !this.dialog;
@@ -292,6 +293,24 @@ export default {
           this.teamlist = data.data;
           console.log(this.teamlist);
         });
+    },
+        memberDelete() {
+      let token = window.$cookies.get("nnd");
+
+      confirm("삭제하시겠습니까?") &&
+        axios
+          .delete(
+            `${process.env.VUE_APP_API_URL}/memberboard/delete/` +
+              this.teaminfo.boardno,
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then(() => {
+            this.$router.go();
+          });
     },
   },
 };
