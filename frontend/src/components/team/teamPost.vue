@@ -5,7 +5,7 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              color="primary"
+              color="#0277BD"
               dark
               small
               v-bind="attrs"
@@ -14,29 +14,36 @@
             >글쓰기</v-btn>
           </template>
           <v-card>
-            <v-card-title>
-              <span class="headline">게시판 글쓰기</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
+            <v-toolbar dark flat color="#0277BD">
+              <v-toolbar-title>게시글 작성</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-container>
+              <v-card-text>
                 <v-row>
-                  <v-col cols="12">
-                    <v-text-field label="제목*" required v-model="title"></v-text-field>
+                  <v-col cols="12" class="py-0">
+                    <span class="subheader">✔ 제목</span>
+                    <v-text-field class="mt-2" filled label="제목" required v-model="title"></v-text-field>
                   </v-col>
-                  <v-col cols="12">
-                    <v-textarea label="내용*" required v-model="content"></v-textarea>
+                  <v-col cols="12" class="py-0">
+                    <span class="subheader">✔ 내용</span>
+                    <v-textarea class="mt-2" filled label="내용" required v-model="content"></v-textarea>
                   </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-select :items="['공지']" label="공지" v-model="notice"></v-select>
+                  <v-col cols="12" sm="6" class="py-0">
+                    <span class="subheader">게시글 유형</span>
+                    <v-select class="mt-2" filled :items="['공지']" label="공지" v-model="notice"></v-select>
+                  </v-col>
+                  <v-col cols="12" class="py-0">
+                    <small>✔ 필수 작성 항목</small>
                   </v-col>
                 </v-row>
-              </v-container>
-              <small>*꼭 필요한 항목 표시</small>
-            </v-card-text>
+              </v-card-text>
+            </v-container>
+
             <v-card-actions>
+              <v-btn color="#0277BD" text @click="dialog = false">닫기</v-btn>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false">닫기</v-btn>
-              <v-btn color="blue darken-1" text @click="addPost()">저장</v-btn>
+              <v-btn color="#0277BD" text @click="addPost()">저장</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -148,4 +155,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.subheader {
+  padding: 1px 0;
+  background-color: #eeeeee;
+  font-style: italic;
+}
+</style>

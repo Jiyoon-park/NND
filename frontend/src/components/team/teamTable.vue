@@ -9,24 +9,25 @@
     >
       <template slot="table-row" slot-scope="props">
         <span v-if="props.column.field === 'survey'">
-          <v-btn v-if="props.row.memberIdx == myidx" color="primary" disabled>평가하기</v-btn>
+          <v-btn v-if="props.row.memberIdx == myidx" color="#0277BD" disabled>평가하기</v-btn>
           <v-btn
             v-else
-            color="primary"
+            dark
+            color="#0277BD"
             @click="goSurvey(props)"
             :disabled="btnStatus[props.index]"
           >평가하기</v-btn>
         </span>
       </template>
     </vue-good-table>
-    <v-dialog v-model="dialog" persistent max-width="600">
+    <v-dialog v-model="dialog" persistent max-width="400">
       <v-card>
         <div class="d-flex flex-column align-center py-3">
-          <v-card-title class="h6 pb-2">팀워크</v-card-title>
+          <v-card-title class="h5 pb-2 font-weight-bold">팀워크</v-card-title>
           <div>
             <v-rating color="indigo" medium v-model="teamworkship"></v-rating>
           </div>
-          <v-card-title class="headline pb-2 mt-2">만족도</v-card-title>
+          <v-card-title class="h5 pb-2 mt-2 font-weight-bold">만족도</v-card-title>
           <div>
             <v-rating color="indigo" medium v-model="satisfaction"></v-rating>
           </div>
