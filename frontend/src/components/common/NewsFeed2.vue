@@ -10,14 +10,7 @@
                 color="white"
                 size="50"
                 class="user-img mb-2"
-                @click="
-                  $router
-                    .push({
-                      name: 'userProfile',
-                      params: { idx: teaminfo.idx },
-                    })
-                    .catch(() => {})
-                "
+                @click="profileMove(teaminfo.idx)"
               >
                 <img v-if="!profileURL" src="https://picsum.photos/200" />
                 <img v-else :src="profileURL" />
@@ -185,6 +178,15 @@ export default {
     }
   },
   methods: {
+    profileMove(no) {
+      this.$store.state.profileidx = no;
+      this.$store.commit("pchange");
+      if (this.$route.path == "/userProfile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/userProfile").catch(() => {});
+      }
+    },
     addFavorite() {
       let token = window.$cookies.get("nnd");
 
