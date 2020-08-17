@@ -288,6 +288,7 @@ public class TeamMenuController {
 			Object[] temp = (Object[]) teamMemberList.get(i);
 			map.put("memberName", temp[0]);
 			map.put("memberProfile", temp[1]);
+			map.put("memberIdx", temp[2]);
 			datalist.add(map);
 		}
 		return datalist;
