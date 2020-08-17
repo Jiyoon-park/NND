@@ -21,4 +21,5 @@ public interface MemberRatingRepository extends JpaRepository<MemberRating, Long
 	Optional<MemberRating> findByIdxAndTeamboardNoAndRatedIdx(Long idx, Long teamboardNo, Long ratedIdx);
 	
 	Optional<List<MemberRating>> findByIdx(Long idx);
+	
 }

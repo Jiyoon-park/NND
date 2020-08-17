@@ -2,16 +2,12 @@
   <v-card flat>
     <NavBar />
     <v-container class="mt-11">
-      <!-- 아...탭 오른쪽 왼쪽 마진 없애고 싶어 -->
-      <v-tabs
-        fixed-tabs
-        v-model="tab"
-        background-color="#FAFAFA"
-        color="indigo lighten-1"
-      >
-        <v-tab v-for="item in items" :key="item.tab" class="font-weight-bold">{{
+      <v-tabs fixed-tabs v-model="tab" color="#0277BD">
+        <v-tab v-for="item in items" :key="item.tab" class="font-weight-bold">
+          {{
           item.tab
-        }}</v-tab>
+          }}
+        </v-tab>
       </v-tabs>
       <v-tabs-slider></v-tabs-slider>
 
@@ -23,12 +19,8 @@
                 <v-row justify="center">
                   <v-col cols="12" lg="8" class="px-0">
                     <p class="mb-3 ml-3 body-2">
-                      <v-avatar color="#706fd3" size="12" class="mr-1">
-                      </v-avatar
-                      >영입 제안 편지
-                      <v-avatar color="#38ada9" size="12" class="ml-2 mr-1">
-                      </v-avatar
-                      >팀원 지원 편지
+                      <v-avatar color="#706fd3" size="12" class="mr-1"></v-avatar>영입 제안 편지
+                      <v-avatar color="#38ada9" size="12" class="ml-2 mr-1"></v-avatar>팀원 지원 편지
                     </p>
                     <LetterListItem
                       :item="item"
@@ -81,11 +73,14 @@ export default {
     if (token) {
       console.log(token.object.idx);
       axios
-        .get(`${process.env.VUE_APP_API_URL}/letter/list/receive/${token.object.idx}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
+        .get(
+          `${process.env.VUE_APP_API_URL}/letter/list/receive/${token.object.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((res) => {
           this.items[0].letters = res.data;
           console.log(this.items[0].letters);
@@ -95,11 +90,14 @@ export default {
         });
 
       axios
-        .get(`${process.env.VUE_APP_API_URL}/letter/list/send/${token.object.idx}`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
+        .get(
+          `${process.env.VUE_APP_API_URL}/letter/list/send/${token.object.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
         .then((res) => {
           this.items[1].letters = res.data;
           console.log(this.items[1].letters);

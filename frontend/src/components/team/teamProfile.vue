@@ -15,22 +15,10 @@
       </div>
 
       <v-tabs show-arrows fixed-tabs color="indigo lighten-1" class="tabs">
-        <v-tab class="px-0" @click="$vuetify.goTo('#team-post', options)"
-          >게시판</v-tab
-        >
-        <v-tab class="px-0" @click="$vuetify.goTo('#team-member', options)"
-          >팀원목록</v-tab
-        >
-        <v-tab
-          class="px-0"
-          @click="$vuetify.goTo('#team-member-graph', options)"
-          >그래프</v-tab
-        >
-        <v-tab
-          class="px-0"
-          @click="$vuetify.goTo('#team-member-diary', options)"
-          >다이어리</v-tab
-        >
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member-diary', options)">일정관리</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>
+        <v-tab class="px-0" @click="$vuetify.goTo('#team-member-graph', options)">그래프</v-tab>
       </v-tabs>
 
       <div id="team-post" class="target">
@@ -38,6 +26,14 @@
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
             <team-board :teaminfo="teaminfo" :userinfo="user"></team-board>
+          </v-col>
+        </v-row>
+      </div>
+      <div id="team-member-diary" class="target">
+        <h3 class="mb-3">✍ 일정관리 ✍</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 py-4">
+            <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
           </v-col>
         </v-row>
       </div>
@@ -58,21 +54,12 @@
             <h3 class="mb-3">📈 그래프 📉</h3>
             <v-row class="py-0 px-0">
               <v-col cols="12" sm="12">
-                <MemberChart />
+                <MemberChart :axiostype="axiostype" />
               </v-col>
             </v-row>
           </div>
         </v-col>
       </v-row>
-
-      <div id="team-member-diary" class="target">
-        <h3 class="mb-3">✍ 다이어리 ✍</h3>
-        <v-row style="background-color: #fafafa; border-radius:10px;">
-          <v-col cols="12" sm="12" class="px-4 py-4">
-            <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
-          </v-col>
-        </v-row>
-      </div>
     </v-col>
   </v-row>
 </template>
@@ -108,6 +95,7 @@ export default {
       profileURL: "",
       teaminfo: {},
       teamboardno: "",
+      axiostype: "list",
     };
   },
 
