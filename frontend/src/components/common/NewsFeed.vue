@@ -53,11 +53,11 @@
                 >{{ teaminfo.category }}</span>
               </span>
 
-              <div style="position:absolute; right:15px; bottom:-32px; z-index:2;">
+              <div style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;">
                 <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
-              <div style="position:absolute; left:15px; bottom:-32px; z-index:2;">
+              <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
                 <i @click="applyform" class="fas fa-paper-plane">
                   <small class="ml-1">영입하기</small>
                 </i>
@@ -251,13 +251,12 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          alert("등록성공");
+          alert("신청되었습니다.");
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
+          alert("실패했습니다.");
         });
-      //alert("신청되었습니다.");
     },
     applyform() {
       this.dialog = !this.dialog;
