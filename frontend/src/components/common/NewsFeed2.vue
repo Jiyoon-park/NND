@@ -192,6 +192,9 @@ export default {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
+
+    // profileURL을 초기화
+    this.profileURL = this.teaminfo.profile;
   },
   methods: {
     addFavorite() {

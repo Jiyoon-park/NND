@@ -11,15 +11,6 @@ import * as firebase from "firebase/app";
   
   require('dotenv').config();
 
-  console.log(process.env);
-  console.log(`value : ${process.env.VUE_APP_APIKEY}`);
-  console.log(`value : ${process.env.VUE_APP_AUTHDOMAIN}`);
-  console.log(`value : ${process.env.VUE_APP_DATABASEURL}`);
-  console.log(`value : ${process.env.VUE_APP_PROJECTID}`);
-  console.log(`value : ${process.env.VUE_APP_STORAGEBUCKET}`);
-  console.log(`value : ${process.env.VUE_APP_MESSAGINGSENDERID}`);
-  console.log(`value : ${process.env.VUE_APP_APPID}`);
-  console.log(`value : ${process.env.VUE_APP_MEASUREMENTID}`);
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: process.env.VUE_APP_APIKEY,
@@ -32,7 +23,6 @@ import * as firebase from "firebase/app";
     measurementId: process.env.VUE_APP_MEASUREMENTID
   };
   // Initialize Firebase
-  console.log(`length : ${firebase.apps.length}`);
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   } else {
