@@ -94,6 +94,19 @@
               </div>
               <v-expand-transition>
                 <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}</v-card>
+                <div class="d-flex mx-3 my-3 align-center">
+                  <v-avatar
+                    style="cursor:pointer;"
+                    color="#eeeeee"
+                    size="50"
+                    class="user-img mb-2"
+                    @click="profileMove(teaminfo.idx)"
+                  >
+                    <i v-if="!profileURL" class="fas fa-user"></i>
+                    <!-- <img  v-if="!profileURL" src="https://picsum.photos/200" /> -->
+                    <img v-else :src="profileURL" />
+                  </v-avatar>
+                </div>
               </v-expand-transition>
               <div class="d-flex">
                 <v-chip
@@ -106,6 +119,7 @@
                 ># {{ stack }}</v-chip>
               </div>
             </div>
+            
             <!-- <v-expansion-panel-header class="mt-7 pb-0">
               <div class="d-flex flex-column">
             <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>-->
