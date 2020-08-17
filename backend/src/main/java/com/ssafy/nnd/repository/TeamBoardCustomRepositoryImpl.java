@@ -25,11 +25,13 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		StringBuilder str = new StringBuilder();
 		
 		////////////// select //////////////
-		str.append("select teamboardno, idx, email, name, teamname, memberemails, groupsize, deadline, title, content, techstack, category, likecnt, t.createdate as createdate, kakaolink, likeno, tboard, mno, imageurl, memcnt ");
+		str.append("select teamboardno, idx, email, name, teamname, memberemails, "
+				+ "groupsize, deadline, title, content, techstack, category, likecnt, "
+				+ "t.createdate as createdate, kakaolink, likeno, tboard, mno, imageurl, memcnt, profile ");
 		////////////// select end //////////////
 		
 		////////////// from //////////////
-		str.append("from teamboard t left join (select likeno, tboard, mno from liketeam where mno = " + mno + ") l on teamboardno = tboard ");
+		str.append("from (teamboard t left join (select likeno, tboard, mno from liketeam where mno = " + mno + ") l on teamboardno = tboard) natural join member ");
 		////////////// from end //////////////
 		
 		////////////// where //////////////
@@ -85,7 +87,7 @@ public class TeamBoardCustomRepositoryImpl implements TeamBoardCustomRepository 
 		int pageSize = pageable.getPageSize();
 		
 		List<Tuple> temp = entityManager.createNativeQuery(str.toString(), Tuple.class).setFirstResult((pageNumber) * pageSize).setMaxResults(pageSize).getResultList();
-		String[] keys = {"teamboardno","idx","email", "name", "teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno","imageurl","memcnt"}; 
+		String[] keys = {"teamboardno","idx","email", "name", "teamname","memberemails","groupsize","deadline","title","content","techstack","category","likecnt","createdate","kakaolink","likeno","tboard","mno","imageurl","memcnt", "profile"}; 
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		for (int i = 0; i < temp.size(); i++) {
 			Map<String, Object> real = new HashMap<String, Object>();

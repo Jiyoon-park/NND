@@ -1,6 +1,7 @@
 <template>
   <div>
-    <RadarChart v-if="loaded" :chartData="chartData" :options="options" />
+    <RadarChart v-if="loaded && axiostype=='list'" :chartData="chartData" :options="options" />
+    <RadarChart v-if="loaded && axiostype=='memberlist'" :chartData="chartData" :options="options" />
   </div>
 </template>
 
@@ -12,6 +13,14 @@ export default {
   components: {
     RadarChart,
   },
+  props: {
+    axiostype: {
+      type: String,
+    },
+    letteridx: {
+      type: Object,
+    },
+  },
   data() {
     return {
       loaded: false,
@@ -21,11 +30,16 @@ export default {
   async mounted() {
     try {
       let token = window.$cookies.get("nnd");
-
+      let num = "";
+      if (this.axiostype == "list") {
+        num = this.$store.state.teamNo;
+      } else {
+        num = this.letteridx.sendIdx;
+      }
       axios
         .get(
-          `${process.env.VUE_APP_API_URL}/teammenu/rating/list/` +
-            this.$store.state.teamNo,
+          `${process.env.VUE_APP_API_URL}/teammenu/rating/${this.axiostype}/` +
+            num,
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token

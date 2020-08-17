@@ -31,9 +31,9 @@
             >로그아웃</v-btn>
           </div>
         </v-list-item>
-        <v-list-item-group color="#3949AB" class="text-center">
+        <v-list-item-group color="#0277BD" class="text-center">
           <v-list-item link>
-            <v-list-item-content @click="$router.push('/profile').catch(() => {})">
+            <v-list-item-content @click="profileMove(user.idx)">
               <v-list-item-title>내 정보</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -142,6 +142,15 @@ export default {
         this.$router.go().catch(() => {});
       } else {
         this.$router.push("/").catch(() => {});
+      }
+    },
+    profileMove(no) {
+      this.$store.state.profileidx = no;
+      this.$store.commit("pchange");
+      if (this.$route.path == "/Profile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/Profile").catch(() => {});
       }
     },
     test(no) {

@@ -16,7 +16,7 @@
       ></i>
     </template>
     <v-card>
-      <v-toolbar dark color="indigo lighten-2">
+      <v-toolbar dark flat color="#0277BD">
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -37,7 +37,7 @@
               small-chips
               outlined
               class="mt-5"
-              color="indigo darken-2"
+              color="#0277BD"
             ></v-combobox>
           </v-list-item>
         </v-list>
@@ -50,7 +50,7 @@
               <div class="d-flex justify-center">
                 <v-chip-group
                   v-model="typeSelection"
-                  active-class="indigo lighten-1 white--text text--accent-4"
+                  active-class="blue darken-3 white--text text--accent-4"
                   mandatory
                 >
                   <v-chip
@@ -71,25 +71,25 @@
           <v-list-item>
             <v-list-item-content class="py-0">
               <div class="d-flex justify-center">
-                <v-switch
+                <v-checkbox
                   v-model="categorySelection"
                   label="스터디"
                   color="red darken-3"
                   value="스터디"
-                ></v-switch>
-                <v-switch
+                ></v-checkbox>
+                <v-checkbox
                   v-model="categorySelection"
                   label="프로젝트"
                   color="indigo darken-3"
                   value="프로젝트"
                   class="mx-2"
-                ></v-switch>
-                <v-switch
+                ></v-checkbox>
+                <v-checkbox
                   v-model="categorySelection"
                   label="공모전"
                   color="orange darken-3"
                   value="공모전"
-                ></v-switch>
+                ></v-checkbox>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -108,7 +108,7 @@
                   multiple
                   dense
                   chips
-                  color="indigo darken-2"
+                  color="#0277BD"
                 ></v-combobox>
               </div>
             </v-list-item-content>
@@ -117,21 +117,9 @@
       </v-container>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn
-          color="indigo darken-1"
-          text
-          class="font-weight-bold"
-          @click="dialog = false"
-          >Close</v-btn
-        >
+        <v-btn color="#0277BD" text class="font-weight-bold" @click="dialog = false">Close</v-btn>
         <v-spacer></v-spacer>
-        <v-btn
-          color="indigo darken-1"
-          text
-          class="font-weight-bold"
-          @click="submit"
-          >Search</v-btn
-        >
+        <v-btn color="#0277BD" text class="font-weight-bold" @click="submit">Search</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
