@@ -60,7 +60,7 @@ public class ContestController {
 
 		List<Contest> list = new LinkedList<Contest>();
 		boolean flag = false; //마감flag
-		for (int i = 1; i <= 1; i++) {  //느려서 바꾼거 실제로 i<=3
+		for (int i = 1; i <= 2; i++) {  //느려서 바꾼거 실제로 i<=3
 			System.out.println(i+"번째 크롤링중......");
 			String url = "https://www.thinkcontest.com/Contest/CateField.html?page="+i+"&c=12";
 			Document doc = Jsoup.connect(url).get();

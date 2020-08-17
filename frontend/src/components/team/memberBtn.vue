@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-btn color="primary" @click="goSurvey(props)" :disabled="btnStatus"
-      >평가하기</v-btn
-    >
+    <v-btn color="primary" @click="goSurvey(props)" :disabled="btnStatus">평가하기</v-btn>
     <v-dialog v-model="dialog" persistent max-width="600">
       <v-card>
         <v-card-title class="headline">팀워크</v-card-title>
@@ -15,9 +13,7 @@
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false"
-            >취소</v-btn
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">취소</v-btn>
           <v-btn color="green darken-1" text @click="sendRating">확인</v-btn>
         </v-card-actions>
       </v-card>
