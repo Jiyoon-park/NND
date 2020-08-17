@@ -7,41 +7,31 @@
       <v-list-item-subtitle>{{ historyinfo.summary }}</v-list-item-subtitle>
       <div class="mt-3">{{ historyinfo.content }}</div>
       <small class="mt-3">
-        관련링크<br />
-        <a :href="historyinfo.gitLink" style="text-decoration:none;">{{
+        관련링크
+        <br />
+        <a :href="historyinfo.gitLink" style="text-decoration:none;">
+          {{
           historyinfo.gitLink
-        }}</a>
+          }}
+        </a>
       </small>
       <!-- 히스토리 삭제/수정 버튼 -->
-      <div
-        v-show="isEditPage && isEdit"
-        style="position:absolute; top:0;right:5px;"
-      >
+      <div v-show="isEditPage && isEdit" style="position:absolute; top:0;right:5px;">
         <v-btn
           x-small
           color="red darken-3"
           dark
           class="mr-1"
           @click="onDeleteBtn(`${historyinfo.historyNo}`)"
-          >삭제</v-btn
-        >
+        >삭제</v-btn>
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="green"
-              dark
-              v-bind="attrs"
-              v-on="on"
-              x-small
-              class="mr-1"
-              >수정</v-btn
-            >
+            <v-btn color="green" dark v-bind="attrs" v-on="on" x-small class="mr-1">수정</v-btn>
           </template>
           <v-card>
             <v-card-title
-              class="headline font-weight-regular indigo lighten-1 white--text"
-              >project history</v-card-title
-            >
+              class="headline font-weight-regular blue darken-3 white--text"
+            >project history</v-card-title>
             <v-form>
               <v-container>
                 <v-text-field
@@ -84,20 +74,18 @@
               </v-container>
               <v-card-actions>
                 <v-btn
-                  color="indigo darken-1"
+                  color="blue darken-3"
                   class="font-weight-bold"
                   text
                   @click="dialog = false"
-                  >닫기</v-btn
-                >
+                >닫기</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn
-                  color="indigo darken-1"
+                  color="blue darken-3"
                   class="font-weight-bold"
                   text
                   @click="onEditBtn(`${historyinfo.historyNo}`)"
-                  >수정</v-btn
-                >
+                >수정</v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
@@ -159,7 +147,7 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/projecthistory/update/${projecthistoryNo}`,
-         {
+          {
             idx: this.historyinfo.idx,
             projectName: this.historyinfo.projectName,
             summary: this.historyinfo.summary,
