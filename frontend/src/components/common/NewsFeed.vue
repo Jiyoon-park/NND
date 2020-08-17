@@ -256,11 +256,9 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          alert("등록성공");
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
         });
       //alert("신청되었습니다.");
     },

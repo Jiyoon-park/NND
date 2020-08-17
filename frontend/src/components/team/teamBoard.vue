@@ -5,7 +5,9 @@
     :search="search"
     :sort-by="['num']"
     :sort-desc="[true]"
+    :items-per-page="5"
     class="elevation-1"
+    mobile-breakpoint="0"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">

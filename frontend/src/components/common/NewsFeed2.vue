@@ -28,16 +28,19 @@
                 <span
                   style="cursor:pointer;"
                   @click="
-                  $router
-                    .push({
-                      name: 'userProfile',
-                      params: { idx: teaminfo.idx },
-                    })
-                    .catch(() => {})
-                "
-                >{{ teaminfo.name }}</span>
+                    $router
+                      .push({
+                        name: 'userProfile',
+                        params: { idx: teaminfo.idx },
+                      })
+                      .catch(() => {})
+                  "
+                  >{{ teaminfo.name }}</span
+                >
                 <div>
-                  <span>{{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}</span>
+                  <span>{{
+                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
+                  }}</span>
                   <small class="deadline">
                     ~ {{ teaminfo.deadline }}
                     <span style="color:#555">마감</span>
@@ -48,19 +51,23 @@
             <div style="position:relative;">
               <div v-if="!teaminfo.imageurl">
                 <v-img
-                  :aspect-ratio="16/9"
+                  :aspect-ratio="16 / 9"
                   v-if="teaminfo.category === '스터디'"
                   src="../../assets/images/study.jpg"
                 ></v-img>
                 <v-img
-                  :aspect-ratio="16/9"
+                  :aspect-ratio="16 / 9"
                   v-else-if="teaminfo.category === '프로젝트'"
                   src="../../assets/images/project.jpg"
                 ></v-img>
-                <v-img :aspect-ratio="16/9" v-else src="../../assets/images/competition.jpg"></v-img>
+                <v-img
+                  :aspect-ratio="16 / 9"
+                  v-else
+                  src="../../assets/images/competition.jpg"
+                ></v-img>
               </div>
               <div v-else>
-                <v-img :aspect-ratio="16/9" :src="teaminfo.imageurl"></v-img>
+                <v-img :aspect-ratio="16 / 9" :src="teaminfo.imageurl"></v-img>
               </div>
               <span
                 class="mr-3 mt-1 d-flex flex-column align-end"
@@ -68,19 +75,31 @@
               >
                 <span
                   style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                >{{ teaminfo.category }}</span>
+                  >{{ teaminfo.category }}</span
+                >
 
                 <small
                   style="background-color:#eeeeee; opacity:0.7;"
                   class="px-1"
-                >모집 인원 {{teaminfo.memcnt}}/{{ teaminfo.groupsize }}</small>
+                  >모집 인원 {{ teaminfo.memcnt }}/{{
+                    teaminfo.groupsize
+                  }}</small
+                >
               </span>
 
-              <div style="position:absolute; right:15px; bottom:-32px; z-index:2;">
-                <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
+              <div
+                style="position:absolute; right:15px; bottom:-32px; z-index:2;"
+              >
+                <i
+                  class="far fa-bookmark"
+                  v-if="!favorite"
+                  @click="addFavorite"
+                ></i>
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
-              <div style="position:absolute; left:15px; bottom:-32px; z-index:2;">
+              <div
+                style="position:absolute; left:15px; bottom:-32px; z-index:2;"
+              >
                 <i @click="applyform" class="fas fa-paper-plane">
                   <small class="ml-1">지원하기</small>
                 </i>
@@ -90,10 +109,16 @@
             <div class="shrink mt-10 mx-4 mb-4">
               <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
+                <small
+                  @click="expand = !expand"
+                  style="cursor:pointer; color:primary"
+                  >더보기</small
+                >
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}</v-card>
+                <v-card flat v-show="expand" class="mx-auto">{{
+                  teaminfo.content
+                }}</v-card>
               </v-expand-transition>
               <div class="d-flex">
                 <v-chip
@@ -103,7 +128,12 @@
                   text-color="white"
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
-                ># {{ stack }}</v-chip>
+                  ># {{ stack }}</v-chip
+                >
+                <v-spacer></v-spacer>
+                <v-icon right @click="teamDelete" :disabled=!status>
+                   mdi-delete
+                </v-icon>
               </div>
             </div>
             <!-- <v-expansion-panel-header class="mt-7 pb-0">
@@ -132,21 +162,40 @@
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card style="border: 3px solid #eeeeee;">
-            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
-            <v-card-title
-              class="header-text text-center justify-center body-1"
-            >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title>
+            <v-img
+              class="header"
+              height="200px"
+              src="../../assets/images/team2.jpg"
+            ></v-img>
+            <v-card-title class="header-text text-center justify-center body-1"
+              >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title
+            >
 
             <v-card-text class="pb-0">
               <div class="mt-4">
-                <p class="mb-3 pl-1" style="font-size:1rem;">팀장에게 보내는 어필 한마디 🙈🙉</p>
-                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                <p class="mb-3 pl-1" style="font-size:1rem;">
+                  팀장에게 보내는 어필 한마디 🙈🙉
+                </p>
+                <v-textarea
+                  filled
+                  v-model="content"
+                  name="content"
+                  placeholder="내용을 작성해주세요."
+                ></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions class="pt-0">
-              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >취소</v-btn
+              >
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" class="font-weight-bold" text @click="submit">지원하기</v-btn>
+              <v-btn
+                color="blue darken-1"
+                class="font-weight-bold"
+                text
+                @click="submit"
+                >지원하기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -165,6 +214,7 @@ export default {
     return {
       show: false,
       favorite: false,
+      status: false,
       dialog: false,
       stacks: this.teaminfo.techstack,
       username: "",
@@ -181,9 +231,7 @@ export default {
       expand: false,
     };
   },
-  // mounted(){
-  //   this.teamboardno = this.teaminfo.teamboardNo;
-  // },
+
   created() {
     if (this.teaminfo.mno == this.$store.state.myToken.idx) {
       console.log("즐겨찾기 상태");
@@ -192,14 +240,15 @@ export default {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
+    if (this.teaminfo.idx == this.$store.state.myToken.idx) {
+      this.status = true;
+    } else {
+      this.status = false;
+    }
   },
   methods: {
     addFavorite() {
       let token = window.$cookies.get("nnd");
-
-      console.log("팀 번호: " + this.teaminfo.teamboardno);
-      console.log("토큰: " + this.$store.state.myToken.idx);
-      //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
           `${process.env.VUE_APP_API_URL}/liketeam/save/` +
@@ -237,10 +286,7 @@ export default {
     submit() {
       this.dialog = false;
       let token = window.$cookies.get("nnd");
-      console.log(this.sendIdx + " send");
-      console.log(this.teaminfo.idx + " receive");
-      console.log(this.lettertype + " type");
-      console.log(this.teamboardNo);
+
       axios
         .put(
           `${process.env.VUE_APP_API_URL}/letter/create/` + this.lettertype,
@@ -261,12 +307,9 @@ export default {
           }
         )
         .then(() => {
-          console.log(this.sendIdx);
-          alert("등록성공");
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
         });
       alert("신청되었습니다.");
     },
@@ -277,10 +320,6 @@ export default {
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
-
-      console.log(`현재시간 : ${curTime}`);
-      console.log(`마감시간 : ${endTime}`);
-      console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
       if (this.boardtype == "team") {
         this.boardtype = "tboard";
       } else if (this.boardtype == "member") {
@@ -296,8 +335,6 @@ export default {
           }
         )
         .then((res) => {
-          console.log("확인확인확인확인확인확인확인확인확인확인확인확인");
-          console.log(res.data);
           if (res.data == "overlap letter") {
             alert("중복 지원입니다.");
           } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
@@ -317,6 +354,24 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    teamDelete() {
+      let token = window.$cookies.get("nnd");
+
+      confirm("삭제하시겠습니까?") &&
+        axios
+          .delete(
+            `${process.env.VUE_APP_API_URL}/teamboard/delete/` +
+              this.teaminfo.teamboardno,
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then(() => {
+            this.$router.go();
+          });
     },
   },
 };
