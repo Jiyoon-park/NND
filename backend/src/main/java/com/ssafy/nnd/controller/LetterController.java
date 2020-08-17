@@ -42,11 +42,10 @@ public class LetterController {
 	@Autowired
 	TeamRegistRepository teamregistRepository;
 
-	
-	@GetMapping("/letter/member/teamlist/{memberidx}") //현재 꼬시기 버트을 누르는 member의 idx
-	public @ResponseBody List<Map<String,Object>> getAllTeamList(@PathVariable Long memberidx) {
+	@GetMapping("/letter/member/teamlist/{memberidx}") // 현재 꼬시기 버트을 누르는 member의 idx
+	public @ResponseBody List<Map<String, Object>> getAllTeamList(@PathVariable Long memberidx) {
 		List<Object> teamList = teamregistRepository.findTeamByIdx(memberidx);
-		
+
 		List<Map<String, Object>> datalist = new ArrayList<Map<String, Object>>();
 
 		for (int i = 0; i < teamList.size(); i++) {
@@ -58,6 +57,7 @@ public class LetterController {
 		}
 		return datalist;
 	}
+
 	// R
 	// 모든 메시지
 	@GetMapping("/letter/list/all")
@@ -89,7 +89,7 @@ public class LetterController {
 			map.put("createDate", temp[12]);
 			map.put("read", temp[13]);
 			map.put("letterType", temp[14]);
-			map.put("teamboardNo",temp[15] );
+			map.put("teamboardNo", temp[15]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -113,7 +113,7 @@ public class LetterController {
 			map.put("createDate", temp[12]);
 			map.put("read", temp[13]);
 			map.put("letterType", temp[14]);
-			map.put("teamboardNo",temp[15] );
+			map.put("teamboardNo", temp[15]);
 			datalist.add(map);
 		}
 		return datalist;
@@ -163,15 +163,31 @@ public class LetterController {
 
 		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		Optional<Member> member = memberRepository.findById(sendidx);
-		
-		TeamRegist memberRegist = new TeamRegist();
-		memberRegist.setTeamboardNo(team.get().getTeamboardNo());
-		memberRegist.setMemberIdx(member.get().getIdx());
-		memberRegist.setMemberEmail(member.get().getEmail());
-		teamregistRepository.save(memberRegist);
 
-		return "success";
-
+		boolean check = true;
+		int curgroupsize = team.get().getMemCnt();
+		int groupsize = team.get().getGroupSize();
+		String message = "success";
+		if (curgroupsize >= groupsize) {
+			check = false;
+			return message = "already full";
+		}
+		if (teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, sendidx).isPresent()) {
+			check = false;
+		}
+		if (check) {
+			TeamRegist memberRegist = new TeamRegist();
+			memberRegist.setTeamboardNo(team.get().getTeamboardNo());
+			memberRegist.setMemberIdx(member.get().getIdx());
+			memberRegist.setMemberEmail(member.get().getEmail());
+			teamregistRepository.save(memberRegist);
+			team.get().setMemCnt(++curgroupsize);
+			teamBoardRepository.save(team.get());
+			return message;
+		} else {
+			message = "already joinded";
+			return message;
+		}
 	}
 
 	// 개인이 팀장의 스카웃을 수락할 경우
@@ -180,15 +196,52 @@ public class LetterController {
 
 		Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
 		Optional<Member> member = memberRepository.findById(receiveidx);
-		
-		TeamRegist memberRegist = new TeamRegist();
-		memberRegist.setTeamboardNo(team.get().getTeamboardNo());
-		memberRegist.setMemberIdx(member.get().getIdx());
-		memberRegist.setMemberEmail(member.get().getEmail());
-		teamregistRepository.save(memberRegist);
-		
-		return "success";
 
+		boolean check = true;
+		int curgroupsize = team.get().getMemCnt();
+		int groupsize = team.get().getGroupSize();
+		String message = "success";
+		if (curgroupsize >= groupsize) {
+			check = false;
+			return message = "already full";
+		}
+
+		if (teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno, receiveidx).isPresent()) {
+			check = false;
+		}
+		if (check) {
+
+			TeamRegist memberRegist = new TeamRegist();
+			memberRegist.setTeamboardNo(team.get().getTeamboardNo());
+			memberRegist.setMemberIdx(member.get().getIdx());
+			memberRegist.setMemberEmail(member.get().getEmail());
+			teamregistRepository.save(memberRegist);
+			team.get().setMemCnt(++curgroupsize);
+			teamBoardRepository.save(team.get());
+
+			return message;
+		} else {
+			message = "already joined";
+			return message;
+		}
+
+	}
+
+	@GetMapping("letter/check/overlap/{memberidx}/{receiveidx}/{type}/{teamboardno}")
+	public @ResponseBody String checkOverlap(@PathVariable Long memberidx, @PathVariable Long receiveidx,
+			@PathVariable String type, @PathVariable Long teamboardno) {
+		try {
+			Optional<Letter> letter = letterRepository.findByVariableCol(memberidx, receiveidx, type, teamboardno);
+			Optional<TeamRegist> teamregist = teamregistRepository.findByTeamboardNoAndMemberIdx(teamboardno,
+					memberidx);
+			if(!letter.isPresent()&&!teamregist.isPresent()) {
+				return "success";
+			}else {
+				return "overlap letter";
+			}
+		} catch (Exception e) {
+			return "error";
+		}
 	}
 
 }

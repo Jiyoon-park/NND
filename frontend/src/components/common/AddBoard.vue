@@ -109,6 +109,7 @@
               <v-overflow-btn
                 outlined
                 v-model="groupSize"
+                :rules="groupsizeRules"
                 :items="dropdown_font"
                 label="선택하세요"
                 class="mt-2 pl-0"
@@ -216,11 +217,24 @@ export default {
     allmemberEmails: [],
     name: "",
     types: ["팀", "팀원"],
+
     // 이미지를 저장할 변수들
     imageName: "", // 이미지 파일 이름
     imageUrl: "", // 이미지 파일 경로
     imageFile: "", // 이미지 파일 객체
   }),
+  computed: {
+    groupsizeRules() {
+      const rules = [
+        (v) => !!v || "모집 인원수를 선탁해야합니다.",
+        (v) =>
+          v > this.memberEmails.length ||
+          "모집 인원이 입력한 팀원수 보다 값이 작습니다.",
+      ];
+      return rules;
+    },
+  },
+
   components: {},
   created() {
     let token = window.$cookies.get("nnd");
@@ -236,7 +250,7 @@ export default {
       console.log("유저의 memberstack: " + this.memberstack);
     }
     axios
-      .get("${process.env.VUE_APP_API_URL}/member/all", {
+      .get(`${process.env.VUE_APP_API_URL}/member/all`, {
         headers: {
           Authorization: "Bearer " + token.data, // the token is a variable which holds the token
         },

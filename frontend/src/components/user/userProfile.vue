@@ -85,7 +85,7 @@ export default {
     };
   },
   created() {
-    let id = this.$route.params.idx;
+    let id = this.$store.state.profileidx;
     let token = window.$cookies.get("nnd");
     this.$http
       .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {

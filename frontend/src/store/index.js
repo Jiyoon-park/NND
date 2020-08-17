@@ -17,6 +17,7 @@ export default new Vuex.Store({
     teamNo: "",
     teamMaster: "",
     teammembers: [],
+    profileidx: "",
   },
   plugins: [createPersistedState()],
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    pchange: (state) => state.profileidx,
     nchange: (state) => state.teamNo,
     saveMember: (state) => state.teammembers,
     increment(state) {

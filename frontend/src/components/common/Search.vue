@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" width="50%" :fullscreen="$vuetify.breakpoint.mobile" hide-overlay>
+  <v-dialog
+    v-model="dialog"
+    width="50%"
+    :fullscreen="$vuetify.breakpoint.mobile"
+    hide-overlay
+  >
     <template v-slot:activator="{ on, attrs }">
       <i
         class="fas fa-search fa-lg"
@@ -48,7 +53,13 @@
                   active-class="blue darken-3 white--text text--accent-4"
                   mandatory
                 >
-                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
+                  <v-chip
+                    large
+                    v-for="type in types"
+                    :key="type"
+                    :value="type"
+                    >{{ type }}</v-chip
+                  >
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -91,7 +102,7 @@
               <div class="d-flex flex-column justify-center">
                 <v-combobox
                   v-model="newSkill"
-                  :newSkill="newSkill"
+                  :items="items"
                   label="기술스택 추가"
                   filled
                   multiple
@@ -126,7 +137,28 @@ export default {
     skillSelection: [],
     newSkill: [],
     types: ["team", "member"],
-    skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
+    items: [
+      "C",
+      "C++",
+      "JAVA",
+      "Spring",
+      "Django",
+      "C#",
+      "Go",
+      "R",
+      "Javascript",
+      "vue.js",
+      "Linux",
+      "MYSQL",
+      "Mariadb",
+      "RestApi",
+      "Python",
+      "Pytorch",
+      "Tensorflow",
+      "Spirngboot",
+      "Ruby",
+      "React.js",
+    ],
     info: {},
     isMobile: false,
   }),

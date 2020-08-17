@@ -67,6 +67,9 @@ public class TeamBoard {
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;
 
+	@Column(name="memcnt")  //현재 구성인원
+	private int memCnt;
+	
 	@Column
 	private String name;
 
@@ -76,7 +79,7 @@ public class TeamBoard {
 
 	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
 			String deadLine, String title, String content, String imageurl, String kakaoLink, String techStack,
-			String category, int likeCnt, LocalDateTime createDate, String name) {
+			String category, int likeCnt, LocalDateTime createDate, int memCnt, String name) {
 		super();
 		this.teamboardNo = teamboardNo;
 		this.idx = idx;
@@ -93,14 +96,7 @@ public class TeamBoard {
 		this.category = category;
 		this.likeCnt = likeCnt;
 		this.createDate = createDate;
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+		this.memCnt = memCnt;
 		this.name = name;
 	}
 
@@ -108,20 +104,8 @@ public class TeamBoard {
 		return teamboardNo;
 	}
 
-	public String getKakaoLink() {
-		return kakaoLink;
-	}
-
-	public void setKakaoLink(String kakaoLink) {
-		this.kakaoLink = kakaoLink;
-	}
-
-	public String getMemberEmails() {
-		return memberEmails;
-	}
-
-	public void setMemberEmails(String memberEmails) {
-		this.memberEmails = memberEmails;
+	public void setTeamboardNo(Long teamboardNo) {
+		this.teamboardNo = teamboardNo;
 	}
 
 	public Long getIdx() {
@@ -130,10 +114,6 @@ public class TeamBoard {
 
 	public void setIdx(Long idx) {
 		this.idx = idx;
-	}
-
-	public void setTeamboardNo(Long teamboardNo) {
-		this.teamboardNo = teamboardNo;
 	}
 
 	public String getEmail() {
@@ -150,6 +130,14 @@ public class TeamBoard {
 
 	public void setTeamName(String teamName) {
 		this.teamName = teamName;
+	}
+
+	public String getMemberEmails() {
+		return memberEmails;
+	}
+
+	public void setMemberEmails(String memberEmails) {
+		this.memberEmails = memberEmails;
 	}
 
 	public int getGroupSize() {
@@ -184,6 +172,22 @@ public class TeamBoard {
 		this.content = content;
 	}
 
+	public String getImageurl() {
+		return imageurl;
+	}
+
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+
+	public String getKakaoLink() {
+		return kakaoLink;
+	}
+
+	public void setKakaoLink(String kakaoLink) {
+		this.kakaoLink = kakaoLink;
+	}
+
 	public String getTechStack() {
 		return techStack;
 	}
@@ -216,25 +220,31 @@ public class TeamBoard {
 		this.createDate = createDate;
 	}
 
-	public String getImageurl() {
-		return imageurl;
+	public int getMemCnt() {
+		return memCnt;
 	}
 
-	public void setImageurl(String imageurl) {
-		this.imageurl = imageurl;
+	public void setMemCnt(int memCnt) {
+		this.memCnt = memCnt;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("TeamBoard [teamboardNo=").append(teamboardNo).append(", idx=").append(idx).append(", email=")
-				.append(email).append(", teamName=").append(teamName).append(", memberEmails=").append(memberEmails)
-				.append(", groupSize=").append(groupSize).append(", deadLine=").append(deadLine).append(", title=")
-				.append(title).append(", content=").append(content).append(", imageurl=").append(imageurl)
-				.append(", kakaoLink=").append(kakaoLink).append(", techStack=").append(techStack).append(", category=")
-				.append(category).append(", likeCnt=").append(likeCnt).append(", createDate=").append(createDate)
-				.append(", name=").append(name).append("]");
-		return builder.toString();
+		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
+				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
+				+ title + ", content=" + content + ", imageurl=" + imageurl + ", kakaoLink=" + kakaoLink
+				+ ", techStack=" + techStack + ", category=" + category + ", likeCnt=" + likeCnt + ", createDate="
+				+ createDate + ", memCnt=" + memCnt + ", name=" + name + "]";
 	}
+
+	
 
 }

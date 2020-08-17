@@ -3,11 +3,26 @@
     <v-row justify="center">
       <v-col cols="10" sm="8" md="6" lg="4" style="max-height:800px; ">
         <div class="logo-container">
-          <img class="logo" src="../../assets/images/logo_black_title.png" width="60%" />
+          <img
+            class="logo"
+            src="../../assets/images/logo_black_title.png"
+            width="60%"
+          />
         </div>
         <v-form class="form" ref="form" v-model="valid" lazy-validation>
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <v-text-field v-model="email" :rules="emailRules" label="이메일" required outlined dense></v-text-field>
+          <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+          />
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="이메일"
+            required
+            outlined
+            dense
+          ></v-text-field>
           <v-text-field
             v-model="password"
             :rules="[rules.required, rules.min]"
@@ -18,8 +33,19 @@
             outlined
             dense
           ></v-text-field>
-          <v-btn large class="button" :disabled="!valid" color="#0277BD" @click="login">로그인</v-btn>
-          <v-checkbox v-model="checkbox" color="success" label="로그인 정보 기억"></v-checkbox>
+          <v-btn
+            large
+            class="button"
+            :disabled="!valid"
+            color="#0277BD"
+            @click="login"
+            >로그인</v-btn
+          >
+          <v-checkbox
+            v-model="checkbox"
+            color="success"
+            label="로그인 정보 기억"
+          ></v-checkbox>
         </v-form>
         <div class="login-body text-center">
           <div class="sns-login">
@@ -31,7 +57,9 @@
           </div>
           <div class="add-option">
             <router-link to="/signup" class="routers">회원가입</router-link>|
-            <router-link to="/findpw" class="routers">비밀번호 찾기</router-link>
+            <router-link to="/findpw" class="routers"
+              >비밀번호 찾기</router-link
+            >
           </div>
         </div>
       </v-col>
@@ -64,6 +92,45 @@ export default {
   }),
   created() {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    axios
+      .get(`${process.env.VUE_APP_API_URL}/contest`, {
+        // headers: {
+        //   Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        // },
+      })
+      .then(({ data }) => {
+        this.boards = data;
+
+        this.$store.commit("setContest", this.boards);
+        console.log(this.boards);
+        // for (let index = 0; index < this.boards.length; index++) {
+        //   var ncolor =
+        //     "#" + Math.round(Math.random() * 0xffffff).toString(16);
+        //   const allDay = this.rnd(0, 3) === 0;
+        //   this.events.push({
+        //     id: index,
+        //     name: this.boards[index].title,
+        //     start: this.boards[index].start,
+        //     end: this.boards[index].start,
+        //     color: ncolor,
+        //     timed: !allDay,
+        //     poster: this.boards[index].poster,
+        //   });
+
+        //   this.events.push({
+        //     id: index,
+        //     name: this.boards[index].title,
+        //     start: this.boards[index].end,
+        //     end: this.boards[index].end,
+        //     color: ncolor,
+        //     timed: !allDay,
+        //     poster: this.boards[index].poster,
+        //   });
+        // }
+      })
+      .catch((err) => {
+        console.log(err);
+      }); //endaxios
     if (token) {
       //토큰 존재하면
       console.log("already-login");
@@ -93,6 +160,7 @@ export default {
               });
             },
             () => {
+              alert("비밀번호가 틀렸습니다.");
               console.log("failed");
             }
           );

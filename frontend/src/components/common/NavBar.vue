@@ -33,7 +33,7 @@
         </v-list-item>
         <v-list-item-group color="#0277BD" class="text-center">
           <v-list-item link>
-            <v-list-item-content @click="$router.push('/profile').catch(() => {})">
+            <v-list-item-content @click="profileMove(user.idx)">
               <v-list-item-title>내 정보</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -144,6 +144,15 @@ export default {
         this.$router.push("/").catch(() => {});
       }
     },
+    profileMove(no) {
+      this.$store.state.profileidx = no;
+      this.$store.commit("pchange");
+      if (this.$route.path == "/Profile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/Profile").catch(() => {});
+      }
+    },
     test(no) {
       console.log(no);
       console.log(`현재 url : ${this.$route.path}`);
@@ -161,9 +170,16 @@ export default {
       this.$router.push("/login");
     },
     getLetters() {
+      let token = window.$cookies.get("nnd");
+
       axios
         .get(
-          `${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`
+          `${process.env.VUE_APP_API_URL}/letter/list/receive/${this.user.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((res) => {
           this.letters = res;
@@ -188,9 +204,16 @@ export default {
       return count;
     },
     getMemberTeamList() {
+      let token = window.$cookies.get("nnd");
+
       axios
         .get(
-          `${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`
+          `${process.env.VUE_APP_API_URL}/teammenu/teamlist/${this.user.idx}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
         )
         .then((res) => {
           this.teams = res.data;

@@ -25,7 +25,7 @@
         <h3 class="mb-3">📢 게시판 📢</h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
-            <TeamPost :teaminfo="teaminfo" :userinfo="user" />
+            <team-board :teaminfo="teaminfo" :userinfo="user"></team-board>
           </v-col>
         </v-row>
       </div>
@@ -44,7 +44,7 @@
             <h3 class="mb-3">🏃 팀원목록 🏃</h3>
             <v-row>
               <v-col cols="12" sm="12">
-                <TeamTable />
+                <TeamTable :teamdata="this.$store.state.teammembers" />
               </v-col>
             </v-row>
           </div>
@@ -54,7 +54,7 @@
             <h3 class="mb-3">📈 그래프 📉</h3>
             <v-row class="py-0 px-0">
               <v-col cols="12" sm="12">
-                <MemberChart />
+                <MemberChart :axiostype="axiostype" />
               </v-col>
             </v-row>
           </div>
@@ -68,20 +68,22 @@
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
-import TeamPost from "../team/teamPost.vue";
+//import TeamPost from "../team/teamPost.vue";
 import TeamTable from "../team/teamTable.vue";
 import MemberChart from "../team/memberChart.vue";
 import TeamDiary from "../team/teamDiary";
+import TeamBoard from "../team/teamBoard";
 
 import axios from "axios";
 
 export default {
   components: {
     NavBar,
-    TeamPost,
+    //TeamPost,
     TeamTable,
     MemberChart,
     TeamDiary,
+    TeamBoard,
   },
   data() {
     return {
@@ -93,6 +95,7 @@ export default {
       profileURL: "",
       teaminfo: {},
       teamboardno: "",
+      axiostype: "list",
     };
   },
 
@@ -130,7 +133,14 @@ export default {
         console.log(err);
       });
     axios
-      .get(`http://localhost:8080/teammenu/member/` + this.teamboardno)
+      .get(
+        `${process.env.VUE_APP_API_URL}/teammenu/member/${this.teamboardno}/${id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((data) => {
         console.log("데이터찍어보자");
         console.log(data.data);

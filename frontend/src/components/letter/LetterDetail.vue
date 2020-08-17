@@ -1,20 +1,16 @@
 <template>
   <v-card>
     <v-toolbar flat dark color="#38ada9" v-if="letterinfo.letterType == 'tboard'">
-      <v-btn icon dark @click="changeDialog">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
       <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
+      <i class="fas fa-trash" @click="deleteLetter"></i>
     </v-toolbar>
     <v-toolbar flat dark color="#706fd3" v-else>
-      <v-btn icon dark @click="changeDialog">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
       <v-toolbar-title v-if="item.tab == '받은 편지함'">받은 편지</v-toolbar-title>
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
+      <i class="fas fa-trash" @click="deleteLetter"></i>
     </v-toolbar>
     <v-card-text class="mt-5 px-5">
       <div class="d-flex align-center">
@@ -27,7 +23,8 @@
         <div class="ml-3">
           <p class="mb-1" v-if="item.tab == '받은 편지함'">보낸 사람</p>
           <p class="mb-1" v-else>받는 사람</p>
-          <p class="mb-1">보낸 날짜</p>
+          <p class="mb-1" v-if="item.tab == '받은 편지함'">받은 날짜</p>
+          <p class="mb-1" v-else>보낸 날짜</p>
         </div>
         <div class="ml-3">
           <p class="mb-1">{{ letterinfo.name }}</p>
@@ -37,7 +34,9 @@
       <div class="rounded grey lighten-3 pa-3 mt-3">
         <span class="subheader" v-if="letterinfo.letterType == 'mboard'">✔ 팀 영입 제안입니다.</span>
         <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
-
+        <div style="height:300px; width:300px; margin:auto;" v-if="item.tab == '받은 편지함'">
+          <MemberChart :axiostype="axiostype" :letteridx="letterinfo" />
+        </div>
         <p class="mt-2">{{ letterinfo.content }}</p>
       </div>
     </v-card-text>
@@ -65,8 +64,11 @@
 
 <script>
 import axios from "axios";
+import MemberChart from "../team/memberChart.vue";
 export default {
-  components: {},
+  components: {
+    MemberChart,
+  },
   props: {
     letterinfo: {
       type: Object,
@@ -84,14 +86,17 @@ export default {
   data() {
     return {
       letterDate: "",
+      axiostype: "memberlist",
     };
   },
   methods: {
+    deleteLetter() {},
     teamAccept(sendidx, teamboardno) {
       let token = window.$cookies.get("nnd");
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/letter/teamaccept/${sendidx}/${teamboardno}`,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -100,11 +105,17 @@ export default {
         )
         .then((res) => {
           console.log(res);
-          alert("수락완료");
+          if (res.data == "success") {
+            alert("수락완료");
+          } else if (res.data == "already full") {
+            alert("멤버 모집이 끝났습니다.");
+          } else if (res.data == "already joined") {
+            alert("이미 가입했습니다.");
+          }
         })
         .catch((err) => {
           console.log(err);
-          alert("수락실패");
+          alert("멤버가 없거나 팀이 삭제되었습니다.");
         });
       this.changeDialog();
     },
@@ -113,14 +124,27 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/letter/memberaccept/${teamboardno}/${receiveidx}`,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
           }
         )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          if (res.data == "success") {
+            alert("수락완료");
+          } else if (res.data == "already full") {
+            alert("멤버 모집이 끝났습니다.");
+          } else if (res.data == "already joined") {
+            alert("이미 가입했습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("멤버가 없거나 팀이 삭제되었습니다.");
+        });
       this.changeDialog();
     },
     changeDialog() {

@@ -31,7 +31,13 @@ public class MemberRating {
 	
 	@Column 
 	private Long teamworkship;
-
+	
+	@Column (name="teamboardno")
+	private Long teamboardNo;
+	
+	@Column (name="ratedidx")
+	private Long ratedIdx;
+	
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;   //평가날짜
 	
@@ -111,6 +117,26 @@ public class MemberRating {
 	}
 
 
+	public Long getTeamboardNo() {
+		return teamboardNo;
+	}
+
+
+	public void setTeamboardNo(Long teamboardNo) {
+		this.teamboardNo = teamboardNo;
+	}
+
+
+	public Long getRatedIdx() {
+		return ratedIdx;
+	}
+
+
+	public void setRatedIdx(Long ratedIdx) {
+		this.ratedIdx = ratedIdx;
+	}
+
+
 	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
@@ -125,12 +151,8 @@ public class MemberRating {
 	public String toString() {
 		return "MemberRating [ratingNo=" + ratingNo + ", idx=" + idx + ", commitCnt=" + commitCnt + ", issueCnt="
 				+ issueCnt + ", attendRate=" + attendRate + ", satisfaction=" + satisfaction + ", teamworkship="
-				+ teamworkship + ", createDate=" + createDate + "]";
+				+ teamworkship + ", teamboardNo=" + teamboardNo + ", ratedIdx=" + ratedIdx + ", createDate="
+				+ createDate + "]";
 	}
-
-	
-
-	
-	
 	
 }

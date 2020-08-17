@@ -11,14 +11,7 @@
                 color="#eeeeee"
                 size="50"
                 class="user-img mb-2"
-                @click="
-                  $router
-                    .push({
-                      name: 'userProfile',
-                      params: { idx: teaminfo.idx },
-                    })
-                    .catch(() => {})
-                "
+                @click="profileMove(teaminfo.idx)"
               >
                 <i v-if="!profileURL" class="fas fa-user"></i>
                 <!-- <img  v-if="!profileURL" src="https://picsum.photos/200" /> -->
@@ -73,16 +66,16 @@
                 <small
                   style="background-color:#eeeeee; opacity:0.7;"
                   class="px-1"
-                >모집 인원 {{ teaminfo.groupsize }}</small>
+                >모집 인원 {{teaminfo.memcnt}}/{{ teaminfo.groupsize }}</small>
               </span>
 
-              <div style="position:absolute; right:15px; bottom:-32px; z-index:2; cursor:pointer;">
+              <div style="position:absolute; right:15px; bottom:-32px; z-index:2;">
                 <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
                 <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
               </div>
-              <div style="position:absolute; left:15px; bottom:-32px; z-index:2; cursor:pointer;">
+              <div style="position:absolute; left:15px; bottom:-32px; z-index:2;">
                 <i @click="applyform" class="fas fa-paper-plane">
-                  <span class="ml-1" style="font-size:14px;">지원하기</span>
+                  <small class="ml-1">지원하기</small>
                 </i>
               </div>
             </div>
@@ -159,7 +152,7 @@
 import axios from "axios";
 export default {
   name: "NewsFeed2",
-  props: ["teaminfo"],
+  props: ["teaminfo", "boardtype"],
 
   data() {
     return {
@@ -192,8 +185,20 @@ export default {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
+
+    // profileURL을 초기화
+    this.profileURL = this.teaminfo.profile;
   },
   methods: {
+    profileMove(no) {
+      this.$store.state.profileidx = no;
+      this.$store.commit("pchange");
+      if (this.$route.path == "/userProfile") {
+        this.$router.go().catch(() => {});
+      } else {
+        this.$router.push("/userProfile").catch(() => {});
+      }
+    },
     addFavorite() {
       let token = window.$cookies.get("nnd");
 
@@ -202,12 +207,15 @@ export default {
       //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/liketeam/save/${this.$store.state.myToken.idx}/${this.teaminfo.teamboardno}`,
+          `${process.env.VUE_APP_API_URL}/liketeam/save/` +
+            this.$store.state.myToken.idx +
+            "/" +
+            this.teaminfo.teamboardno,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
-            params: {},
           }
         )
         .then((data) => {
@@ -237,13 +245,12 @@ export default {
       console.log(this.sendIdx + " send");
       console.log(this.teaminfo.idx + " receive");
       console.log(this.lettertype + " type");
+      console.log(this.teamboardNo);
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`,
+          `${process.env.VUE_APP_API_URL}/letter/create/` + this.lettertype,
           {
-            headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+            read: "",
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,
             content: this.content,
@@ -251,6 +258,11 @@ export default {
             createDate: this.createDate,
             lettertype: this.lettertype,
             teamboardNo: this.teamboardNo,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
           }
         )
         .then(() => {
@@ -264,6 +276,7 @@ export default {
       alert("신청되었습니다.");
     },
     applyform() {
+      let token = window.$cookies.get("nnd");
       // 지원을 받기전 마감시간이 지났는지 체크하도록 한다.
       // 지났다 = 현재시간 - 마감시간 > 0
       // 안지났다 = 반대
@@ -273,19 +286,42 @@ export default {
       console.log(`현재시간 : ${curTime}`);
       console.log(`마감시간 : ${endTime}`);
       console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
-
-      if (curTime.getTime() - endTime.getTime() > 0) {
-        alert("마감되었습니다!!!");
-      } else {
-        this.dialog = !this.dialog;
-        let token = window.$cookies.get("nnd");
-        if (token) {
-          console.log("프로필주소 : " + token.object.profile);
-          this.username = token.object.name;
-          this.profileURL = token.object.profile;
-          this.sendIdx = token.object.idx;
-        }
+      if (this.boardtype == "team") {
+        this.boardtype = "tboard";
+      } else if (this.boardtype == "member") {
+        this.boardtype = "mboard";
       }
+      axios
+        .get(
+          `${process.env.VUE_APP_API_URL}/letter/check/overlap/${token.object.idx}/${this.teaminfo.idx}/${this.boardtype}/${this.teaminfo.teamboardno}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
+        .then((res) => {
+          console.log("확인확인확인확인확인확인확인확인확인확인확인확인");
+          console.log(res.data);
+          if (res.data == "overlap letter") {
+            alert("중복 지원입니다.");
+          } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
+            alert("모집인원을 초과했습니다");
+          } else if (curTime.getTime() - endTime.getTime() > 0) {
+            alert("마감되었습니다!!!");
+          } else {
+            this.dialog = !this.dialog;
+            if (token) {
+              console.log("프로필주소 : " + token.object.profile);
+              this.username = token.object.name;
+              this.profileURL = token.object.profile;
+              this.sendIdx = token.object.idx;
+            }
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
