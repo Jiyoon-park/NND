@@ -11,11 +11,11 @@
       <!-- <div class="point-top"></div>
       <div class="point-bottom">
         <p>ⓒ 2020. 이나앨 All Rights Reserved.</p>
-      </div> -->
+      </div>-->
       <v-list rounded>
         <v-list-item link class="d-flex flex-column pt-8 mb-0">
-          <v-avatar color="white" size="80" class="user-img mb-1">
-            <img v-if="!profileURL" src="https://picsum.photos/200" />
+          <v-avatar color="#eeeeee" size="70" class="user-img mb-1">
+            <i v-if="!profileURL" class="fas fa-user"></i>
             <img v-else :src="profileURL" />
           </v-avatar>
           <div class="mt-2">
@@ -28,15 +28,12 @@
               style="opacity:0.7;"
               @click="onLogout"
               dark
-              >로그아웃</v-btn
-            >
+            >로그아웃</v-btn>
           </div>
         </v-list-item>
         <v-list-item-group color="#3949AB" class="text-center">
           <v-list-item link>
-            <v-list-item-content
-              @click="$router.push('/profile').catch(() => {})"
-            >
+            <v-list-item-content @click="$router.push('/profile').catch(() => {})">
               <v-list-item-title>내 정보</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -52,19 +49,11 @@
               <v-expansion-panel>
                 <v-expansion-panel-header :expand-icon="null">
                   <v-list-item-content>
-                    <v-list-item-title style="text-align: center;"
-                      >팀 게시판 목록</v-list-item-title
-                    >
+                    <v-list-item-title style="text-align: center;">팀 게시판 목록</v-list-item-title>
                   </v-list-item-content>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content v-if="this.teams.length == 0">
-                  팀 목록이 없습니다.
-                </v-expansion-panel-content>
-                <v-expansion-panel-content
-                  v-else
-                  v-for="(team, index) in teams"
-                  :key="index"
-                >
+                <v-expansion-panel-content v-if="this.teams.length == 0">팀 목록이 없습니다.</v-expansion-panel-content>
+                <v-expansion-panel-content v-else v-for="(team, index) in teams" :key="index">
                   <v-btn text @click="test(team)">{{ team.teamName }}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -72,9 +61,7 @@
           </v-list-item>
 
           <v-list-item link>
-            <v-list-item-content
-              @click="$router.push('/gongmo').catch(() => {})"
-            >
+            <v-list-item-content @click="$router.push('/gongmo').catch(() => {})">
               <v-list-item-title>외부 공모전</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -82,7 +69,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="#FAFAFA" app :flat="true" :fixed="true">
+    <v-app-bar color="#0277BD" app :flat="true" :fixed="true">
       <div class="nav-icon" @click.stop="drawer = !drawer">
         <div></div>
       </div>
@@ -95,10 +82,10 @@
       <v-badge :content="messages" :value="messages" color="green" overlap>
         <v-icon
           size="30"
+          color="#eeeeee"
           class="ml-3"
           @click="$router.push('/letter').catch(() => {})"
-          >mdi-email</v-icon
-        >
+        >mdi-email</v-icon>
       </v-badge>
     </v-app-bar>
   </div>
@@ -168,7 +155,7 @@ export default {
         this.$router.push("/TeamProfile").catch(() => {});
       }
     },
-    onLogout: function() {
+    onLogout: function () {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
       this.$router.push("/login");
@@ -194,7 +181,7 @@ export default {
           console.log(err);
         });
     },
-    checkRead: function(arr) {
+    checkRead: function (arr) {
       // console.log("count 함수 실행!!");
       // console.log("arr: " + arr);
       // console.log("length: " + arr.length);
@@ -239,7 +226,7 @@ export default {
   font-family: "Rowdies", cursive;
   font-weight: 700;
   font-style: italic;
-  color: #1565c0;
+  color: #eeeeee;
   margin-left: 20px;
 }
 .point-top {
@@ -276,7 +263,7 @@ export default {
 .nav-icon:after,
 .nav-icon:before,
 .nav-icon div {
-  background-color: #777;
+  background-color: #eeeeee;
   border-radius: 5px;
   content: "";
   display: block;

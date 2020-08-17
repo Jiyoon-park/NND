@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="10" md="8" lg="4">
+      <v-col cols="10" sm="8" md="6" lg="4" style="max-height:800px; ">
         <div class="logo-container">
           <img
             class="logo"
@@ -73,7 +73,7 @@ export default {
   name: "Login",
   components: {},
   data: () => ({
-    redirectURL: `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}login&response_type=code`,
+    redirectURL: `https://kauth.kakao.com/oauth/authorize?client_id=136ae30351513efbd13773e917430828&redirect_uri=${process.env.VUE_APP_API_URL}/login&response_type=code`,
     id: 0,
     token: "",
     valid: true,

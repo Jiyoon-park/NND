@@ -14,9 +14,9 @@
                   <v-btn fab text small color="grey darken-2" @click="prev">
                     <v-icon small>mdi-chevron-left</v-icon>
                   </v-btn>
-                  <v-toolbar-title v-if="$refs.calendar">{{
-                    $refs.calendar.title
-                  }}</v-toolbar-title>
+                  <v-toolbar-title v-if="$refs.calendar">
+                    {{ $refs.calendar.title }}
+                  </v-toolbar-title>
                   <v-btn fab text small color="grey darken-2" @click="next">
                     <v-icon small>mdi-chevron-right</v-icon>
                   </v-btn>
@@ -44,7 +44,8 @@
               </div>
             </v-toolbar>
           </v-sheet>
-          <v-sheet height="100%">
+
+          <v-sheet height="600">
             <v-calendar
               ref="calendar"
               v-model="focus"
@@ -99,11 +100,11 @@
                             <!-- <div v-if="board.qua !== null" class="mt-2">
                               <p class="mb-0 font-weight-bold">참가자격</p>
                               <span>{{ board.qua }}</span>
-                            </div> -->
+                            </div>-->
                             <div v-if="board.price !== null" class="mt-2">
                               <p class="mb-0 font-weight-bold">시상금액 💰</p>
-                              <span>1등 {{ board.price }}</span
-                              ><br />
+                              <span>1등 {{ board.price }}</span>
+                              <br />
                             </div>
                             <div class="mt-5">
                               <small class="mb-0">

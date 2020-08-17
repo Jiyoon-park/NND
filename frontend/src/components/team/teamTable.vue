@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ml-10 mt-10">
+  <v-card>
     <vue-good-table
       :columns="columns"
       :rows="members"
@@ -31,9 +31,7 @@
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false"
-            >취소</v-btn
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">취소</v-btn>
           <v-btn color="green darken-1" text @click="sendRating">확인</v-btn>
         </v-card-actions>
       </v-card>
