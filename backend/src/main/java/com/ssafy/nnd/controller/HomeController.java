@@ -32,18 +32,18 @@ import com.ssafy.nnd.util.KakaoAPI;
 @CrossOrigin
 @Controller
 public class HomeController {
-	
+
 	@Autowired
-    MemberRepository memberRepository;
- 
+	MemberRepository memberRepository;
+
 	private Member tmpMember;
-	
+
 	@Autowired
 	private JwtService jwtService;
-	
-    @Autowired
-    private KakaoAPI kakao;
-    
+
+	@Autowired
+	private KakaoAPI kakao;
+
 //    @RequestMapping(value="/")
 //    public String index() {
 //        
@@ -55,36 +55,37 @@ public class HomeController {
 //
 //		return member.get();
 //	}
-    @RequestMapping(value="/login")
-    public String login(@RequestParam("code") String code, HttpSession session) {
-        String access_Token = kakao.getAccessToken(code);
-        HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
-        System.out.println("login Controller : " + userInfo);
-        Member mem = new Member();
+	@RequestMapping(value = "/login")
+	public String login(@RequestParam("code") String code, HttpSession session) {
+		String access_Token = kakao.getAccessToken(code);
+		HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
+		System.out.println("login Controller : " + userInfo);
+		Member mem = new Member();
 
-        // db에 넣기
-        Optional<Member> member = memberRepository.findMemberByEmailAndCompany((String)userInfo.get("email"), (String)userInfo.get("company"));
-        if (!member.isPresent()) { // 신규 유저일때
-        	System.out.println("카카오 신규 유저");
-            mem.setEmail((String)userInfo.get("email"));
-            mem.setName((String)userInfo.get("nickname"));
-            mem.setProfile((String)userInfo.get("profile"));
-            mem.setCompany((String)userInfo.get("company"));
-        	memberRepository.save(mem);	// db에 등록
+		// db에 넣기
+		Optional<Member> member = memberRepository.findMemberByEmailAndCompany((String) userInfo.get("email"),
+				(String) userInfo.get("company"));
+		if (!member.isPresent()) { // 신규 유저일때
+			System.out.println("카카오 신규 유저");
+			mem.setEmail((String) userInfo.get("email"));
+			mem.setName((String) userInfo.get("nickname"));
+			mem.setProfile((String) userInfo.get("profile"));
+			mem.setCompany((String) userInfo.get("company"));
+			memberRepository.save(mem); // db에 등록
 		} else {
-        	System.out.println("카카오 가입자");
-        	mem = member.get();
+			System.out.println("카카오 가입자");
+			mem = member.get();
 		}
-        
-        tmpMember = mem;
-        return "redirect:http://i3a404.p.ssafy.io/";	// 서버에서 돌릴때
-        // return "redirect:http://localhost:8081/";		// 로컬에서 돌릴때
-    }
+
+		tmpMember = mem;
+//        return "redirect:http://i3a404.p.ssafy.io/";	// 서버에서 돌릴때
+		return "redirect:http://localhost:8081/"; // 로컬에서 돌릴때
+	}
 
 //  
-    @ResponseBody 
-    @RequestMapping(value="/userinfo")
-    public Object getuserinfo() {
+	@ResponseBody
+	@RequestMapping(value = "/userinfo")
+	public Object getuserinfo() {
 		ResponseEntity response = null;
 		String token = jwtService.create("member", tmpMember, "user");
 		final BasicResponse result = new BasicResponse();
@@ -92,17 +93,16 @@ public class HomeController {
 		result.status = true;
 		result.data = token;
 		response = new ResponseEntity<>(result, HttpStatus.OK);
-    	return response;
-    }
-    
-    @RequestMapping(value="/logout")
-    public String logout(HttpSession session) {
-    	System.out.println("로그아웃에는 세션이 있는지 확인 "+session.getAttribute("member"));
-        kakao.kakaoLogout((String)session.getAttribute("access_Token"));
-        session.removeAttribute("access_Token");
-        session.removeAttribute("userId");
-        return "index";
-    }
+		return response;
+	}
+
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		System.out.println("로그아웃에는 세션이 있는지 확인 " + session.getAttribute("member"));
+		kakao.kakaoLogout((String) session.getAttribute("access_Token"));
+		session.removeAttribute("access_Token");
+		session.removeAttribute("userId");
+		return "index";
+	}
 
 }
-
