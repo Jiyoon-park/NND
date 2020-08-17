@@ -98,7 +98,12 @@
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
                 ># {{ stack }}</v-chip>
+                                <v-spacer></v-spacer>
+                <v-icon right @click="memberDelete" :disabled=!status>
+                   mdi-delete
+                </v-icon>
               </div>
+                              
             </div>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -165,6 +170,8 @@ export default {
       stacks: this.teaminfo.techstack,
       username: "",
       profileURL: "",
+            status: false,
+
       ///쪽찌보낼내용
       sendIdx: "",
       receiveIdx: "",
@@ -189,6 +196,11 @@ export default {
     } else {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
+    }
+        if (this.teaminfo.idx == this.$store.state.myToken.idx) {
+      this.status = true;
+    } else {
+      this.status = false;
     }
   },
   methods: {
@@ -285,6 +297,24 @@ export default {
           this.teamlist = data.data;
           console.log(this.teamlist);
         });
+    },
+        memberDelete() {
+      let token = window.$cookies.get("nnd");
+
+      confirm("삭제하시겠습니까?") &&
+        axios
+          .delete(
+            `${process.env.VUE_APP_API_URL}/memberboard/delete/` +
+              this.teaminfo.boardno,
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then(() => {
+            this.$router.go();
+          });
     },
   },
 };
