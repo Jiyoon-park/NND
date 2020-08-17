@@ -1,20 +1,23 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="mt-15" style="background-color:#eceff1;">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-15">
+    <v-col
+      cols="10"
+      md="8"
+      lg="6"
+      class="my-6"
+      style="background-color:#fafafa; border-radius:10px;"
+    >
       <div class="user-info">
         <v-avatar color="grey" size="90" class="mb-3">
-          <span v-if="!profileURL" class="white--text headline"></span>
+          <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
           <img v-else :src="profileURL" />
         </v-avatar>
         <small>{{ teaminfo.category }}</small>
         <h4>{{ teaminfo.teamName }}</h4>
-        <!-- <v-btn small @click="$router.push('/profile-update')">
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>-->
       </div>
 
-      <v-tabs show-arrows fixed-tabs color="indigo lighten-1" class="tabs">
+      <v-tabs show-arrows fixed-tabs background-color="#fafafa" color="#0277BD" class="tabs">
         <v-tab class="px-0" @click="$vuetify.goTo('#team-post', options)">게시판</v-tab>
         <v-tab class="px-0" @click="$vuetify.goTo('#team-member-diary', options)">일정관리</v-tab>
         <v-tab class="px-0" @click="$vuetify.goTo('#team-member', options)">팀원목록</v-tab>

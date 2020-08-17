@@ -8,63 +8,72 @@
     :items-per-page="5"
     class="elevation-1"
     mobile-breakpoint="0"
+    style="position:relative;"
   >
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
-          label="Search"
+          label="검색"
           single-line
           hide-details
         ></v-text-field>
-        <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
-              >게시글 추가</v-btn
-            >
+            <v-btn
+              color="#0277BD"
+              dark
+              class="mb-2"
+              v-bind="attrs"
+              v-on="on"
+              style="position:absolute; top:-55px; right:0px;"
+            >글작성</v-btn>
           </template>
           <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-col cols="12">
-                  <v-text-field
-                    v-model="editedItem.title"
-                    label="제목"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-textarea
-                    v-model="editedItem.content"
-                    label="내용"
-                  ></v-textarea>
-                </v-col>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
+            <v-toolbar dark flat color="#0277BD">
+              <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">취소</v-btn>
-              <v-btn color="blue darken-1" text @click="save" :disabled="status"
-                >저장</v-btn
-              >
+            </v-toolbar>
+
+            <v-container>
+              <v-card-text>
+                <v-row>
+                  <v-col cols="12" class="py-0">
+                    <span class="subheader">✔ 제목</span>
+                    <v-text-field
+                      class="mt-2"
+                      filled
+                      label="제목"
+                      required
+                      v-model="editedItem.title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" class="py-0">
+                    <span class="subheader">✔ 내용</span>
+                    <v-textarea
+                      class="mt-2"
+                      filled
+                      label="내용"
+                      required
+                      v-model="editedItem.content"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-container>
+            <v-card-actions>
+              <v-btn color="#0277BD" text @click="close">닫기</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn color="#0277BD" text @@click="save" :disabled="status">저장</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">
-        mdi-pencil
-      </v-icon>
-      <v-icon small @click="deleteItem(item)">
-        mdi-delete
-      </v-icon>
+      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -223,4 +232,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.subheader {
+  padding: 1px 0;
+  background-color: #eeeeee;
+  font-style: italic;
+}
+</style>
