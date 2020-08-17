@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-toolbar dark color="indigo lighten-2">
+    <v-toolbar dark flat color="#0277BD">
       <v-btn icon dark @click="changeDialog">
         <v-icon>mdi-close</v-icon>
       </v-btn>
@@ -11,7 +11,7 @@
       <div class="d-flex justify-center">
         <v-chip-group
           v-model="teamcheck"
-          active-class="indigo lighten-1 white--text text--accent-4"
+          active-class="blue darken-3 white--text text--accent-4"
           mandatory
           class="my-3"
         >
@@ -137,8 +137,8 @@
                 </template>
                 <v-date-picker v-model="date" no-title scrollable>
                   <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false">취소</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(date)">선택</v-btn>
+                  <v-btn text color="#0277BD" @click="menu = false">취소</v-btn>
+                  <v-btn text color="#0277BD" @click="$refs.menu.save(date)">선택</v-btn>
                 </v-date-picker>
               </v-menu>
             </v-col>
@@ -148,17 +148,17 @@
     </v-container>
     <v-divider></v-divider>
     <v-card-actions>
-      <v-btn text @click="changeDialog">취소</v-btn>
+      <v-btn text color="blue darken-3" @click="changeDialog">취소</v-btn>
       <v-spacer></v-spacer>
       <v-btn
-        color="indigo darken-1"
+        color="blue darken-3"
         text
         class="font-weight-bold"
         v-if="teamcheck == '팀'"
         @click="submit"
       >팀 등록</v-btn>
       <v-btn
-        color="indigo darken-1"
+        color="blue darken-3"
         text
         class="font-weight-bold"
         v-if="teamcheck == '팀원'"

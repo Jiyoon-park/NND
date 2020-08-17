@@ -1,54 +1,55 @@
 <template>
   <v-row justify="center">
     <NavBar />
-    <v-col cols="10" md="8" lg="6" class="mt-15">
-      <div class="user-info">
-        <v-avatar color="grey" size="90" class="mb-2">
+    <v-col cols="10" md="8" lg="6" class="mt-13">
+      <div class="user-info" style="position:relative;">
+        <v-avatar color="grey" size="90" class="mb-3">
           <span v-if="!profileURL" class="white--text headline"></span>
           <img v-else :src="profileURL" />
         </v-avatar>
         <h3>{{ user.name }}</h3>
-        <p># 참여중인 팀 : 앨리스</p>
       </div>
 
-      <v-tabs class="tabs">
-        <v-spacer></v-spacer>
+      <v-tabs fixed-tabs color="#0277BD" class="tabs">
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
         <v-tab @click="$vuetify.goTo('#experience', options)">참여이력</v-tab>
-        <v-spacer></v-spacer>
       </v-tabs>
 
       <div id="my-info" class="target">
-        <h3># 내정보</h3>
-        <v-row>
-          <v-col cols="4" md="2">
+        <h3 class="mb-3">🌞 내정보 🌞</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="4" md="2" class="px-4 py-4">
             <p>이메일</p>
-            <p>GIT 주소</p>
+            <p class="mb-0">GIT</p>
           </v-col>
-          <v-col cols="8" md="10">
+          <v-col cols="8" md="10" class="px-4 py-4">
             <p>{{ user.email }}</p>
-            <p>{{ user.gitaddr }}</p>
+            <p class="mb-0">{{ user.gitaddr }}</p>
           </v-col>
         </v-row>
       </div>
 
-      <hr />
       <div id="skills" class="target">
-        <h3># 기술스택</h3>
-        <div class="skills">
-          <v-combobox
-          v-model="select"
-          chips
-          multiple
-          readonly
-        ></v-combobox>
-        </div>
+        <h3 class="mb-3">✨ 기술스택 ✨</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <v-col cols="12" sm="12" class="px-4 py-4">
+            <v-chip-group column>
+              <v-chip v-for="tag in select" :key="tag" color="indigo" dark>
+                {{
+                tag
+                }}
+              </v-chip>
+            </v-chip-group>
+          </v-col>
+        </v-row>
       </div>
-      <hr />
+
       <div id="experience" class="target">
-        <h3># 참여이력</h3>
-        <ProjectHistoryList />
+        <h3 class="mb-3">🏅 참여이력 🏅</h3>
+        <v-row style="background-color: #fafafa; border-radius:10px;">
+          <ProjectHistoryList :isEditPage="isEditPage" />
+        </v-row>
       </div>
     </v-col>
   </v-row>
@@ -73,24 +74,25 @@ export default {
       easings: Object.keys(easings),
       user: "",
       profileURL: "",
-      select:[],
+      select: [],
+      isEditPage: false,
     };
   },
   created() {
     let id = this.$route.params.idx;
-    let token = window.$cookies.get('nnd')
+    let token = window.$cookies.get("nnd");
     this.$http
-  .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {
-    headers: {
-              Authorization: 'Bearer ' + token.data, // the token is a variable which holds the token
-            }
-  })
-  .then((resp) => {
-    console.log(resp);
-    this.user = resp.data;
-    this.profileURL = this.user.profile;
-    this.select = JSON.parse(this.user.memberstack)        
-    });
+      .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        },
+      })
+      .then((resp) => {
+        console.log(resp);
+        this.user = resp.data;
+        this.profileURL = this.user.profile;
+        this.select = JSON.parse(this.user.memberstack);
+      });
   },
   computed: {
     target() {
@@ -141,15 +143,3 @@ hr {
   margin: 30px 0;
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-<style></style>

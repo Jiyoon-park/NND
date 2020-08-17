@@ -25,7 +25,7 @@
           <span>변경된 정보를 저장 합니다.</span>
         </v-tooltip>
       </div>
-      <v-tabs fixed-tabs color="indigo lighten-1" class="tabs">
+      <v-tabs fixed-tabs color="#0277BD" class="tabs">
         <v-spacer></v-spacer>
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
@@ -37,32 +37,10 @@
         <h3 class="mb-3">🌞 내정보 🌞</h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-card-text>
-            <v-text-field
-              filled
-              dense
-              disabled
-              :value="user.email"
-              label="이메일"
-              color="white"
-            ></v-text-field>
-            <v-text-field
-              filled
-              dense
-              v-model="user.name"
-              label="이름"
-            ></v-text-field>
-            <v-text-field
-              dense
-              v-model="user.gitaddr"
-              label="GIT 주소"
-              filled
-            ></v-text-field>
-            <v-text-field
-              dense
-              v-model="user.profile"
-              label="프로필사진 링크"
-              filled
-            ></v-text-field>
+            <v-text-field filled dense disabled :value="user.email" label="이메일" color="white"></v-text-field>
+            <v-text-field filled dense v-model="user.name" label="이름"></v-text-field>
+            <v-text-field dense v-model="user.gitaddr" label="GIT 주소" filled></v-text-field>
+            <v-text-field dense v-model="user.profile" label="프로필사진 링크" filled></v-text-field>
             <v-btn type="button" @click="PreviewImg">이미지 미리보기</v-btn>
           </v-card-text>
         </v-row>
@@ -72,14 +50,7 @@
         <h3 class="mb-3">✨ 기술스택 ✨</h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 pt-4 pb-0">
-            <v-combobox
-              v-model="select"
-              :items="items"
-              label="기술스택"
-              multiple
-              chips
-              filled
-            ></v-combobox>
+            <v-combobox v-model="select" :items="items" label="기술스택" multiple chips filled></v-combobox>
           </v-col>
         </v-row>
       </div>
@@ -90,14 +61,7 @@
           <!-- 프로젝트히스토리 추가/수정 버튼 -->
           <div v-show="isEditPage">
             <AddProjectHistory />
-            <v-btn
-              color="red darken-2"
-              dark
-              fab
-              x-small
-              class="mr-1"
-              @click="EditChange"
-            >
+            <v-btn color="red darken-2" dark fab x-small class="mr-1" @click="EditChange">
               <v-icon>mdi-minus</v-icon>
             </v-btn>
           </div>

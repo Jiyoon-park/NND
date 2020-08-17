@@ -26,7 +26,7 @@
         </v-tooltip>
       </div>
 
-      <v-tabs fixed-tabs color="indigo lighten-1" class="tabs">
+      <v-tabs fixed-tabs color="#0277BD" class="tabs">
         <v-tab @click="$vuetify.goTo('#my-info', options)">내정보</v-tab>
         <v-tab @click="$vuetify.goTo('#skills', options)">기술스택</v-tab>
         <v-tab @click="$vuetify.goTo('#experience', options)">참여이력</v-tab>
