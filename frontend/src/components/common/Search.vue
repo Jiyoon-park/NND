@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" width="50%" :fullscreen="$vuetify.breakpoint.mobile" hide-overlay>
+  <v-dialog
+    v-model="dialog"
+    width="50%"
+    :fullscreen="$vuetify.breakpoint.mobile"
+    hide-overlay
+  >
     <template v-slot:activator="{ on, attrs }">
       <i
         class="fas fa-search fa-lg"
@@ -48,7 +53,13 @@
                   active-class="indigo lighten-1 white--text text--accent-4"
                   mandatory
                 >
-                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
+                  <v-chip
+                    large
+                    v-for="type in types"
+                    :key="type"
+                    :value="type"
+                    >{{ type }}</v-chip
+                  >
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -60,7 +71,12 @@
           <v-list-item>
             <v-list-item-content class="py-0">
               <div class="d-flex justify-center">
-                <v-switch v-model="categorySelection" label="스터디" color="red darken-3" value="스터디"></v-switch>
+                <v-switch
+                  v-model="categorySelection"
+                  label="스터디"
+                  color="red darken-3"
+                  value="스터디"
+                ></v-switch>
                 <v-switch
                   v-model="categorySelection"
                   label="프로젝트"
@@ -86,7 +102,7 @@
               <div class="d-flex flex-column justify-center">
                 <v-combobox
                   v-model="newSkill"
-                  :newSkill="newSkill"
+                  :items="items"
                   label="기술스택 추가"
                   filled
                   multiple
@@ -101,9 +117,21 @@
       </v-container>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="indigo darken-1" text class="font-weight-bold" @click="dialog = false">Close</v-btn>
+        <v-btn
+          color="indigo darken-1"
+          text
+          class="font-weight-bold"
+          @click="dialog = false"
+          >Close</v-btn
+        >
         <v-spacer></v-spacer>
-        <v-btn color="indigo darken-1" text class="font-weight-bold" @click="submit">Search</v-btn>
+        <v-btn
+          color="indigo darken-1"
+          text
+          class="font-weight-bold"
+          @click="submit"
+          >Search</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -121,7 +149,28 @@ export default {
     skillSelection: [],
     newSkill: [],
     types: ["team", "member"],
-    skills: ["Java", "Python", "Spring", "C", "C++", "JavaScript"],
+    items: [
+      "C",
+      "C++",
+      "JAVA",
+      "Spring",
+      "Django",
+      "C#",
+      "Go",
+      "R",
+      "Javascript",
+      "vue.js",
+      "Linux",
+      "MYSQL",
+      "Mariadb",
+      "RestApi",
+      "Python",
+      "Pytorch",
+      "Tensorflow",
+      "Spirngboot",
+      "Ruby",
+      "React.js",
+    ],
     info: {},
     isMobile: false,
   }),

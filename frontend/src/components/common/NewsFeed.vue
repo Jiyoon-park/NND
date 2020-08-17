@@ -201,6 +201,7 @@ export default {
             this.$store.state.myToken.idx +
             "/" +
             this.teaminfo.boardno,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token

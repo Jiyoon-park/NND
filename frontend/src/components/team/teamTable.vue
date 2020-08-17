@@ -9,17 +9,17 @@
     >
       <template slot="table-row" slot-scope="props">
         <span v-if="props.column.field === 'survey'">
-          <v-btn v-if="props.row.memberIdx == myidx" color="primary" disabled>평가하기</v-btn>
           <v-btn
-            v-else
+            v-if="props.row.memberIdx == myidx || props.row.rated == '1'"
             color="primary"
-            @click="goSurvey(props)"
-            :disabled="btnStatus[props.index]"
-          >평가하기</v-btn>
+            disabled
+            >평가하기</v-btn
+          >
+          <member-btn v-else :props="props"></member-btn>
         </span>
       </template>
     </vue-good-table>
-    <v-dialog v-model="dialog" persistent max-width="600">
+    <!--<v-dialog v-model="dialog" persistent max-width="600">
       <v-card>
         <v-card-title class="headline">팀워크</v-card-title>
         <div class="text-center">
@@ -35,14 +35,15 @@
           <v-btn color="green darken-1" text @click="sendRating">확인</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog>-->
   </v-card>
 </template>
 
 <script>
 import "vue-good-table/dist/vue-good-table.css";
 import { VueGoodTable } from "vue-good-table";
-import axios from "axios";
+import MemberBtn from "./memberBtn.vue";
+//import axios from "axios";
 
 export default {
   data() {
@@ -72,6 +73,7 @@ export default {
   },
   components: {
     VueGoodTable,
+    MemberBtn,
   },
   created() {
     this.teamboardno = this.$store.state.teamNo;
@@ -92,33 +94,34 @@ export default {
   },
 
   methods: {
-    goSurvey(props) {
-      this.dialog = true;
-      console.log("props찍어보자");
-      console.log(props);
-      this.nowNum = props.index;
-    },
-    sendRating() {
-      this.dialog = false;
-      console.log(this.satisfaction);
-      console.log(this.teamworkship);
-      axios
-        .put(`${process.env.VUE_APP_API_URL}/teammenu/rating`, {
-          ratingN0: "",
-          idx: this.nowNum,
-          commitCnt: 4,
-          issueCnt: 3,
-          attendRate: 4,
-          satisfaction: this.satisfaction,
-          teamworkship: this.teamworkship,
-        })
-        .then(() => {
-          this.btnStatus[this.nowNum] = true;
-          console.log("btnStatus찍어보자");
-          console.log(this.btnStatus);
-          this.isDisabled;
-        });
-    },
+    // goSurvey(props) {
+    //   this.dialog = true;
+    //   console.log("props찍어보자");
+    //   console.log(props);
+    //   this.nowNum = props.index;
+    // },
+    // sendRating() {
+    //   this.dialog = false;
+    //   console.log(this.satisfaction);
+    //   console.log(this.teamworkship);
+    //   axios
+    //     .put("http://localhost:8080/teammenu/rating", {
+    //       ratingN0: "",
+    //       idx: this.nowNum,
+    //       commitCnt: 4,
+    //       issueCnt: 3,
+    //       attendRate: 4,
+    //       satisfaction: this.satisfaction,
+    //       teamworkship: this.teamworkship,
+    //     })
+    //     .then(() => {
+    //       this.btnStatus[this.nowNum] = true;
+    //       console.log("btnStatus찍어보자");
+    //       console.log(this.btnStatus);
+    //       this.isDisabled;
+    //     });
+    //   this.$forceUpdate;
+    // },
     checkMaster() {
       var list = this.members;
       console.log("list를 찍어보자");

@@ -92,6 +92,7 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/letter/teamaccept/${sendidx}/${teamboardno}`,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
@@ -100,11 +101,17 @@ export default {
         )
         .then((res) => {
           console.log(res);
-          alert("수락완료");
+          if (res.data == "success") {
+            alert("수락완료");
+          } else if (res.data == "already full") {
+            alert("멤버 모집이 끝났습니다.");
+          } else if (res.data == "already joined") {
+            alert("이미 가입했습니다.");
+          }
         })
         .catch((err) => {
           console.log(err);
-          alert("수락실패");
+          alert("멤버가 없거나 팀이 삭제되었습니다.");
         });
       this.changeDialog();
     },
@@ -113,14 +120,27 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/letter/memberaccept/${teamboardno}/${receiveidx}`,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
             },
           }
         )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          console.log(res);
+          if (res.data == "success") {
+            alert("수락완료");
+          } else if (res.data == "already full") {
+            alert("멤버 모집이 끝났습니다.");
+          } else if (res.data == "already joined") {
+            alert("이미 가입했습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("멤버가 없거나 팀이 삭제되었습니다.");
+        });
       this.changeDialog();
     },
     changeDialog() {

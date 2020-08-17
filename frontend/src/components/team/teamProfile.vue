@@ -131,7 +131,14 @@ export default {
         console.log(err);
       });
     axios
-      .get(`http://localhost:8080/teammenu/member/` + this.teamboardno)
+      .get(
+        `${process.env.VUE_APP_API_URL}/teammenu/member/${this.teamboardno}/${id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+          },
+        }
+      )
       .then((data) => {
         console.log("데이터찍어보자");
         console.log(data.data);

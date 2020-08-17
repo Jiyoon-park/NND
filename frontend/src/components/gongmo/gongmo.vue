@@ -132,7 +132,7 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
-import axios from "axios";
+//import axios from "axios";
 
 export default {
   name: "Gongmo",
@@ -140,80 +140,34 @@ export default {
     NavBar,
   },
   created() {
-    let token = window.$cookies.get("nnd");
-    var t = new Date().getDay();
-    console.log(t);
-    console.log(this.$store.state.day);
+    // if (this.$store.state.day == "" || this.$store.state.day - t != 0) {
+    //   console.log(this.$store.state.day - t);
+    //   this.$store.commit("setDate", t);
 
-    if (this.$store.state.day == "" || this.$store.state.day - t != 0) {
-      console.log(this.$store.state.day - t);
-      this.$store.commit("setDate", t);
-      axios
-        .get(`${process.env.VUE_APP_API_URL}/contest`, {
-          headers: {
-            Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-          },
-        })
-        .then(({ data }) => {
-          this.boards = data;
+    console.log("exist");
+    this.boards = this.$store.state.contest;
+    for (let index = 0; index < this.boards.length; index++) {
+      var ncolor = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+      const allDay = this.rnd(0, 3) === 0;
+      this.events.push({
+        id: index,
+        name: this.boards[index].title,
+        start: this.boards[index].start,
+        end: this.boards[index].start,
+        color: ncolor,
+        timed: !allDay,
+        poster: this.boards[index].poster,
+      });
 
-          this.$store.commit("setContest", this.boards);
-          console.log(this.boards);
-          for (let index = 0; index < this.boards.length; index++) {
-            var ncolor =
-              "#" + Math.round(Math.random() * 0xffffff).toString(16);
-            const allDay = this.rnd(0, 3) === 0;
-            this.events.push({
-              id: index,
-              name: this.boards[index].title,
-              start: this.boards[index].start,
-              end: this.boards[index].start,
-              color: ncolor,
-              timed: !allDay,
-              poster: this.boards[index].poster,
-            });
-
-            this.events.push({
-              id: index,
-              name: this.boards[index].title,
-              start: this.boards[index].end,
-              end: this.boards[index].end,
-              color: ncolor,
-              timed: !allDay,
-              poster: this.boards[index].poster,
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        }); //endaxios
-    } //end if
-    else {
-      console.log("exist");
-      this.boards = this.$store.state.contest;
-      for (let index = 0; index < this.boards.length; index++) {
-        var ncolor = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-        const allDay = this.rnd(0, 3) === 0;
-        this.events.push({
-          id: index,
-          name: this.boards[index].title,
-          start: this.boards[index].start,
-          end: this.boards[index].start,
-          color: ncolor,
-          timed: !allDay,
-          poster: this.boards[index].poster,
-        });
-
-        this.events.push({
-          id: index,
-          name: this.boards[index].title,
-          start: this.boards[index].end,
-          end: this.boards[index].end,
-          color: ncolor,
-          timed: !allDay,
-          poster: this.boards[index].poster,
-        });
-      }
+      this.events.push({
+        id: index,
+        name: this.boards[index].title,
+        start: this.boards[index].end,
+        end: this.boards[index].end,
+        color: ncolor,
+        timed: !allDay,
+        poster: this.boards[index].poster,
+      });
     }
   },
   data: () => ({
