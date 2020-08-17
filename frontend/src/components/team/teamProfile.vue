@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" class="mt-15" style="background-color:#eceff1;">
+  <v-row justify="center" class="mt-13" style="background-color:#eceff1;">
     <NavBar />
     <v-col
       cols="10"
@@ -9,10 +9,10 @@
       style="background-color:#fafafa; border-radius:10px;"
     >
       <div class="user-info">
-        <v-avatar color="grey" size="90" class="mb-3">
-          <i v-if="!profileURL" class="fas fa-user fa-lg"></i>
-          <img v-else :src="profileURL" />
-        </v-avatar>
+        <!-- <v-avatar color="#eeeeee" size="90" class="mb-3">
+          <i v-if="!teaminfo.imageurl">{{ teaminfo.category }}</i>
+          <img v-else :src="teaminfo.imgaeurl" />
+        </v-avatar>-->
         <small>{{ teaminfo.category }}</small>
         <h4>{{ teaminfo.teamName }}</h4>
       </div>
