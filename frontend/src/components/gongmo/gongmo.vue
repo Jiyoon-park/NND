@@ -7,29 +7,21 @@
           <v-sheet height="64">
             <v-toolbar flat color="white" style="position:relative;">
               <div class="d-flex justify-center align-center">
-                <div
-                  class="d-flex align-center"
-                  style="position:absolute; left:0;"
-                >
+                <div class="d-flex align-center" style="position:absolute; left:0;">
                   <v-btn fab text small color="grey darken-2" @click="prev">
                     <v-icon small>mdi-chevron-left</v-icon>
                   </v-btn>
-                  <v-toolbar-title v-if="$refs.calendar">{{
+                  <v-toolbar-title v-if="$refs.calendar">
+                    {{
                     $refs.calendar.title
-                  }}</v-toolbar-title>
+                    }}
+                  </v-toolbar-title>
                   <v-btn fab text small color="grey darken-2" @click="next">
                     <v-icon small>mdi-chevron-right</v-icon>
                   </v-btn>
                 </div>
                 <div style="position:absolute; right:10px;">
-                  <v-btn
-                    outlined
-                    small
-                    dark
-                    color="grey darken-2"
-                    @click="setToday"
-                    >오늘</v-btn
-                  >
+                  <v-btn outlined small dark color="grey darken-2" @click="setToday">오늘</v-btn>
                   <v-btn
                     v-if="type == 'day'"
                     outlined
@@ -38,12 +30,12 @@
                     class="ml-2"
                     color="grey darken-3"
                     @click="type = 'month'"
-                    >월</v-btn
-                  >
+                  >월</v-btn>
                 </div>
               </div>
             </v-toolbar>
           </v-sheet>
+
           <v-sheet height="100%">
             <v-calendar
               ref="calendar"
@@ -65,28 +57,19 @@
             >
               <v-card color="grey lighten-4" flat style="max-width:500px;">
                 <v-toolbar :color="selectedEvent.color" flat dark>
-                  <v-toolbar-title
-                    v-html="selectedEvent.name"
-                  ></v-toolbar-title>
+                  <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                 </v-toolbar>
                 <v-container class="py-0">
                   <v-row>
                     <v-col cols="12" sm="12" class="px-4 pt-4">
-                      <img
-                        v-bind:src="getPoster()"
-                        style="max-height:200px; max-width:500px;"
-                      />
+                      <img v-bind:src="getPoster()" style="max-height:200px; max-width:500px;" />
                     </v-col>
                   </v-row>
                   <v-row>
                     <v-col cols="12" class="pb-0">
                       <v-card-text class="px-4 py-0">
                         <h3>{{ selectedEvent.name }}</h3>
-                        <div
-                          v-for="(board, index) in boards"
-                          :key="index"
-                          class="mt-5"
-                        >
+                        <div v-for="(board, index) in boards" :key="index" class="mt-5">
                           <div v-if="index === selectedEvent.id">
                             <div v-if="board.host !== null" class="mt-2">
                               <p class="mb-0 font-weight-bold">주최 🏢</p>
@@ -99,11 +82,11 @@
                             <!-- <div v-if="board.qua !== null" class="mt-2">
                               <p class="mb-0 font-weight-bold">참가자격</p>
                               <span>{{ board.qua }}</span>
-                            </div> -->
+                            </div>-->
                             <div v-if="board.price !== null" class="mt-2">
                               <p class="mb-0 font-weight-bold">시상금액 💰</p>
-                              <span>1등 {{ board.price }}</span
-                              ><br />
+                              <span>1등 {{ board.price }}</span>
+                              <br />
                             </div>
                             <div class="mt-5">
                               <small class="mb-0">
@@ -112,8 +95,7 @@
                                   :href="board.link"
                                   target="_blank"
                                   style="text-decoration:none;"
-                                  >여기를 클릭</a
-                                >하세요
+                                >여기를 클릭</a>하세요
                               </small>
                             </div>
                           </div>
@@ -130,16 +112,14 @@
                     color="secondary"
                     class="font-weight-bold"
                     @click="selectedOpen = false"
-                    >닫기</v-btn
-                  >
+                  >닫기</v-btn>
                   <v-spacer />
                   <v-btn
                     text
                     color="secondary"
                     class="font-weight-bold"
                     @click="$router.push('/')"
-                    >팀찾기</v-btn
-                  >
+                  >팀찾기</v-btn>
                 </v-card-actions>
               </v-card>
             </v-menu>

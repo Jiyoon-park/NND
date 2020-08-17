@@ -16,7 +16,7 @@
       <v-toolbar-title v-else>보낸 편지</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-card-text class="mt-5 px-3">
+    <v-card-text class="mt-5 px-5">
       <div class="d-flex align-center">
         <div>
           <v-avatar color="grey" size="48">
