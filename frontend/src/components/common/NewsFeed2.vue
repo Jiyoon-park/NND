@@ -20,13 +20,15 @@
               <div class="d-flex flex-column ml-3">
                 <span style="cursor:pointer;" @click="profileMove(teaminfo.idx)">{{ teaminfo.name }}</span>
                 <div>
-                  <span>{{
+                  <span>
+                    {{
                     $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                  }}</span>
-                  <small class="deadline">
+                    }}
+                  </span>
+                  <span class="deadline">
                     ~ {{ teaminfo.deadline }}
-                    <span style="color:#555">마감</span>
-                  </small>
+                    마감
+                  </span>
                 </div>
               </div>
             </div>
@@ -42,11 +44,7 @@
                   v-else-if="teaminfo.category === '프로젝트'"
                   src="../../assets/images/project.jpg"
                 ></v-img>
-                <v-img
-                  :aspect-ratio="16 / 9"
-                  v-else
-                  src="../../assets/images/competition.jpg"
-                ></v-img>
+                <v-img :aspect-ratio="16 / 9" v-else src="../../assets/images/competition.jpg"></v-img>
               </div>
               <div v-else>
                 <v-img :aspect-ratio="16 / 9" :src="teaminfo.imageurl"></v-img>
@@ -57,16 +55,13 @@
               >
                 <span
                   style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                  >{{ teaminfo.category }}</span
-                >
+                >{{ teaminfo.category }}</span>
 
-                <small
-                  style="background-color:#eeeeee; opacity:0.7;"
-                  class="px-1"
-                  >모집 인원 {{ teaminfo.memcnt }}/{{
-                    teaminfo.groupsize
-                  }}</small
-                >
+                <small style="background-color:#eeeeee; opacity:0.7;" class="px-1">
+                  참여 인원 {{ teaminfo.memcnt }}/{{
+                  teaminfo.groupsize
+                  }}
+                </small>
               </span>
 
               <div style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;">
@@ -83,16 +78,14 @@
             <div class="shrink mt-10 mx-4 mb-4">
               <div class="d-flex justify-space-between align-center">
                 <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <small
-                  @click="expand = !expand"
-                  style="cursor:pointer; color:primary"
-                  >더보기</small
-                >
+                <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">{{
+                <v-card flat v-show="expand" class="mx-auto">
+                  {{
                   teaminfo.content
-                }}</v-card>
+                  }}
+                </v-card>
               </v-expand-transition>
               <div class="d-flex">
                 <v-chip
@@ -102,12 +95,9 @@
                   text-color="white"
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
-                  ># {{ stack }}</v-chip
-                >
+                ># {{ stack }}</v-chip>
                 <v-spacer></v-spacer>
-                <v-icon right @click="teamDelete" :disabled=!status>
-                   mdi-delete
-                </v-icon>
+                <v-icon right @click="teamDelete" :disabled="!status">mdi-delete</v-icon>
               </div>
             </div>
             <!-- <v-expansion-panel-header class="mt-7 pb-0">
@@ -136,40 +126,21 @@
 
         <v-dialog v-model="dialog" max-width="600px">
           <v-card style="border: 3px solid #eeeeee;">
-            <v-img
-              class="header"
-              height="200px"
-              src="../../assets/images/team2.jpg"
-            ></v-img>
-            <v-card-title class="header-text text-center justify-center body-1"
-              >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title
-            >
+            <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
+            <v-card-title
+              class="header-text text-center justify-center body-1"
+            >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title>
 
             <v-card-text class="pb-0">
               <div class="mt-4">
-                <p class="mb-3 pl-1" style="font-size:1rem;">
-                  팀장에게 보내는 어필 한마디 🙈🙉
-                </p>
-                <v-textarea
-                  filled
-                  v-model="content"
-                  name="content"
-                  placeholder="내용을 작성해주세요."
-                ></v-textarea>
+                <p class="mb-3 pl-1" style="font-size:1rem;">팀장에게 보내는 어필 한마디 🙈🙉</p>
+                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
               </div>
             </v-card-text>
             <v-card-actions class="pt-0">
-              <v-btn color="blue darken-1" text @click="dialog = false"
-                >취소</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
               <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                class="font-weight-bold"
-                text
-                @click="submit"
-                >지원하기</v-btn
-              >
+              <v-btn color="blue darken-1" class="font-weight-bold" text @click="submit">지원하기</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -381,7 +352,6 @@ export default {
 
 .deadline {
   color: #222;
-  font-weight: bold;
   background-color: #eeeeee;
   margin-left: 5px;
 }
