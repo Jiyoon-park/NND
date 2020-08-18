@@ -37,7 +37,7 @@
 
         <p class="mt-2">{{ letterinfo.content }}</p>
         <span class="subheader">✔ {{ letterinfo.name }}님의 이전 프로젝트 평가점수입니다.</span>
-        <div style="height:300px; width:300px; margin:auto;" v-if="item.tab == '받은 편지함'">
+        <div style="max-height:250px; max-width:250px; margin:auto;" v-if="item.tab == '받은 편지함'">
           <MemberChart :axiostype="axiostype" :letteridx="letterinfo" />
         </div>
       </div>

@@ -48,12 +48,16 @@
 
     <v-dialog v-model="ok" max-width="600px">
       <v-card>
-        <v-card-title class="header-text text-center justify-center font-italic">❝ 스케줄 내용 수정❠</v-card-title>
+        <v-toolbar color="blue darken-3" flat dark>
+          <v-toolbar-title>스케줄 내용 수정</v-toolbar-title>
+        </v-toolbar>
+
         <v-card-text class="mt-5 pb-0">
           <div class="mt-3">
             <v-textarea filled v-model="msg" placeholder="내용을 작성해주세요."></v-textarea>
           </div>
         </v-card-text>
+        <v-divider></v-divider>
         <v-card-actions>
           <v-btn color="blue darken-1" text @click="ok = false">취소</v-btn>
           <v-spacer></v-spacer>

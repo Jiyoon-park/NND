@@ -27,15 +27,31 @@
       </v-tabs>
 
       <div id="team-post" class="target">
-        <h3 class="mb-3">📢 게시판 📢</h3>
+        <h3 class="mb-3">
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on">📢 게시판 📢</span>
+            </template>
+            <span>프로젝트 관련 정보들을 공유해주세요.</span>
+          </v-tooltip>
+        </h3>
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
             <team-board :teaminfo="teaminfo" :userinfo="user"></team-board>
           </v-col>
         </v-row>
       </div>
+
       <div id="team-member-diary" class="target">
-        <h3 class="mb-3">✍ 일정관리 ✍</h3>
+        <h3 class="mb-3">
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on">✍ 일정관리 ✍</span>
+            </template>
+            <span>팀원과 공유할 일정이 있나요? 해당 일을 클릭해 드래그로 일정을 기록해보세요.</span>
+          </v-tooltip>
+        </h3>
+
         <v-row style="background-color: #fafafa; border-radius:10px;">
           <v-col cols="12" sm="12" class="px-4 py-4">
             <TeamDiary :teaminfo="teaminfo" :userinfo="user" />
@@ -46,7 +62,14 @@
       <v-row class="py-0 px-0">
         <v-col cols="12" sm="12" md="6">
           <div id="team-member" class="target">
-            <h3 class="mb-3">🏃 팀원목록 🏃</h3>
+            <h3 class="mb-3">
+              <v-tooltip right>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs" v-on="on">🏃 팀원목록 🏃</span>
+                </template>
+                <span>프로젝트가 마무리되었나요? 팀원에 대한 점수를 남겨주세요.</span>
+              </v-tooltip>
+            </h3>
             <v-row>
               <v-col cols="12" sm="12">
                 <TeamTable :teamdata="this.$store.state.teammembers" />
@@ -56,7 +79,14 @@
         </v-col>
         <v-col cols="12" sm="12" md="6">
           <div id="team-member-graph" class="target">
-            <h3 class="mb-3">📈 그래프 📉</h3>
+            <h3 class="mb-3">
+              <v-tooltip right>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs" v-on="on">📈 그래프 📉</span>
+                </template>
+                <span>전체 팀원의 평가 결과를 확인할 수 있습니다.</span>
+              </v-tooltip>
+            </h3>
             <v-row class="py-0 px-0">
               <v-col cols="12" sm="12">
                 <MemberChart :axiostype="axiostype" />
