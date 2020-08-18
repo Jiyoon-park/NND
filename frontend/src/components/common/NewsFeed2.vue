@@ -28,9 +28,14 @@
                       $moment(teaminfo.createdate).format("YYYY-MM-DD")
                       }}
                     </span>
-                    <span class="deadline">
+                    <!-- <span class="deadline">
                       ~ {{ teaminfo.deadline }}
                       마감
+                    </span>-->
+                    <span class="ml-1">
+                      <span v-if="this.dday==0" class="red">❗ D-DAY</span>
+                      <span v-else-if="this.dday < 0" class="grey">✘ 마감</span>
+                      <span v-else class="green">✅ D-{{ dday }}</span>
                     </span>
                   </div>
                 </div>
@@ -113,10 +118,10 @@
                     </div>
                   </v-card>
                 </v-expand-transition>
-                <div class="d-flex">
+                <div>
                   <v-chip
                     small
-                    class="mr-2 mt-1"
+                    class="mr-2 mb-1"
                     color="#0277BD"
                     text-color="white"
                     v-for="stack in JSON.parse(stacks)"
@@ -178,6 +183,7 @@ export default {
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
       expand: false,
+      dday: "",
     };
   },
 
@@ -196,6 +202,12 @@ export default {
     }
     // profileURL을 초기화
     this.profileURL = this.teaminfo.profile;
+
+    //D-day 계산
+    this.dday =
+      new Date().getTime() - new Date(this.teaminfo.deadline).getTime();
+    this.dday = Math.floor(this.dday / (1000 * 60 * 60 * 24)) * -1;
+    console.log(this.dday);
   },
   methods: {
     profileMove(no) {
@@ -379,5 +391,23 @@ export default {
   z-index: 2;
   color: #e0e0e0;
   border-top: 10px solid #0277bd;
+}
+
+.red {
+  background-color: #b71c1c;
+  padding: 4px 5px;
+  color: white;
+}
+
+.green {
+  background-color: #2e7d32;
+  padding: 4px 5px;
+  color: white;
+}
+
+.grey {
+  background-color: grey;
+  padding: 4px 5px;
+  color: white;
 }
 </style>
