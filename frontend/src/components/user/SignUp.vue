@@ -1,17 +1,13 @@
 <template>
   <v-container>
+    <div class="d-flex align-center" @click="$router.push('/login')">
+      <v-btn icon>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <p class="mb-0">로그인 화면으로</p>
+    </div>
     <v-row justify="center">
-      <v-col cols="10" sm="8" md="6" lg="4" class="px-0">
-        <div class="d-flex align-center" @click="$router.push('/login')">
-          <v-btn icon>
-            <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
-          <p class="mb-0">로그인 화면으로</p>
-        </div>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="10" sm="8" md="6" lg="4">
+      <v-col cols="10" md="8" lg="4">
         <h2 class="my-5">너내동 회원가입</h2>
         <v-form class="form" ref="form" v-model="valid" lazy-validation>
           <v-text-field v-model="name" :rules="nameRule" label="이름" outlined dense required></v-text-field>
@@ -54,9 +50,9 @@
 
 <script>
 import axios from "axios";
-//import * as firebase from "firebase/app";
-//import "firebase/auth";
-//import "firebase/database";
+// import * as firebase from "firebase/app";
+// import "firebase/auth";
+// import "firebase/database";
 
 export default {
   name: "SignUp",
@@ -97,22 +93,23 @@ export default {
   methods: {
     signup() {
       if (this.$refs.form.validate()) {
-//        firebase
-//          .auth()
-//          .createUserWithEmailAndPassword(this.email, this.password)
-//          .then(() => {
-//            alert("회원가입 완료");
-//            var user = firebase.auth().currentUser;
-//            user.updateProfile({
-//              displayName: this.name,
-//            });
-//            this.$router.push("/login");
-//          })
-//          .catch(function (error) {
-//            const errorCode = error.code;
-//            const errorMessage = error.message;
-//            alert(errorMessage + errorCode);
-//          });
+        // firebase
+        //   .auth()
+        //   .createUserWithEmailAndPassword(this.email, this.password)
+        //   .then(() => {
+        //     alert("회원가입 완료");
+        //     var user = firebase.auth().currentUser;
+        //     user.updateProfile({
+        //       displayName: this.name,
+        //     });
+        //     this.$router.push("/login");
+        //   })
+        //   .catch(function (error) {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message;
+        //     alert(errorMessage + errorCode);
+        //   });
+
         axios
           .post(`${process.env.VUE_APP_API_URL}/member/signup`, {
             name: this.name,
