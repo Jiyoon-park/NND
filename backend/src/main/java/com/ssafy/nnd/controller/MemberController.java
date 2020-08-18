@@ -1,9 +1,12 @@
 package com.ssafy.nnd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,6 +145,22 @@ public class MemberController {
 	@GetMapping("/all")
 	public List<String> getallemail() {		
 		return memberRepository.findAllMemberEmail();
+	}
+	
+	@PutMapping("/teamprofilelink")
+	public List getMemberProfileLink(@RequestBody Map<String, List<String>> map) {
+    	List<String> emails = map.get("memberemails");
+		List<Object> profile = new ArrayList<>();
+		for (String email : emails) {
+			Optional<Object> tmp = memberRepository.findProfileLinkByEmail(email);
+			if (tmp.equals(Optional.empty())) { // profile이 없다면
+				profile.add(null);				// null 저장
+			} else {
+				profile.add(tmp.get());
+			}
+		}
+		return profile;
+		
 	}
 
 }
