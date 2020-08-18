@@ -42,6 +42,7 @@ export default {
             console.log("failed");
           }
         );
+        delay: 200
     }
     // let ntoken = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
     // if (!ntoken) {
