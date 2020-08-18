@@ -34,7 +34,6 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
     <v-dialog v-model="dialog" max-width="500px">
@@ -46,13 +45,20 @@
           v-bind="attrs"
           v-on="on"
           style="position:absolute; top:-55px; right:0px;"
-        >글작성</v-btn>
+          >글작성</v-btn
+        >
       </template>
       <v-card>
         <v-toolbar dark flat color="#0277BD">
           <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <!-- <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
+          <v-icon
+            v-if="this.myItem.memberIdx == this.userinfo.idx"
+            small
+            @click="deleteItem(myItem)"
+            color="#EEEEEE"
+            >mdi-delete</v-icon
+          >
         </v-toolbar>
 
         <v-container>
@@ -60,11 +66,23 @@
             <v-row>
               <v-col cols="12" class="py-0">
                 <span class="subheader">✔ 제목</span>
-                <v-text-field class="mt-2" filled label="제목" required v-model="editedItem.title"></v-text-field>
+                <v-text-field
+                  class="mt-2"
+                  filled
+                  label="제목"
+                  required
+                  v-model="editedItem.title"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" class="py-0">
                 <span class="subheader">✔ 내용</span>
-                <v-textarea class="mt-2" filled label="내용" required v-model="editedItem.content"></v-textarea>
+                <v-textarea
+                  class="mt-2"
+                  filled
+                  label="내용"
+                  required
+                  v-model="editedItem.content"
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
@@ -72,7 +90,16 @@
         <v-card-actions>
           <v-btn color="#0277BD" text @click="close">닫기</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="#0277BD" text @click="save" :disabled="status">저장</v-btn>
+          <v-btn
+            v-if="
+              this.myItem.memberIdx == this.userinfo.idx ||
+                this.editedIndex == -1
+            "
+            color="#0277BD"
+            text
+            @click="save"
+            >저장</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -88,8 +115,9 @@ export default {
     search: "",
     checkNum: 1,
     postSize: 0,
-    status: false,
+    status: true,
     myIdx: "",
+    myItem: [],
     headers: [
       {
         text: "번호",
@@ -103,7 +131,7 @@ export default {
         value: "title",
       },
       { text: "이름", value: "writer" },
-      { text: "상세보기/삭제", value: "actions", sortable: false },
+      { text: "상세보기", value: "actions", sortable: false },
     ],
     teampost: [],
 
@@ -173,10 +201,15 @@ export default {
     },
 
     editItem(item) {
+      console.log("2");
+      this.myItem = item;
+      console.log(this.myItem);
       if (this.$store.state.myToken.idx == item.memberIdx) {
-        this.status = false;
-      } else {
         this.status = true;
+        console.log("내게시글");
+      } else {
+        this.status = false;
+        console.log("내게시글아님");
       }
       this.editedIndex = this.teampost.indexOf(item);
       this.editedItem = Object.assign({}, item); //병합
@@ -184,8 +217,9 @@ export default {
     },
 
     deleteItem(item) {
+      console.log("item");
+      console.log(item);
       let token = window.$cookies.get("nnd");
-
       const index = this.teampost.indexOf(item);
       confirm("삭제하시겠습니까?") &&
         this.teampost.splice(index, 1) &&
@@ -198,19 +232,19 @@ export default {
             },
           }
         );
+      this.dialog = false;
     },
 
     close() {
-      this.dialog = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
+      this.dialog = false;
     },
 
     save() {
       let token = window.$cookies.get("nnd");
-
       if (this.editedIndex > -1) {
         Object.assign(this.teampost[this.editedIndex], this.editedItem);
         axios.post(
@@ -228,26 +262,35 @@ export default {
           }
         );
       } else {
-        this.editedItem.writer = this.userinfo.name;
-        this.teampost.push(this.editedItem);
-        axios.put(
-          `${process.env.VUE_APP_API_URL}/teammenu/post/save`,
-          {
-            teamboardNo: this.teaminfo.teamboardNo,
-            memberIdx: this.userinfo.idx,
-            writer: this.userinfo.name,
-            title: this.editedItem.title,
-            content: this.editedItem.content,
-            notice: 0,
-            createDate: "",
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+        // this.editedItem.writer = this.userinfo.name;
+        // this.editedItem.memberIdx = this.userinfo.idx;
+        // console.log(this.editedItem);
+        axios
+          .put(
+            `${process.env.VUE_APP_API_URL}/teammenu/post/save`,
+            {
+              teamboardNo: this.teaminfo.teamboardNo,
+              memberIdx: this.userinfo.idx,
+              writer: this.userinfo.name,
+              title: this.editedItem.title,
+              content: this.editedItem.content,
+              notice: 0,
+              createDate: "",
             },
-          }
-        );
-        this.teampost[this.postSize].num = this.postSize++;
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then((data) => {
+            this.myItem = data.data;
+            this.teampost.push(this.myItem);
+            console.log(this.myItem);
+            console.log(this.teampost);
+            this.teampost[this.postSize].num = this.postSize++;
+            console.log(this.teampost);
+          });
       }
       this.close();
     },
