@@ -34,10 +34,12 @@
       <div class="rounded grey lighten-3 pa-3 mt-3">
         <span class="subheader" v-if="letterinfo.letterType == 'mboard'">✔ 팀 영입 제안입니다.</span>
         <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
+
+        <p class="mt-2">{{ letterinfo.content }}</p>
+        <span class="subheader">✔ {{ letterinfo.name }}님의 이전 프로젝트 평가점수입니다.</span>
         <div style="height:300px; width:300px; margin:auto;" v-if="item.tab == '받은 편지함'">
           <MemberChart :axiostype="axiostype" :letteridx="letterinfo" />
         </div>
-        <p class="mt-2">{{ letterinfo.content }}</p>
       </div>
     </v-card-text>
     <v-divider></v-divider>
