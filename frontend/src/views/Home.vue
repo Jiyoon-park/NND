@@ -47,7 +47,7 @@ export default {
       let ntoken = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
       if (!ntoken) {
         //카카오도없고  nnd도 없으면 로그인해라
-        alert("로그인해주세요!");
+        //alert("로그인해주세요!");
         this.$store.commit("logout");
         window.$cookies.remove("nnd");
         this.$router.push("/welcome");
