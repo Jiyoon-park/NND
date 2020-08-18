@@ -86,7 +86,7 @@
                     <small>참여팀원</small>
                     <div class="d-flex mr-3 my-2 align-center">
                       <v-avatar
-                        v-for="profile in teaminfo.profile"
+                        v-for="profile in teaminfo.profiles"
                         v-bind:key="profile.memberProfile"
                         style="cursor:pointer; margin-right:10px"
                         color="#eeeeee"
@@ -277,7 +277,7 @@ export default {
       var endTime = new Date(this.teaminfo.deadline);
 
       // 9시로 계산되는 경향이 있어서 15시간을 추가한다.
-      endTime.setTime(endTime.getHours() + 15);
+      endTime.setHours(endTime.getHours() + 15);
 
       if (this.boardtype == "team") {
         this.boardtype = "tboard";
@@ -305,12 +305,12 @@ export default {
             if (token) {
               console.log("프로필주소 : " + token.object.profile);
               this.username = token.object.name;
-              this.profileURL = token.object.profile;
+              // this.profileURL = token.object.profile;
               this.sendIdx = token.object.idx;
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
