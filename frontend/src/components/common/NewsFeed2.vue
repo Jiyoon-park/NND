@@ -170,7 +170,7 @@ export default {
       createDate: "",
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
-      expand: false,
+      expand: false
     };
   },
 
@@ -211,11 +211,11 @@ export default {
           {},
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((data) => {
+        .then(data => {
           this.favorite = true;
 
           this.tlikeno = data.data;
@@ -228,8 +228,8 @@ export default {
           `${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(() => {
@@ -251,19 +251,19 @@ export default {
             letterNo: this.letterNo,
             createDate: this.createDate,
             lettertype: this.lettertype,
-            teamboardNo: this.teamboardNo,
+            teamboardNo: this.teamboardNo
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(() => {
           console.log(this.sendIdx);
           alert("신청되었습니다.");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
           alert("실패했습니다.");
         });
@@ -277,7 +277,7 @@ export default {
       var endTime = new Date(this.teaminfo.deadline);
 
       // 9시로 계산되는 경향이 있어서 15시간을 추가한다.
-      endTime.setTime(endTime.getHours() + 15);
+      endTime.setHours(endTime.getHours() + 15);
 
       if (this.boardtype == "team") {
         this.boardtype = "tboard";
@@ -289,11 +289,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/letter/check/overlap/${token.object.idx}/${this.teaminfo.idx}/${this.boardtype}/${this.teaminfo.teamboardno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => {
+        .then(res => {
           if (res.data == "overlap letter") {
             alert("중복 지원입니다.");
           } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
@@ -310,7 +310,7 @@ export default {
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -324,15 +324,15 @@ export default {
               this.teaminfo.teamboardno,
             {
               headers: {
-                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-              },
+                Authorization: "Bearer " + token.data // the token is a variable which holds the token
+              }
             }
           )
           .then(() => {
             this.$router.go();
           });
-    },
-  },
+    }
+  }
 };
 </script>
 
