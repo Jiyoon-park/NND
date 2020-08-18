@@ -80,30 +80,29 @@
                 </div>
               </div>
 
-              <div class="shrink mt-10 mx-4 mb-4">
-                <div class="d-flex justify-space-between align-center">
-                  <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                  <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
-                </div>
-                <v-expand-transition>
-                  <v-card flat v-show="expand" class="mx-auto" style="position:relative;">
-                    {{ teaminfo.content }}
-                    <div class="mt-4">
-                      <small>참여팀원</small>
-                      <div class="d-flex mr-3 my-2 align-center">
-                        <v-avatar
-                          v-for="profile in teaminfo.profile"
-                          v-bind:key="profile.memberProfile"
-                          style="cursor:pointer; margin-right:10px"
-                          color="#eeeeee"
-                          size="30"
-                          class="user-img mb-2"
-                          @click="profileMove(profile.memberIdx)"
-                        >
-                          <i v-if="!profile.memberProfile" class="fas fa-user"></i>
-                          <img v-else :src="profile.memberProfile" />
-                        </v-avatar>
-                      </div>
+            <div class="shrink mt-10 mx-4 mb-4">
+              <div class="d-flex justify-space-between align-center">
+                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
+                <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
+              </div>
+              <v-expand-transition>
+                <v-card flat v-show="expand" class="mx-auto" style="position:relative;">
+                  {{ teaminfo.content }}
+                  <div class="mt-4">
+                    <small>참여팀원</small>
+                    <div class="d-flex mr-3 my-2 align-center">
+                      <v-avatar
+                        v-for="profile in teaminfo.profiles"
+                        v-bind:key="profile.memberProfile"
+                        style="cursor:pointer; margin-right:10px"
+                        color="#eeeeee"
+                        size="30"
+                        class="user-img mb-2"
+                        @click="profileMove(profile.memberIdx)"
+                      >
+                        <i v-if="!profile.memberProfile" class="fas fa-user"></i>
+                        <img v-else :src="profile.memberProfile" />
+                      </v-avatar>
                     </div>
                     <v-icon
                       right
@@ -177,7 +176,7 @@ export default {
       createDate: "",
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
-      expand: false,
+      expand: false
     };
   },
 
@@ -218,11 +217,11 @@ export default {
           {},
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((data) => {
+        .then(data => {
           this.favorite = true;
 
           this.tlikeno = data.data;
@@ -235,8 +234,8 @@ export default {
           `${process.env.VUE_APP_API_URL}/liketeam/delete/${this.tlikeno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(() => {
@@ -258,19 +257,19 @@ export default {
             letterNo: this.letterNo,
             createDate: this.createDate,
             lettertype: this.lettertype,
-            teamboardNo: this.teamboardNo,
+            teamboardNo: this.teamboardNo
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(() => {
           console.log(this.sendIdx);
           alert("신청되었습니다.");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
           alert("실패했습니다.");
         });
@@ -282,6 +281,10 @@ export default {
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
+
+      // 9시로 계산되는 경향이 있어서 15시간을 추가한다.
+      endTime.setHours(endTime.getHours() + 15);
+
       if (this.boardtype == "team") {
         this.boardtype = "tboard";
       } else if (this.boardtype == "member") {
@@ -292,11 +295,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/letter/check/overlap/${token.object.idx}/${this.teaminfo.idx}/${this.boardtype}/${this.teaminfo.teamboardno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => {
+        .then(res => {
           if (res.data == "overlap letter") {
             alert("중복 지원입니다.");
           } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
@@ -308,12 +311,12 @@ export default {
             if (token) {
               console.log("프로필주소 : " + token.object.profile);
               this.username = token.object.name;
-              this.profileURL = token.object.profile;
+              // this.profileURL = token.object.profile;
               this.sendIdx = token.object.idx;
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -327,15 +330,15 @@ export default {
               this.teaminfo.teamboardno,
             {
               headers: {
-                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-              },
+                Authorization: "Bearer " + token.data // the token is a variable which holds the token
+              }
             }
           )
           .then(() => {
             this.$router.go();
           });
-    },
-  },
+    }
+  }
 };
 </script>
 
