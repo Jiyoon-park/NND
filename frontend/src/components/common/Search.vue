@@ -1,10 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    width="50%"
-    :fullscreen="$vuetify.breakpoint.mobile"
-    hide-overlay
-  >
+  <v-dialog v-model="dialog" width="50%" :fullscreen="$vuetify.breakpoint.mobile" hide-overlay>
     <template v-slot:activator="{ on, attrs }">
       <i
         class="fas fa-search fa-lg"
@@ -17,10 +12,7 @@
     </template>
     <v-card>
       <v-toolbar dark flat color="#0277BD">
-        <v-btn icon dark @click="dialog = false">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-        <v-toolbar-title>검색</v-toolbar-title>
+        <v-toolbar-title>검색창</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-container style="padding:3%;">
@@ -53,13 +45,7 @@
                   active-class="blue darken-3 white--text text--accent-4"
                   mandatory
                 >
-                  <v-chip
-                    large
-                    v-for="type in types"
-                    :key="type"
-                    :value="type"
-                    >{{ type }}</v-chip
-                  >
+                  <v-chip large v-for="type in types" :key="type" :value="type">{{ type }}</v-chip>
                 </v-chip-group>
               </div>
             </v-list-item-content>
@@ -117,9 +103,9 @@
       </v-container>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn color="#0277BD" text class="font-weight-bold" @click="dialog = false">Close</v-btn>
+        <v-btn color="#0277BD" text class="font-weight-bold" @click="dialog = false">닫기</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="#0277BD" text class="font-weight-bold" @click="submit">Search</v-btn>
+        <v-btn color="#0277BD" text class="font-weight-bold" @click="submit">검색</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
