@@ -1,141 +1,151 @@
 <template>
   <v-container fluid>
-    <v-flex xs12 md6 offset-sm3>
-      <v-card flat style="position:relative;">
-        <div class="ribbon" v-if="favorite"></div>
-        <v-expansion-panels>
-          <v-expansion-panel>
-            <div class="d-flex mx-3 my-3 align-center">
-              <v-avatar
-                style="cursor:pointer;"
-                color="#eeeeee"
-                size="50"
-                class="user-img mb-2"
-                @click="profileMove(teaminfo.idx)"
-              >
-                <i v-if="!profileURL" class="fas fa-user"></i>
-                <img v-else :src="profileURL" />
-              </v-avatar>
-              <div class="d-flex flex-column ml-3">
-                <span style="cursor:pointer;" @click="profileMove(teaminfo.idx)">{{ teaminfo.name }}</span>
-                <div>
-                  <span>
-                    {{
-                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                    }}
-                  </span>
+    <v-row justify="center">
+      <v-col cols="12" sm="12" md="6" class="py-0">
+        <v-card flat style="position:relative;">
+          <div class="ribbon" v-if="favorite"></div>
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <div class="d-flex mx-3 my-3 align-center">
+                <v-avatar
+                  style="cursor:pointer;"
+                  color="#eeeeee"
+                  size="50"
+                  class="user-img mb-2"
+                  @click="profileMove(teaminfo.idx)"
+                >
+                  <i v-if="!profileURL" class="fas fa-user"></i>
+                  <img v-else :src="profileURL" />
+                </v-avatar>
+                <div class="d-flex flex-column ml-3">
+                  <span
+                    style="cursor:pointer;"
+                    @click="profileMove(teaminfo.idx)"
+                  >{{ teaminfo.name }}</span>
+                  <div>
+                    <span>
+                      {{
+                      $moment(teaminfo.createdate).format("YYYY-MM-DD")
+                      }}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style="position:relative;">
-              <div v-if="!teaminfo.imageurl">
-                <v-img
-                  v-if="teaminfo.category === '스터디'"
-                  src="../../assets/images/study.jpg"
-                  height="194"
-                ></v-img>
-                <v-img
-                  v-else-if="teaminfo.category === '프로젝트'"
-                  src="../../assets/images/project.jpg"
-                  height="194"
-                ></v-img>
-                <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
-              </div>
-              <div v-else>
-                <v-img :src="teaminfo.imageurl" height="194"></v-img>
-              </div>
-              <span
-                class="mr-3 mt-1"
-                style="position:absolute; top:0; right:0; font-weight:bold; font-style:italic;"
-              >
+              <div style="position:relative;">
+                <div v-if="!teaminfo.imageurl">
+                  <v-img
+                    v-if="teaminfo.category === '스터디'"
+                    src="../../assets/images/study.jpg"
+                    height="194"
+                  ></v-img>
+                  <v-img
+                    v-else-if="teaminfo.category === '프로젝트'"
+                    src="../../assets/images/project.jpg"
+                    height="194"
+                  ></v-img>
+                  <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+                </div>
+                <div v-else>
+                  <v-img :src="teaminfo.imageurl" height="194"></v-img>
+                </div>
                 <span
-                  style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                >{{ teaminfo.category }}</span>
-              </span>
+                  class="mr-3 mt-1"
+                  style="position:absolute; top:0; right:0; font-weight:bold; font-style:italic;"
+                >
+                  <span
+                    style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
+                  >{{ teaminfo.category }}</span>
+                </span>
 
-              <div style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;">
-                <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
-                <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
+                <div
+                  style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;"
+                >
+                  <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
+                  <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
+                </div>
+                <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
+                  <i @click="applyform" class="fas fa-paper-plane">
+                    <span class="ml-1 mb-0" style="font-family: 'Do Hyeon', sans-serif;">영입하기</span>
+                  </i>
+                </div>
               </div>
-              <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
-                <i @click="applyform" class="fas fa-paper-plane">
-                  <small class="ml-1">영입하기</small>
-                </i>
-              </div>
-            </div>
 
-            <div class="shrink mt-10 mx-4 mb-4">
-              <div class="d-flex justify-space-between align-center">
-                <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
+              <div class="shrink mt-10 mx-4 mb-4">
+                <div class="d-flex justify-space-between align-center">
+                  <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
+                  <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
+                </div>
+                <v-expand-transition>
+                  <v-card flat v-show="expand" class="mx-auto">
+                    {{ teaminfo.content }}
+                    <v-icon
+                      right
+                      @click="memberDelete"
+                      v-show="this.status"
+                      style="position:absolute; bottom:8px; right:0;"
+                    >mdi-delete</v-icon>
+                  </v-card>
+                </v-expand-transition>
+                <div class="d-flex">
+                  <v-chip
+                    small
+                    class="mr-2 mt-1"
+                    color="#0277BD"
+                    text-color="white"
+                    v-for="stack in JSON.parse(stacks)"
+                    :key="stack"
+                  ># {{ stack }}</v-chip>
+                </div>
               </div>
-              <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}</v-card>
-              </v-expand-transition>
-              <div class="d-flex">
-                <v-chip
-                  small
-                  class="mr-2 mt-1"
-                  color="#0277BD"
-                  text-color="white"
-                  v-for="stack in JSON.parse(stacks)"
-                  :key="stack"
-                ># {{ stack }}</v-chip>
-                                <v-spacer></v-spacer>
-                <v-icon right @click="memberDelete" :disabled=!status>
-                   mdi-delete
-                </v-icon>
-              </div>
-                              
-            </div>
-          </v-expansion-panel>
-        </v-expansion-panels>
+            </v-expansion-panel>
+          </v-expansion-panels>
 
-        <v-dialog v-model="dialog" max-width="600px">
-          <v-card style="border: 3px solid #eeeeee;">
-            <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
-            <v-card-title
-              v-if="this.teamlist.length !== 0"
-              class="header-text text-center justify-center body-1"
-            >❝ {{ teaminfo.name }} 님을 영입합니다 ❠</v-card-title>
-            <v-card-title
-              v-else
-              class="header-text text-center justify-center body-1"
-            >❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠</v-card-title>
-
-            <v-card-text v-if="this.teamlist.length !== 0" class="pb-0">
-              <div class="mt-4">
-                <p class="mb-3 pl-1" style="font-size:1rem;">팀원에게 보내는 어필 한마디 🙈🙉</p>
-                <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
-                <v-row class="mb-0">
-                  <v-col class="py-0" cols="12">
-                    <v-overflow-btn
-                      filled
-                      v-model="teamno"
-                      :items="teamlist"
-                      label="영입할 팀을 선택하세요"
-                      item-text="teamName"
-                      item-value="teamboardNo"
-                      class="mb-0"
-                    ></v-overflow-btn>
-                  </v-col>
-                </v-row>
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
-              <v-spacer></v-spacer>
-              <v-btn
+          <v-dialog v-model="dialog" max-width="600px">
+            <v-card style="border: 3px solid #eeeeee;">
+              <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
+              <v-card-title
                 v-if="this.teamlist.length !== 0"
-                color="blue darken-1"
-                text
-                @click="submit"
-              >영입하기</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-card>
-    </v-flex>
+                class="header-text text-center justify-center body-1"
+              >❝ {{ teaminfo.name }} 님을 영입합니다 ❠</v-card-title>
+              <v-card-title
+                v-else
+                class="header-text text-center justify-center body-1"
+              >❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠</v-card-title>
+
+              <v-card-text v-if="this.teamlist.length !== 0" class="pb-0">
+                <div class="mt-4">
+                  <p class="mb-3 pl-1" style="font-size:1rem;">팀원에게 보내는 어필 한마디 🙈🙉</p>
+                  <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                  <v-row class="mb-0">
+                    <v-col class="py-0" cols="12">
+                      <v-overflow-btn
+                        filled
+                        v-model="teamno"
+                        :items="teamlist"
+                        label="영입할 팀을 선택하세요"
+                        item-text="teamName"
+                        item-value="teamboardNo"
+                        class="mb-0"
+                      ></v-overflow-btn>
+                    </v-col>
+                  </v-row>
+                </div>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                  v-if="this.teamlist.length !== 0"
+                  color="blue darken-1"
+                  text
+                  @click="submit"
+                >영입하기</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -153,7 +163,7 @@ export default {
       stacks: this.teaminfo.techstack,
       username: "",
       profileURL: "",
-            status: false,
+      status: false,
 
       ///쪽찌보낼내용
       sendIdx: "",
@@ -180,7 +190,7 @@ export default {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
-        if (this.teaminfo.idx == this.$store.state.myToken.idx) {
+    if (this.teaminfo.idx == this.$store.state.myToken.idx) {
       this.status = true;
     } else {
       this.status = false;
@@ -294,7 +304,7 @@ export default {
           console.log(this.teamlist);
         });
     },
-        memberDelete() {
+    memberDelete() {
       let token = window.$cookies.get("nnd");
 
       confirm("삭제하시겠습니까?") &&
