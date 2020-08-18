@@ -18,6 +18,7 @@
       :items-per-page="5"
       class="elevation-1"
       mobile-breakpoint="0"
+      @click:row="editItem"
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
@@ -131,7 +132,6 @@ export default {
         value: "title",
       },
       { text: "이름", value: "writer" },
-      { text: "상세보기", value: "actions", sortable: false },
     ],
     teampost: [],
 
@@ -201,9 +201,7 @@ export default {
     },
 
     editItem(item) {
-      console.log("2");
       this.myItem = item;
-      console.log(this.myItem);
       if (this.$store.state.myToken.idx == item.memberIdx) {
         this.status = true;
         console.log("내게시글");
@@ -217,8 +215,6 @@ export default {
     },
 
     deleteItem(item) {
-      console.log("item");
-      console.log(item);
       let token = window.$cookies.get("nnd");
       const index = this.teampost.indexOf(item);
       confirm("삭제하시겠습니까?") &&
@@ -286,10 +282,7 @@ export default {
           .then((data) => {
             this.myItem = data.data;
             this.teampost.push(this.myItem);
-            console.log(this.myItem);
-            console.log(this.teampost);
-            this.teampost[this.postSize].num = this.postSize++;
-            console.log(this.teampost);
+            this.teampost[this.teampost.length - 1].num = this.postSize++;
           });
       }
       this.close();
