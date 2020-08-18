@@ -86,7 +86,7 @@
                     <small>참여팀원</small>
                     <div class="d-flex mr-3 my-2 align-center">
                       <v-avatar
-                        v-for="profile in teaminfo.profile"
+                        v-for="profile in teaminfo.profiles"
                         v-bind:key="profile.memberProfile"
                         style="cursor:pointer; margin-right:10px"
                         color="#eeeeee"
@@ -305,7 +305,7 @@ export default {
             if (token) {
               console.log("프로필주소 : " + token.object.profile);
               this.username = token.object.name;
-              this.profileURL = token.object.profile;
+              // this.profileURL = token.object.profile;
               this.sendIdx = token.object.idx;
             }
           }
