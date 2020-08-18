@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div style="background-color:#eceff1;">
     <NavBar />
     <TeammemberFeed />
@@ -36,7 +36,7 @@ export default {
             window.$cookies.remove("kakao"); //kakao 쿠키 없애고 새로생성
             window.$cookies.set("nnd", response.data, "2d"); //로그인시 쿠키 저장
             //console.log(response.data.object.idx)
-            // location.reload();
+            location.reload();
           },
           () => {
             console.log("failed");
