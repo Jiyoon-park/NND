@@ -1,9 +1,6 @@
 <template>
   <v-card>
-    <v-card-title
-      class="headline font-weight-regular indigo lighten-1 white--text"
-      >project history</v-card-title
-    >
+    <v-card-title class="headline font-weight-regular blue darken-3 white--text">project history</v-card-title>
     <v-form>
       <v-container class="pb-0">
         <v-text-field
@@ -34,13 +31,7 @@
           small-chips
         ></v-combobox>
 
-        <v-textarea
-          v-model="content"
-          filled
-          label="상세 업무 및 성과"
-          placeholder="내용을 입력해주세요."
-          required
-        ></v-textarea>
+        <v-textarea v-model="content" filled label="상세 업무 및 성과" placeholder="내용을 입력해주세요." required></v-textarea>
         <v-text-field
           v-model="gitLink"
           filled
@@ -51,21 +42,9 @@
       </v-container>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn
-          color="indigo darken-1"
-          class="font-weight-bold"
-          text
-          @click="changeDialog"
-          >닫기</v-btn
-        >
+        <v-btn color="blue darken-3" class="font-weight-bold" text @click="changeDialog">닫기</v-btn>
         <v-spacer></v-spacer>
-        <v-btn
-          color="indigo darken-1"
-          class="font-weight-bold"
-          text
-          @click="submit"
-          >저장</v-btn
-        >
+        <v-btn color="blue darken-3" class="font-weight-bold" text @click="submit">저장</v-btn>
       </v-card-actions>
     </v-form>
   </v-card>

@@ -20,30 +20,34 @@
               <div class="d-flex flex-column ml-3">
                 <span style="cursor:pointer;" @click="profileMove(teaminfo.idx)">{{ teaminfo.name }}</span>
                 <div>
-                  <span>{{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}</span>
-                  <small class="deadline">
+                  <span>
+                    {{
+                    $moment(teaminfo.createdate).format("YYYY-MM-DD")
+                    }}
+                  </span>
+                  <span class="deadline">
                     ~ {{ teaminfo.deadline }}
-                    <span style="color:#555">마감</span>
-                  </small>
+                    마감
+                  </span>
                 </div>
               </div>
             </div>
             <div style="position:relative;">
               <div v-if="!teaminfo.imageurl">
                 <v-img
-                  :aspect-ratio="16/9"
+                  :aspect-ratio="16 / 9"
                   v-if="teaminfo.category === '스터디'"
                   src="../../assets/images/study.jpg"
                 ></v-img>
                 <v-img
-                  :aspect-ratio="16/9"
+                  :aspect-ratio="16 / 9"
                   v-else-if="teaminfo.category === '프로젝트'"
                   src="../../assets/images/project.jpg"
                 ></v-img>
-                <v-img :aspect-ratio="16/9" v-else src="../../assets/images/competition.jpg"></v-img>
+                <v-img :aspect-ratio="16 / 9" v-else src="../../assets/images/competition.jpg"></v-img>
               </div>
               <div v-else>
-                <v-img :aspect-ratio="16/9" :src="teaminfo.imageurl"></v-img>
+                <v-img :aspect-ratio="16 / 9" :src="teaminfo.imageurl"></v-img>
               </div>
               <span
                 class="mr-3 mt-1 d-flex flex-column align-end"
@@ -53,10 +57,11 @@
                   style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
                 >{{ teaminfo.category }}</span>
 
-                <small
-                  style="background-color:#eeeeee; opacity:0.7;"
-                  class="px-1"
-                >모집 인원 {{teaminfo.memcnt}}/{{ teaminfo.groupsize }}</small>
+                <small style="background-color:#eeeeee; opacity:0.7;" class="px-1">
+                  참여 인원 {{ teaminfo.memcnt }}/{{
+                  teaminfo.groupsize
+                  }}
+                </small>
               </span>
 
               <div style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;">
@@ -76,7 +81,19 @@
                 <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}</v-card>
+                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}
+                <div class="d-flex mx-3 my-3 align-center">
+                  <v-avatar v-for="profile in teaminfo.profile" v-bind:key="profile.memberProfile"
+                    style="cursor:pointer; margin-right:10px"
+                    color="#eeeeee"
+                    size="30"
+                    class="user-img mb-2"
+                    @click="profileMove(profile.memberIdx)">
+                    <i v-if="!profile.memberProfile" class="fas fa-user"></i>
+                    <img v-else :src="profile.memberProfile" />
+                  </v-avatar>
+                </div>
+                </v-card>
               </v-expand-transition>
               <div class="d-flex">
                 <v-chip
@@ -87,8 +104,11 @@
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
                 ># {{ stack }}</v-chip>
+                <v-spacer></v-spacer>
+                <v-icon right @click="teamDelete" :disabled="!status">mdi-delete</v-icon>
               </div>
             </div>
+            
             <!-- <v-expansion-panel-header class="mt-7 pb-0">
               <div class="d-flex flex-column">
             <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>-->
@@ -148,6 +168,7 @@ export default {
     return {
       show: false,
       favorite: false,
+      status: false,
       dialog: false,
       stacks: this.teaminfo.techstack,
       username: "",
@@ -164,9 +185,7 @@ export default {
       expand: false,
     };
   },
-  // mounted(){
-  //   this.teamboardno = this.teaminfo.teamboardNo;
-  // },
+
   created() {
     if (this.teaminfo.mno == this.$store.state.myToken.idx) {
       console.log("즐겨찾기 상태");
@@ -175,7 +194,11 @@ export default {
       console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
-
+    if (this.teaminfo.idx == this.$store.state.myToken.idx) {
+      this.status = true;
+    } else {
+      this.status = false;
+    }
     // profileURL을 초기화
     this.profileURL = this.teaminfo.profile;
   },
@@ -191,10 +214,6 @@ export default {
     },
     addFavorite() {
       let token = window.$cookies.get("nnd");
-
-      console.log("팀 번호: " + this.teaminfo.teamboardno);
-      console.log("토큰: " + this.$store.state.myToken.idx);
-      //// teaminfo.mno가 숫자가 있으면 즐겨찾기 된거 or null이면 추가 안된거
       axios
         .put(
           `${process.env.VUE_APP_API_URL}/liketeam/save/` +
@@ -232,10 +251,7 @@ export default {
     submit() {
       this.dialog = false;
       let token = window.$cookies.get("nnd");
-      console.log(this.sendIdx + " send");
-      console.log(this.teaminfo.idx + " receive");
-      console.log(this.lettertype + " type");
-      console.log(this.teamboardNo);
+
       axios
         .put(
           `${process.env.VUE_APP_API_URL}/letter/create/` + this.lettertype,
@@ -271,10 +287,6 @@ export default {
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
-
-      console.log(`현재시간 : ${curTime}`);
-      console.log(`마감시간 : ${endTime}`);
-      console.log(`차이 : ${curTime.getTime() - endTime.getTime()}`);
       if (this.boardtype == "team") {
         this.boardtype = "tboard";
       } else if (this.boardtype == "member") {
@@ -290,8 +302,6 @@ export default {
           }
         )
         .then((res) => {
-          console.log("확인확인확인확인확인확인확인확인확인확인확인확인");
-          console.log(res.data);
           if (res.data == "overlap letter") {
             alert("중복 지원입니다.");
           } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
@@ -311,6 +321,24 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    teamDelete() {
+      let token = window.$cookies.get("nnd");
+
+      confirm("삭제하시겠습니까?") &&
+        axios
+          .delete(
+            `${process.env.VUE_APP_API_URL}/teamboard/delete/` +
+              this.teaminfo.teamboardno,
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then(() => {
+            this.$router.go();
+          });
     },
   },
 };
@@ -333,7 +361,6 @@ export default {
 
 .deadline {
   color: #222;
-  font-weight: bold;
   background-color: #eeeeee;
   margin-left: 5px;
 }

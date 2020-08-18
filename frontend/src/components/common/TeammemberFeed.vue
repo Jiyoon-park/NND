@@ -85,61 +85,70 @@ export default {
         .then(({ data }) => {
           setTimeout(() => {
             if (data.length) {
-              console.log("기존 스크롤 push " + this.page);
               this.page += 1;
-              console.log(`data의 원래 개수 : ${this.list.length}`);
               var len = this.list.length; // 무한 스크롤을 진행 할 때마다 list엔 데이터가 쌓이게되므로, len에 변경할 url들이 위치하는 list의 인덱스를 미리 저장한다.
               this.list.push(...data);
-              console.log(`list : `);
-              console.log(this.list);
 
-              // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다
+              // 새로 들어온 카드들을 대상으로 파이어베이스 작업, 팀원들의 링크들을 가져오는 작업을 진행한다.
               for (let i = len; i < this.list.length; i++) {
+                // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다
                 var card = this.list[i];
 
-                console.log(`before imageurl : ${card.imageurl}`);
-                if (card.imageurl == "") {
-                  // url이 비어있으면 pass, 있으면 아래 코드를 진행한다.
-                  continue;
+                // console.log(`before imageurl : ${card.imageurl}`);
+                if (card.imageurl != "") { // url이 존재하는 경우만 firebase 코드를 진행한다.
+                  if (this.type == "team") {
+                    card.imageurl = `images/${this.type}/${card.teamboardno}/${card.imageurl}`;
+                  } else {
+                    card.imageurl = `images/${this.type}/${card.boardno}/${card.imageurl}`;
+                  }
+                  // console.log(`parsing imageurl : ${card.imageurl}`);
+                  firebase
+                    .storage()
+                    .ref()
+                    .child(card.imageurl)
+                    .getDownloadURL()
+                    .then((imageurl) => {
+                      this.list[i].imageurl = imageurl;
+                    })
+                    .catch(function (error) {
+                      // A full list of error codes is available at
+                      // https://firebase.google.com/docs/storage/web/handle-errors
+                      switch (error.code) {
+                        case "storage/object-not-found":
+                          // File doesn't exist
+                          break;
+
+                        case "storage/unauthorized":
+                          // User doesn't have permission to access the object
+                          break;
+
+                        case "storage/canceled":
+                          // User canceled the upload
+                          break;
+
+                        case "storage/unknown":
+                          // Unknown error occurred, inspect the server response
+                          break;
+                      }
+                    });
                 }
 
-                if (this.type == "team") {
-                  card.imageurl = `images/${this.type}/${card.teamboardno}/${card.imageurl}`;
-                } else {
-                  card.imageurl = `images/${this.type}/${card.boardno}/${card.imageurl}`;
-                }
-                console.log(`parsing imageurl : ${card.imageurl}`);
-                firebase
-                  .storage()
-                  .ref()
-                  .child(card.imageurl)
-                  .getDownloadURL()
-                  .then((imageurl) => {
-                    this.list[i].imageurl = imageurl;
-                  })
-                  .catch(function (error) {
-                    // A full list of error codes is available at
-                    // https://firebase.google.com/docs/storage/web/handle-errors
-                    switch (error.code) {
-                      case "storage/object-not-found":
-                        // File doesn't exist
-                        break;
-
-                      case "storage/unauthorized":
-                        // User doesn't have permission to access the object
-                        break;
-
-                      case "storage/canceled":
-                        // User canceled the upload
-                        break;
-
-                      case "storage/unknown":
-                        // Unknown error occurred, inspect the server response
-                        break;
+                //////////////////////////////////////////////////////////////////////
+                // 팀원들의 링크를 가져오는 작업을 진행한다.
+                // 1. teamboardno를 가지고 axios 요청을 보낸다.
+                axios.get(
+                  `${process.env.VUE_APP_API_URL}/teammenu/member/${this.list[i].teamboardno}`,
+                  {
+                    headers: {
+                      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
                     }
-                  });
+                  }
+                ).then(({data}) => {
+                  this.list[i].profile = data;
+                });
               }
-
+              console.log(`list :`);
+              console.log(this.list);
               $state.loaded();
             } else {
               $state.complete();
