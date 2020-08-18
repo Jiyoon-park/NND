@@ -50,7 +50,7 @@ export default {
         alert("로그인해주세요!");
         this.$store.commit("logout");
         window.$cookies.remove("nnd");
-        this.$router.push("/login");
+        this.$router.push("/welcome");
       }
     }
   },
