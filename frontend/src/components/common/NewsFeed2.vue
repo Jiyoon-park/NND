@@ -81,10 +81,18 @@
                 <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">
-                  {{
-                  teaminfo.content
-                  }}
+                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}
+                <div class="d-flex mx-3 my-3 align-center">
+                  <v-avatar v-for="profile in teaminfo.profile" v-bind:key="profile.memberProfile"
+                    style="cursor:pointer; margin-right:10px"
+                    color="#eeeeee"
+                    size="30"
+                    class="user-img mb-2"
+                    @click="profileMove(profile.memberIdx)">
+                    <i v-if="!profile.memberProfile" class="fas fa-user"></i>
+                    <img v-else :src="profile.memberProfile" />
+                  </v-avatar>
+                </div>
                 </v-card>
               </v-expand-transition>
               <div class="d-flex">
@@ -100,6 +108,7 @@
                 <v-icon right @click="teamDelete" :disabled="!status">mdi-delete</v-icon>
               </div>
             </div>
+            
             <!-- <v-expansion-panel-header class="mt-7 pb-0">
               <div class="d-flex flex-column">
             <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>-->

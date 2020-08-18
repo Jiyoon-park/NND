@@ -95,6 +95,7 @@ export default {
         text: "번호",
         align: "start",
         value: "num",
+        sortable: false,
       },
       {
         text: "제목",
@@ -136,8 +137,6 @@ export default {
 
   watch: {
     dialog(val) {
-      console.log("watch");
-
       val || this.close();
     },
   },
@@ -185,8 +184,20 @@ export default {
     },
 
     deleteItem(item) {
+      let token = window.$cookies.get("nnd");
+
       const index = this.teampost.indexOf(item);
-      confirm("삭제하시겠습니까?") && this.teampost.splice(index, 1);
+      confirm("삭제하시겠습니까?") &&
+        this.teampost.splice(index, 1) &&
+        axios.delete(
+          `${process.env.VUE_APP_API_URL}/teammenu/post/delete/` +
+            item.teamPostNo,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        );
     },
 
     close() {
@@ -202,6 +213,20 @@ export default {
 
       if (this.editedIndex > -1) {
         Object.assign(this.teampost[this.editedIndex], this.editedItem);
+        axios.post(
+          `${process.env.VUE_APP_API_URL}/teammenu/post/update`,
+          {
+            teamboardNo: this.teaminfo.teamboardNo,
+            teamPostNo: this.teampost[this.editedIndex].teamPostNo,
+            title: this.editedItem.title,
+            content: this.editedItem.content,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        );
       } else {
         this.editedItem.writer = this.userinfo.name;
         this.teampost.push(this.editedItem);
