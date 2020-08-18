@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div style="background-color:#eceff1;">
     <NavBar />
-    <v-container>
-      <v-row class="mt-13">
+    <v-container class="mt-15">
+      <h2 class="mb-3">🏆 외부 공모전 일정</h2>
+      <v-row style="background-color:#fff; border-radius:10px;">
         <v-col cols="12" sm="12" lg="12" class="px-0 pt-0">
-          <h2 class="my-4 ml-4 text-center">[ 외부 공모전 일정 ]</h2>
+          <div class="mt-2"></div>
           <v-sheet height="64">
             <v-toolbar flat color="white" style="position:relative;">
               <div class="d-flex justify-center align-center">
@@ -12,9 +13,7 @@
                   <v-btn fab text small color="grey darken-2" @click="prev">
                     <v-icon small>mdi-chevron-left</v-icon>
                   </v-btn>
-                  <v-toolbar-title v-if="$refs.calendar">
-                    {{ $refs.calendar.title }}
-                  </v-toolbar-title>
+                  <v-toolbar-title v-if="$refs.calendar">{{ $refs.calendar.title }}</v-toolbar-title>
                   <v-btn fab text small color="grey darken-2" @click="next">
                     <v-icon small>mdi-chevron-right</v-icon>
                   </v-btn>
