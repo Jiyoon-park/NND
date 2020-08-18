@@ -275,6 +275,10 @@ export default {
       // 안지났다 = 반대
       var curTime = new Date();
       var endTime = new Date(this.teaminfo.deadline);
+
+      // 9시로 계산되는 경향이 있어서 15시간을 추가한다.
+      endTime.setTime(endTime.getHours() + 15);
+
       if (this.boardtype == "team") {
         this.boardtype = "tboard";
       } else if (this.boardtype == "member") {

@@ -136,16 +136,18 @@ export default {
                 //////////////////////////////////////////////////////////////////////
                 // 팀원들의 링크를 가져오는 작업을 진행한다.
                 // 1. teamboardno를 가지고 axios 요청을 보낸다.
-                axios.get(
-                  `${process.env.VUE_APP_API_URL}/teammenu/member/${this.list[i].teamboardno}`,
-                  {
-                    headers: {
-                      Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+                axios
+                  .get(
+                    `${process.env.VUE_APP_API_URL}/teammenu/member/${this.list[i].teamboardno}`,
+                    {
+                      headers: {
+                        Authorization: "Bearer " + token.data // the token is a variable which holds the token
+                      }
                     }
-                  }
-                ).then(({data}) => {
-                  this.list[i].profile = data;
-                });
+                  )
+                  .then(({ data }) => {
+                    this.list[i].profiles = data;
+                  });
               }
               console.log(`list :`);
               console.log(this.list);
