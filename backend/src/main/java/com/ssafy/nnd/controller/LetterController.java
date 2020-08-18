@@ -185,7 +185,7 @@ public class LetterController {
 			teamBoardRepository.save(team.get());
 			return message;
 		} else {
-			message = "already joinded";
+			message = "already joined";
 			return message;
 		}
 	}
