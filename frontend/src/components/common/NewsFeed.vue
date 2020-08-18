@@ -286,7 +286,7 @@ export default {
       if (token) {
         console.log(token.object.idx);
         this.username = token.object.name;
-        this.profileURL = token.object.profile;
+        //this.profileURL = token.object.profile;
         this.sendIdx = token.object.idx;
       }
 

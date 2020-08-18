@@ -21,16 +21,20 @@
                   <span
                     style="cursor:pointer;"
                     @click="profileMove(teaminfo.idx)"
-                  >{{ teaminfo.name }}</span>
+                    >{{ teaminfo.name }}</span
+                  >
                   <div>
                     <span>
-                      {{
-                      $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                      }}
+                      {{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}
                     </span>
-                    <span class="deadline">
+                    <!-- <span class="deadline">
                       ~ {{ teaminfo.deadline }}
                       마감
+                    </span>-->
+                    <span class="ml-1">
+                      <span v-if="this.dday==0" class="red">❗ D-DAY</span>
+                      <span v-else-if="this.dday < 0" class="grey">✘ 마감</span>
+                      <span v-else class="green">✅ D-{{ dday }}</span>
                     </span>
                   </div>
                 </div>
@@ -47,10 +51,17 @@
                     v-else-if="teaminfo.category === '프로젝트'"
                     src="../../assets/images/project.jpg"
                   ></v-img>
-                  <v-img :aspect-ratio="16 / 9" v-else src="../../assets/images/competition.jpg"></v-img>
+                  <v-img
+                    :aspect-ratio="16 / 9"
+                    v-else
+                    src="../../assets/images/competition.jpg"
+                  ></v-img>
                 </div>
                 <div v-else>
-                  <v-img :aspect-ratio="16 / 9" :src="teaminfo.imageurl"></v-img>
+                  <v-img
+                    :aspect-ratio="16 / 9"
+                    :src="teaminfo.imageurl"
+                  ></v-img>
                 </div>
                 <span
                   class="mr-3 mt-1 d-flex flex-column align-end"
@@ -58,35 +69,58 @@
                 >
                   <span
                     style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                  >{{ teaminfo.category }}</span>
+                    >{{ teaminfo.category }}</span
+                  >
 
-                  <small style="background-color:#eeeeee; opacity:0.7;" class="px-1">
-                    참여 인원 {{ teaminfo.memcnt }}/{{
-                    teaminfo.groupsize
-                    }}
+                  <small
+                    style="background-color:#eeeeee; opacity:0.7;"
+                    class="px-1"
+                  >
+                    참여 인원 {{ teaminfo.memcnt }}/{{ teaminfo.groupsize }}
                   </small>
                 </span>
 
                 <div
                   style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;"
                 >
-                  <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
+                  <i
+                    class="far fa-bookmark"
+                    v-if="!favorite"
+                    @click="addFavorite"
+                  ></i>
                   <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
                 </div>
-                <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
+                <div
+                  style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;"
+                >
                   <i @click="applyform" class="fas fa-paper-plane">
-                    <span class="ml-1 mb-0" style="font-family: 'Do Hyeon', sans-serif;">지원하기</span>
+                    <span
+                      class="ml-1 mb-0"
+                      style="font-family: 'Do Hyeon', sans-serif;"
+                      >지원하기</span
+                    >
                   </i>
                 </div>
               </div>
 
               <div class="shrink mt-10 mx-4 mb-4">
                 <div class="d-flex justify-space-between align-center">
-                  <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                  <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
+                  <span class="font-weight-black mb-1">{{
+                    teaminfo.title
+                  }}</span>
+                  <small
+                    @click="expand = !expand"
+                    style="cursor:pointer; color:primary"
+                    >더보기</small
+                  >
                 </div>
                 <v-expand-transition>
-                  <v-card flat v-show="expand" class="mx-auto" style="position:relative;">
+                  <v-card
+                    flat
+                    v-show="expand"
+                    class="mx-auto"
+                    style="position:relative;"
+                  >
                     {{ teaminfo.content }}
                     <div class="mt-4">
                       <small>참여팀원</small>
@@ -100,8 +134,23 @@
                           class="user-img mb-2"
                           @click="profileMove(profile.memberIdx)"
                         >
-                          <i v-if="!profile.memberProfile" class="fas fa-user"></i>
-                          <img v-else :src="profile.memberProfile" />
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <i
+                                v-if="!profile.memberProfile"
+                                class="fas fa-user"
+                                v-bind="attrs"
+                                v-on="on"
+                              ></i>
+                              <img
+                                v-else
+                                v-bind="attrs"
+                                v-on="on"
+                                :src="profile.memberProfile"
+                              />
+                            </template>
+                            <span>{{ profile.memberName }}</span>
+                          </v-tooltip>
                         </v-avatar>
                       </div>
                     </div>
@@ -110,18 +159,20 @@
                       @click="teamDelete"
                       v-show="this.status"
                       style="position:absolute; bottom:8px; right:0;"
-                    >mdi-delete</v-icon>
+                      >mdi-delete</v-icon
+                    >
                   </v-card>
                 </v-expand-transition>
-                <div class="d-flex">
+                <div>
                   <v-chip
                     small
-                    class="mr-2 mt-1"
+                    class="mr-2 mb-1"
                     color="#0277BD"
                     text-color="white"
                     v-for="stack in JSON.parse(stacks)"
                     :key="stack"
-                  ># {{ stack }}</v-chip>
+                    ># {{ stack }}</v-chip
+                  >
                 </div>
               </div>
             </v-expansion-panel>
@@ -129,21 +180,41 @@
 
           <v-dialog v-model="dialog" max-width="600px">
             <v-card style="border: 3px solid #eeeeee;">
-              <v-img class="header" height="200px" src="../../assets/images/team2.jpg"></v-img>
+              <v-img
+                class="header"
+                height="200px"
+                src="../../assets/images/team2.jpg"
+              ></v-img>
               <v-card-title
                 class="header-text text-center justify-center body-1"
-              >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title>
+                >❝ {{ teaminfo.teamname }} 팀에 지원합니다 ❠</v-card-title
+              >
 
               <v-card-text class="pb-0">
                 <div class="mt-4">
-                  <p class="mb-3 pl-1" style="font-size:1rem;">팀장에게 보내는 어필 한마디 🙈🙉</p>
-                  <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                  <p class="mb-3 pl-1" style="font-size:1rem;">
+                    팀장에게 보내는 어필 한마디 🙈🙉
+                  </p>
+                  <v-textarea
+                    filled
+                    v-model="content"
+                    name="content"
+                    placeholder="내용을 작성해주세요."
+                  ></v-textarea>
                 </div>
               </v-card-text>
               <v-card-actions class="pt-0">
-                <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+                <v-btn color="blue darken-1" text @click="dialog = false"
+                  >취소</v-btn
+                >
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" class="font-weight-bold" text @click="submit">지원하기</v-btn>
+                <v-btn
+                  color="blue darken-1"
+                  class="font-weight-bold"
+                  text
+                  @click="submit"
+                  >지원하기</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -178,6 +249,7 @@ export default {
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
       expand: false,
+      dday: "",
     };
   },
 
@@ -196,6 +268,12 @@ export default {
     }
     // profileURL을 초기화
     this.profileURL = this.teaminfo.profile;
+
+    //D-day 계산
+    this.dday =
+      new Date().getTime() - new Date(this.teaminfo.deadline).getTime();
+    this.dday = Math.floor(this.dday / (1000 * 60 * 60 * 24)) * -1;
+    console.log(this.dday);
   },
   methods: {
     profileMove(no) {
@@ -379,5 +457,23 @@ export default {
   z-index: 2;
   color: #e0e0e0;
   border-top: 10px solid #0277bd;
+}
+
+.red {
+  background-color: #b71c1c;
+  padding: 4px 5px;
+  color: white;
+}
+
+.green {
+  background-color: #2e7d32;
+  padding: 4px 5px;
+  color: white;
+}
+
+.grey {
+  background-color: grey;
+  padding: 4px 5px;
+  color: white;
 }
 </style>

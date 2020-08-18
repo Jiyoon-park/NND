@@ -4,14 +4,10 @@
       v-model="drawer"
       fixed-tabs
       app
-      right
+      left
       disable-resize-watcher="true"
       temporary="true"
     >
-      <!-- <div class="point-top"></div>
-      <div class="point-bottom">
-        <p>ⓒ 2020. 이나앨 All Rights Reserved.</p>
-      </div>-->
       <v-list rounded>
         <v-list-item link class="d-flex flex-column pt-8 mb-0">
           <v-avatar color="#eeeeee" size="70" class="user-img mb-1">
