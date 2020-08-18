@@ -1,12 +1,8 @@
 <template>
   <div class="back">
     <v-container class="d-flex justify-center align-center" width="350px;">
-      <img
-        src="../assets/images/logo.png"
-        width="45px"
-        style="position:absolute; top: 5px; left:4px;"
-      />
-      <div class="container">
+      <div class="container" style="position:relative;">
+        <img src="../assets/images/logo.png" width="90px" style="position:absolute; top:30px;" />
         <div class="d-flex flex-column" style="font-family: 'Do Hyeon', sans-serif; font-size:40px">
           <div style="color:#0277BD;">너</div>
           <div style="color:#0277BD;">내</div>
@@ -23,6 +19,9 @@
         </div>
       </div>
     </v-container>
+      <video class="embed-container" id="videoBG" poster="poster.JPG" autoplay muted loop>
+        <source src="../assets/video/videoplayback2.mp4" type="video/mp4">
+      </video>
   </div>
 </template>
 
@@ -34,7 +33,6 @@ export default {
 
 <style scoped>
 .back {
-  background: url(../assets/images/team2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -60,5 +58,12 @@ export default {
   font-size: 16px;
   width: 230px;
   padding: px;
+}
+
+#videoBG {
+  max-width: 1903px;
+  max-height: 100%;
+  position: fixed;
+  z-index: -1;
 }
 </style>
