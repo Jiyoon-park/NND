@@ -45,6 +45,12 @@ export default {
     }
     let ntoken = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
     if (!ntoken) {
+      for (let index = 0; index < 500000000; index++) {
+        if (index % 100000000 === 0) console.log("loading");
+      }
+    }
+    ntoken = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
+    if (!ntoken) {
       alert("로그인해주세요!");
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
