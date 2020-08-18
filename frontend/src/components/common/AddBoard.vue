@@ -261,7 +261,7 @@ export default {
       })
       .catch((error) => {
         console.log(error.response);
-        alert("실패");
+        alert("등록에 실패했습니다.");
       });
   },
   methods: {
@@ -358,7 +358,7 @@ export default {
                 },
                 () => {
                   console.log("파이어베이스 등록 성공");
-                  alert("등록성공");
+                  alert("등록에 성공했습니다.");
 
                   // 등록페이지 초기화
                   this.teamName = null;
@@ -378,14 +378,14 @@ export default {
                 }
               );
           } else {
-            alert("등록성공");
+            alert("등록에 성공했습니다.");
             this.changeDialog();
             this.goMain();
           }
         })
         .catch((error) => {
           console.log(error.response);
-          alert("실패");
+          alert("등록에 실패했습니다.");
         });
     },
     goMain() {

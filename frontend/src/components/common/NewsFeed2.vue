@@ -14,7 +14,6 @@
                 @click="profileMove(teaminfo.idx)"
               >
                 <i v-if="!profileURL" class="fas fa-user"></i>
-                <!-- <img  v-if="!profileURL" src="https://picsum.photos/200" /> -->
                 <img v-else :src="profileURL" />
               </v-avatar>
               <div class="d-flex flex-column ml-3">
@@ -70,7 +69,7 @@
               </div>
               <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
                 <i @click="applyform" class="fas fa-paper-plane">
-                  <small class="ml-1">지원하기</small>
+                  <!-- <span class="ml-1 mb-0" style="font-family: 'Do Hyeon', sans-serif;">지원하기</span> -->
                 </i>
               </div>
             </div>
@@ -81,18 +80,31 @@
                 <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
               </div>
               <v-expand-transition>
-                <v-card flat v-show="expand" class="mx-auto">{{ teaminfo.content }}
-                <div class="d-flex mx-3 my-3 align-center">
-                  <v-avatar v-for="profile in teaminfo.profile" v-bind:key="profile.memberProfile"
-                    style="cursor:pointer; margin-right:10px"
-                    color="#eeeeee"
-                    size="30"
-                    class="user-img mb-2"
-                    @click="profileMove(profile.memberIdx)">
-                    <i v-if="!profile.memberProfile" class="fas fa-user"></i>
-                    <img v-else :src="profile.memberProfile" />
-                  </v-avatar>
-                </div>
+                <v-card flat v-show="expand" class="mx-auto" style="position:relative;">
+                  {{ teaminfo.content }}
+                  <div class="mt-4">
+                    <small>참여팀원</small>
+                    <div class="d-flex mr-3 my-2 align-center">
+                      <v-avatar
+                        v-for="profile in teaminfo.profile"
+                        v-bind:key="profile.memberProfile"
+                        style="cursor:pointer; margin-right:10px"
+                        color="#eeeeee"
+                        size="30"
+                        class="user-img mb-2"
+                        @click="profileMove(profile.memberIdx)"
+                      >
+                        <i v-if="!profile.memberProfile" class="fas fa-user"></i>
+                        <img v-else :src="profile.memberProfile" />
+                      </v-avatar>
+                    </div>
+                  </div>
+                  <v-icon
+                    right
+                    @click="teamDelete"
+                    v-show="this.status"
+                    style="position:absolute; bottom:8px; right:0;"
+                  >mdi-delete</v-icon>
                 </v-card>
               </v-expand-transition>
               <div class="d-flex">
@@ -104,32 +116,8 @@
                   v-for="stack in JSON.parse(stacks)"
                   :key="stack"
                 ># {{ stack }}</v-chip>
-                <v-spacer></v-spacer>
-                <v-icon right @click="teamDelete" :disabled="!status">mdi-delete</v-icon>
               </div>
             </div>
-            
-            <!-- <v-expansion-panel-header class="mt-7 pb-0">
-              <div class="d-flex flex-column">
-            <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>-->
-            <!-- 
-            <div class="d-flex">
-              <v-chip
-                small
-                class="mr-2 mt-1"
-                color="#3949ab"
-                text-color="white"
-                v-for="stack in JSON.parse(stacks)"
-                :key="stack"
-                style="opacity:0.7;"
-                ># {{ stack }}</v-chip
-              >
-            </div>-->
-            <!-- </div>
-            </v-expansion-panel-header>
-            <v-expansion-panel-content>
-              <div>{{ teaminfo.content }}</div>
-            </v-expansion-panel-content>-->
           </v-expansion-panel>
         </v-expansion-panels>
 
