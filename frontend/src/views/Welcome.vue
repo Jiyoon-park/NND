@@ -1,12 +1,8 @@
 <template>
   <div class="back">
     <v-container class="d-flex justify-center align-center" width="350px;">
-      <img
-        src="../assets/images/logo.png"
-        width="45px"
-        style="position:absolute; top: 5px; left:4px;"
-      />
-      <div class="container">
+      <div class="container" style="position:relative;">
+        <img src="../assets/images/logo.png" width="90px" style="position:absolute; top:30px;" />
         <div class="d-flex flex-column" style="font-family: 'Do Hyeon', sans-serif; font-size:40px">
           <div style="color:#0277BD;">너</div>
           <div style="color:#0277BD;">내</div>

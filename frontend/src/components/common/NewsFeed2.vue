@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-flex xs12 md6 offset-sm3>
-      <v-card flat style="position:relative;">
+      <v-card flat style="position:relative;" :disabled="this.cannot">
         <div class="ribbon" v-if="favorite"></div>
         <v-expansion-panels>
           <v-expansion-panel>
@@ -99,12 +99,10 @@
                       </v-avatar>
                     </div>
                   </div>
-                  <v-icon
-                    right
-                    @click="teamDelete"
-                    v-show="this.status"
-                    style="position:absolute; bottom:8px; right:0;"
-                  >mdi-delete</v-icon>
+                  <div style="position:absolute; bottom:8px; right:0;">
+                    <v-btn small dark color="#BDBDBD" @click="teamDelete" v-show="this.status">글 삭제</v-btn>
+                  </div>
+                  <!-- <v-icon style="position:absolute; bottom:8px; right:0;">mdi-delete</v-icon> -->
                 </v-card>
               </v-expand-transition>
               <div class="d-flex">
@@ -171,6 +169,7 @@ export default {
       teamboardNo: this.teaminfo.teamboardno,
       tlikeno: this.teaminfo.likeno,
       expand: false,
+      cannot: false,
     };
   },
 
@@ -293,8 +292,10 @@ export default {
           if (res.data == "overlap letter") {
             alert("중복 지원입니다.");
           } else if (this.teaminfo.memcnt >= this.teaminfo.groupsize) {
+            this.cannot = true;
             alert("모집인원을 초과했습니다.");
           } else if (curTime.getTime() - endTime.getTime() > 0) {
+            this.cannot = true;
             alert("마감되었습니다.");
           } else {
             this.dialog = !this.dialog;
