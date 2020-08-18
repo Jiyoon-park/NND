@@ -119,12 +119,12 @@ export default {
           })
           .then((response) => {
             console.log(response);
-            // alert("회원가입 완료");
+            alert("회원가입 완료");
             this.$router.push("/login");
           })
           .catch((error) => {
             console.log(error.response);
-            alert("이미 존재하는 아이디입니다");
+            alert("Error~~!!");
             this.$router.push("/signup");
           });
       }
