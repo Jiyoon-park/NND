@@ -5,7 +5,9 @@
         <span>{{ historyinfo.projectName }}</span>
       </v-list-item-title>
       <v-list-item-subtitle>{{ historyinfo.summary }}</v-list-item-subtitle>
-      <div class="mt-3">{{ historyinfo.content }}</div>
+      <div class="mt-3">
+        <p v-html="historyinfo.content"></p>
+      </div>
       <small class="mt-3">
         관련링크
         <br />
@@ -101,17 +103,17 @@ import axios from "axios";
 export default {
   props: {
     historyinfo: {
-      type: Object,
+      type: Object
     },
     isEdit: {
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
   data() {
     return {
       dialog: false,
       isEditPage: true,
-      select: [],
+      select: []
     };
   },
   created() {
@@ -132,11 +134,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/projecthistory/delete/${projecthistoryNo}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => {
+        .then(res => {
           console.log(res);
           location.reload();
           //EventBus.$emit('delete-card');          //location.reload()
@@ -153,24 +155,24 @@ export default {
             summary: this.historyinfo.summary,
             content: this.historyinfo.content,
             usedStack: JSON.stringify(this.select),
-            gitLink: this.historyinfo.gitLink,
+            gitLink: this.historyinfo.gitLink
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           console.log(response);
           this.dialog = false;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
           this.dialog = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
