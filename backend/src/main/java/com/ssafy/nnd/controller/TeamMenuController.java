@@ -86,12 +86,12 @@ public class TeamMenuController {
 	}
 
 	// 팀 게시글 글쓰기
-	@PutMapping("teammenu/post/save")
-	public String saveTeamPost(@RequestBody TeamPost teampost) {
+    @PutMapping("teammenu/post/save")
+    public TeamPost saveTeamPost(@RequestBody TeamPost teampost) {
 
-		teampostRepository.save(teampost);
-		return "save success";
-	}
+       TeamPost newTeampost = teampostRepository.save(teampost);
+       return newTeampost;
+    }
 
 	// 팀 게시글 수정
 	@PostMapping("teammenu/post/update")

@@ -45,12 +45,9 @@ export default {
         )
         .then(({ data }) => {
           this.projects = data;
-          console.log(`데이터 : `);
-          console.log(this.projects);
-          console.log(`before : ${this.projects.content}`);
-          this.projects.content = this.projects.content.replace(/\n/g, "<br>");
-          console.log(`after : ${this.projects.content}`);
-          console.log(this.projects);
+          this.projects.forEach(element => {
+            element.content = element.content.replace(/\n/g, "<br>");
+          });
         })
         .catch(err => {
           console.log(err);
