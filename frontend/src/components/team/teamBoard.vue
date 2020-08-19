@@ -35,9 +35,6 @@
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-      </template>
     </v-data-table>
 
     <v-dialog v-model="dialog" max-width="500px">
@@ -49,7 +46,8 @@
           v-bind="attrs"
           v-on="on"
           style="position:absolute; top:-55px; right:0px;"
-        >글작성</v-btn>
+          >글작성</v-btn
+        >
       </template>
       <v-card>
         <v-toolbar dark flat color="#0277BD">
@@ -60,7 +58,8 @@
             small
             @click="deleteItem(myItem)"
             color="#EEEEEE"
-          >mdi-delete</v-icon>
+            >mdi-delete</v-icon
+          >
         </v-toolbar>
 
         <v-container>
@@ -68,15 +67,28 @@
             <v-row>
               <v-col cols="12" class="py-0">
                 <span class="subheader">✔ 제목</span>
-                <v-text-field class="mt-2" filled label="제목" required v-model="editedItem.title"></v-text-field>
+                <v-text-field
+                  class="mt-2"
+                  filled
+                  label="제목"
+                  required
+                  v-model="editedItem.title"
+                ></v-text-field>
               </v-col>
               <v-col cols="12" class="py-0">
                 <span class="subheader">✔ 내용</span>
-                <v-textarea class="mt-2" filled label="내용" required v-model="editedItem.content"></v-textarea>
+                <v-textarea
+                  class="mt-2"
+                  filled
+                  label="내용"
+                  required
+                  v-model="editedItem.content"
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-card-text>
         </v-container>
+
         <v-card-actions>
           <v-btn color="#0277BD" text @click="close">닫기</v-btn>
           <v-spacer></v-spacer>
@@ -88,7 +100,8 @@
             color="#0277BD"
             text
             @click="save"
-          >저장</v-btn>
+            >저장</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>

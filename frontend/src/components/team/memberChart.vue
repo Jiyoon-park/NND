@@ -47,7 +47,7 @@ export default {
           }
         )
         .then((res) => {
-          console.log("제발제발제발제발제발제발제발");
+          // console.log("제발제발제발제발제발제발제발");
           console.log(res.data);
 
           this.chartData = {
@@ -73,7 +73,7 @@ export default {
               ],
             });
           }
-          console.log("chart dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
+          // console.log("chart dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
           console.log(this.chartData);
           this.loaded = true;
         })
