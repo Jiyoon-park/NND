@@ -99,15 +99,15 @@ export default {
           `${process.env.VUE_APP_API_URL}/teamboard/list/${this.letterinfo.teamboardNo}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => {
+        .then(res => {
           this.teamboardinfo = res.data.teamName;
           console.log(this.teamboardinfo);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -116,7 +116,7 @@ export default {
     return {
       letterDate: "",
       axiostype: "memberlist",
-      teamboardinfo: "",
+      teamboardinfo: ""
     };
   },
   methods: {
@@ -126,6 +126,7 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/letter/teamaccept/${sendidx}/${teamboardno}`,
+          {},
           {
             headers: {
               Authorization: "Bearer " + token.data // the token is a variable which holds the token
