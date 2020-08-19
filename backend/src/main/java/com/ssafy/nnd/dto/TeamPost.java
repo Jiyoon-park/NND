@@ -35,30 +35,6 @@ public class TeamPost {
 	@Column(name = "createdate", insertable = false, updatable = false)
 	private LocalDateTime createDate;  //작성 시간
 	
-	//경도 위도 약속시간
-	
-	@Column
-	private String longitude;   //경도
-	
-	@Column
-	private String latitude;   //위도
-		
-	
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
 	
 	public TeamPost() {
 		// TODO Auto-generated constructor stub
