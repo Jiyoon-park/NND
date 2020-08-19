@@ -86,7 +86,7 @@
                     >mdi-delete</v-icon>
                   </v-card>
                 </v-expand-transition>
-                <div class="d-flex">
+                <div>
                   <v-chip
                     small
                     class="mr-2 mt-1"
@@ -176,7 +176,7 @@ export default {
       memberidx: this.teaminfo.idx,
       teamno: "",
       mlikeno: this.teaminfo.likeno,
-      expand: false,
+      expand: false
     };
   },
   // mounted(){
@@ -221,11 +221,11 @@ export default {
           {},
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((data) => {
+        .then(data => {
           this.favorite = true;
 
           this.mlikeno = data.data;
@@ -239,8 +239,8 @@ export default {
           `${process.env.VUE_APP_API_URL}/likemember/delete/${this.mlikeno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(() => {
@@ -256,26 +256,26 @@ export default {
       console.log(this.teamno);
       axios
         .put(
-          `${process.env.VUE_APP_API_URL}/letter/create/${this.lettertype}`,
+          `${process.env.VUE_APP_API_URL}/letter/create/${this.letterType}`,
           {
             sendIdx: this.sendIdx,
             receiveIdx: this.teaminfo.idx,
             content: this.content,
             letterNo: this.letterNo,
             createDate: this.createDate,
-            teamboardNo: this.teamno,
+            teamboardNo: this.teamno
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           console.log(response);
           alert("신청되었습니다.");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
           alert("실패했습니다.");
         });
@@ -295,11 +295,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/letter/member/teamlist/${this.$store.state.myToken.idx}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((data) => {
+        .then(data => {
           this.teamlist = data.data;
           console.log(this.teamlist);
         });
@@ -314,15 +314,15 @@ export default {
               this.teaminfo.boardno,
             {
               headers: {
-                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-              },
+                Authorization: "Bearer " + token.data // the token is a variable which holds the token
+              }
             }
           )
           .then(() => {
             this.$router.go();
           });
-    },
-  },
+    }
+  }
 };
 </script>
 

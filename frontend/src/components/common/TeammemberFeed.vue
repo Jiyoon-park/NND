@@ -33,7 +33,7 @@ export default {
       query: [],
       category: [],
       skills: [],
-      idx: null,
+      idx: null
     };
   },
   created() {
@@ -44,7 +44,7 @@ export default {
       console.log("유저의 idx: " + this.idx);
     }
 
-    EventBus.$on("search", (obj) => {
+    EventBus.$on("search", obj => {
       this.type = obj.typeSelection;
       console.log(this.type);
       this.query = obj.search;
@@ -69,17 +69,17 @@ export default {
           {
             query: this.query,
             category: this.category,
-            skills: this.skills,
+            skills: this.skills
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
             },
             params: {
               page: this.page,
               size: this.size,
-              mode: 1,
-            },
+              mode: 1
+            }
           }
         )
         .then(({ data }) => {
@@ -107,10 +107,10 @@ export default {
                     .ref()
                     .child(card.imageurl)
                     .getDownloadURL()
-                    .then((imageurl) => {
+                    .then(imageurl => {
                       this.list[i].imageurl = imageurl;
                     })
-                    .catch(function (error) {
+                    .catch(function(error) {
                       // A full list of error codes is available at
                       // https://firebase.google.com/docs/storage/web/handle-errors
                       switch (error.code) {
@@ -136,18 +136,26 @@ export default {
                 //////////////////////////////////////////////////////////////////////
                 // 팀원들의 링크를 가져오는 작업을 진행한다.
                 // 1. teamboardno를 가지고 axios 요청을 보낸다.
-                axios
-                  .get(
-                    `${process.env.VUE_APP_API_URL}/teammenu/member/${this.list[i].teamboardno}`,
-                    {
-                      headers: {
-                        Authorization: "Bearer " + token.data // the token is a variable which holds the token
+                if (this.type == "team") {
+                  axios
+                    .get(
+                      `${process.env.VUE_APP_API_URL}/teammenu/member/${this.list[i].teamboardno}`,
+                      {
+                        headers: {
+                          Authorization: "Bearer " + token.data // the token is a variable which holds the token
+                        }
                       }
-                    }
-                  )
-                  .then(({ data }) => {
-                    this.list[i].profiles = data;
-                  });
+                    )
+                    .then(({ data }) => {
+                      this.list[i].profiles = data;
+                      // console.log(`before : ${this.list[i].content}`);
+                      this.list[i].content = this.list[i].content.replace(
+                        /\n/g,
+                        "<br>"
+                      );
+                      // console.log(`after : ${this.list[i].content}`);
+                    });
+                }
               }
               console.log(`list :`);
               console.log(this.list);
@@ -157,14 +165,14 @@ export default {
             }
           }, 1000);
         });
-    },
+    }
   },
   components: {
     NewsFeed2: NewsFeed2,
     NewsFeed: NewsFeed,
     ActionButton,
-    InfiniteLoading,
-  },
+    InfiniteLoading
+  }
 };
 </script>
 
