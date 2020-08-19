@@ -32,8 +32,11 @@
         </div>
       </div>
       <div class="rounded grey lighten-3 pa-3 mt-3">
-        <span class="subheader" v-if="letterinfo.letterType == 'mboard'">✔ 팀 영입 제안입니다.</span>
-        <span class="subheader" v-else>✔ 팀원 지원입니다.</span>
+        <span
+          class="subheader"
+          v-if="letterinfo.letterType == 'mboard'"
+        >✔ '{{teamboardinfo}}' 팀에 동료가 되어주세요.</span>
+        <span class="subheader" v-else>✔ '{{teamboardinfo}}' 팀에 동료가 되고싶습니다.</span>
 
         <p class="mt-2">{{ letterinfo.content }}</p>
         <span class="subheader">✔ {{ letterinfo.name }}님의 이전 프로젝트 평가점수입니다.</span>
@@ -83,12 +86,33 @@ export default {
     },
   },
   created() {
+    let token = window.$cookies.get("nnd");
     this.letterDate = this.dateFormatted(this.letterinfo.createDate);
+    console.log("##############");
+    if (this.letterinfo.letterType == "tboard") {
+      axios
+        .get(
+          `${process.env.VUE_APP_API_URL}/teamboard/list/${this.letterinfo.teamboardNo}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
+          }
+        )
+        .then((res) => {
+          this.teamboardinfo = res.data.teamName;
+          console.log(this.teamboardinfo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
   data() {
     return {
       letterDate: "",
       axiostype: "memberlist",
+      teamboardinfo: "",
     };
   },
   methods: {
@@ -98,7 +122,6 @@ export default {
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/letter/teamaccept/${sendidx}/${teamboardno}`,
-          {},
           {
             headers: {
               Authorization: "Bearer " + token.data, // the token is a variable which holds the token
