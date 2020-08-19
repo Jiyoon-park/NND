@@ -101,7 +101,6 @@ public class TeamBoardController {
     	//teamboard에 팀장의 정보 저장
     	teamBoard.setIdx(member.get().getIdx());
     	teamBoard.setEmail(leaderEmail);
-    	teamBoard.setName(member.get().getName());
     	teamBoard.setMemCnt(1);
     	
     	//1차저장 teamboardno 만들기 

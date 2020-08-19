@@ -70,8 +70,6 @@ public class TeamBoard {
 	@Column(name="memcnt")  //현재 구성인원
 	private int memCnt;
 	
-	@Column
-	private String name;
 
 	public TeamBoard() {
 		// TODO Auto-generated constructor stub
@@ -79,7 +77,7 @@ public class TeamBoard {
 
 	public TeamBoard(Long teamboardNo, Long idx, String email, String teamName, String memberEmails, int groupSize,
 			String deadLine, String title, String content, String imageurl, String kakaoLink, String techStack,
-			String category, int likeCnt, LocalDateTime createDate, int memCnt, String name) {
+			String category, int likeCnt, LocalDateTime createDate, int memCnt) {
 		super();
 		this.teamboardNo = teamboardNo;
 		this.idx = idx;
@@ -97,7 +95,6 @@ public class TeamBoard {
 		this.likeCnt = likeCnt;
 		this.createDate = createDate;
 		this.memCnt = memCnt;
-		this.name = name;
 	}
 
 	public Long getTeamboardNo() {
@@ -228,21 +225,13 @@ public class TeamBoard {
 		this.memCnt = memCnt;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Override
 	public String toString() {
 		return "TeamBoard [teamboardNo=" + teamboardNo + ", idx=" + idx + ", email=" + email + ", teamName=" + teamName
 				+ ", memberEmails=" + memberEmails + ", groupSize=" + groupSize + ", deadLine=" + deadLine + ", title="
 				+ title + ", content=" + content + ", imageurl=" + imageurl + ", kakaoLink=" + kakaoLink
 				+ ", techStack=" + techStack + ", category=" + category + ", likeCnt=" + likeCnt + ", createDate="
-				+ createDate + ", memCnt=" + memCnt + ", name=" + name + "]";
+				+ createDate + ", memCnt=" + memCnt + ", name=" + "]";
 	}
 
 	
