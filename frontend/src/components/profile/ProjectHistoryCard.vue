@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title class="headline font-weight-regular blue darken-3 white--text">project history</v-card-title>
+    <v-card-title class="headline font-weight-regular blue darken-3 white--text">참여 이력</v-card-title>
     <v-form>
       <v-container class="pb-0">
         <v-text-field
@@ -83,8 +83,8 @@ export default {
         "Pytorch",
         "Tensorflow",
         "Spirngboot",
-        "Ruby",
-      ],
+        "Ruby"
+      ]
     };
   },
   created() {
@@ -104,15 +104,15 @@ export default {
             summary: this.summary,
             content: this.content,
             usedStack: JSON.stringify(this.usedStack),
-            gitLink: this.gitLink,
+            gitLink: this.gitLink
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           this.$emit("onSubmit");
           console.log(response);
           alert("등록에 성공했습니다");
@@ -124,15 +124,15 @@ export default {
           this.gitLink = null;
           EventBus.$emit("create-card"); //location.reload()
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
           alert("등록에 실패했습니다");
         });
     },
     changeDialog() {
       this.$emit("changeDialog");
-    },
-  },
+    }
+  }
 };
 </script>
 

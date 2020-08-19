@@ -1,22 +1,20 @@
 <template>
   <div class="letter">
     <v-card outlined>
-      <v-list-item
-        @click="onLetterDetail(`${letterinfo.letterNo}`)"
-        @click.stop="dialog = true"
-      >
+      <v-list-item @click="onLetterDetail(`${letterinfo.letterNo}`)" @click.stop="dialog = true">
         <div class="ml-2 mr-3">
-          <v-avatar color="grey" size="50" @click="profileMove(item.tab == '받은 편지함' ? letterinfo.sendIdx : letterinfo.receiveIdx)">
+          <v-avatar
+            color="grey"
+            size="50"
+            @click="profileMove(item.tab == '받은 편지함' ? letterinfo.sendIdx : letterinfo.receiveIdx)"
+          >
             <i v-if="!letterinfo.profile" class="fas fa-user"></i>
             <img v-else :src="letterinfo.profile" />
           </v-avatar>
         </div>
         <v-list-item-content style="position:relative;">
           <div>
-            <v-list-item-title
-              v-text="letterinfo.name"
-              class="font-weight-black mb-1"
-            ></v-list-item-title>
+            <v-list-item-title v-text="letterinfo.name" class="font-weight-black mb-1"></v-list-item-title>
             <!-- 편지 읽음/안읽음  -->
             <div class="d-flex">
               <v-list-item-title
@@ -29,22 +27,14 @@
           <small
             class="mb-0 text--secondary"
             style="position:absolute; right:0; top:15px"
-            >{{ letterDate }}</small
-          >
-          <div
-            v-if="item.tab == '받은 편지함'"
-            style="position:absolute; right:7px; top:35px"
-          >
+          >{{ letterDate }}</small>
+          <div v-if="item.tab == '받은 편지함'" style="position:absolute; right:7px; top:35px">
             <i
               class="fas fa-envelope"
               style="font-size:20px; color:#7986CB"
               v-if="!letterinfo.read"
             ></i>
-            <i
-              class="fas fa-envelope-open-text"
-              style="font-size:20px; color: #BDBDBD;"
-              v-else
-            ></i>
+            <i class="fas fa-envelope-open-text" style="font-size:20px; color: #BDBDBD;" v-else></i>
           </div>
         </v-list-item-content>
       </v-list-item>
@@ -69,21 +59,21 @@ import { EventBus } from "../../main.js";
 
 export default {
   components: {
-    LetterDetail,
+    LetterDetail
   },
   data() {
     return {
       dialog: false,
-      letterDate: "", // 포맷팅한 날짜를 저장하는 변수공간
+      letterDate: "" // 포맷팅한 날짜를 저장하는 변수공간
     };
   },
   props: {
     item: {
-      type: Object,
+      type: Object
     },
     letterinfo: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   created() {
     this.letterDate = this.dateFormatted(this.letterinfo.createDate);
@@ -104,23 +94,27 @@ export default {
     onLetterDetail(letterNo) {
       let token = window.$cookies.get("nnd");
       // 클릭한 편지는 읽음 처리
-      if (this.letterinfo.read == 0) {
-        this.letterinfo.read = 1;
-        axios
-          .post(
-            `${process.env.VUE_APP_API_URL}/letter/update/${letterNo}`,
-            {},
-            {
-              headers: {
-                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            EventBus.$emit("letterRead");
-          })
-          .catch((err) => console.log(err));
+      if (this.item.tab == "받은 편지함") {
+        if (this.letterinfo.read == 0) {
+          this.letterinfo.read = 1;
+          axios
+            .post(
+              `${process.env.VUE_APP_API_URL}/letter/update/${letterNo}`,
+              {},
+              {
+                headers: {
+                  Authorization: "Bearer " + token.data // the token is a variable which holds the token
+                }
+              }
+            )
+            .then(res => {
+              console.log(res);
+              if (this.item.tab == "받은 편지함") {
+                EventBus.$emit("letterRead");
+              }
+            })
+            .catch(err => console.log(err));
+        }
       }
     },
     dateFormatted: function(dt) {
@@ -151,7 +145,7 @@ export default {
           ":" +
           (d.getSeconds() > 9 ? "" : "0") +
           d.getSeconds(),
-        formatted: "",
+        formatted: ""
       };
 
       console.log(result.raw); // 결과값
@@ -180,8 +174,8 @@ export default {
           d.getDate();
       }
       return result.formatted;
-    },
-  },
+    }
+  }
 };
 </script>
 

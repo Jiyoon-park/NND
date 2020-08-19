@@ -13,18 +13,18 @@ import { EventBus } from "../../main";
 
 export default {
   components: {
-    ProjectHistoryListItem,
+    ProjectHistoryListItem
   },
   props: {
     isEdit: {
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
   data() {
     return {
       projects: [],
       user: "",
-      dialog: false,
+      dialog: false
     };
   },
   created() {
@@ -39,15 +39,20 @@ export default {
           `${process.env.VUE_APP_API_URL}/projecthistory/list/${this.$store.state.profileidx}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(({ data }) => {
           this.projects = data;
+          console.log(`데이터 : `);
+          console.log(this.projects);
+          console.log(`before : ${this.projects.content}`);
+          this.projects.content = this.projects.content.replace(/\n/g, "<br>");
+          console.log(`after : ${this.projects.content}`);
           console.log(this.projects);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     }
@@ -69,15 +74,15 @@ export default {
           `${process.env.VUE_APP_API_URL}/projecthistory/list/${this.$store.state.profileidx}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
         .then(({ data }) => {
           this.projects = data;
           console.log(this.projects);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     });
@@ -90,11 +95,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/projecthistory/delete/${projecthistoryNo}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => console.log(res));
+        .then(res => console.log(res));
     },
     onEditBtn(projecthistoryNo, i) {
       let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
@@ -109,24 +114,24 @@ export default {
             content: this.projects[i].content,
             usedStack: this.projects[i].usedStack,
             gitLink: this.projects[i].gitLink,
-            techStack: JSON.stringify(this.projects[i].techStack),
+            techStack: JSON.stringify(this.projects[i].techStack)
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((response) => {
+        .then(response => {
           console.log(response);
           this.dialog = false;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
           this.dialog = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

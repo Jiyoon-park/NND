@@ -39,30 +39,34 @@
         <span class="subheader" v-else>✔ '{{teamboardinfo}}' 팀에 동료가 되고싶습니다.</span>
 
         <p class="mt-2">{{ letterinfo.content }}</p>
-        <span class="subheader">✔ {{ letterinfo.name }}님의 이전 프로젝트 평가점수입니다.</span>
-        <div style="max-height:250px; max-width:250px; margin:auto;" v-if="item.tab == '받은 편지함'">
-          <MemberChart :axiostype="axiostype" :letteridx="letterinfo" />
+        <div v-if="item.tab == '받은 편지함'">
+          <span class="subheader">✔ {{ letterinfo.name }}님의 이전 프로젝트 평가점수입니다.</span>
+          <div style="max-height:250px; max-width:250px; margin:auto;" v-if="item.tab == '받은 편지함'">
+            <MemberChart :axiostype="axiostype" :letteridx="letterinfo" />
+          </div>
         </div>
       </div>
     </v-card-text>
     <v-divider></v-divider>
-    <v-card-actions v-if="item.tab == '받은 편지함'">
+    <v-card-actions>
       <v-btn color="grey" class="font-weight-bold" text @click="changeDialog">닫기</v-btn>
       <v-spacer></v-spacer>
-      <v-btn
-        color="#38ada9"
-        text
-        class="font-weight-bold"
-        @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
-        v-if="letterinfo.letterType == 'tboard'"
-      >지원수락</v-btn>
-      <v-btn
-        color="#706fd3"
-        text
-        class="font-weight-bold"
-        @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
-        v-else
-      >제안수락</v-btn>
+      <div v-if="item.tab == '받은 편지함'">
+        <v-btn
+          color="#38ada9"
+          text
+          class="font-weight-bold"
+          @click="teamAccept(letterinfo.sendIdx, letterinfo.teamboardNo)"
+          v-if="letterinfo.letterType == 'tboard'"
+        >지원수락</v-btn>
+        <v-btn
+          color="#706fd3"
+          text
+          class="font-weight-bold"
+          @click="memberAccept(letterinfo.teamboardNo, letterinfo.receiveIdx)"
+          v-else
+        >제안수락</v-btn>
+      </div>
     </v-card-actions>
   </v-card>
 </template>
@@ -72,18 +76,18 @@ import axios from "axios";
 import MemberChart from "../team/memberChart.vue";
 export default {
   components: {
-    MemberChart,
+    MemberChart
   },
   props: {
     letterinfo: {
-      type: Object,
+      type: Object
     },
     item: {
-      type: Object,
+      type: Object
     },
     dialog: {
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
   created() {
     let token = window.$cookies.get("nnd");
@@ -124,11 +128,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/letter/teamaccept/${sendidx}/${teamboardno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => {
+        .then(res => {
           console.log(res);
           if (res.data == "success") {
             alert("수락완료");
@@ -138,7 +142,7 @@ export default {
             alert("이미 가입했습니다.");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           alert("멤버가 없거나 팀이 삭제되었습니다.");
         });
@@ -152,11 +156,11 @@ export default {
           {},
           {
             headers: {
-              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
-            },
+              Authorization: "Bearer " + token.data // the token is a variable which holds the token
+            }
           }
         )
-        .then((res) => {
+        .then(res => {
           console.log(res);
           if (res.data == "success") {
             alert("수락완료");
@@ -166,7 +170,7 @@ export default {
             alert("이미 가입했습니다.");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           alert("멤버가 없거나 팀이 삭제되었습니다.");
         });
@@ -175,7 +179,7 @@ export default {
     changeDialog() {
       this.$emit("changeDialog");
     },
-    dateFormatted: function (dt) {
+    dateFormatted: function(dt) {
       console.log("dt : " + dt);
       var d = new Date(dt);
 
@@ -197,8 +201,8 @@ export default {
       // (d.getSeconds() > 9 ? "" : "0") +
       // d.getSeconds();
       return result;
-    },
-  },
+    }
+  }
 };
 </script>
 
