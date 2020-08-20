@@ -43,8 +43,47 @@ yarn serve
 
 
 ## 📖 Documentation
-See [Documentation](예시) page.
--> 지훈이 사용
+
+
+- 웰컴페이지 / 로그인 / 회원가입 화면
+
+<div>
+	<img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_181146142.gif?alt=media&token=379ba17d-e6bd-441b-a8ac-77bb4466687c">
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_174541048.jpg?alt=media&token=cf166865-2855-4298-83f8-18475e351296">
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_174540790.jpg?alt=media&token=3ac3d58a-a977-474a-835d-2a803cfbffd6">
+</div>
+
+
+
+* 메인화면(무한스크롤 가능) / 뉴스피드 글 등록 및 프로필 정보 확인 / 검색 필터링 / 내 정보 수정 화면
+
+<div>
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_183838866.gif?alt=media&token=499087a2-088d-4744-9c3c-c8dda24aab59">
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_185711169.gif?alt=media&token=bf9cdbfe-366f-4e05-a1c1-f452bb033b84">
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EA%B2%80%EC%83%89.gif?alt=media&token=3b58ae9d-13fd-478a-994f-5ac11532b01c">
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EB%82%B4%20%EC%A0%95%EB%B3%B4%20%EC%88%98%EC%A0%95.gif?alt=media&token=43fe9c70-1372-4d5b-8048-3a605b4ec3f1">
+</div>
+
+
+
+* 팀게시판 목록(게시판 글 등록 및 일정 관리, 팀원 평가) / 외부 공모전 탭 화면
+
+<div>
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%ED%8C%80%EA%B2%8C%EC%8B%9C%ED%8C%90.gif?alt=media&token=dd1ce44f-7c94-44dc-8faf-8287ba5dd5c9">
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EC%99%B8%EB%B6%80%20%EA%B3%B5%EB%AA%A8%EC%A0%84.gif?alt=media&token=9946618b-6984-4cdc-8727-5dff9990422f">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 🌐 Supported Browsers
 |<img width="40" src="https://simpleicons.org/icons/internetexplorer.svg" alt="IE" />|<img width="40" src="https://simpleicons.org/icons/googlechrome.svg" alt="Chrome" />|<img width="40" src="https://simpleicons.org/icons/apple.svg" alt="iOS" />|<img width="40" src="https://simpleicons.org/icons/android.svg" alt="Android">|
