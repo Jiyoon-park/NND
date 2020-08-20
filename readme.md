@@ -12,8 +12,14 @@
 > 팀원 및 팀을 구하는 웹 사이트
 
 <b>Supported Frameworks</b><br/>
-<a href="https://github.com/naver/egjs-flicking/blob/master/packages/ngx-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/angular.svg" alt="AngularJS" /></a>&nbsp;&nbsp;
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/ngx-flicking/README.md"><img width="45" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/330px-CSS3_logo_and_wordmark.svg.png" alt="AngularJS" /></a>&nbsp;&nbsp;
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/react-flicking/README.md"><img width="45" src="https://linked2ev.github.io/assets//img/icon/iconSpringboot.png" alt="React" /></a>&nbsp;&nbsp;
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
+
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://seeklogo.com/images/V/vuetify-logo-3BCF73C928-seeklogo.com.png" alt="Vue.js" /></a>
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
 
 
