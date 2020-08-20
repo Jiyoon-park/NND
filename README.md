@@ -9,7 +9,13 @@
   </a>
 </p>
 
-> 팀원 및 팀을 구하는 웹 사이트
+> 스터디 & 공모전 등 팀원 및 팀을 구하는 웹 사이트
+
+<h3 align=center>
+  <a href="http://i3a404.p.ssafy.io/">project homepage</a> 
+</h3>
+
+
 
 <b>Supported Frameworks</b><br/>
 
@@ -46,8 +52,6 @@ See [Documentation](예시) page.
 |10+|Latest|7+|4+|
 
 ## Author
-
-👤 project homepage i3a404.p.ssafy.io**
 
 * Website: 이상한 나라의 앨리스
 * Github: (https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404)
