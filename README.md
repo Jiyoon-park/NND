@@ -16,7 +16,7 @@
 </p>
 
 <h3 align=center>
-배포중인 홈페이지
+배포중인 사이트
   <a href="http://i3a404.p.ssafy.io/">homepage</a> 
 </h3><br/>
 
