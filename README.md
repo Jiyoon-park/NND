@@ -45,7 +45,7 @@ yarn serve
 ## 📖 Documentation
 
 
-- 웰컴페이지 / 로그인 / 회원가입 화면
+- 웰컴페이지 / 로그인 / 회원가입
 
 <div>
 	<img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_181146142.gif?alt=media&token=379ba17d-e6bd-441b-a8ac-77bb4466687c">
@@ -55,7 +55,7 @@ yarn serve
 
 
 
-* 메인화면(무한스크롤 가능) / 뉴스피드 글 등록 및 프로필 정보 확인 / 검색 필터링 / 내 정보 수정 화면
+* 메인화면 / 뉴스피드 글 등록 및 프로필 정보 확인 / 검색 필터링 / 내 정보 수정 화면
 
 <div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_183838866.gif?alt=media&token=499087a2-088d-4744-9c3c-c8dda24aab59">
@@ -66,11 +66,13 @@ yarn serve
 
 
 
-* 팀게시판 목록(게시판 글 등록 및 일정 관리, 팀원 평가) / 외부 공모전 탭 화면
+* 팀게시판 목록을 관리 할 수 있습니다.(게시판 글 등록 및 일정 관리, 팀원 평가)
 
 <div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%ED%8C%80%EA%B2%8C%EC%8B%9C%ED%8C%90.gif?alt=media&token=dd1ce44f-7c94-44dc-8faf-8287ba5dd5c9">
 </div>
+
+* 외부 공모전을 찾아 볼 수 있습니다.
 
 <div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EC%99%B8%EB%B6%80%20%EA%B3%B5%EB%AA%A8%EC%A0%84.gif?alt=media&token=9946618b-6984-4cdc-8727-5dff9990422f">
