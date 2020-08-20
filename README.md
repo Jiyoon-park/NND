@@ -102,11 +102,15 @@ yarn serve
 
 
 
-## Author
+## Contributors
 
 * Team: 이상한 나라의 앨리스
-* Member: okk0@naver.com, logbug1004@gmail.com, soundpjy1205@gmail.com, ohks9208@naver.com, tjdgus2319@gmail.com, dlckddbs95k@gmail.com
-* Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
+* 오기석은 DB 구현 및 FrontEnd과의 연결을 도왔습니다.
+* 함지훈은 DB 설계 및 API 구현을 도왔습니다.
+* 김성현은 JWT 보안 및 API 구현을 도왔습니다.
+* 박지윤은 디자인 통합 및 내정보 페이지를 구현했습니다.
+* 이창윤은 팀게시판 및 뉴스피드를 구현했습니다.
+* 이상현은 와이어 프레임 작성 및 외부공모전을 구현했습니다.
 
 
 ***
