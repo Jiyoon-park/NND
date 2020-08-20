@@ -59,11 +59,6 @@
                 </v-toolbar>
                 <v-container class="py-0">
                   <v-row>
-                    <v-col cols="12" sm="12" class="px-4 pt-4">
-                      <img v-bind:src="getPoster()" style="max-height:200px; max-width:500px;" />
-                    </v-col>
-                  </v-row>
-                  <v-row>
                     <v-col cols="12" class="pb-0">
                       <v-card-text class="px-4 py-0">
                         <h3>{{ selectedEvent.name }}</h3>
