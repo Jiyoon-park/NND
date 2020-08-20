@@ -57,8 +57,8 @@ yarn serve
 * 웰컴페이지 / 로그인 / 회원가입
 
 <div>
-	<img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_181146142.gif?alt=media&token=379ba17d-e6bd-441b-a8ac-77bb4466687c">
-    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_174541048.jpg?alt=media&token=cf166865-2855-4298-83f8-18475e351296">
+	<img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_181146142.gif?alt=media&token=379ba17d-e6bd-441b-a8ac-77bb4466687c">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_174541048.jpg?alt=media&token=cf166865-2855-4298-83f8-18475e351296">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_174540790.jpg?alt=media&token=3ac3d58a-a977-474a-835d-2a803cfbffd6">
 </div>
 
