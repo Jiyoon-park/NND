@@ -1,15 +1,21 @@
 <h1 align="center">Welcome to 너 내 동료가 되라! 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
-  <a href="?    Project homepage (use empty value to skip)" target="_blank">
+  <a href="http://i3a404.p.ssafy.io/" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-</p>
+</p><br/>
 
-> 팀원 및 팀을 구하는 웹 사이트
+스터디 & 공모전 등 팀원 및 팀을 구하는 웹 사이트
+
+<h3 align=center>
+    홈페이지 이동<br/>
+  <a href="http://i3a404.p.ssafy.io/">project homepage</a> 
+</h3><br/>
+
 
 <b>Supported Frameworks</b><br/>
 
@@ -40,13 +46,15 @@ yarn serve
 See [Documentation](예시) page.
 -> 지훈이 사용
 
+## 🌐 Supported Browsers
+|<img width="40" src="https://simpleicons.org/icons/internetexplorer.svg" alt="IE" />|<img width="40" src="https://simpleicons.org/icons/googlechrome.svg" alt="Chrome" />|<img width="40" src="https://simpleicons.org/icons/apple.svg" alt="iOS" />|<img width="40" src="https://simpleicons.org/icons/android.svg" alt="Android">|
+|:---:|:---:|:---:|:---:|
+|10+|Latest|7+|4+|
 
 ## Author
 
-👤 project homepage i3a404.p.ssafy.io**
-
 * Website: 이상한 나라의 앨리스
-* Github: (https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404)
+* Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
 
 
 ***
