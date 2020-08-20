@@ -93,15 +93,19 @@ yarn serve
 </div>
 
 
+
+
 ## 🌐 Supported Browsers
 |<img width="40" src="https://simpleicons.org/icons/internetexplorer.svg" alt="IE" />|<img width="40" src="https://simpleicons.org/icons/googlechrome.svg" alt="Chrome" />|<img width="40" src="https://simpleicons.org/icons/apple.svg" alt="iOS" />|<img width="40" src="https://simpleicons.org/icons/android.svg" alt="Android">|
 |:---:|:---:|:---:|:---:|
 |10+|Latest|7+|4+|
 
+
+
 ## Author
 
 * Team: 이상한 나라의 앨리스
-* Member: okk0@naver.com logbug1004@gmail.com soundpjy1205@gmail.com ohks9208@naver.com tjdgus2319@gmail.com dlckddbs95k@gmail.com
+* Member: okk0@naver.com, logbug1004@gmail.com, soundpjy1205@gmail.com, ohks9208@naver.com, tjdgus2319@gmail.com, dlckddbs95k@gmail.com
 * Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
 
 
