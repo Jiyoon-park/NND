@@ -21,12 +21,11 @@
                   <span
                     style="cursor:pointer;"
                     @click="profileMove(teaminfo.idx)"
-                  >{{ teaminfo.name }}</span>
+                    >{{ teaminfo.name }}</span
+                  >
                   <div>
                     <span>
-                      {{
-                      $moment(teaminfo.createdate).format("YYYY-MM-DD")
-                      }}
+                      {{ $moment(teaminfo.createdate).format("YYYY-MM-DD") }}
                     </span>
                   </div>
                 </div>
@@ -36,17 +35,19 @@
                   <v-img
                     v-if="teaminfo.category === '스터디'"
                     src="../../assets/images/study.jpg"
-                    height="194"
                   ></v-img>
                   <v-img
                     v-else-if="teaminfo.category === '프로젝트'"
                     src="../../assets/images/project.jpg"
-                    height="194"
                   ></v-img>
-                  <v-img v-else src="../../assets/images/competition.jpg" height="194"></v-img>
+                  <v-img
+                    v-else
+                    src="../../assets/images/competition.jpg"
+                  ></v-img>
                 </div>
                 <div v-else>
-                  <v-img :src="teaminfo.imageurl" height="194"></v-img>
+                  <!--<v-img :src="teaminfo.imageurl" height="194"></v-img>-->
+                  <show-image :url="teaminfo.imageurl"></show-image>
                 </div>
                 <span
                   class="mr-3 mt-1"
@@ -54,26 +55,43 @@
                 >
                   <span
                     style="text-shadow:1px 1px black; color:#eeeeee; font-size:18px;"
-                  >{{ teaminfo.category }}</span>
+                    >{{ teaminfo.category }}</span
+                  >
                 </span>
 
                 <div
                   style="position:absolute; cursor:pointer; right:15px; bottom:-32px; z-index:2;"
                 >
-                  <i class="far fa-bookmark" v-if="!favorite" @click="addFavorite"></i>
+                  <i
+                    class="far fa-bookmark"
+                    v-if="!favorite"
+                    @click="addFavorite"
+                  ></i>
                   <i class="fas fa-bookmark" v-else @click="delFavorite"></i>
                 </div>
-                <div style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;">
+                <div
+                  style="position:absolute; cursor:pointer; left:15px; bottom:-32px; z-index:2;"
+                >
                   <i @click="applyform" class="fas fa-paper-plane">
-                    <span class="ml-1 mb-0" style="font-family: 'Do Hyeon', sans-serif;">영입하기</span>
+                    <span
+                      class="ml-1 mb-0"
+                      style="font-family: 'Do Hyeon', sans-serif;"
+                      >영입하기</span
+                    >
                   </i>
                 </div>
               </div>
 
               <div class="shrink mt-10 mx-4 mb-4">
                 <div class="d-flex justify-space-between align-center">
-                  <span class="font-weight-black mb-1">{{ teaminfo.title }}</span>
-                  <small @click="expand = !expand" style="cursor:pointer; color:primary">더보기</small>
+                  <span class="font-weight-black mb-1">{{
+                    teaminfo.title
+                  }}</span>
+                  <small
+                    @click="expand = !expand"
+                    style="cursor:pointer; color:primary"
+                    >더보기</small
+                  >
                 </div>
                 <v-expand-transition>
                   <v-card flat v-show="expand" class="mx-auto">
@@ -83,7 +101,8 @@
                       @click="memberDelete"
                       v-show="this.status"
                       style="position:absolute; bottom:8px; right:0;"
-                    >mdi-delete</v-icon>
+                      >mdi-delete</v-icon
+                    >
                   </v-card>
                 </v-expand-transition>
                 <div>
@@ -94,7 +113,8 @@
                     text-color="white"
                     v-for="stack in JSON.parse(stacks)"
                     :key="stack"
-                  ># {{ stack }}</v-chip>
+                    ># {{ stack }}</v-chip
+                  >
                 </div>
               </div>
             </v-expansion-panel>
@@ -102,20 +122,33 @@
 
           <v-dialog v-model="dialog" max-width="600px">
             <v-card style="border: 3px solid #eeeeee;">
-              <v-img class="header" height="200px" src="../../assets/images/member2.jpg"></v-img>
+              <v-img
+                class="header"
+                height="200px"
+                src="../../assets/images/member2.jpg"
+              ></v-img>
               <v-card-title
                 v-if="this.teamlist.length !== 0"
                 class="header-text text-center justify-center body-1"
-              >❝ {{ teaminfo.name }} 님을 영입합니다 ❠</v-card-title>
+                >❝ {{ teaminfo.name }} 님을 영입합니다 ❠</v-card-title
+              >
               <v-card-title
                 v-else
                 class="header-text text-center justify-center body-1"
-              >❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠</v-card-title>
+                >❝ 아쉽지만 등록된 팀이 없어 영업이 불가합니다. ❠</v-card-title
+              >
 
               <v-card-text v-if="this.teamlist.length !== 0" class="pb-0">
                 <div class="mt-4">
-                  <p class="mb-3 pl-1" style="font-size:1rem;">팀원에게 보내는 어필 한마디 🙈🙉</p>
-                  <v-textarea filled v-model="content" name="content" placeholder="내용을 작성해주세요."></v-textarea>
+                  <p class="mb-3 pl-1" style="font-size:1rem;">
+                    팀원에게 보내는 어필 한마디 🙈🙉
+                  </p>
+                  <v-textarea
+                    filled
+                    v-model="content"
+                    name="content"
+                    placeholder="내용을 작성해주세요."
+                  ></v-textarea>
                   <v-row class="mb-0">
                     <v-col class="py-0" cols="12">
                       <v-overflow-btn
@@ -132,14 +165,17 @@
                 </div>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+                <v-btn color="blue darken-1" text @click="dialog = false"
+                  >취소</v-btn
+                >
                 <v-spacer></v-spacer>
                 <v-btn
                   v-if="this.teamlist.length !== 0"
                   color="blue darken-1"
                   text
                   @click="submit"
-                >영입하기</v-btn>
+                  >영입하기</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -151,10 +187,14 @@
 
 <script>
 import axios from "axios";
+import ShowImage from "../common/ShowImage.vue";
+
 export default {
   name: "NewsFeed",
   props: ["teaminfo"],
-
+  components: {
+    ShowImage,
+  },
   data() {
     return {
       show: false,
@@ -176,7 +216,7 @@ export default {
       memberidx: this.teaminfo.idx,
       teamno: "",
       mlikeno: this.teaminfo.likeno,
-      expand: false
+      expand: false,
     };
   },
   // mounted(){
@@ -221,11 +261,11 @@ export default {
           {},
           {
             headers: {
-              Authorization: "Bearer " + token.data // the token is a variable which holds the token
-            }
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
           }
         )
-        .then(data => {
+        .then((data) => {
           this.favorite = true;
 
           this.mlikeno = data.data;
@@ -239,8 +279,8 @@ export default {
           `${process.env.VUE_APP_API_URL}/likemember/delete/${this.mlikeno}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data // the token is a variable which holds the token
-            }
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
           }
         )
         .then(() => {
@@ -263,19 +303,19 @@ export default {
             content: this.content,
             letterNo: this.letterNo,
             createDate: this.createDate,
-            teamboardNo: this.teamno
+            teamboardNo: this.teamno,
           },
           {
             headers: {
-              Authorization: "Bearer " + token.data // the token is a variable which holds the token
-            }
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
           }
         )
-        .then(response => {
+        .then((response) => {
           console.log(response);
           alert("신청되었습니다.");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.response);
           alert("실패했습니다.");
         });
@@ -295,11 +335,11 @@ export default {
           `${process.env.VUE_APP_API_URL}/letter/member/teamlist/${this.$store.state.myToken.idx}`,
           {
             headers: {
-              Authorization: "Bearer " + token.data // the token is a variable which holds the token
-            }
+              Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+            },
           }
         )
-        .then(data => {
+        .then((data) => {
           this.teamlist = data.data;
           console.log(this.teamlist);
         });
@@ -314,15 +354,15 @@ export default {
               this.teaminfo.boardno,
             {
               headers: {
-                Authorization: "Bearer " + token.data // the token is a variable which holds the token
-              }
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
             }
           )
           .then(() => {
             this.$router.go();
           });
-    }
-  }
+    },
+  },
 };
 </script>
 
