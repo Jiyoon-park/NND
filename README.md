@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to 너 내 동료가 되라! 👋</h1>
+<h1 align="center"> 너 내 동료가 되라! 👋</h1>
 <p>
   <a href="http://i3a404.p.ssafy.io/" target="_blank">
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
@@ -101,6 +101,7 @@ yarn serve
 ## Contributors
 
 * Team: 이상한 나라의 앨리스
+* 
 * [오기석](https://lab.ssafy.com/ohks9208)은 DB 구현 및 FrontEnd와의 연결을 도왔습니다.
 * [함지훈](https://lab.ssafy.com/logbug1004)은 DB 설계 및 API 구현을 도왔습니다.
 * [김성현](https://lab.ssafy.com/tjdgus2319)은 JWT 보안 및 API 구현을 도왔습니다.
