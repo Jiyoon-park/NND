@@ -1,6 +1,8 @@
 <h1 align="center">Welcome to 너 내 동료가 되라! 👋</h1>
 <p>
+  <a href="http://i3a404.p.ssafy.io/" target="_blank">
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+  </a>
   <a href="http://i3a404.p.ssafy.io/" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
