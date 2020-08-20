@@ -42,8 +42,6 @@ See [Documentation](예시) page.
 
 ## 🌐 Supported Browsers
 |<img width="20" src="https://simpleicons.org/icons/internetexplorer.svg" alt="IE" />|<img width="20" src="https://simpleicons.org/icons/googlechrome.svg" alt="Chrome" />|<img width="20" src="https://simpleicons.org/icons/apple.svg" alt="iOS" />|<img width="20" src="https://simpleicons.org/icons/android.svg" alt="Android">|
-|:---:|:---:|:---:|:---:|:---:|:---:|
-|10+|Latest|Latest|Latest|7+|4+|
 
 
 ## Author
