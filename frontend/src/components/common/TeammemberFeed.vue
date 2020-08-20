@@ -39,14 +39,11 @@ export default {
   created() {
     let token = window.$cookies.get("nnd");
     if (token) {
-      console.log("유저의 전체정보: " + token.object);
       this.idx = token.object.idx;
-      console.log("유저의 idx: " + this.idx);
     }
 
     EventBus.$on("search", obj => {
       this.type = obj.typeSelection;
-      console.log(this.type);
       this.query = obj.search;
       this.category = obj.categorySelection;
       this.skills = obj.newSkill;
@@ -94,14 +91,12 @@ export default {
                 // 여기서 파이어베이스에서 이미지를 얻기 위해 imageurl을 변환한다
                 var card = this.list[i];
 
-                // console.log(`before imageurl : ${card.imageurl}`);
                 if (card.imageurl != "") { // url이 존재하는 경우만 firebase 코드를 진행한다.
                   if (this.type == "team") {
                     card.imageurl = `images/${this.type}/${card.teamboardno}/${card.imageurl}`;
                   } else {
                     card.imageurl = `images/${this.type}/${card.boardno}/${card.imageurl}`;
                   }
-                  // console.log(`parsing imageurl : ${card.imageurl}`);
                   firebase
                     .storage()
                     .ref()
@@ -148,17 +143,13 @@ export default {
                     )
                     .then(({ data }) => {
                       this.list[i].profiles = data;
-                      // console.log(`before : ${this.list[i].content}`);
                       this.list[i].content = this.list[i].content.replace(
                         /\n/g,
                         "<br>"
                       );
-                      // console.log(`after : ${this.list[i].content}`);
                     });
                 }
               }
-              console.log(`list :`);
-              console.log(this.list);
               $state.loaded();
             } else {
               $state.complete();

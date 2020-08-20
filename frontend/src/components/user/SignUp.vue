@@ -50,9 +50,6 @@
 
 <script>
 import axios from "axios";
-// import * as firebase from "firebase/app";
-// import "firebase/auth";
-// import "firebase/database";
 
 export default {
   name: "SignUp",
@@ -93,22 +90,6 @@ export default {
   methods: {
     signup() {
       if (this.$refs.form.validate()) {
-        // firebase
-        //   .auth()
-        //   .createUserWithEmailAndPassword(this.email, this.password)
-        //   .then(() => {
-        //     alert("회원가입 완료");
-        //     var user = firebase.auth().currentUser;
-        //     user.updateProfile({
-        //       displayName: this.name,
-        //     });
-        //     this.$router.push("/login");
-        //   })
-        //   .catch(function (error) {
-        //     const errorCode = error.code;
-        //     const errorMessage = error.message;
-        //     alert(errorMessage + errorCode);
-        //   });
 
         axios
           .post(`${process.env.VUE_APP_API_URL}/member/signup`, {
@@ -117,8 +98,7 @@ export default {
             profile: null,
             password: this.password,
           })
-          .then((response) => {
-            console.log(response);
+          .then(() => {
             alert("회원가입 완료");
             this.$router.push("/login");
           })

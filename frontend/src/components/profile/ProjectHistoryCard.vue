@@ -112,9 +112,8 @@ export default {
             }
           }
         )
-        .then(response => {
+        .then(() => {
           this.$emit("onSubmit");
-          console.log(response);
           alert("등록에 성공했습니다");
           this.changeDialog();
           this.projectName = null;

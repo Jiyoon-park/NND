@@ -8,7 +8,6 @@
     </v-card-text>
     <v-card-text>
       오픈카톡방 :
-      <!-- <div v-bind: href="https://www.google/com">KAKAO!!</div> -->
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>

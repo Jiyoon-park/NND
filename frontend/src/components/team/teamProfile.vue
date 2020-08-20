@@ -105,7 +105,6 @@
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 
 import NavBar from "../common/NavBar.vue";
-//import TeamPost from "../team/teamPost.vue";
 import TeamTable from "../team/teamTable.vue";
 import MemberChart from "../team/memberChart.vue";
 import TeamDiary from "../team/teamDiary";
@@ -116,7 +115,6 @@ import axios from "axios";
 export default {
   components: {
     NavBar,
-    //TeamPost,
     TeamTable,
     MemberChart,
     TeamDiary,
@@ -162,8 +160,6 @@ export default {
       )
       .then((res) => {
         this.teaminfo = res.data;
-        // console.log("팀장idx찍어보자");
-        // console.log(this.teaminfo.idx);
         this.$store.state.teamMaster = this.teaminfo.idx;
       })
       .catch((err) => {
@@ -179,8 +175,6 @@ export default {
         }
       )
       .then((data) => {
-        console.log("데이터찍어보자");
-        console.log(data.data);
         this.$store.state.teammembers = data.data;
         this.$store.commit("saveMember");
       });

@@ -94,7 +94,6 @@ export default {
         },
       })
       .then((resp) => {
-        console.log(resp);
         this.user = resp.data;
         this.profileURL = this.user.profile;
         this.select = JSON.parse(this.user.memberstack);

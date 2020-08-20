@@ -105,7 +105,6 @@ export default {
   },
   created() {
     let token = window.$cookies.get("nnd");
-    console.log(token);
     let id = token.object.idx; //넘겨 받아야함
     this.$http
       .get(`${process.env.VUE_APP_API_URL}/member/info/${id}`, {
@@ -114,7 +113,6 @@ export default {
         },
       })
       .then((resp) => {
-        console.log(resp);
         this.user = resp.data;
         this.profileURL = this.user.profile;
         this.select = JSON.parse(this.user.memberstack);

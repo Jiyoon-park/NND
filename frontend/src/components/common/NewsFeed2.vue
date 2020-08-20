@@ -257,10 +257,8 @@ export default {
 
   created() {
     if (this.teaminfo.mno == this.$store.state.myToken.idx) {
-      console.log("즐겨찾기 상태");
       this.favorite = true;
     } else {
-      console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
     if (this.teaminfo.idx == this.$store.state.myToken.idx) {
@@ -275,7 +273,6 @@ export default {
     this.dday =
       new Date().getTime() - new Date(this.teaminfo.deadline).getTime();
     this.dday = Math.floor(this.dday / (1000 * 60 * 60 * 24)) * -1;
-    console.log(this.dday);
   },
   methods: {
     profileMove(no) {
@@ -347,11 +344,10 @@ export default {
           }
         )
         .then(() => {
-          console.log(this.sendIdx);
           alert("신청되었습니다.");
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
           alert("실패했습니다.");
         });
     },
@@ -390,7 +386,6 @@ export default {
           } else {
             this.dialog = !this.dialog;
             if (token) {
-              console.log("프로필주소 : " + token.object.profile);
               this.username = token.object.name;
               // this.profileURL = token.object.profile;
               this.sendIdx = token.object.idx;

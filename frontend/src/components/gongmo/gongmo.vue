@@ -125,7 +125,6 @@
 
 <script>
 import NavBar from "../common/NavBar.vue";
-//import axios from "axios";
 
 export default {
   name: "Gongmo",
@@ -133,11 +132,6 @@ export default {
     NavBar,
   },
   created() {
-    // if (this.$store.state.day == "" || this.$store.state.day - t != 0) {
-    //   console.log(this.$store.state.day - t);
-    //   this.$store.commit("setDate", t);
-
-    console.log("exist");
     this.boards = this.$store.state.contest;
     for (let index = 0; index < this.boards.length; index++) {
       var ncolor = "#" + Math.round(Math.random() * 0xffffff).toString(16);
@@ -215,7 +209,6 @@ export default {
       return this.selectedEvent.poster;
     },
     getstart() {
-      console.log(this.selectedEvent.id);
       return this.boards[this.selectedEvent.id].end;
     },
   },
