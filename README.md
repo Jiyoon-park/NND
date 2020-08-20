@@ -17,7 +17,6 @@
 </h3><br/>
 
 
-
 <b>Supported Frameworks</b><br/>
 
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/ngx-flicking/README.md"><img width="45" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/330px-CSS3_logo_and_wordmark.svg.png" alt="AngularJS" /></a>
@@ -55,7 +54,7 @@ See [Documentation](예시) page.
 ## Author
 
 * Website: 이상한 나라의 앨리스
-* Github: (https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404)
+* Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
 
 
 ***
