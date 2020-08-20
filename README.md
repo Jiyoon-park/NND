@@ -67,14 +67,14 @@ yarn serve
 * 메인화면 / 팀 지원 및 팀 생성을 할 수 있고 상대방 프로필을 확인 할 수 있습니다.
 
 <div>
-    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_183838866.gif?alt=media&token=499087a2-088d-4744-9c3c-c8dda24aab59">&nbsp&nbsp
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_183838866.gif?alt=media&token=499087a2-088d-4744-9c3c-c8dda24aab59">&nbsp;&nbsp;
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_185711169.gif?alt=media&token=bf9cdbfe-366f-4e05-a1c1-f452bb033b84">
 </div>
 
 * 원하는 키워드로 게시물을 찾을 수 있고 내정보를 수정 할 수 있습니다.
 
 <div>
-    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EA%B2%80%EC%83%89.gif?alt=media&token=3b58ae9d-13fd-478a-994f-5ac11532b01c">&nbsp&nbsp
+    <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EA%B2%80%EC%83%89.gif?alt=media&token=3b58ae9d-13fd-478a-994f-5ac11532b01c">&nbsp;&nbsp;
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EB%82%B4%20%EC%A0%95%EB%B3%B4%20%EC%88%98%EC%A0%95.gif?alt=media&token=43fe9c70-1372-4d5b-8048-3a605b4ec3f1">
 </div>
 
