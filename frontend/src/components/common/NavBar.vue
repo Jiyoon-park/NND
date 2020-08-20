@@ -24,7 +24,8 @@
               style="opacity:0.7;"
               @click="onLogout"
               dark
-            >로그아웃</v-btn>
+              >로그아웃</v-btn
+            >
           </div>
         </v-list-item>
         <v-list-item-group color="#0277BD" class="text-center">
@@ -45,11 +46,19 @@
               <v-expansion-panel>
                 <v-expansion-panel-header :expand-icon="null">
                   <v-list-item-content>
-                    <v-list-item-title style="text-align: center;">팀 게시판 목록</v-list-item-title>
+                    <v-list-item-title style="text-align: center;"
+                      >팀 게시판 목록</v-list-item-title
+                    >
                   </v-list-item-content>
                 </v-expansion-panel-header>
-                <v-expansion-panel-content v-if="this.teams.length == 0">팀 목록이 없습니다.</v-expansion-panel-content>
-                <v-expansion-panel-content v-else v-for="(team, index) in teams" :key="index">
+                <v-expansion-panel-content v-if="this.teams.length == 0"
+                  >팀 목록이 없습니다.</v-expansion-panel-content
+                >
+                <v-expansion-panel-content
+                  v-else
+                  v-for="(team, index) in teams"
+                  :key="index"
+                >
                   <v-btn text @click="test(team)">{{ team.teamName }}</v-btn>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -57,7 +66,9 @@
           </v-list-item>
 
           <v-list-item link>
-            <v-list-item-content @click="$router.push('/gongmo').catch(() => {})">
+            <v-list-item-content
+              @click="$router.push('/gongmo').catch(() => {})"
+            >
               <v-list-item-title>외부 공모전</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -81,7 +92,8 @@
           color="#eeeeee"
           class="ml-3"
           @click="$router.push('/letter').catch(() => {})"
-        >mdi-email</v-icon>
+          >mdi-email</v-icon
+        >
       </v-badge>
     </v-app-bar>
   </div>
@@ -150,9 +162,8 @@ export default {
       }
     },
     test(no) {
-      console.log(no);
-      console.log(`현재 url : ${this.$route.path}`);
       this.$store.state.teamNo = no.teamboardNo;
+      this.$store.state.teamMaster = no.idx;
       this.$store.commit("nchange");
       if (this.$route.path == "/TeamProfile") {
         this.$router.go().catch(() => {});
@@ -160,7 +171,7 @@ export default {
         this.$router.push("/TeamProfile").catch(() => {});
       }
     },
-    onLogout: function () {
+    onLogout: function() {
       this.$store.commit("logout");
       window.$cookies.remove("nnd");
       this.$router.push("/login");
@@ -180,16 +191,12 @@ export default {
         .then((res) => {
           this.letters = res;
           this.messages = this.checkRead(this.letters.data);
-          console.log(`message개수 :${this.messages}`);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    checkRead: function (arr) {
-      // console.log("count 함수 실행!!");
-      // console.log("arr: " + arr);
-      // console.log("length: " + arr.length);
+    checkRead: function(arr) {
       var count = 0;
       for (let index = 0; index < arr.length; index++) {
         console.log(`arr :${arr[index]}`);
