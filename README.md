@@ -48,7 +48,7 @@ yarn serve
 ## 📖 Documentation
 
 
-- 웰컴페이지 / 로그인 / 회원가입
+* 웰컴페이지 / 로그인 / 회원가입
 
 <div>
 	<img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_181146142.gif?alt=media&token=379ba17d-e6bd-441b-a8ac-77bb4466687c">
@@ -58,11 +58,16 @@ yarn serve
 
 
 
-* 메인화면 / 뉴스피드 글 등록 및 프로필 정보 확인 / 검색 필터링 / 내 정보 수정 화면
+* 메인화면 / 팀 지원 및 팀 생성을 할 수 있고 상대방 프로필을 확인 할 수 있습니다.
 
 <div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_183838866.gif?alt=media&token=499087a2-088d-4744-9c3c-c8dda24aab59">
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2FKakaoTalk_20200820_185711169.gif?alt=media&token=bf9cdbfe-366f-4e05-a1c1-f452bb033b84">
+</div>
+
+* 원하는 키워드로 게시물을 찾을 수 있고 내정보를 수정 할 수 있습니다.
+
+<div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EA%B2%80%EC%83%89.gif?alt=media&token=3b58ae9d-13fd-478a-994f-5ac11532b01c">
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EB%82%B4%20%EC%A0%95%EB%B3%B4%20%EC%88%98%EC%A0%95.gif?alt=media&token=43fe9c70-1372-4d5b-8048-3a605b4ec3f1">
 </div>
@@ -80,16 +85,6 @@ yarn serve
 <div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EC%99%B8%EB%B6%80%20%EA%B3%B5%EB%AA%A8%EC%A0%84.gif?alt=media&token=9946618b-6984-4cdc-8727-5dff9990422f">
 </div>
-
-
-
-
-
-
-
-
-
-
 
 
 ## 🌐 Supported Browsers
