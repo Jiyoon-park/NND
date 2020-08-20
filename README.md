@@ -100,7 +100,8 @@ yarn serve
 
 ## Author
 
-* Website: 이상한 나라의 앨리스
+* Team: 이상한 나라의 앨리스
+* Member: logbug1004@gmail.com, soundpjy1205@gmail.com, ohks9208@naver.com, tjdgus2319@gmail.com , dlckddbs95k@gmail.com
 * Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
 
 
