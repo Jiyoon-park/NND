@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to 너 내 동료가 되라! 👋</h1>
+<h1 align="center"> 너 내 동료가 되라! 👋</h1>
 <p>
   <a href="http://i3a404.p.ssafy.io/" target="_blank">
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
@@ -53,10 +53,6 @@ yarn serve
 
 ## 📖 Documentation
 
-## 🌐 Supported Browsers
-|<img width="40" src="https://simpleicons.org/icons/internetexplorer.svg" alt="IE" />|<img width="40" src="https://simpleicons.org/icons/googlechrome.svg" alt="Chrome" />|<img width="40" src="https://simpleicons.org/icons/apple.svg" alt="iOS" />|<img width="40" src="https://simpleicons.org/icons/android.svg" alt="Android">|
-|:---:|:---:|:---:|:---:|
-|10+|Latest|7+|4+|
 
 * 웰컴페이지 / 로그인 / 회원가입
 
@@ -93,16 +89,24 @@ yarn serve
 </div>
 
 
+
+
 ## 🌐 Supported Browsers
 |<img width="40" src="https://simpleicons.org/icons/internetexplorer.svg" alt="IE" />|<img width="40" src="https://simpleicons.org/icons/googlechrome.svg" alt="Chrome" />|<img width="40" src="https://simpleicons.org/icons/apple.svg" alt="iOS" />|<img width="40" src="https://simpleicons.org/icons/android.svg" alt="Android">|
 |:---:|:---:|:---:|:---:|
 |10+|Latest|7+|4+|
 
-## Author
 
-* Team: 이상한 나라의 앨리스
-* Member: okk0@naver.com logbug1004@gmail.com soundpjy1205@gmail.com ohks9208@naver.com tjdgus2319@gmail.com dlckddbs95k@gmail.com
-* Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
+
+## Contributors
+
+Team: 이상한 나라의 앨리스
+* [오기석](https://lab.ssafy.com/ohks9208)은 DB 구현 및 FrontEnd와의 연결을 도왔습니다.
+* [함지훈](https://lab.ssafy.com/logbug1004)은 DB 설계 및 API 구현을 도왔습니다.
+* [김성현](https://lab.ssafy.com/tjdgus2319)은 JWT 보안 및 API 구현을 도왔습니다.
+* [박지윤](https://lab.ssafy.com/bellnuite)은 디자인 통합 및 내정보 페이지를 구현했습니다.
+* [이창윤](https://lab.ssafy.com/tony95k)은 팀게시판 및 뉴스피드를 구현했습니다.
+* [이상현]()은 와이어 프레임 작성 및 외부공모전을 구현했습니다.
 
 
 ***
