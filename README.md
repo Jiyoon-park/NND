@@ -101,12 +101,12 @@ yarn serve
 ## Contributors
 
 * Team: 이상한 나라의 앨리스
-* 오기석은 DB 구현 및 FrontEnd과의 연결을 도왔습니다.
-* 함지훈은 DB 설계 및 API 구현을 도왔습니다.
-* 김성현은 JWT 보안 및 API 구현을 도왔습니다.
-* 박지윤은 디자인 통합 및 내정보 페이지를 구현했습니다.
-* 이창윤은 팀게시판 및 뉴스피드를 구현했습니다.
-* 이상현은 와이어 프레임 작성 및 외부공모전을 구현했습니다.
+* [오기석](https://lab.ssafy.com/ohks9208)은 DB 구현 및 FrontEnd과의 연결을 도왔습니다.
+* [함지훈](https://lab.ssafy.com/logbug1004)은 DB 설계 및 API 구현을 도왔습니다.
+* [김성현](https://lab.ssafy.com/tjdgus2319)은 JWT 보안 및 API 구현을 도왔습니다.
+* [박지윤](https://lab.ssafy.com/bellnuite)은 디자인 통합 및 내정보 페이지를 구현했습니다.
+* [이창윤](https://lab.ssafy.com/tony95k)은 팀게시판 및 뉴스피드를 구현했습니다.
+* [이상현]()은 와이어 프레임 작성 및 외부공모전을 구현했습니다.
 
 
 ***
