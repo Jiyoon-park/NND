@@ -1,67 +1,40 @@
-<h1 align="center">Welcome to readme-md-generator 👋</h1>
+<h1 align="center">Welcome to 너 내 동료가 되라! 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/readme-md-generator" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/readme-md-generator.svg">
-  </a>
-  <img src="https://img.shields.io/badge/npm-%3E%3D5.5.0-blue.svg" />
-  <img src="https://img.shields.io/badge/node-%3E%3D9.3.0-blue.svg" />
-  <a href="https://github.com/kefranabg/readme-md-generator#readme" target="_blank">
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+  <a href="? �  Project homepage (use empty value to skip)" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-  <a href="https://github.com/kefranabg/readme-md-generator/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
-  </a>
-  <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/kefranabg/readme-md-generator" />
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
 </p>
 
-> CLI that generates beautiful README.md files.
+> 팀원 및 팀을 구하는 웹 사이트
 
-### 🏠 [Homepage](https://github.com/kefranabg/readme-md-generator#readme)
-
-## Prerequisites
-
-- npm >=5.5.0
-- node >=9.3.0
+### ✨ [Demo](? �  Project homepage (use empty value to skip))
 
 ## Install
 
 ```sh
-npm install
+yarn install
 ```
 
 ## Usage
 
 ```sh
-npm run start
-```
-
-## Run tests
-
-```sh
-npm run test
+yarn serve
 ```
 
 ## Author
 
-👤 **Franck Abgrall**
+👤 **? �  Project homepage (use empty value to skip)i3a404.p.ssafy.io**
 
-* Website: https://www.franck-abgrall.me/
-* Github: [@kefranabg](https://github.com/kefranabg)
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kefranabg/readme-md-generator/issues). You can also take a look at the [contributing guide](https://github.com/kefranabg/readme-md-generator/blob/master/CONTRIBUTING.md).
+* Website: 이상한 나라의 앨리스
+* Github: [@tjdgus2319@gmail.com](https://github.com/tjdgus2319@gmail.com)
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-## 📝 License
-
-Copyright © 2020 [Franck Abgrall](https://github.com/kefranabg).<br />
-This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
