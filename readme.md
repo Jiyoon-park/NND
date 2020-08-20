@@ -13,7 +13,7 @@
 
 <b>Supported Frameworks</b><br/>
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/ngx-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/angular.svg" alt="AngularJS" /></a>&nbsp;&nbsp;
-<a href="https://github.com/naver/egjs-flicking/blob/master/packages/react-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/react.svg" alt="React" /></a>&nbsp;&nbsp;
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/react-flicking/README.md"><img width="45" src="https://linked2ev.github.io/assets//img/icon/iconSpringboot.png" alt="React" /></a>&nbsp;&nbsp;
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
 
 
