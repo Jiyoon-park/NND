@@ -149,14 +149,12 @@ export default {
       } else {
         this.isEdit = true;
       }
-      console.log(this.isEdit);
     },
     PreviewImg() {
       this.profileURL = this.user.profile;
     },
     modify() {
       let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
-      console.log(token);
       axios
         .post(
           `${process.env.VUE_APP_API_URL}/member/update`,

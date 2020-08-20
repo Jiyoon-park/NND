@@ -100,40 +100,13 @@ export default {
       })
       .then(({ data }) => {
         this.boards = data;
-
         this.$store.commit("setContest", this.boards);
-        console.log(this.boards);
-        // for (let index = 0; index < this.boards.length; index++) {
-        //   var ncolor =
-        //     "#" + Math.round(Math.random() * 0xffffff).toString(16);
-        //   const allDay = this.rnd(0, 3) === 0;
-        //   this.events.push({
-        //     id: index,
-        //     name: this.boards[index].title,
-        //     start: this.boards[index].start,
-        //     end: this.boards[index].start,
-        //     color: ncolor,
-        //     timed: !allDay,
-        //     poster: this.boards[index].poster,
-        //   });
-
-        //   this.events.push({
-        //     id: index,
-        //     name: this.boards[index].title,
-        //     start: this.boards[index].end,
-        //     end: this.boards[index].end,
-        //     color: ncolor,
-        //     timed: !allDay,
-        //     poster: this.boards[index].poster,
-        //   });
-        // }
       })
       .catch((err) => {
         console.log(err);
       }); //endaxios
     if (token) {
       //토큰 존재하면
-      console.log("already-login");
       this.$router.push("/"); //home으로 보냄
     }
   },
@@ -150,10 +123,7 @@ export default {
           })
           .then(
             (response) => {
-              console.log(response);
               window.$cookies.set("nnd", response.data, "2d"); //로그인시 쿠키 저장
-              console.log(response.data.object);
-              //location.reload()
               this.$router.push({
                 name: "Home",
                 params: { id: response.data.object.idx },
@@ -161,7 +131,6 @@ export default {
             },
             () => {
               alert("비밀번호가 틀렸습니다.");
-              console.log("failed");
             }
           );
       }

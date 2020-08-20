@@ -32,8 +32,6 @@ export default {
     if (token) {
       //토큰 존재하면
       this.user = token.object;
-      console.log("###########");
-      console.log(this.user.idx);
       axios
         .get(
           `${process.env.VUE_APP_API_URL}/projecthistory/list/${this.$store.state.profileidx}`,
@@ -54,17 +52,6 @@ export default {
         });
     }
 
-    // EventBus.$on('delete-card',() =>{
-    //    axios
-    //     .get(`${process.env.VUE_APP_API_URL}/projecthistory/list/${this.user.idx}`)
-    //     .then(({ data }) => {
-    //       this.projects = data;
-    //       console.log(this.projects);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // });
     EventBus.$on("create-card", () => {
       axios
         .get(
@@ -77,7 +64,6 @@ export default {
         )
         .then(({ data }) => {
           this.projects = data;
-          console.log(this.projects);
         })
         .catch(err => {
           console.log(err);
@@ -95,8 +81,7 @@ export default {
               Authorization: "Bearer " + token.data // the token is a variable which holds the token
             }
           }
-        )
-        .then(res => console.log(res));
+        );
     },
     onEditBtn(projecthistoryNo, i) {
       let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
@@ -119,8 +104,7 @@ export default {
             }
           }
         )
-        .then(response => {
-          console.log(response);
+        .then(() => {
           this.dialog = false;
         })
         .catch(error => {

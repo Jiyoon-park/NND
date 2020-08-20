@@ -17,35 +17,13 @@
         <v-text-field dense single-line outlined></v-text-field>
       </v-col>
     </v-row>
-    <!-- <v-form @submit.prevent="onSubmit">
-      <div class="d-flex">
-        <input class="search-input" type="text" v-model="inputData" placeholder="검색어를 입력하세요" />
-        <v-btn depressed color="grey" dark class="ml-2">
-          <v-icon>fas fa-search</v-icon>
-        </v-btn>
-      </div>
-      <small v-show="warning" class="red--text">{{ errorMsg }}</small>
-    </v-form>
-    <div>
-      <ul class="search-keyword-list d-flex">
-        <li class="search-keyword" v-for="(keyword, index) in searchKeywords" :key="index">
-          <span>{{ keyword }}</span>
-          <button class="keyword-delbtn" @click="onDelbtn(index)">
-            <i class="fas fa-times-circle"></i>
-          </button>
-        </li>
-    </ul>-->
-    <!-- </div> -->
-    <!-- <SearchKeywords /> -->
   </div>
 </template>
 
 <script>
-// import SearchKeywords from "./SearchKeywords.vue";
 
 export default {
   components: {
-    // SearchKeywords,
   },
   data() {
     return {
@@ -55,9 +33,6 @@ export default {
       errorMsg: "",
       select: null,
       items: ["전체", "아이디", "제목+내용", "태그검색"],
-      // items: ["Java", "Vue", "Django", "Vuetify", "C", "C++", "JS", "Spring "],
-      // model: ["Vuetify"],
-      // search: null,
     };
   },
   watch: {

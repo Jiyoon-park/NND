@@ -239,15 +239,10 @@ export default {
   created() {
     let token = window.$cookies.get("nnd");
     if (token) {
-      console.log("유저의 전체정보: " + token.object);
       this.email = token.object.email;
       this.idx = token.object.idx;
       this.name = token.object.name;
       this.memberstack = JSON.parse(token.object.memberstack);
-      console.log("유저의 email: " + this.email);
-      console.log("유저의 idx: " + this.idx);
-      console.log("유저의 name: " + this.name);
-      console.log("유저의 memberstack: " + this.memberstack);
     }
     axios
       .get(`${process.env.VUE_APP_API_URL}/member/all`, {
@@ -256,7 +251,6 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response.data);
         this.allmemberEmails = response.data;
       })
       .catch((error) => {
@@ -327,23 +321,15 @@ export default {
           },
         })
         .then((response) => {
-          console.log("게시판 등록 성공");
           // axios 요청등록 후 리턴받은 teamboardNo값을 route로 해서 firebase에 image 등록
-          console.log(response);
-          console.log(`각 값들 : ${response.data}`);
-          // console.log(`각 값들 : ${this.teamcheck == "팀" ? "team" : "member"}`);
-          // console.log(`각 값들 : ${this.imageName}`);
           if (this.imageName != "") {
             // 이미지 파일을 쓰는 경우만 파이어베이스 코드를 진행토록 한다.
             var image_url = `images/${
               this.teamcheck == "팀" ? "team" : "member"
             }/${response.data}/${this.imageName}`;
-            console.log(`image_url : ${image_url}`);
-            console.log(`firebase : `);
-            console.log(`${firebase}`);
+
             const storageRef = firebase.storage().ref();
-            console.log(`storageRef : `);
-            console.log(`${storageRef}`);
+
             storageRef
               .child(image_url)
               .put(this.imageFile)
@@ -354,10 +340,9 @@ export default {
                 },
                 (error) => {
                   console.log(error);
-                  console.log("파이어베이스 등록 실패!");
+   
                 },
                 () => {
-                  console.log("파이어베이스 등록 성공");
                   alert("등록에 성공했습니다.");
 
                   // 등록페이지 초기화
@@ -389,7 +374,6 @@ export default {
         });
     },
     goMain() {
-      console.log(`현재 url : ${this.$route.path}`);
       if (this.$route.path == "/") {
         this.$router.go();
       } else {

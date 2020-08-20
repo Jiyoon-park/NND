@@ -145,7 +145,6 @@ export default {
   },
   methods: {
     checkMainURL() {
-      console.log(`현재 url : ${this.$route.path}`);
       if (this.$route.path == "/") {
         this.$router.go().catch(() => {});
       } else {
@@ -199,7 +198,6 @@ export default {
     checkRead: function(arr) {
       var count = 0;
       for (let index = 0; index < arr.length; index++) {
-        console.log(`arr :${arr[index]}`);
         if (arr[index].read == 0) {
           count++;
         }

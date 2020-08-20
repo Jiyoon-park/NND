@@ -47,16 +47,11 @@ export default {
           }
         )
         .then((res) => {
-          // console.log("제발제발제발제발제발제발제발");
-          console.log(res.data);
 
           this.chartData = {
             labels: ["지라", "팀워크", "출석률", "깃 커밋", "만족도"],
             datasets: [
-              // {
-              //   label: "오기석",
-              //   data: [1, 2, 3, 4, 5],
-              // },
+
             ],
           };
           for (let index = 0; index < res.data.length; index++) {
@@ -73,8 +68,6 @@ export default {
               ],
             });
           }
-          // console.log("chart dataaaaaaaaaaaaaaaaaaaaaaaaaaa");
-          console.log(this.chartData);
           this.loaded = true;
         })
         .catch((err) => {

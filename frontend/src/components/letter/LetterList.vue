@@ -28,7 +28,6 @@
                       :key="i"
                       :letterinfo="item.letters[i]"
                     />
-                    <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
                   </v-col>
                 </v-row>
               </v-list-item-group>
@@ -41,7 +40,6 @@
 </template>
 
 <script>
-// import InfiniteLoading from "vue-infinite-loading";
 import NavBar from "../common/NavBar.vue";
 import LetterListItem from "./LetterListItem.vue";
 import axios from "axios";
@@ -63,15 +61,12 @@ export default {
           letters: [],
         },
       ],
-      // list: [],
-      // page: 0,
-      // size: 10,
+
     };
   },
   created() {
     let token = window.$cookies.get("nnd"); //nnd가 key인 쿠키 가져옴
     if (token) {
-      console.log(token.object.idx);
       axios
         .get(
           `${process.env.VUE_APP_API_URL}/letter/list/receive/${token.object.idx}`,
@@ -83,7 +78,6 @@ export default {
         )
         .then((res) => {
           this.items[0].letters = res.data;
-          console.log(this.items[0].letters);
         })
         .catch((err) => {
           console.log(err);
@@ -100,7 +94,6 @@ export default {
         )
         .then((res) => {
           this.items[1].letters = res.data;
-          console.log(this.items[1].letters);
         })
         .catch((err) => {
           console.log(err);

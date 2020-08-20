@@ -75,7 +75,6 @@ export default {
   name: "TeamDiary",
   components: {},
   created() {
-    console.log(this.$store.state.teamNo);
     //디비에서 가져와야함
     let token = window.$cookies.get("nnd");
     axios
@@ -89,7 +88,6 @@ export default {
       )
       .then(({ data }) => {
         this.boards = data;
-        console.log(this.boards);
         for (let index = 0; index < this.boards.length; index++) {
           this.events.push({
             no: this.boards[index].teamdiaryNo,
@@ -100,7 +98,6 @@ export default {
             timed: this.boards[index].timed,
           });
         }
-        console.log(this.events);
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +124,6 @@ export default {
   },
   methods: {
     viewDay({ date }) {
-      console.log(date);
       this.focus = date;
       this.type = "week";
     },
@@ -145,8 +141,6 @@ export default {
     },
     startDrag({ event, timed }) {
       //눌렀는데 이벤트 있을때
-      //this.ok = true;
-      console.log("startDrag");
       if (event && timed) {
         this.dragflag = true;
         this.dragEvent = event;
@@ -157,8 +151,6 @@ export default {
 
     submit() {
       const i = this.events.indexOf(this.dragmsg);
-      console.log(this.events);
-      console.log(i);
       this.events[i].name = this.msg;
 
       let token = this.$cookies.get("nnd");
@@ -179,8 +171,7 @@ export default {
             },
           }
         )
-        .then((response) => {
-          console.log(response);
+        .then(() => {
         })
         .catch((error) => {
           console.log(error.response);
@@ -208,9 +199,7 @@ export default {
       } else {
         //이벤트가 존재하지 않아 새로 만듬
         this.createStart = this.roundTime(mouse);
-        console.log(typeof this.createStart);
         this.createEvent = {
-          //name: `Event #${this.events.length}`,
           name: `Event #`,
           color: "#" + Math.round(Math.random() * 0xffffff).toString(16),
           start: this.createStart,
@@ -238,7 +227,6 @@ export default {
           )
           .then(({ data }) => {
             this.createEvent.no = data.teamdiaryNo;
-            console.log(data);
           })
           .catch((err) => {
             console.log(err);
@@ -297,10 +285,7 @@ export default {
                 Authorization: "Bearer " + token.data, // the token is a variable which holds the token
               },
             }
-          )
-          .then((response) => {
-            console.log(response);
-          })
+          )        
           .catch((error) => {
             console.log(error.response);
           });
@@ -321,9 +306,6 @@ export default {
               },
             }
           )
-          .then((response) => {
-            console.log(response);
-          })
           .catch((error) => {
             console.log(error.response);
           });
@@ -336,7 +318,6 @@ export default {
       this.extendOriginal = null;
     },
     cancelDrag() {
-      console.log("cancel");
 
       if (this.ok) {
         //모달창으로 나간거면 삭제하지마라
@@ -353,8 +334,7 @@ export default {
                   Authorization: "Bearer " + token.data, // the token is a variable which holds the token
                 },
               }
-            )
-            .then((res) => console.log(res));
+            );
           this.events.splice(i, 1);
         }
       }

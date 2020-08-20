@@ -92,7 +92,6 @@ export default {
   created() {
     let token = window.$cookies.get("nnd");
     this.letterDate = this.dateFormatted(this.letterinfo.createDate);
-    console.log("##############");
     if (this.letterinfo.letterType == "tboard") {
       axios
         .get(
@@ -105,7 +104,6 @@ export default {
         )
         .then(res => {
           this.teamboardinfo = res.data.teamName;
-          console.log(this.teamboardinfo);
         })
         .catch(err => {
           console.log(err);
@@ -134,7 +132,6 @@ export default {
           }
         )
         .then(res => {
-          console.log(res);
           if (res.data == "success") {
             alert("수락완료");
           } else if (res.data == "already full") {
@@ -162,7 +159,6 @@ export default {
           }
         )
         .then(res => {
-          console.log(res);
           if (res.data == "success") {
             alert("수락완료");
           } else if (res.data == "already full") {
@@ -181,7 +177,6 @@ export default {
       this.$emit("changeDialog");
     },
     dateFormatted: function(dt) {
-      console.log("dt : " + dt);
       var d = new Date(dt);
 
       var result =
@@ -193,14 +188,7 @@ export default {
         (d.getDate() > 9 ? "" : "0") +
         d.getDate() +
         " ";
-      // (d.getHours() > 9 ? "" : "0") +
-      // d.getHours() +
-      // ":" +
-      // (d.getMinutes() > 9 ? "" : "0") +
-      // d.getMinutes() +
-      // ":" +
-      // (d.getSeconds() > 9 ? "" : "0") +
-      // d.getSeconds();
+
       return result;
     }
   }
