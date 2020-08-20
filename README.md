@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to 너 내 동료가 되라! 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
-  <a href="?    Project homepage (use empty value to skip)" target="_blank">
+  <a href="http://i3a404.p.ssafy.io/" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
   <a href="#" target="_blank">
@@ -12,8 +12,9 @@
 > 스터디 & 공모전 등 팀원 및 팀을 구하는 웹 사이트
 <br/><br/>
 <h3 align=center>
-  <a href="http://i3a404.p.ssafy.io/">홈페이지 이동 -----------------------------------> project homepage</a> 
-</h3><br/><br/>
+    홈페이지 이동<br/>
+  <a href="http://i3a404.p.ssafy.io/">project homepage</a> 
+</h3><br/>
 
 
 
