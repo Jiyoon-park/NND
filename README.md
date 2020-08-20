@@ -10,8 +10,7 @@
 </p><br/>
 
 <h3 align=center>
-    홈페이지 이동<br/>
-  <a href="http://i3a404.p.ssafy.io/">project homepage</a> 
+  <a href="http://i3a404.p.ssafy.io/">homepage</a> 
 </h3><br/>
 
 
