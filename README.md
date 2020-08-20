@@ -10,10 +10,10 @@
 </p>
 
 > 스터디 & 공모전 등 팀원 및 팀을 구하는 웹 사이트
-
+<br/><br/>
 <h3 align=center>
-  <a href="http://i3a404.p.ssafy.io/">project homepage</a> 
-</h3>
+  <a href="http://i3a404.p.ssafy.io/">홈페이지 이동 -----------------------------------> project homepage</a> 
+</h3><br/><br/>
 
 
 
