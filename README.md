@@ -9,6 +9,10 @@
   </a>
 </p><br/>
 
+<p align=center>
+  <b>매일 3천만명이 사용하는 믿을 수 있는, 유연한, 그리고 확장 가능한 캐로셀 컴포넌트</b><br>📱💻🖥
+</p>
+
 <h3 align=center>
 배포중인 홈페이지
   <a href="http://i3a404.p.ssafy.io/">homepage</a> 
