@@ -16,8 +16,8 @@
 <b>Frontend</b><br/>
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/ngx-flicking/README.md"><img width="45" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/330px-CSS3_logo_and_wordmark.svg.png" alt="AngularJS" /></a>
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://seeklogo.com/images/V/vuetify-logo-3BCF73C928-seeklogo.com.png" alt="Vue.js" /></a>&nbsp;&nbsp;
-<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a></br>
-<b>Backend</b><br/>
+<a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://naver.github.io/egjs-flicking/images/vue.svg" alt="Vue.js" /></a>
+</br><b>Backend</b><br/>
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://4.bp.blogspot.com/-8vOCoZerLoo/Wr89_d1RBSI/AAAAAAAC_XE/J4utotMyys8rSqJ6-Gl-JGX_n3H-oybawCK4BGAYYCw/s1600/java-logo.jpg" alt="Vue.js" /></a>
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://blog.kakaocdn.net/dn/bL5ZFB/btqAcNTkJdx/kbJqdk56Js1gs4zL8jjhO0/img.png" alt="Vue.js" /></a>&nbsp;&nbsp;
 <a href="https://github.com/naver/egjs-flicking/blob/master/packages/vue-flicking/README.md"><img width="45" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png" alt="Vue.js" /></a>&nbsp;&nbsp;
