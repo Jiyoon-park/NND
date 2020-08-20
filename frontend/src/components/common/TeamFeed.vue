@@ -37,7 +37,6 @@ export default {
       )
       .then(({ data }) => {
         this.boards = data;
-        console.log(this.boards);
       })
       .catch((err) => {
         console.log(err);

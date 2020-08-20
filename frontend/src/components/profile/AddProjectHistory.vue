@@ -10,7 +10,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import ProjectHistoryCard from "./ProjectHistoryCard.vue";
 export default {
   components: {

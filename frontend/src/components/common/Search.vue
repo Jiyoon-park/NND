@@ -160,7 +160,6 @@ export default {
   },
   methods: {
     submit() {
-      //console.log(this.search);
       EventBus.$emit("search", {
         typeSelection: this.typeSelection, //팀,팀원
         search: this.search, //검색

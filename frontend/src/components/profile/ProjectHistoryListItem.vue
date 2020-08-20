@@ -99,7 +99,6 @@
 
 <script>
 import axios from "axios";
-//import EventBus from "../../main";
 export default {
   props: {
     historyinfo: {
@@ -117,7 +116,6 @@ export default {
     };
   },
   created() {
-    console.log(this.historyinfo.idx);
     if (this.$route.path == "/profile-update") {
       this.isEditPage = true;
     } else {
@@ -138,10 +136,8 @@ export default {
             }
           }
         )
-        .then(res => {
-          console.log(res);
+        .then(() => {
           location.reload();
-          //EventBus.$emit('delete-card');          //location.reload()
         });
     },
     onEditBtn(projecthistoryNo) {
@@ -163,8 +159,7 @@ export default {
             }
           }
         )
-        .then(response => {
-          console.log(response);
+        .then(() => {
           this.dialog = false;
         })
         .catch(error => {

@@ -65,51 +65,5 @@ export default new Vuex.Store({
       state.contest = contest;
     },
   },
-  // actions: {
-  //   async getUserFromServer(context) {
-  //     if (context.state.token) {
-  //       axios
-  //         .get(`${process.env.VUE_APP_API_URL}/member`, {
-  //           //재시작시 실행
-  //           headers: {
-  //             Authorization: "Bearer " + context.state.token, // the token is a variable which holds the token
-  //           },
-  //         })
-  //         .then(
-  //           (resp) => {
-  //             console.log(resp);
-  //             console.log("getUserFromServer.action.afterAxios");
-  //             context.commit("setUser", resp.data);
-  //           },
-  //           (resp) => {
-  //             console.log(resp);
-  //             console.log("Error while loading user");
-  //             window.$cookies.remove("nnd");
-  //             context.commit("setUser", "");
-  //           }
-  //         );
-  //     }
-  //   },
-  //   async getLogById({ commit, state }) {
-  //     console.log("getUserLogById.action");
-  //     if (state.user.id) {
-  //       axios
-  //         .get(`${process.env.VUE_APP_API_URL}/member/info/?id=${state.user.id}`, {
-  //           headers: {
-  //             Authorization: "Bearer " + state.token, // the token is a variable which holds the token
-  //           },
-  //         })
-  //         .then(
-  //           (resp) => {
-  //             console.log(resp);
-  //             commit("setLog", resp.data);
-  //           },
-  //           (resp) => {
-  //             console.log(resp);
-  //             console.log("Error while loading log ");
-  //           }
-  //         );
-  //     }
-  //   },
-  // },
+  
 });

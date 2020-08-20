@@ -129,7 +129,6 @@ export default {
       },
       {
         text: "제목",
-        // align: "start",
         value: "title",
       },
       { text: "이름", value: "writer" },
@@ -205,10 +204,8 @@ export default {
       this.myItem = item;
       if (this.$store.state.myToken.idx == item.memberIdx) {
         this.status = true;
-        console.log("내게시글");
       } else {
         this.status = false;
-        console.log("내게시글아님");
       }
       this.editedIndex = this.teampost.indexOf(item);
       this.editedItem = Object.assign({}, item); //병합
@@ -259,9 +256,6 @@ export default {
           }
         );
       } else {
-        // this.editedItem.writer = this.userinfo.name;
-        // this.editedItem.memberIdx = this.userinfo.idx;
-        // console.log(this.editedItem);
         axios
           .put(
             `${process.env.VUE_APP_API_URL}/teammenu/post/save`,

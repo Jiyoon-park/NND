@@ -81,7 +81,6 @@ export default {
   methods: {
     // 클릭한 프로필 페이지로 이동하는 함수
     profileMove(no) {
-      console.log(`no 번호: ${no}`);
       this.$store.state.profileidx = no;
       this.$store.commit("pchange");
       if (this.$route.path == "/userProfile") {
@@ -107,8 +106,7 @@ export default {
                 }
               }
             )
-            .then(res => {
-              console.log(res);
+            .then(() => {
               if (this.item.tab == "받은 편지함") {
                 EventBus.$emit("letterRead");
               }
@@ -118,7 +116,6 @@ export default {
       }
     },
     dateFormatted: function(dt) {
-      console.log("dt : " + dt);
       var min = 60 * 1000;
       var c = new Date();
       var d = new Date(dt);
@@ -148,7 +145,6 @@ export default {
         formatted: ""
       };
 
-      console.log(result.raw); // 결과값
 
       if (minsAgo < 60) {
         // 1시간 내(ex: 1분 전, 3분 전, 45분 전)

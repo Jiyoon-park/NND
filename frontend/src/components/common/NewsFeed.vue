@@ -219,15 +219,11 @@ export default {
       expand: false,
     };
   },
-  // mounted(){
-  //   this.teamboardno = this.teaminfo.teamboardNo;
-  // },
+
   created() {
     if (this.teaminfo.mno == this.$store.state.myToken.idx) {
-      console.log("즐겨찾기 상태");
       this.favorite = true;
     } else {
-      console.log("즐겨찾기 아닌상태");
       this.favorite = false;
     }
     if (this.teaminfo.idx == this.$store.state.myToken.idx) {
@@ -290,10 +286,6 @@ export default {
     submit() {
       let token = window.$cookies.get("nnd");
       this.dialog = false;
-      console.log(this.sendIdx + " send");
-      console.log(this.teaminfo.idx + " receive");
-      console.log(this.letterType + " type");
-      console.log(this.teamno);
       axios
         .put(
           `${process.env.VUE_APP_API_URL}/letter/create/${this.letterType}`,
@@ -324,9 +316,7 @@ export default {
       this.dialog = !this.dialog;
       let token = window.$cookies.get("nnd");
       if (token) {
-        console.log(token.object.idx);
         this.username = token.object.name;
-        //this.profileURL = token.object.profile;
         this.sendIdx = token.object.idx;
       }
 
@@ -341,7 +331,6 @@ export default {
         )
         .then((data) => {
           this.teamlist = data.data;
-          console.log(this.teamlist);
         });
     },
     memberDelete() {
