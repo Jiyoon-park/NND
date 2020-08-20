@@ -8,7 +8,7 @@
       }"
     >
       <template slot="table-row" slot-scope="props">
-        <span v-if="props.column.field === 'survey'">
+        <v-row v-if="props.column.field === 'survey'">
           <v-btn
             v-if="props.row.memberIdx == myidx || props.row.rated == '1'"
             color="primary"
@@ -16,7 +16,14 @@
             >평가하기</v-btn
           >
           <member-btn v-else :props="props"></member-btn>
-        </span>
+          <v-icon
+            v-if="checkM && props.row.master == '팀원'"
+            class="ml-3"
+            color="red"
+            @click="deleteMember(props.row)"
+            >mdi-do-not-disturb</v-icon
+          >
+        </v-row>
       </template>
     </vue-good-table>
   </v-card>
@@ -26,13 +33,14 @@
 import "vue-good-table/dist/vue-good-table.css";
 import { VueGoodTable } from "vue-good-table";
 import MemberBtn from "./memberBtn.vue";
-//import axios from "axios";
+import axios from "axios";
 
 export default {
   props: ["teamdata"],
 
   data() {
     return {
+      checkM: false,
       teamboardno: "",
       members: [],
       dialog: false,
@@ -62,6 +70,11 @@ export default {
   created() {
     this.teamboardno = this.$store.state.teamNo;
     this.members = this.$store.state.teammembers;
+    if (this.$store.state.teamMaster == this.$store.state.myToken.idx) {
+      this.checkM = true;
+    } else {
+      this.checkM = false;
+    }
     this.checkMaster();
 
     let token = window.$cookies.get("nnd");
@@ -87,6 +100,25 @@ export default {
         }
       }
       this.members = list;
+    },
+    deleteMember(member) {
+      let token = window.$cookies.get("nnd");
+      confirm("삭제하시겠습니까?") &&
+        axios
+          .delete(
+            `${process.env.VUE_APP_API_URL}/teammenu/member/delete/` +
+              this.teamboardno +
+              `/` +
+              member.memberIdx,
+            {
+              headers: {
+                Authorization: "Bearer " + token.data, // the token is a variable which holds the token
+              },
+            }
+          )
+          .then(() => {
+            this.$router.go();
+          });
     },
   },
 };
