@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.nnd.dto.Member;
 import com.ssafy.nnd.dto.MemberRating;
+import com.ssafy.nnd.dto.TeamBoard;
 import com.ssafy.nnd.dto.TeamDiary;
 import com.ssafy.nnd.dto.TeamPost;
 import com.ssafy.nnd.dto.TeamRegist;
@@ -41,7 +42,7 @@ public class TeamMenuController {
 
 	@Autowired
 	TeamBoardRepository teamBoardRepository;
-
+	
 	@Autowired
 	MemberRepository memberRepository;
 
@@ -133,6 +134,12 @@ public class TeamMenuController {
 
 		try {
 			teamregistRepository.deleteByTeamboardNoAndMemberIdx(teamboardno, memberidx);
+			
+			// memCnt를 1 감소 시킨다.
+			Optional<TeamBoard> team = teamBoardRepository.findById(teamboardno);
+			team.get().setMemCnt(team.get().getMemCnt() - 1);
+			teamBoardRepository.save(team.get());
+			
 			return "delete member success";
 		} catch (Exception e) {
 			return "delete member fail";
@@ -173,6 +180,7 @@ public class TeamMenuController {
 			Object[] temp = (Object[]) teamList.get(i);
 			map.put("teamboardNo", temp[0]);
 			map.put("teamName", temp[1]);
+			map.put("idx", temp[2]);
 			datalist.add(map);
 		}
 		return datalist;

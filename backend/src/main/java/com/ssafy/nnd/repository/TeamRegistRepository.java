@@ -16,7 +16,7 @@ import com.ssafy.nnd.dto.TeamRegist;
 
 public interface TeamRegistRepository extends JpaRepository<TeamRegist,Long>{
 	
-	@Query(value="select teamboard.teamboardno, teamname from teamboard JOIN teamregist ON teamboard.teamboardno=teamregist.teamboardno WHERE memberidx= :idx",nativeQuery=true)
+	@Query(value="select teamboard.teamboardno, teamname, teamboard.idx from teamboard JOIN teamregist ON teamboard.teamboardno=teamregist.teamboardno WHERE memberidx= :idx",nativeQuery=true)
 	List<Object> findTeamByIdx(@Param("idx") Long idx);
 	
 	@Query(value="select member.idx, member.name, rated from member JOIN teamregist ON member.idx=teamregist.memberidx WHERE teamboardno= :teamboardno",nativeQuery=true)
