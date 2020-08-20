@@ -80,16 +80,12 @@ yarn serve
 
 
 
-* 팀게시판 목록을 관리 할 수 있습니다.(게시판 글 등록 및 일정 관리, 팀원 평가)
+* 팀게시판 목록을 관리 할 수 있습니다.(게시판 글 등록 및 일정 관리, 팀원 평가) / 외부 공모전을 찾아 볼 수 있습니다.
 
 <div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%ED%8C%80%EA%B2%8C%EC%8B%9C%ED%8C%90.gif?alt=media&token=dd1ce44f-7c94-44dc-8faf-8287ba5dd5c9">
-</div>
-
-* 외부 공모전을 찾아 볼 수 있습니다.
-
-<div>
     <img width="190" src="https://firebasestorage.googleapis.com/v0/b/neonaedong.appspot.com/o/readmeMD%2F%EC%99%B8%EB%B6%80%20%EA%B3%B5%EB%AA%A8%EC%A0%84.gif?alt=media&token=9946618b-6984-4cdc-8727-5dff9990422f">
+
 </div>
 
 
@@ -101,7 +97,7 @@ yarn serve
 ## Author
 
 * Team: 이상한 나라의 앨리스
-* Member: logbug1004@gmail.com, soundpjy1205@gmail.com, ohks9208@naver.com, tjdgus2319@gmail.com , dlckddbs95k@gmail.com
+* Member: okk0@naver.com, logbug1004@gmail.com, soundpjy1205@gmail.com, ohks9208@naver.com, tjdgus2319@gmail.com , dlckddbs95k@gmail.com
 * Github: https://lab.ssafy.com/s03-webmobile2-sub3/s03p13a404
 
 
